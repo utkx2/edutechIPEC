@@ -1,0 +1,57 @@
+const express = require('express');
+const router = express.Router();
+const User = require('../models/UserModel');
+const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = 'alpha$dev';
+
+
+// Create a User using: POST "/api/auth/register".
+router.post('/register', [
+    body('firstname').isLength({ min: 3 }),
+    body('middlename').isLength({ min: 3 }),
+    body('lastname').isLength({ min: 3 }),
+    body('email').isEmail(),
+    body('confirm_email').isEmail(),
+    body('mobileNumber').isLength({ min: 10 }),
+    body('dob').isDate(),
+    body('gender').isIn(['male', 'female']),
+    body('fatherName').isLength({ min: 3 }),
+    body('fatherMob').isLength({ min: 10 }),
+    body('motherName').isLength({ min: 3 }),
+    body('motherMob').isLength({ min: 10 }),
+    body('category').isIn(['general', 'ews', 'sc', 'st', 'obc']),
+    body('addressLine1').notEmpty(),
+    body('addressLine2').notEmpty(),
+    body('state'),
+    body('city').notEmpty(),
+    body('pinCode').isNumeric(),
+    body('schoolName').notEmpty(),
+    body('schoolCity').notEmpty(),
+    body('schoolCity').notEmpty(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array() });
+    }
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const secPass = await bcrypt.hash(req.body.password, salt);
+
+        User = await User.create({
+            name: req.body.name,
+            password: secPass,
+            email: req.body.email,
+        });
+        const data = {
+            User: {
+                id: User.id
+            }
+        }
+        const authToken = jwt.sign({ data, JWT_SECRET });
+        res.json({ authToken });
+    } catch (err) {
+        res.status(500).json({ error: 'Could not create user' });
+    }
+});
