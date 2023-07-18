@@ -40,8 +40,8 @@ const Login = () => {
                     setErrorMessage(data.errors)
                 } else {                    
                     // Store response in local storage
-                    localStorage.setItem("token", data.authToken);
-                    navigate("/dashboard/");
+                    localStorage.setItem("token", JSON.stringify(data.authtoken));
+                    navigate("/dashboard/admin");
                     // Navigate to the desired page
                     // const user = data.user.data
                     // if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")

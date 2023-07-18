@@ -1,6 +1,6 @@
 // import AdminTenderResultForm from "../Admin/partials/dashboard/tenders/AdminTenderResultForm";
 import { Route, Routes } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoutes";
 
 import DashboardHome from "../Admin/partials/dashboard/DashboardHome";
 // //Tenders
