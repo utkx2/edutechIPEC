@@ -148,7 +148,7 @@ export default function Career() {
                         <input
                             type="tel"
                             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                            name="floating_phone"
+                            name="phoneNumber"
                             id="floating_phone"
                             value={formData.phoneNumber}
                             onChange={handleChange}
