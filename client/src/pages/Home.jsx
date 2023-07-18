@@ -63,7 +63,7 @@ function Home() {
             <div className="w-[340px] bg-white border mt-5 shadow-lg rounded-[16px] h-[450px] p-3">
               
                 <img src={FacultyImg} alt="student" className=' h-[280px] w-full rounded-[8px] ' />
-                <div className='w-full h-[100px] mt-2 flex flex-col items-center text-center font-bold justify-center p-3'>
+                <div className='bg-black w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-center justify-center text-center font-bold justify-center p-3'>
                   <div className='font-bold'>Pradeep Malhotra</div>
                   <div>2 Year classroom programme</div>
                   <div>IIT Delhi</div>
@@ -85,7 +85,7 @@ function Home() {
 
                 <img src={Student} alt="student" className='absolute h-[140px] w-[104px] bottom-10 left-5' />
 
-                <div className='text-[#1f1d5a] m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16'>
+                <div className='text-[#1f1d5a]  m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16'>
                   <div className='font-bold'>Paarth Agarwal</div>
                   <div>2 Year classroom programme</div>
                   <div>enrollment number</div>
