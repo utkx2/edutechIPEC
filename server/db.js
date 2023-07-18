@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-MONGO_CONNECTION = 'mongodb+srv://user:user@ipec.9t0esx2.mongodb.net/'
+MONGO_CONNECTION = 'mongodb+srv://akshattamrakar:root@cluster0.0z0aan1.mongodb.net/edutech';
 
 const connectDb = async () => {
     try {
