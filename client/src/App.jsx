@@ -18,31 +18,31 @@ import Login from "../pages/Login";
 // import Registration from "./components/Registration";
 
 const App = () => {
-  
+
 
   return (
-   
-    
-      <BrowserRouter>
-      <Navbar/>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} /> 
-          <Route path="/about" element={<About />} />
-          <Route path="/results" element={<Result />} />
-          <Route path="/mission" element={<OurMission />} />
-          <Route path="/why" element={<WhyIPEC />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/course" element={<Course />} />
-          <Route path="/courseDetails" element={<CourseDetails />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/careers" element={<Career />} />
-          <Route path="/testimonials" element={<Testimonials />} />
-          <Route path="/login" element={<Login/>} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-   
+
+
+    <BrowserRouter>
+      {/* <Navbar/> */}
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/results" element={<Result />} />
+        <Route path="/mission" element={<OurMission />} />
+        <Route path="/why" element={<WhyIPEC />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/course" element={<Course />} />
+        <Route path="/courseDetails" element={<CourseDetails />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/careers" element={<Career />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+
   );
 };
 

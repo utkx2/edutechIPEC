@@ -76,10 +76,7 @@ const RegistrationsModel = new Schema({
         type: Number,
         required: true
     },
-    schoolName: {
-        type: String,
-        required: true
-    },
+
     message: {
         type: String,
     }
