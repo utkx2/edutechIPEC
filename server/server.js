@@ -6,6 +6,9 @@ const contentRoutes = require('./routes/ContentRoute')
 const RegistrationRoute = require('./routes/RegistrationRoute');
 const bodyParser = require('body-parser');
 const cors = require("cors");
+const AboutRoute = require('./routes/AboutRoute');
+const WhyIPEC_Route = require('./routes/WhyIpecRoute');
+const FacultyHireRoute = require('./routes/FacultyHireRoute');
 // const path = require('path');
 
 // Middleware
@@ -18,9 +21,13 @@ app.use(express.json(({ limit: '10mb' })));
 
 connectDb();
 
+
 app.use('/api/auth', require('./auth/auth'));
 app.use('/api/registration', RegistrationRoute);
 app.use('/api/content', contentRoutes);
+app.use('/api/AboutIpec', AboutRoute);
+app.use('/api/whyIPEC', WhyIPEC_Route);
+app.use('/api/facultyHire', FacultyHireRoute);
 
 app.listen(port, () => {
     console.log(`app listning at port: ${port}`);
