@@ -22,6 +22,9 @@ function Header() {
   const handleDropdown = () => {
     setOpenDropdown(!openDropdown)
   }
+
+  const auth = false
+  
   return (
     <div>
           <div className='h-[85px] bg-white flex items-center justify-between px-8'>
@@ -35,8 +38,17 @@ function Header() {
             <span className='absolute w-[2px] h-[20px] text-red-700 bg-red-700 left-[58%] top-0'></span>
           </div>
           <div className='px-3 py-1 bg-yellow-400 text-[#1f1d5a] font-medium rounded'>ADMISSION TEST RESULT</div>
-          <div className='px-3 py-1 bg-red-400 text-[#1f1d5a] font-medium rounded'>Login</div>
-          <div className='px-3 py-1 bg-slate-400 text-[#1f1d5a] font-medium rounded'>Dashboard</div>
+          {auth ? (
+            <>
+              <div className="text-white bg-[#1f1d5a] cursor-pointer focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >Logout</div>
+              <Link to='/dashboard' className="text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >Dashboard</Link>
+            </>
+          ) : (
+            <Link to='/login'  className="text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >Login</Link>
+          )}
         </div>
       </div>
 
