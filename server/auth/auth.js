@@ -6,7 +6,21 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'alpha$dev';
+const { v4: uuidv4 } = require('uuid');
 
+
+const generateUUID = function () {
+    const pattern = /[a-zA-Z0-9]/;
+    let uuid = '';
+
+    while (uuid.length < 6) {
+        const char = uuidv4().charAt(0);
+        if (pattern.test(char)) {
+            uuid += char;
+        }
+    }
+    return uuid;
+}
 
 // Create a UserAuth using: POST "/api/auth/register".
 // http://localhost:3000/api/auth/register
@@ -27,12 +41,13 @@ router.post('/register', [
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(req.body.password, salt);
         // const userId = floor(rand() * 100);
+        const userId = generateUUID();
         const role = "admin";
         user = await UserAuth.create({
             name: req.body.name,
             password: secPass,
             email: req.body.email,
-            userId: req.body.userId,
+            userId: userId,
             phoneNumber: req.body.phoneNumber,
             userRole: req.body.userRole
         });
