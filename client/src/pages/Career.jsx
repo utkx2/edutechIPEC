@@ -49,11 +49,6 @@ export default function Career() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (formData.email !== formData.retypeEmail) {
-            alert('Emails do not match');
-            return;
-        }
-
         try {
             const response = await fetch('api/registration', {
                 method: 'POST',

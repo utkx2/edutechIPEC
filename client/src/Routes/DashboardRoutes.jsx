@@ -1,8 +1,8 @@
 // import AdminTenderResultForm from "../Admin/partials/dashboard/tenders/AdminTenderResultForm";
-// import { Route, Routes } from "react-router-dom";
-// import PrivateRoute from "./PrivateRoute";
+import { Route, Routes } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
-// import DashboardHome from "../Admin/partials/dashboard/DashboardHome";
+import DashboardHome from "../Admin/partials/dashboard/DashboardHome";
 // //Tenders
 // import AllTendersSection from "../Admin/partials/dashboard/tenders/DashboardTenders";
 // import Subcontractor from "../Admin/partials/dashboard/tenders/SubcontractorTenders";
@@ -78,9 +78,18 @@
 
 
 
-// const DashboardRoutes = () => {
-//   return (
+const DashboardRoutes = () => {
+  return (
+    <div>
+         <Routes>
+            <Route
+                path="/admin"
+                element={<PrivateRoute element={DashboardHome} />}
+            />
+         </Routes>
+    </div>
 //     <div>
+
 //       <Routes>
 //         <Route
 //           path="/admin"
@@ -319,7 +328,7 @@
 //         <Route path="*" element={"NOT Allowed"} />
 //       </Routes>
 //     </div>
-//   );
-// };
+  );
+};
 
-// export default DashboardRoutes;
+export default DashboardRoutes;
