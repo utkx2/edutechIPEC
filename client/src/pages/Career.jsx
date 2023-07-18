@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react'
 import IndianStates from '../constants/IndianStates';
 
-const Registration = () => {
+export default function Career() {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -95,15 +95,14 @@ const Registration = () => {
         <div className='max-w-[1444px] border py-6 px-12 shadow-lg bg-white'>
             
         <h1 className=' text-3xl text-[#1f1d5a] font-bold text-center'>
-        REGISTRATION FORM
+        FACULTY RECRUITMENT FORM
       </h1> 
             <form onSubmit={handleSubmit} className='mt-5'>
                 <div className="grid md:grid-cols-2 md:gap-6">
-
                     <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
-                            name="firstName"
+                            name="firstname"
                             id="floating_first_name"
                             value={formData.firstName}
                             onChange={handleChange}
@@ -117,7 +116,6 @@ const Registration = () => {
                             First name
                         </label>
                     </div>
-
                     <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
@@ -152,7 +150,7 @@ const Registration = () => {
                         Email address
                     </label>
                 </div>
-                {/* <div className="relative z-0 w-full mb-6 group">
+                <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="email"
                             name="retypeEmail"
@@ -164,38 +162,38 @@ const Registration = () => {
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Retype Email
                         </label>
-                    </div> */}
+                    </div>
                 </div>
-                {/* <div className="grid md:grid-cols-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                    <input
-                        type="password"
-                        name="password"
-                        id="floating_password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label htmlFor="floating_password"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Password
-                    </label>
+                <div className="grid md:grid-cols-2 md:gap-6">
+                    <div className="relative z-0 w-full mb-6 group">
+                        <input
+                            type="password"
+                            name="password"
+                            id="floating_password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label htmlFor="floating_password"
+                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Password
+                        </label>
+                    </div>
+                    <div className="relative z-0 w-full mb-6 group">
+                        <input
+                            type="password"
+                            name="repeatPassword"
+                            id="floating_repeat_password"
+                            value={formData.repeatPassword}
+                            onChange={handleChange}
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label htmlFor="floating_repeat_password"
+                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Confirm password
+                        </label>
+                    </div>
                 </div>
-                <div className="relative z-0 w-full mb-6 group">
-                    <input
-                        type="password"
-                        name="repeatPassword"
-                        id="floating_repeat_password"
-                        value={formData.repeatPassword}
-                        onChange={handleChange}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label htmlFor="floating_repeat_password"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Confirm password
-                    </label>
-                </div>
-                </div> */}
 
-                <div className="relative z-0 flex flex-col w-full mb-6 gap-y-2 group">
+                {/* <div className="relative z-0 flex flex-col w-full mb-6 gap-y-2 group">
                     <label htmlFor="" className="text-sm text-gray-500 dark:text-gray-400">
                         Choose Class
                     </label>
@@ -282,16 +280,14 @@ const Registration = () => {
                         </label>
                     </div>
                     </div>
-                </div>
-
-                
+                </div> */}
 
                 <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                         <input
-                            type="number"
+                            type="tel"
                             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                            name="phoneNumber"
+                            name="floating_phone"
                             id="floating_phone"
                             value={formData.phoneNumber}
                             onChange={handleChange}
@@ -312,6 +308,7 @@ const Registration = () => {
                         Choose Gender
                     </label>
                     <div className='flex items-start justify-start gap-x-4'>
+                        {/* change academic qualification */}
                         <div className="items-center pl-4 rounded basis-1/2 dark:border-gray-700">
                             <input
                                 id="bordered-radio-6"
@@ -353,11 +350,46 @@ const Registration = () => {
 
                 </div>
 
-                <div className="grid md:grid-cols-2 md:gap-6">
+                {/* NOTE: change vars */}
+                <div className="relative z-0 w-full mb-6 group">
+                    <input
+                        type="email"
+                        name="email"
+                        id="floating_email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        required />
+                    <label
+                        htmlFor="floating_email"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Academic Qualification
+                    </label>
+                </div>
+
+                <div className="relative z-0 w-full mb-6 group">
+                    <input
+                        type="email"
+                        name="email"
+                        id="floating_email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=" "
+                        required />
+                    <label
+                        htmlFor="floating_email"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Previous Experience
+                    </label>
+                </div>
+
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
-                            name="fatherName"
+                            name="floating_first_name"
                             id="floating_father_name"
                             value={formData.fatherName}
                             onChange={handleChange}
@@ -391,13 +423,13 @@ const Registration = () => {
                         </label>
                     </div>
                     
-                </div>
+                </div> */}
 
-                <div className="grid md:grid-cols-2 md:gap-6">
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
-                            name="motherName"
+                            name="floating_last_name"
                             id="floating_mother_name"
                             value={formData.motherName}
                             onChange={handleChange}
@@ -430,7 +462,7 @@ const Registration = () => {
                             Mother Mobile Number
                         </label>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="grid md:grid-cols-2 md:gap-6">
                     <div>
@@ -617,6 +649,5 @@ const Registration = () => {
         </div>
         </div>
     )
-};
 
-export default Registration;
+}

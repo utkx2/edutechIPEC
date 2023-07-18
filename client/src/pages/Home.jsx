@@ -6,6 +6,7 @@ import ClassroomImg2 from '../assets/classroom-2.jpg'
 import { Carousel } from "@material-tailwind/react";
 import CarouselImg2 from '../assets/carousel-2.jpg'
 import CarouselImg3 from '../assets/carousel-3.jpg'
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -156,30 +157,56 @@ function Home() {
 
             <div className='flex flex-col items-center gap-4 p-2'>
                 <img src={ClassroomImg1} alt='classroom_1' className='h-[310px] w-[527px]' />
-                <h1 className='text-2xl'>Live Classes - Online</h1>
+                <h1 className='text-2xl'>IPEC Classroom Programs</h1>
                 <p className='w-5/6 text-center'>
                     Learn from best teachers in India remotely, attend Live classes and engage. 
                     Now you can truly learn from anywhere, anytime. 
                     We have enabled best technologies to give you a great learning platform.
                 </p>
-                <div className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
-                Discover Courses
-                </div>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
             </div>
 
             <div className='flex flex-col items-center gap-4 p-2'>
                 <img src={ClassroomImg2} alt='classroom_1' className='h-[310px] w-[527px]' />
-                <h1 className='text-2xl'>Live Classes - Online</h1>
+                <h1 className='text-2xl'>IPEC Online Program</h1>
                 <p className='w-5/6 text-center'>
                     Learn from best teachers in India remotely, attend Live classes and engage. 
                     Now you can truly learn from anywhere, anytime. 
                     We have enabled best technologies to give you a great learning platform.
                 </p>
-                <div className='text-[#1f1d5a] w-fit text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
-                Discover Courses
-                </div>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
             </div>
 
+
+            <div className='flex flex-col items-center gap-4 p-2'>
+                <img src={ClassroomImg1} alt='classroom_1' className='h-[310px] w-[527px]' />
+                <h1 className='text-2xl'>IPEC Distance Learning Program</h1>
+                <p className='w-5/6 text-center'>
+                    Learn from best teachers in India remotely, attend Live classes and engage. 
+                    Now you can truly learn from anywhere, anytime. 
+                    We have enabled best technologies to give you a great learning platform.
+                </p>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
+            </div>
+
+            <div className='flex flex-col items-center gap-4 p-2'>
+                <img src={ClassroomImg2} alt='classroom_1' className='h-[310px] w-[527px]' />
+                <h1 className='text-2xl'>IPEC Medical Division</h1>
+                <p className='w-5/6 text-center'>
+                    Learn from best teachers in India remotely, attend Live classes and engage. 
+                    Now you can truly learn from anywhere, anytime. 
+                    We have enabled best technologies to give you a great learning platform.
+                </p>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
+            </div>
 
         </div>
 
