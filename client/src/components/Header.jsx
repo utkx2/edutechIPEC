@@ -34,6 +34,8 @@ function Header() {
             <span className='absolute w-[2px] h-[20px] text-red-700 bg-red-700 left-[58%] top-0'></span>
           </div>
           <div className='px-3 py-1 bg-yellow-400 text-[#1f1d5a] font-medium rounded'>ADMISSION TEST RESULT</div>
+          <div className='px-3 py-1 bg-red-400 text-[#1f1d5a] font-medium rounded'>Login</div>
+          <div className='px-3 py-1 bg-slate-400 text-[#1f1d5a] font-medium rounded'>Dashboard</div>
         </div>
       </div>
 

@@ -12,6 +12,8 @@ import Course from "./pages/Course";
 import CourseDetails from "./pages/CourseDetails";
 import ContactUs from "./pages/Contact-us";
 import Testimonials from "./pages/Testimonials";
+import Navbar from "./components/Navbar";
+import Login from "../pages/Login";
 // import Registration from "./components/Registration";
 
 const App = () => {
@@ -21,6 +23,7 @@ const App = () => {
    
     
       <BrowserRouter>
+      <Navbar/>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} /> 
@@ -33,6 +36,7 @@ const App = () => {
           <Route path="/courseDetails" element={<CourseDetails />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/login" element={<Login/>} />
         </Routes>
         <Footer />
       </BrowserRouter>

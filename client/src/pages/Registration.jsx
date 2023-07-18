@@ -102,7 +102,7 @@ const Registration = () => {
                     <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
-                            name="firstname"
+                            name="firstName"
                             id="floating_first_name"
                             value={formData.firstName}
                             onChange={handleChange}

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const mongoURI = "mongodb://localhost:27017/edutechIPEC";
+const mongoURI = "mongodb://127.0.0.1:27017/edutechIPEC";
 
 async function connectToMongo() {
     try {
