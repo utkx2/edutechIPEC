@@ -21,7 +21,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         // Make API request to login
-        fetch("/apiTender/signin", {
+        fetch(`${process.env.BASE_URL}/api/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -60,7 +60,7 @@ const Login = () => {
                 <h1 className=' text-3xl text-[#1f1d5a] font-bold text-center'>
                 LOGIN FORM
                 </h1> 
-                <div className="flex flex-col gap-4 p-6 px-4 py-8 mx-auto mt-6  md:flex-row">
+                <div className="flex flex-col gap-4 p-6 px-4 py-8 mx-auto mt-6 md:flex-row">
                     <div className="w-full m-2 mb-4 md:w-1/2 md:mb-0">
                         <img className="w-80"
                             src={LoginImg}
@@ -77,7 +77,7 @@ const Login = () => {
                                     id="floating_email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="block pt-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=""
                                     required
                                 />
@@ -94,7 +94,7 @@ const Login = () => {
                                     id="floating_password"
                                     value={formData.password}
                                     onChange={handleInputChange}
-                                    className="block pt-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=""
                                     required
                                 />
@@ -148,7 +148,7 @@ const Login = () => {
                                 </a>
                             </div>
                         </form>
-                        <div className="text-center mt-10">
+                        <div className="mt-10 text-center">
                             Don't have an account?{" "}
                             <Link
                                 to="/signup"

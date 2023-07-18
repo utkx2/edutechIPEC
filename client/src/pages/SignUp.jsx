@@ -21,36 +21,37 @@ const Signup = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(formData)
         // Make API request with form data
-        fetch('/apiTender/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                // Handle response data
-                console.log(data);
-                if (data.error) {
-                    if (data.error.email) alert(data.error.email);
-                    if (data.error.phoneNumber) alert(data.error.phoneNumber);
-                } else {
-                    setSuccessMessage(data.success);
-                    // Clear input fields
-                    setFormData({
-                        name: '',
-                        email: '',
-                        password: '',
-                        phoneNumber: ''
-                    });
-                }
-            })
-            .catch((error) => {
-                // Handle error
-                console.log(error);
-            });
+        // fetch(`${process.env.BASE_URL}/api/auth/register`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(formData)
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         // Handle response data
+        //         console.log(data);
+        //         if (data.error) {
+        //             if (data.error.email) alert(data.error.email);
+        //             if (data.error.phoneNumber) alert(data.error.phoneNumber);
+        //         } else {
+        //             setSuccessMessage(data.success);
+        //             // Clear input fields
+        //             setFormData({
+        //                 name: '',
+        //                 email: '',
+        //                 password: '',
+        //                 phoneNumber: ''
+        //             });
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         // Handle error
+        //         console.log(error);
+        //     });
     };
 
     return (
@@ -59,14 +60,14 @@ const Signup = () => {
                 <div>
 
             
-                    <div className="max-w-7xl border p-6  shadow-lg bg-white">
+                    <div className="p-6 bg-white border shadow-lg max-w-7xl">
 
                         <h1 className=' text-3xl text-[#1f1d5a] font-bold text-center'>
                         REGISTER FORM
                         </h1> 
 
                     <div className="flex flex-col gap-4 p-6 px-4 py-8 mx-auto mt-6 md:flex-row">
-                            <div className="w-full md:w-1/2 mb-4 md:mb-0">
+                            <div className="w-full mb-4 md:w-1/2 md:mb-0">
                                 <img
                                 className='w-full h-auto'
                                     src={SignUpImg}
@@ -74,7 +75,7 @@ const Signup = () => {
                                 />
                             </div>
 
-                    <div className="w-full flex flex-col items-center justify-center md:w-1/2">
+                    <div className="flex flex-col items-center justify-center w-full md:w-1/2">
                         {successMessage && (
                             <div className="mb-4 text-green-500">{successMessage}</div>
                         )}
@@ -89,7 +90,7 @@ const Signup = () => {
                                             id="floating_name"
                                             value={formData.name}
                                             onChange={handleChange}
-                                            className="block pt-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=""
                                             required
                                         />
@@ -107,7 +108,7 @@ const Signup = () => {
                                             id="floating_email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="block pt-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=""
                                             required
                                         />
@@ -125,7 +126,7 @@ const Signup = () => {
                                             id="floating_phoneNumber"
                                             value={formData.phoneNumber}
                                             onChange={handleChange}
-                                            className="block pt-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=""
                                             required
                                         />
@@ -143,7 +144,7 @@ const Signup = () => {
                                             id="floating_password"
                                             value={formData.password}
                                             onChange={handleChange}
-                                            className="block pt-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=""
                                             required
                                         />
