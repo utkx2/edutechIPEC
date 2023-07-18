@@ -76,13 +76,11 @@ const RegistrationsModel = new Schema({
         type: Number,
         required: true
     },
-    schoolName: {
-        type: String,
-        required: true
-    },
     message: {
         type: String,
     }
 });
 
-module.exports = mongoose.model('Registrations', RegistrationsModel);
+const Registrations = mongoose.model('Registrations', RegistrationsModel);
+
+module.exports = Registrations;
