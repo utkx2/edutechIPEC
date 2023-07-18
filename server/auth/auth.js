@@ -9,6 +9,7 @@ const JWT_SECRET = 'alpha$dev';
 
 
 // Create a UserAuth using: POST "/api/auth/register".
+// http://localhost:3000/api/auth/register
 router.post('/register', [
     body('name', 'Enter a valid name').isLength({ min: 3 }),
     body('email', 'Enter a valid email').isEmail(),
@@ -25,11 +26,15 @@ router.post('/register', [
         }
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(req.body.password, salt);
-
+        // const userId = floor(rand() * 100);
+        const role = "admin";
         user = await UserAuth.create({
             name: req.body.name,
             password: secPass,
             email: req.body.email,
+            userId: req.body.userId,
+            phoneNumber: req.body.phoneNumber,
+            userRole: req.body.userRole
         });
         const data = {
             user: {
@@ -47,10 +52,8 @@ router.post('/register', [
 });
 
 // Authenticate a UserAuth using: POST "/api/auth/login".
-router.post('/login', [
-    body('email', 'invalid email/password').isEmail(),
-    body('password', 'invalid email/password').exists(),
-], async (req, res) => {
+// http://localhost:3000/api/auth/login
+router.post('/login', async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -77,6 +80,20 @@ router.post('/login', [
         res.status(500).send("Internal Server Error");
     }
 });
+
+// get all usersList
+//  http://localhost:3000/api/auth/allUsers
+router.get('/allUsers', async (req, res) => {
+    try {
+        const usersList = await UserAuth.find();
+        res.json(usersList).status(200);
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
 
 // Get loggedin UserAuth Details using: POST "/api/auth/getuser". Login required
 router.post('/getuser', FetchUser, async (req, res) => {
