@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LoginImg from '../assets/login.jpg'
+import { BASE_URL } from "../config";
 
 const Login = () => {
 
     const navigate = useNavigate();
 
+    const [errorMessage, setErrorMessage] = useState('')
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+    
 
     const handleInputChange = (e) => {
         setFormData({
@@ -22,31 +26,36 @@ const Login = () => {
         e.preventDefault();
         console.log(formData)
         // Make API request to login
-        // fetch(`${process.env.BASE_URL}/api/auth/login`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(formData),
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         // Store response in local storage
-        //         localStorage.setItem("token", data.token);
-        //         localStorage.setItem("user", JSON.stringify(data.user.data));
-        //         // Navigate to the desired page
-        //         const user = data.user.data
-        //         if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")
-        //             navigate("/dashboard/users");
-        //         else if (user.userRole == "user")
-        //             navigate('/dashboard/userDashboard')
-        //         else navigate("/");
-        //         console.log("Login successful");
-        //     })
-        //     .catch((error) => {
-        //         // Handle error
-        //         console.error(error);
-        //     });
+        fetch(`${BASE_URL}/api/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                if(data.errors) {
+                    setErrorMessage(data.errors)
+                } else {                    
+                    // Store response in local storage
+                    localStorage.setItem("token", JSON.stringify(data.authtoken));
+                    navigate("/dashboard/admin");
+                    // Navigate to the desired page
+                    // const user = data.user.data
+                    // if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")
+                    //     navigate("/dashboard/users");
+                    // else if (user.userRole == "user")
+                    //     navigate('/dashboard/userDashboard')
+                    // else navigate("/");
+                    console.log("Login successful");
+                }
+            })
+            .catch((error) => {
+                // Handle error
+                console.error(error);
+            });
 
     };
 
@@ -142,12 +151,16 @@ const Login = () => {
                                 >
                                     Sign In
                                 </button>
+                                
                                 <a
                                     className="text-sm font-medium text-[#1f1d5a] cursor-pointer hover:text-red-800"
                                 >
                                     Forgot Password?
                                 </a>
                             </div>
+                            {errorMessage && (
+                            <div className="mb-4 text-red-500">{errorMessage}</div>
+                            )}
                         </form>
                         <div className="mt-10 text-center">
                             Don't have an account?{" "}

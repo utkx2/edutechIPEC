@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SignUpImg from '../assets/signup.jpg'
+import { BASE_URL } from "../config";
 // import { locations } from "../constants/countriesData"
 
 const Signup = () => {
@@ -9,8 +10,11 @@ const Signup = () => {
         email: '',
         password: '',
         phoneNumber: '',
+        role: 'user',
+        userId: 'userID'
     });
     const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('')
 
     const handleChange = (e) => {
         setFormData({
@@ -23,36 +27,37 @@ const Signup = () => {
         e.preventDefault();
         console.log(formData)
         // Make API request with form data
-        // fetch(`${process.env.BASE_URL}/api/auth/register`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(formData)
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         // Handle response data
-        //         console.log(data);
-        //         if (data.error) {
-        //             if (data.error.email) alert(data.error.email);
-        //             if (data.error.phoneNumber) alert(data.error.phoneNumber);
-        //         } else {
-        //             setSuccessMessage(data.success);
-        //             // Clear input fields
-        //             setFormData({
-        //                 name: '',
-        //                 email: '',
-        //                 password: '',
-        //                 phoneNumber: ''
-        //             });
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         // Handle error
-        //         console.log(error);
-        //     });
+        fetch(`${BASE_URL}/api/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle response data
+                console.log(data);
+                if (data.errors) {
+                    setErrorMessage(data.errors[0].msg);
+                } else {
+                    setSuccessMessage(data.success);
+                    setFormData({
+                        name: '',
+                        email: '',
+                        password: '',
+                        phoneNumber: '',
+                        role: 'user'
+                    });
+                }
+            })
+            .catch((error) => {
+                // Handle error
+                console.log(error);
+            });
     };
+
+    const userRole = ['user', 'admin']
 
     return (
         <>
@@ -103,7 +108,7 @@ const Signup = () => {
 
                                     <div className="relative z-0 w-full mb-6 group">
                                         <input
-                                            type="text"
+                                            type="email"
                                             name="email"
                                             id="floating_email"
                                             value={formData.email}
@@ -154,15 +159,59 @@ const Signup = () => {
                                             Password
                                         </label>
                                     </div>
+
+                                    <div className="relative z-0 w-full mb-6 group">
+                                        <select required
+                                            name="role"
+                                            value={formData.role}
+                                            onChange={handleChange}
+                                            id="floating_role"
+                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        >
+                                            {userRole.map((userRole, index) => (
+                                                <option key={index} value={userRole}>
+                                                    {userRole}
+                                                </option>
+                                        ))}
+                                        </select>
+                                        <label
+                                            htmlFor="floating_role"
+                                            className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                            Role
+                                        </label>
+                                    </div>
+
+                                    {/* <div className="mb-4">
+                                    <label className="block font-semibold">
+                                        Role
+                                        <span className="relative top-0 right-0 text-red-700">*</span>
+                                        <select required
+                                            name="role"
+                                            value={formData.role}
+                                            onChange={handleChange}
+                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            >
+                                            {userRole.map((userRole, index) => (
+                                                <option key={index} value={userRole}>
+                                                    {userRole}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </label>
+                                </div> */}
                                  
-                                    <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center justify-between w-full mb-4">
                                         <button
-                                    className="text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                            className="text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
                                             type="submit"
                                         >
                                             Sign Up
                                         </button>
                                     </div>
+
+                                    {errorMessage && (
+                            <div className="mb-4 text-red-500">{errorMessage}</div>
+                        )}
                                 </form>
                             </div>
                            
