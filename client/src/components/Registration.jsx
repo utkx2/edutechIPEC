@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { IndianStates } from '../constants/IndianStates';
+import { IndianStates } from '../constants/IndianStates';
 
 const Registration = () => {
     const [formData, setFormdata] = useState({
@@ -8,7 +8,6 @@ const Registration = () => {
         middleName: '',
         lastName: '',
         email: '',
-        confirmEmail: '',
         mobileNumber: '',
         dob: '',
         gender: '',
@@ -106,17 +105,6 @@ const Registration = () => {
                                 id="email"
                                 aria-label="Email"
                                 name="email"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="col">
-                            <label htmlFor="confirmEmail">Retype Email</label>
-                            <input
-                                type="email"
-                                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                id="confirmEmail"
-                                aria-label="Retype Email"
-                                name="confirmEmail"
                                 onChange={handleChange}
                             />
                         </div>

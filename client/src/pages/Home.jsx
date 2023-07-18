@@ -6,6 +6,8 @@ import ClassroomImg2 from '../assets/classroom-2.jpg'
 import { Carousel } from "@material-tailwind/react";
 import CarouselImg2 from '../assets/carousel-2.jpg'
 import CarouselImg3 from '../assets/carousel-3.jpg'
+import FacultyImg from '../assets/faculty.png'
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -48,6 +50,86 @@ function Home() {
 
             </div>
       </div>
+      </div>
+
+
+      {/* teachers */}
+      <div className='my-10 bg-[#d1e9f9] py-10'>
+        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
+        <div className='flex items-center justify-center py-8'> 
+          <div className='grid grid-cols-3 gap-8'>
+
+            {/* student air card comp*/}
+            <div className="w-[340px] bg-white border mt-5 shadow-lg rounded-[16px] h-[450px] p-3">
+              
+                <img src={FacultyImg} alt="student" className=' h-[280px] w-full rounded-[8px] ' />
+                <div className='bg-black w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-center justify-center text-center font-bold justify-center p-3'>
+                  <div className='font-bold'>Pradeep Malhotra</div>
+                  <div>2 Year classroom programme</div>
+                  <div>IIT Delhi</div>
+                  <div>Teaching from past 10+years.</div>
+                </div>
+            
+            </div>
+
+            <div className="relative w-[353px] rounded-[28px] bg-white border mt-5 shadow-xl">
+              
+              <div className='m-2'>
+                <div className='relative bg-[#E9ECF5] rounded-[20px] m-3 p-3 text-sm'>
+                  "Everything at VMC is designed to give JEE aspirants 
+                  an edge. Be it the faculty, the study material, stress free learning
+                  environment & value-based pedagogy  everything is designed to 
+                  power you to deliver peak performance in JEE. "
+                  <img src={AIR} alt="air" className='absolute h-[97px] w-[97px] right-10 top-[85%]' />
+                </div>
+
+                <img src={Student} alt="student" className='absolute h-[140px] w-[104px] bottom-10 left-5' />
+
+                <div className='text-[#1f1d5a]  m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16'>
+                  <div className='font-bold'>Paarth Agarwal</div>
+                  <div>2 Year classroom programme</div>
+                  <div>enrollment number</div>
+                  <div>1900910130086</div>
+                </div>
+                
+              </div>
+              
+              <div className='absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
+                JEE ADVANCED 2022
+              </div>
+            
+            </div>
+
+            <div className="relative w-[353px] rounded-[28px] bg-white border mt-5 shadow-xl">
+              
+              <div className='m-2'>
+                <div className='relative bg-[#E9ECF5] rounded-[20px] m-3 p-3 text-sm'>
+                  "Everything at VMC is designed to give JEE aspirants 
+                  an edge. Be it the faculty, the study material, stress free learning
+                  environment & value-based pedagogy  everything is designed to 
+                  power you to deliver peak performance in JEE. "
+                  <img src={AIR} alt="air" className='absolute h-[97px] w-[97px] right-10 top-[85%]' />
+                </div>
+
+                <img src={Student} alt="student" className='absolute h-[140px] w-[104px] bottom-10 left-5' />
+
+                <div className='text-[#1f1d5a] m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16'>
+                  <div className='font-bold'>Paarth Agarwal</div>
+                  <div>2 Year classroom programme</div>
+                  <div>enrollment number</div>
+                  <div>1900910130086</div>
+                </div>
+                
+              </div>
+              
+              <div className='absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
+                JEE ADVANCED 2022
+              </div>
+            
+            </div>
+                
+          </div>
+        </div>
       </div>
      
 
@@ -156,30 +238,56 @@ function Home() {
 
             <div className='flex flex-col items-center gap-4 p-2'>
                 <img src={ClassroomImg1} alt='classroom_1' className='h-[310px] w-[527px]' />
-                <h1 className='text-2xl'>Live Classes - Online</h1>
+                <h1 className='text-2xl'>IPEC Classroom Programs</h1>
                 <p className='w-5/6 text-center'>
                     Learn from best teachers in India remotely, attend Live classes and engage. 
                     Now you can truly learn from anywhere, anytime. 
                     We have enabled best technologies to give you a great learning platform.
                 </p>
-                <div className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
-                Discover Courses
-                </div>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
             </div>
 
             <div className='flex flex-col items-center gap-4 p-2'>
                 <img src={ClassroomImg2} alt='classroom_1' className='h-[310px] w-[527px]' />
-                <h1 className='text-2xl'>Live Classes - Online</h1>
+                <h1 className='text-2xl'>IPEC Online Program</h1>
                 <p className='w-5/6 text-center'>
                     Learn from best teachers in India remotely, attend Live classes and engage. 
                     Now you can truly learn from anywhere, anytime. 
                     We have enabled best technologies to give you a great learning platform.
                 </p>
-                <div className='text-[#1f1d5a] w-fit text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
-                Discover Courses
-                </div>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
             </div>
 
+
+            <div className='flex flex-col items-center gap-4 p-2'>
+                <img src={ClassroomImg1} alt='classroom_1' className='h-[310px] w-[527px]' />
+                <h1 className='text-2xl'>IPEC Distance Learning Program</h1>
+                <p className='w-5/6 text-center'>
+                    Learn from best teachers in India remotely, attend Live classes and engage. 
+                    Now you can truly learn from anywhere, anytime. 
+                    We have enabled best technologies to give you a great learning platform.
+                </p>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
+            </div>
+
+            <div className='flex flex-col items-center gap-4 p-2'>
+                <img src={ClassroomImg2} alt='classroom_1' className='h-[310px] w-[527px]' />
+                <h1 className='text-2xl'>IPEC Medical Division</h1>
+                <p className='w-5/6 text-center'>
+                    Learn from best teachers in India remotely, attend Live classes and engage. 
+                    Now you can truly learn from anywhere, anytime. 
+                    We have enabled best technologies to give you a great learning platform.
+                </p>
+                <Link to='/course' className='text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2'>
+                Discover Program
+                </Link>
+            </div>
 
         </div>
 

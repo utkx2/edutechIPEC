@@ -1,6 +1,6 @@
+const UserAuth = require('../models/AuthModel');
 const express = require('express');
 const router = express.Router();
-const User = require('../models/UserModel');
 const FetchUser = require('../middleware/FetchUser');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'alpha$dev';
 
 
-// Create a User using: POST "/api/auth/register".
+// Create a UserAuth using: POST "/api/auth/register".
 router.post('/register', [
     body('name', 'Enter a valid name').isLength({ min: 3 }),
     body('email', 'Enter a valid email').isEmail(),
@@ -19,14 +19,14 @@ router.post('/register', [
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        let user = await User.findOne({ email: req.body.email });
+        let user = await UserAuth.findOne({ email: req.body.email });
         if (user) {
             return res.status(400).json({ error: "Sorry a user with this email already exists" })
         }
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(req.body.password, salt);
 
-        user = await User.create({
+        user = await UserAuth.create({
             name: req.body.name,
             password: secPass,
             email: req.body.email,
@@ -46,8 +46,7 @@ router.post('/register', [
     }
 });
 
-
-// Authenticate a User using: POST "/api/auth/login".
+// Authenticate a UserAuth using: POST "/api/auth/login".
 router.post('/login', [
     body('email', 'invalid email/password').isEmail(),
     body('password', 'invalid email/password').exists(),
@@ -58,7 +57,7 @@ router.post('/login', [
             return res.status(400).json({ errors: errors.array() });
         }
         const { email, password } = req.body;
-        let user = await User.findOne({ email });
+        let user = await UserAuth.findOne({ email });
         if (!user) {
             return res.status(401).json({ errors: "Incorrect credentials" });
         }
@@ -79,12 +78,10 @@ router.post('/login', [
     }
 });
 
-
-
-// Get loggedin User Details using: POST "/api/auth/getuser". Login required
+// Get loggedin UserAuth Details using: POST "/api/auth/getuser". Login required
 router.post('/getuser', FetchUser, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select("-password");
+        const user = await UserAuth.findById(req.user.id).select("-password");
         res.send(user);
     } catch (error) {
         console.error(error.message);
