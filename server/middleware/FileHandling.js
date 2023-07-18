@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Upload PDF
-exports.uploadPdf = (req, res) => {
+router.post('/uploadPdf', upload.single('pdfFile'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'No file received' });
@@ -42,10 +42,10 @@ exports.uploadPdf = (req, res) => {
         console.error('Error uploading file:', error);
         res.status(500).json({ error: 'An error occurred while uploading the file' });
     }
-};
+});
 
 // Download PDF
-exports.downloadPdf = (req, res) => {
+router.get('/downloadPdf/:id', (req, res) => {
     const pdfId = req.params.id;
 
     pdf.findById(pdfId)
@@ -60,10 +60,10 @@ exports.downloadPdf = (req, res) => {
             console.error('Error downloading PDF:', error);
             res.status(500).json({ error: 'An error occurred while downloading the PDF' });
         });
-};
+});
 
 // Delete PDF
-exports.deletePdf = (req, res) => {
+router.delete('/deletePdf/:id', (req, res) => {
     const pdfId = req.params.id;
 
     pdf.findByIdAndDelete(pdfId)
@@ -78,4 +78,6 @@ exports.deletePdf = (req, res) => {
             console.error('Error deleting PDF:', error);
             res.status(500).json({ error: 'An error occurred while deleting the PDF' });
         });
-};
+});
+
+module.exports = router;

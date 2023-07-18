@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import IndianStates from "../constants/IndianStates";
-import { ProgressBar, Step } from "react-step-progress-bar";
+// import { ProgressBar, Step } from "react-step-progress-bar";
 
 const Registration = () => {
     const [isEditing, setIsEditing] = useState(false);
