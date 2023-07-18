@@ -1,5 +1,5 @@
 const ContentModel = require('../models/ContentModel');
-const espress = require('express');
+const express = require('express');
 const router = express.Router();
 
 router.get('/why', async (req, res) => {
@@ -24,7 +24,7 @@ router.get('/why', async (req, res) => {
 
 router.get('/about', async (req, res) => {
     try {
-        
+
     }
     catch (error) {
         console.log(error);
