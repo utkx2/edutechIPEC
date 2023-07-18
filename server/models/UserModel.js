@@ -3,6 +3,11 @@ const validator = require("validator");
 const { Schema } = mongoose;
 
 const UserModel = new Schema({
+    userId: {
+        type: String,
+        required: true,
+        index: { unique: true }
+    },
     firstname: {
         type: String,
         required: true

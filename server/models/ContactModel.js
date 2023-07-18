@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
+const userModel = require("./UserModel");
 const { Schema } = mongoose;
 
 const ContactModel = new Schema({
+    userId: {
+        type: String,
+        ref: userModel
+    },
     name: {
         type: String,
         required: true
@@ -15,10 +20,6 @@ const ContactModel = new Schema({
         required: true
     },
     message: {
-        type: String,
-        required: true
-    },
-    selectedService: {
         type: String,
         required: true
     },

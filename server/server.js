@@ -7,7 +7,7 @@ app.use(express.json());
 
 connectToMongoDB();
 
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./auth/auth'));
 
 app.listen(port, () => {
     console.log(`app listning at port: ${port}`);

@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const Registration = () => {
     const [formData, setFormdata] = useState({
+        motiveOfJoining: '',
         firstName: '',
         middleName: '',
         lastName: '',
