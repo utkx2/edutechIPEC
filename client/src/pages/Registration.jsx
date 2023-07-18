@@ -99,10 +99,11 @@ const Registration = () => {
       </h1> 
             <form onSubmit={handleSubmit} className='mt-5'>
                 <div className="grid md:grid-cols-2 md:gap-6">
+
                     <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
-                            name="firstname"
+                            name="firstName"
                             id="floating_first_name"
                             value={formData.firstName}
                             onChange={handleChange}
@@ -116,6 +117,7 @@ const Registration = () => {
                             First name
                         </label>
                     </div>
+
                     <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
@@ -150,7 +152,7 @@ const Registration = () => {
                         Email address
                     </label>
                 </div>
-                <div className="relative z-0 w-full mb-6 group">
+                {/* <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="email"
                             name="retypeEmail"
@@ -162,9 +164,9 @@ const Registration = () => {
                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Retype Email
                         </label>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="grid md:grid-cols-2 md:gap-6">
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                     <input
                         type="password"
@@ -191,7 +193,7 @@ const Registration = () => {
                         Confirm password
                     </label>
                 </div>
-                </div>
+                </div> */}
 
                 <div className="relative z-0 flex flex-col w-full mb-6 gap-y-2 group">
                     <label htmlFor="" className="text-sm text-gray-500 dark:text-gray-400">
@@ -287,9 +289,9 @@ const Registration = () => {
                 <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                         <input
-                            type="tel"
+                            type="number"
                             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                            name="floating_phone"
+                            name="phoneNumber"
                             id="floating_phone"
                             value={formData.phoneNumber}
                             onChange={handleChange}
@@ -355,7 +357,7 @@ const Registration = () => {
                     <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
-                            name="floating_first_name"
+                            name="fatherName"
                             id="floating_father_name"
                             value={formData.fatherName}
                             onChange={handleChange}
@@ -395,7 +397,7 @@ const Registration = () => {
                 <div className="relative z-0 w-full mb-6 group">
                         <input
                             type="text"
-                            name="floating_last_name"
+                            name="motherName"
                             id="floating_mother_name"
                             value={formData.motherName}
                             onChange={handleChange}

@@ -15,6 +15,7 @@ function Header() {
     {name: 'about ipec', link: '/about', dropdown: false},
     {name: 'why ipec', link: '/why', dropdown: false},
     {name: 'Download', link: '/#', dropdown: true, options: optionsArr},
+    {name: 'Careers', link: '/careers', dropdown: false},
     {name: 'registration form', link: '/registration', dropdown: false},
     {name: 'contact us', link: '/contact', dropdown: false}
   ]
@@ -43,7 +44,7 @@ function Header() {
          navItem.dropdown ? 
           (
             <>
-            <div onClick={handleDropdown} className='relative text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer'>
+            <div onClick={handleDropdown} key={navItem.name} className='relative text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer'>
               {navItem.name}
               {openDropdown && (
                 
