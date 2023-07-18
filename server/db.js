@@ -3,8 +3,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-MONGO_CONNECTION = 'mongodb+srv://user:user@ipec.9t0esx2.mongodb.net/?retryWrites=true&w=majority';
-
+MONGO_CONNECTION = process.env.MONGO_CONNECTION;
 const connectDb = async () => {
     try {
         const connect = await mongoose.connect(MONGO_CONNECTION);
