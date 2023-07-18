@@ -24,7 +24,7 @@ router.get('/why', async (req, res) => {
 
 router.get('/about', async (req, res) => {
     try {
-
+          
     }
     catch (error) {
         console.log(error);
