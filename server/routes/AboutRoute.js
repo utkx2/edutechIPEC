@@ -29,6 +29,32 @@ router.post('/upload', async (req, res) => {
 });
 
 
+//  http://localhost:3000/api/AboutIpec/edit
+router.put('/edit', async (req, res) => {
+
+    const { AboutIPEC, ipecAdvantages, ipecPedagogy } = req.body;
+    console.log(AboutIPEC, ipecAdvantages, ipecPedagogy);
+
+    try {
+        const AboutObj = About.findOneAndUpdate({ AboutIPEC, ipecAdvantages, ipecPedagogy });
+        const savedData = await AboutObj.save();
+
+        res.status(200).json({
+            success: true,
+            message: "form submitted successfully",
+            data: savedData,
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "An error occurred while submitting the gem registration form",
+            error: error.message,
+        });
+    }
+});
+
+
 router.get("/get", async (req, res) => {
 
     try {
