@@ -23,11 +23,11 @@ connectDb();
 
 
 app.use('/api/auth', require('./auth/auth'));
-app.use('/api/registration', RegistrationRoute);
-app.use('/api/content', contentRoutes);
-app.use('/api/AboutIpec', AboutRoute);
-app.use('/api/whyIPEC', WhyIPEC_Route);
-app.use('/api/facultyHire', FacultyHireRoute);
+app.use('/api/registration', require('./routes/RegistrationRoute'));
+app.use('/api/content', require('./routes/ContentRoute'));
+app.use('/api/AboutIpec', require('./routes/AboutRoute'));
+app.use('/api/whyIPEC', require('./routes/WhyIpecRoute'));
+app.use('/api/facultyHire', require('./routes/FacultyHireRoute'));
 
 app.listen(port, () => {
     console.log(`app listning at port: ${port}`);
