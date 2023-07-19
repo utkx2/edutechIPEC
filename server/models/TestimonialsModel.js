@@ -20,6 +20,9 @@ const testimonialSchema = new Schema({
                 type: String,
                 required: true,
             },
+            examName: {
+                type: String,
+            }
         },
     ],
 });

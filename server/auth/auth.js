@@ -55,7 +55,9 @@ router.post('/register', [
         console.log(user);
         const data = {
             user: {
-                id: user.id
+                id: user.id,
+                Role: user.Role,
+                user: user
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET);
@@ -115,9 +117,15 @@ router.get('/allUsers', async (req, res) => {
 
 
 // Get loggedin UserAuth Details using: POST "/api/auth/getuser". Login required
-router.post('/getuser', FetchUser, async (req, res) => {
+router.get('/getuser', FetchUser, async (req, res) => {
+    const { token } = req.cookies;
+    let userData;
+    if (token) {
+        userData = jwt.verify(token, JWT_SECRET);
+        // console.log(userData);
+    }
     try {
-        const user = await UserAuth.findById(req.user.id).select("-password");
+        const user = await UserAuth.findById(userData.user.id);
         res.send(user);
     } catch (error) {
         console.error(error.message);

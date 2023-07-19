@@ -17,40 +17,35 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Upload Intro Video and Testimonial Card
-router.post('/testimonials/upload', 
-    upload.fields([{ name: 'introVideo', maxCount: 1 }, 
-    { name: 'cardImage', maxCount: 1 }]), 
-async (req, res) => {
+// http://localhost:3000/api/testimonials/upload
+
+router.post('/upload', async (req, res) => {
     try {
-        if (!req.files || !req.files.introVideo || !req.files.cardImage) {
-            return res.status(400).json({ error: 'Both intro video and card image are required' });
-        }
-
-        // Save the intro video URL to the database
-        const introVideoUrl = req.files.introVideo[0].path;
-
-        // Save the card details to the database
-        const { title, content } = req.body;
-        const imageUrl = req.files.cardImage[0].path;
-
-        const card = { title, content, imageUrl };
-
-        let testimonial = await testimonialsModel.findOne({});
-
-        if (!testimonial) {
-            // If no testimonial exists, create a new one
-            testimonial = new testimonialsModel({
-                introVideoUrl,
-                cards: [card],
-            });
-        } else {
-            // If testimonial exists, add the new card to the existing one
-            testimonial.cards.push(card);
-        }
-
+        const { introVideoUrl, cards } = req.body;
+        const testimonial = new testimonialsModel({
+            introVideoUrl,
+            cards,
+        });
         await testimonial.save();
+        res.json({ message: 'Video and card uploaded successfully', introVideoUrl, cards });
+    }
+    catch (error) {
+        console.error('Error uploading video and card:', error);
+        res.status(500).json({ error: 'An error occurred while uploading video and card' });
+    }
+});
 
-        res.json({ message: 'Video and card uploaded successfully', introVideoUrl, card });
+// http://localhost:3000/api/testimonials/edit
+
+router.put('/edit', async (req, res) => {
+    try {
+        const { introVideoUrl, cards } = req.body;
+        const testimonial = await testimonialsModel.findOneAndUpdate({
+            introVideoUrl,
+            cards,
+        });
+        await testimonial.save();
+        res.json({ message: 'Video and card updated successfully', testimonial });
     }
     catch (error) {
         console.error('Error uploading video and card:', error);
@@ -59,7 +54,9 @@ async (req, res) => {
 });
 
 // Get Testimonials
-router.get('/testimonials/content', async (req, res) => {
+// http://localhost:3000/api/testimonials/get
+
+router.get('/get', async (req, res) => {
     try {
         const testimonial = await testimonialsModel.findOne({});
         res.json(testimonial || {});
