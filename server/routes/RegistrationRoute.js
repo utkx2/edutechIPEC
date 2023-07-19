@@ -24,13 +24,13 @@ router.post('/upload', async (req, res) => {
     catch (error) {
         res.status(500).json({
             success: false,
-            message: "An error occurred while submitting the gem registration form",
+            message: "An error occurred while submitting the registration form",
             error: error.message,
         });
     }
 });
 
-
+// http://localhost:3000/api/registration/get
 router.get("/get", async (req, res) => {
 
     try {
@@ -41,11 +41,29 @@ router.get("/get", async (req, res) => {
     catch (error) {
         console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
-            error: "An error occurred while submitting the gem registration form"
-
+            error: "An error occurred while getting the registrations list "
         });
     }
 
+})
+
+
+// http://localhost:3000/api/registration/delete/:id
+router.delete("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    try {
+        const registrationsList = await Registrations.findByIdAndDelete({ _id: id });
+        console.log(registrationsList);
+        console.log("registration Deleted Successfully")
+        res.status(200).json(registrationsList);
+    }
+    catch (error) {
+        console.log('Error occurred while retrieving registrations:', error);
+        res.status(500).json({
+            error: "An error occurred while deleting the registration"
+        });
+    }
 })
 
 

@@ -28,7 +28,32 @@ router.post('/upload', async (req, res) => {
     }
 });
 
+//  http://localhost:3000/api/whyIPEC/put
+router.put('/edit', async (req, res) => {
 
+    const { Title, Content, Reasons } = req.body;
+    console.log(Title, Content, Reasons);
+
+    try {
+        const whyIPEC_Obj = whyIPEC.findOneAndUpdate({ Title, Content, Reasons });
+        const savedData = await whyIPEC_Obj.save();
+
+        res.status(200).json({
+            success: true,
+            message: "form submitted successfully",
+            data: savedData,
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "An error occurred while submitting the gem registration form",
+            error: error.message,
+        });
+    }
+});
+
+//  http://localhost:3000/api/whyIPEC/get
 router.get("/get", async (req, res) => {
 
     try {

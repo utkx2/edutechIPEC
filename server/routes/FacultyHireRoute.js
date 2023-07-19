@@ -54,6 +54,24 @@ router.get("/get", async (req, res) => {
 
 })
 
+// http://localhost:3000/api/facultyHire/delete/:id
+router.delete("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    try {
+        const RecruitmentsList = await FacultyHire.findByIdAndDelete({ _id: id });
+        console.log(RecruitmentsList);
+        console.log("User Deleted Successfully")
+        res.status(200).json(RecruitmentsList);
+    }
+    catch (error) {
+        console.log('Error occurred while retrieving registrations:', error);
+        res.status(500).json({
+            error: "An error occurred while submitting the gem registration form"
+        });
+    }
+})
+
 
 // sample json data object
 // {
