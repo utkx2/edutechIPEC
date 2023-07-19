@@ -23,7 +23,7 @@ import DashboardHome from "../Admin/partials/dashboard/DashboardHome";
 // import AllAdmin from "../Admin/partials/dashboard/users/AllAdmin";
 // import AllEmployee from "../Admin/partials/dashboard/users/AllEmployee";
 // import AllHR from "../Admin/partials/dashboard/users/AllHR";
-// import DashboardUsers from "../Admin/partials/dashboard/users/DashboardUsers";
+import DashboardUsers from "../Admin/partials/dashboard/users/DashboardUsers";
 // import DashboardUserDetail from "../Admin/partials/dashboard/users/DashboardUserDetail";
 
 // import DashboardCurrentTenders from "../Admin/partials/dashboard/DashboardCurrentTenders";
@@ -85,6 +85,10 @@ const DashboardRoutes = () => {
             <Route
                 path="/admin"
                 element={<PrivateRoute element={DashboardHome} />}
+            />
+            <Route
+              path="/users"
+              element={<PrivateRoute element={DashboardUsers} />}
             />
          </Routes>
     </div>

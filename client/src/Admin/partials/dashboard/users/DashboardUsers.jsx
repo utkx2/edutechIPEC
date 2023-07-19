@@ -4,11 +4,14 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import {BASE_URL} from '../../../../config'
+
+import { Dialog } from '@headlessui/react'
 
 function DashboardUsers() {
   const [userData, setUserData] = useState([]);
@@ -19,24 +22,53 @@ function DashboardUsers() {
   const [subscriptionStatus, setSubscriptionStatus] = useState("all");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/apiTender/userdetails/allusers",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
-            },
-          }
-        );
-        setUserData(response.data);
-      } catch (error) {
-        console.error(error);
+  const handleDelete = async (id) => {
+    setIsOpen(false)
+    try{
+      const response = await axios.delete(`${BASE_URL}/api/auth/delete/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
+        },
+      })
+      console.log(response)
+      if(response.status == 200){
+        console.log('successfully deleted')
+        fetchData()
       }
-    };
+      if(response.status == 500){
+        console.log('delete failed')
+      }
+      return;
+    } catch (error){
+      console.log(error)
+      return;
+    }
+  }
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/auth/allusers`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(response)
+      setUserData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    
 
     fetchData();
   }, []);
@@ -113,12 +145,9 @@ function DashboardUsers() {
   const downloadAsExcel = () => {
     const selectedData = currentUsers.map((user) => ({
       User: user.name,
-      Role: user.userRole,
+      Role: user.userRole ? user.userRole : 'student' ,
       Email: user.email,
       Phone: user.phoneNumber,
-      Country: user.country,
-      City: user.city,
-      Subscription: user.subscription ? user.subscription.status : "",
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(selectedData);
@@ -138,16 +167,13 @@ function DashboardUsers() {
   const downloadAsPDF = () => {
     const doc = new jsPDF();
 
-    const headers = ["User", "Role", "Email", "Phone", "Country", "City", "Subscription"];
+    const headers = ["User", "Role", "Email", "Phone"];
 
     const selectedData = currentUsers.map((user) => [
       user.name,
-      user.userRole,
+      user.userRole ? user.userRole : 'student',
       user.email,
-      user.phoneNumber,
-      user.country,
-      user.city,
-      user.subscription ? user.subscription.status : ""
+      user.phoneNumber
     ]);
 
     const data = {
@@ -169,89 +195,87 @@ function DashboardUsers() {
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [deleteId, setDeleteId] = useState()
+ 
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+      <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
         <main>
           {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+          <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             {/* Dashboard actions */}
             {/* Cards */}
-            <div className="grid grid-cols-15 gap-6">
+            <div className="grid gap-6 grid-cols-15">
               {/* Table (Top Channels) */}
-              <section className="container mx-auto p-6 font-mono overflow-x-auto">
-                <h1 className="text-xl font-bold mb-4">All User</h1>
-                <div className="flex flex-col md:flex-row mb-4 md:items-center md:justify-between">
+              <section className="container p-6 mx-auto overflow-x-auto font-mono">
+                <h1 className="mb-4 text-xl font-bold">All User</h1>
+                <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between">
                   {/* Search bar */}
-                  <input
-                    type="text"
-                    className="w-full md:w-64 px-4 py-2 mb-2 md:mb-0 mr-0 md:mr-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow focus:outline-none"
-                    placeholder="Search by name or email"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                  />
-                  {/* User type select bar */}
-                  <select
-                    className="w-full md:w-32 px-4 py-2 mb-2 md:mb-0 md:ml-2 text-gray-700 bg-white border border-gray-300 rounded shadow focus:outline-none"
-                    value={userType}
-                    onChange={handleUserTypeChange}
-                  >
-                    <option value="all">All Users</option>
-                    <option value="admin">Admin</option>
-                    <option value="hr">HR</option>
-                    <option value="user">User</option>
-                    <option value="employee">Employee</option>
-                  </select>
-                  {/* Subscription status select bar */}
-                  {userType !== "all" && (
+                  <div className="flex items-center justify-start flex-1 gap-2">                  
+                    <input
+                      type="text"
+                      className="px-4 py-2 mb-2 mr-0 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow w-[300px] md:mb-0 md:mr-2 focus:outline-none"
+                      placeholder="Search by name or email"
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                    />
+                    {/* User type select bar */}
                     <select
-                      className="w-full md:w-32 px-4 py-2 ml-0 md:ml-2 text-gray-700 bg-white border border-gray-300 rounded shadow focus:outline-none"
-                      value={subscriptionStatus}
-                      onChange={handleSubscriptionStatusChange}
+                      className="px-4 py-2 mb-2 text-gray-700 bg-white border border-gray-300 rounded shadow w-fit md:mb-0 md:ml-2 focus:outline-none"
+                      value={userType}
+                      onChange={handleUserTypeChange}
                     >
-                      <option value="all">All Subscriptions</option>
-                      <option value="active">Subscribed</option>
-                      <option value="inactive">Not Subscribed</option>
+                      <option value="all">All Users</option>
+                      <option value="admin">Admin</option>
+                      <option value="student">Student</option>
                     </select>
-                  )}
-                  <button
-                    className="bg-[#182235] hover:bg-[#111a2b] text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
-                    onClick={AddUser}
-                  >
-                    Add New User
-                  </button>
+                  </div>
+                  {/* download buttons */}
+                  <div> 
+                    <button
+                      className="px-4 py-2 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
+                      onClick={downloadAsExcel}
+                    >
+                      Download Excel
+                    </button>
+                    <button
+                      className="px-4 py-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
+                      onClick={downloadAsPDF}
+                    >
+                      Download PDF
+                    </button>
+                  </div>
                 </div>
                 {/* Download buttons */}
-                <div className="flex flex-col md:flex-row justify-end mb-4">
+                {/* <div className="flex flex-col justify-end mb-4 md:flex-row">
                   <button
-                    className="bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 mb-2 md:mb-0 md:mr-2"
+                    className="px-4 py-2 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
                     onClick={downloadAsExcel}
                   >
                     Download Excel
                   </button>
                   <button
-                    className="bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2"
+                    className="px-4 py-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
                     onClick={downloadAsPDF}
                   >
                     Download PDF
                   </button>
-                </div>
+                </div> */}
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                   <div className="w-full overflow-x-auto">
                     <table className="w-full">
                       <thead>
-                        <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                        <tr className="font-semibold tracking-wide text-left text-gray-900 uppercase bg-gray-100 border-b border-gray-600 text-md">
                           <th className="px-4 py-3">User</th>
                           <th className="px-4 py-3">Role</th>
                           <th className="px-4 py-3">Email</th>
                           <th className="px-4 py-3">Phone</th>
-                          <th className="px-4 py-3">Country</th>
-                          <th className="px-4 py-3">City</th>
-                          <th className="px-4 py-3">Subscription</th>
+                          <th className="py-3 text-center"><FontAwesomeIcon icon={faTrash} style={{color: "#000",}} /></th>
                         </tr>
                       </thead>
                       <tbody className="bg-white">
@@ -270,10 +294,10 @@ function DashboardUsers() {
                                 </div>
                               </div>
                             </td>
-                            <td className="px-4 py-3 text-ms font-semibold border">
-                              {user.userRole}
+                            <td className="px-4 py-3 font-semibold border text-ms">
+                              {user.userRole === 'admin' ? 'admin' : 'student'}
                             </td>
-                            <td className="px-4 py-3 text-ms font-semibold border">
+                            <td className="px-4 py-3 font-semibold border text-ms">
                               {user.email}
                             </td>
                             <td className="px-4 py-3 text-xs border">
@@ -281,7 +305,13 @@ function DashboardUsers() {
                                 {user.phoneNumber}
                               </span>
                             </td>
-                            <td className="px-4 py-3 text-sm border">
+                            <td onClick={() => {
+                              setIsOpen(true)
+                              setDeleteId(user.userId) 
+                            }} className="py-3 text-center border cursor-pointer">
+                            <FontAwesomeIcon icon={faTrash} style={{color: "#e01b24",}} />
+                            </td>
+                            {/* <td className="px-4 py-3 text-sm border">
                               {user.country}
                             </td>
                             <td className="px-4 py-3 text-sm border">
@@ -301,7 +331,7 @@ function DashboardUsers() {
                                   ? "Active"
                                   : "Inactive"}
                               </span>
-                            </td>
+                            </td> */}
                           </tr>
                         ))}
                       </tbody>
@@ -335,6 +365,30 @@ function DashboardUsers() {
           </div>
         </main>
       </div>
+      {/* <div className="flex flex-col items-center justify-center w-full h-full"> */}
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        className="relative z-50"
+      >
+        {/* The backdrop, rendered as a fixed sibling to the panel container */}
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+        {/* Full-screen container to center the panel */}
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          {/* The actual dialog panel  */}
+          <Dialog.Panel className="max-w-md px-12 py-10 mx-auto bg-white rounded">
+            <Dialog.Title>Are you sure you want to delete the user?</Dialog.Title>
+            <div className="flex items-center justify-end gap-4 mt-5">
+              <button onClick={() => handleDelete(deleteId)} className="px-4 py-2 text-white bg-red-700 rounded-[8px] cursor-pointer">Delete</button>
+              <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-white bg-gray-700 rounded-[8px] cursor-pointer">Cancel</button>
+            </div>
+
+            {/* ... */}
+          </Dialog.Panel>
+        </div>
+      </Dialog>
+      {/* </div> */}
     </div>
   );
 }

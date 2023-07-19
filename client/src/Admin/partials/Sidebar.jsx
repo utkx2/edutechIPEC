@@ -72,6 +72,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     }
   }, [sidebarExpanded]);
 
+//   users
+// registrations
+// exam
+// result
+// dynamic pages
+// download
+// contact requests
+
   return (
     <div>
       {/* Sidebar backdrop (mobile only) */}
@@ -175,7 +183,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                              Dashboard
+                              Admin
                             </span>
                           </div>
                           {/* Icon */}
@@ -265,7 +273,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       </a>
                       <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
-                          {
+                          {/* {
                             userData.length > 0 && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
@@ -282,7 +290,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               </li>
 
                             )
-                          }
+                          } */}
                           {/* {(userData.userRole == "admin" || userData.userRole == "hr") &&
                             < li className="mb-1 last:mb-0">
                               <NavLink
@@ -299,7 +307,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             </li>
                           } */}
 
-                          <li className="mb-1 last:mb-0">
+                          {/* <li className="mb-1 last:mb-0">
                             <NavLink
                               end
                               to="/dashboard/allemployee"
@@ -324,7 +332,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 Franchise
                               </span>
                             </NavLink>
-                          </li>
+                          </li> */}
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
@@ -334,7 +342,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               }
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Users
+                                All Users
                               </span>
                             </NavLink>
                           </li>
@@ -374,7 +382,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                              Options
+                              Registrations
                             </span>
                           </div>
                           {/* Icon */}
@@ -396,11 +404,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               }
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Department
+                                Registrations
                               </span>
                             </NavLink>
                           </li>
-                          <li className="mb-1 last:mb-0">
+                          {/* <li className="mb-1 last:mb-0">
                             <NavLink
                               end
                               to="/dashboard/category"
@@ -464,7 +472,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                                 Auction Material
                               </span>
                             </NavLink>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                     </React.Fragment>
@@ -498,7 +506,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                              Tenders
+                              Exam
                             </span>
                           </div>
                           {/* Icon */}
@@ -646,7 +654,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                              Projects
+                              Results
                             </span>
                           </div>
                           {/* Icon */}
@@ -722,7 +730,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                              Requests
+                              {/* Requests */}
+                              Dynamic Pages
                             </span>
                           </div>
                           {/* Icon */}
@@ -928,7 +937,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                              Tenders Results
+                              {/* Tenders Results */}
+                              Download
                             </span>
                           </div>
                           {/* Icon */}
@@ -1006,7 +1016,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                              Form Management
+                              {/* Form Management */}
+                              Contact Requests
                             </span>
                           </div>
                           {/* Icon */}
@@ -1040,7 +1051,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </SidebarLinkGroup>
 
               {/* Settings */}
-              <SidebarLinkGroup activecondition={pathname.includes('settings')}>
+              {/* <SidebarLinkGroup activecondition={pathname.includes('settings')}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -1077,7 +1088,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               Settings
                             </span>
                           </div>
-                          {/* Icon */}
                           <div className="flex ml-2 shrink-0">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -1108,7 +1118,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
 
             </ul>
           </div>
