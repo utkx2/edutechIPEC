@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Upload Intro Video and Testimonial Card
-router.post('/testimonials', 
+router.post('/testimonials/upload', 
     upload.fields([{ name: 'introVideo', maxCount: 1 }, 
     { name: 'cardImage', maxCount: 1 }]), 
 async (req, res) => {
@@ -59,7 +59,7 @@ async (req, res) => {
 });
 
 // Get Testimonials
-router.get('/testimonials', async (req, res) => {
+router.get('/testimonials/content', async (req, res) => {
     try {
         const testimonial = await testimonialsModel.findOne({});
         res.json(testimonial || {});

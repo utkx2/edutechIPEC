@@ -35,6 +35,8 @@ app.use('/api/whyIPEC', WhyIPEC_Route);
 app.use('/api/facultyHire', FacultyHireRoute);
 app.use('/api/Courses', CoursesRoute);
 app.use('/api/Contact', ContactRoutes);
+app.use('/api/testimonials', require('./routes/TestimonialsRoute'));
+app.use('/api/home', require('./routes/HomeRoute'));
 
 app.listen(port, () => {
     console.log(`app listning at port: ${port}`);

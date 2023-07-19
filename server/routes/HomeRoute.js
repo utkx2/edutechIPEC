@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Upload home page content
+// http://localhost:3000/api/home/upload
 router.post('/home/upload', upload.fields([
     { name: 'carousel', maxCount: 4 }, 
     { name: 'faculty.images', maxCount: 4 }, 
@@ -25,7 +26,13 @@ router.post('/home/upload', upload.fields([
 ]), async (req, res) => {
     try {
         const { carousel, faculty, selectedStudents, programs } = req.files;
-        const { facultyDescription, selectedStudentsDescription, selectedStudentsAIR, selectedStudentsExam, programDescription } = req.body;
+        const { 
+            facultyDescription, 
+            selectedStudentsDescription, 
+            selectedStudentsAIR, 
+            selectedStudentsExam, 
+            programDescription 
+        } = req.body;
 
         const homeContent = new Home({
             carousel: carousel.map(file => file.filename),
@@ -55,6 +62,7 @@ router.post('/home/upload', upload.fields([
 });
 
 // Fetch home page content
+// http://localhost:3000/api/home/content
 router.get('/home/content', async (req, res) => {
     try {
         const homeContent = await Home.findOne({}); // Assuming there's only one document for the home page content
