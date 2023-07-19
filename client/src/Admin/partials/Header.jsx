@@ -10,7 +10,7 @@ import { useLocation, NavLink } from 'react-router-dom';
 
 function Header() {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   // const navigate = useNavigate();
   const location = useLocation();
@@ -18,15 +18,23 @@ function Header() {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
-    let userData = localStorage.getItem("user");
-    if (userData !== null && userData !== undefined) {
-      let userDataObject = JSON.parse(userData);
-      setUserData(userDataObject);
-      console.log(userData);
+    const token = localStorage.getItem("token");
+    if (token.length>0 && token !== undefined) {
+      setUserData(token);
+      console.log(token);
       console.log('hello world')
     } else {
       console.log("there is no id")
     }
+    // let userData = localStorage.getItem("token");
+    // if (userData !== null && userData !== undefined) {
+    //   let userDataObject = JSON.parse(userData);
+    //   setUserData(userDataObject);
+    //   console.log(userData);
+    //   console.log('hello world')
+    // } else {
+    //   console.log("there is no id")
+    // }
   }, [])
 
   const { pathname } = location;
@@ -211,7 +219,7 @@ function Header() {
                       </a>
                       <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
-                          {
+                          {/* {
                             userData.userRole === "admin" && (
                               <li className="mb-1 last:mb-0">
                                 <NavLink
@@ -243,7 +251,7 @@ function Header() {
                                 </span>
                               </NavLink>
                             </li>
-                          }
+                          } */}
 
                           <li className="mb-1 last:mb-0">
                             <NavLink
