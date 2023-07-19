@@ -30,15 +30,7 @@ const userSchema = new Schema({
         required: true,
     },
 },
-    {
-        toJSON: {
-            transform(doc, ret) {
-                delete ret.password;
-                delete ret.createdAt;
-                delete ret.updatedAt;
-            },
-        },
-    }, { timestamps: true }
+    { timestamps: true }
 );
 
 const userModel = mongoose.model("users", userSchema);

@@ -41,6 +41,7 @@ router.post('/register', [
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(req.body.password, salt);
         // const userId = floor(rand() * 100);
+        console.log(secPass);
         const userId = generateUUID();
         const role = "admin";
         user = await UserAuth.create({
@@ -51,6 +52,7 @@ router.post('/register', [
             phoneNumber: req.body.phoneNumber,
             userRole: req.body.userRole
         });
+        console.log(user);
         const data = {
             user: {
                 id: user.id
@@ -85,11 +87,13 @@ router.post('/login', async (req, res) => {
         }
         const data = {
             user: {
-                id: user.id
+                id: user.id,
+                Role: user.Role,
+                name: user.name
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET);
-        res.json({ authtoken });
+        res.cookie('token', authtoken).json({ authtoken });
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
@@ -123,3 +127,12 @@ router.post('/getuser', FetchUser, async (req, res) => {
 
 
 module.exports = router;
+
+
+// {
+//     "name": "John Doe",
+//         "email": "johndoe4@example.com",
+//             "password": "123456",
+//                 "userRole": "admin",
+//                     "phoneNumber": 1234567890
+// }
