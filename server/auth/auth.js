@@ -133,6 +133,20 @@ router.get('/getuser', FetchUser, async (req, res) => {
     }
 });
 
+//  http://localhost:3000/api/auth/delete/:id
+router.delete('/delete/:id', async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const allusers = await UserAuth.findOneAndDelete({ userId: userId });
+        console.log(allusers)
+        res.status(200).send("User Deleted Successfully");
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
 
 module.exports = router;
 

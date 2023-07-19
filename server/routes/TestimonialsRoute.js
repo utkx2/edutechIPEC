@@ -67,3 +67,23 @@ router.get('/get', async (req, res) => {
 });
 
 module.exports = router;
+
+
+// sample json object
+// {
+//     "introVideoUrl": "https://example.com/intro-video",
+//         "cards": [
+//             {
+//                 "title": "Card 1",
+//                 "content": "jai ho bhai",
+//                 "imageUrl": "https://example.com/card1-image.jpg",
+//                 "examName": "Exam A"
+//             },
+//             {
+//                 "title": "Card 2",
+//                 "content": "padhai kr lo bro ",
+//                 "imageUrl": "https://example.com/card2-image.jpg",
+//                 "examName": "Exam B"
+//             }
+//         ]
+// }
