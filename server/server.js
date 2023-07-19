@@ -38,6 +38,10 @@ app.use('/api/testimonials', require('./routes/TestimonialsRoute'));
 app.use('/api/home', require('./routes/HomeRoute'));
 app.use('/api/studentHomePage', require('./routes/StudentHomePageRoute'));
 app.use('/api/ourPrograms', require('./routes/OurProgramsHomePageRoute'));
+app.use('/api/facultyHomePage', require('./routes/FacultyRoute'));
+app.use('/api/carousel', require('./routes/CarouselRoute'));
+
+
 
 app.listen(port, () => {
     console.log(`app listning at port: ${port}`);

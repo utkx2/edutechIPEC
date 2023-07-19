@@ -14,9 +14,10 @@ const StudentHomePage = new Schema({
         type: String,
         required: true
     },
-    StudentDetails: {
-        type: String,
-        required: true
+    studentDetails: {
+        name: { type: String },
+        classRoomDetails: { type: String },
+        enrollmentNo: { type: String }
     },
     exam: {
         type: String,
@@ -24,4 +25,5 @@ const StudentHomePage = new Schema({
     }
 });
 
-exports.modules = mongoose.model('StudentCards', StudentHomePage);
+StudentCards = mongoose.model('StudentCards', StudentHomePage);
+module.exports = StudentCards;

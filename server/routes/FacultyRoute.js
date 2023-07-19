@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const StudentCards = require('../models/StudentHomePageModel');
+const FacultyCards = require('../models/FacultyModel');
 
 
-// http://localhost:3000/api/studentHomePage/get
+// http://localhost:3000/api/facultyHomePage/get
 router.get('/get', async (req, res) => {
     try {
-        const studentHomePageCards = await StudentCards.find();
-        res.json(studentHomePageCards);
+        const facultyHomePageCards = await FacultyCards.find();
+        res.json(facultyHomePageCards);
     }
     catch (error) {
         console.error('error fetching the student cards', error);
@@ -16,19 +16,20 @@ router.get('/get', async (req, res) => {
 });
 
 
-// http://localhost:3000/api/studentHomePage/upload
+// http://localhost:3000/api/facultyHomePage/upload
 router.post('/upload', async (req, res) => {
     try {
         const {
-            description, air,
-            studentImg, studentDetails, exam
+            collegeName, name,
+            facultyImg, classroom, experience
         } = req.body;
-        const newStudentCard = new StudentCards({
-            description, air, studentImg, studentDetails, exam
+        const newFacultyCard = new FacultyCards({
+            collegeName, name,
+            facultyImg, classroom, experience
         });
-        await newStudentCard.save();
+        await newFacultyCard.save();
 
-        res.json({ message: 'student card added successfully', card: newStudentCard });
+        res.json({ message: 'student card added successfully', card: newFacultyCard });
     }
     catch (error) {
         console.error('error occured', error);
@@ -36,20 +37,20 @@ router.post('/upload', async (req, res) => {
     }
 });
 
-// http://localhost:3000/api/studentHomePage/edit/:id
+// http://localhost:3000/api/facultyHomePage/edit/:id
 router.put('/edit/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
-            description,
-            air,
-            studentImg,
-            studentDetails,
-            exam
+            collegeName, name,
+            facultyImg, classroom, experience
         } = req.body;
-        const updatedCard = await StudentCards.findByIdAndUpdate(
+        const updatedCard = await FacultyCards.findByIdAndUpdate(
             id,
-            { description, air, studentImg, studentDetails, exam },
+            {
+                collegeName, name,
+                facultyImg, classroom, experience
+            },
             { new: true } // This option returns the updated document
         );
         res.json({ message: 'Student home page card updated successfully', card: updatedCard });
@@ -60,11 +61,11 @@ router.put('/edit/:id', async (req, res) => {
     }
 });
 
-// http://localhost:3000/api/studentHomePage/delete/:id
+// http://localhost:3000/api/facultyHomePage/delete/:id
 router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        await StudentCards.findByIdAndRemove(id);
+        await FacultyCards.findByIdAndRemove(id);
         res.json({ message: 'the card has been removed successfully' });
     }
     catch (error) {
@@ -75,15 +76,10 @@ router.delete('/delete/:id', async (req, res) => {
 
 module.exports = router;
 
-
 // {
-//     "description": "This is the description.",
-//         "air": 123,
-//             "studentImg": "https://example.com/student-img.jpg",
-//                 "studentDetails": {
+//     "collegeName": "IIT Bombay",
 //         "name": "John Doe",
-//             "classRoomDetails": "Class A",
-//                 "enrollmentNo": "12345"
-//     },
-//     "exam": "English"
+//             "facultyImg": "https://example.com/faculty-img.jpg",
+//                 "classroom": "Room A",
+//                     "experience": "10 years"
 // }
