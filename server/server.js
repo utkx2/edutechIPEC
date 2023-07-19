@@ -21,7 +21,6 @@ app.use(express.json(({ limit: '10mb' })));
 
 connectDb();
 
-
 app.use('/api/auth', require('./auth/auth'));
 app.use('/api/registration', RegistrationRoute);
 app.use('/api/content', contentRoutes);
@@ -30,6 +29,8 @@ app.use('/api/whyIPEC', WhyIPEC_Route);
 app.use('/api/facultyHire', FacultyHireRoute);
 app.use('/api/testimonials', require('./routes/TestimonialsRoute'));
 app.use('/api/home', require('./routes/HomeRoute'));
+app.use('/api/studentHomePage', require('./routes/StudentHomePageRoute'));
+app.use('/api/ourPrograms', require('./routes/OurProgramsHomePageRoute'));
 
 app.listen(port, () => {
     console.log(`app listning at port: ${port}`);
