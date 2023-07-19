@@ -12,4 +12,5 @@ const OurProgramsHomePageModel = new Schema({
     },
 });
 
-module.exports = mongoose.model('OurProgramsCard', OurProgramsHomePageModel);
+const ourPrograms = mongoose.model('OurPrograms', OurProgramsHomePageModel);
+module.exports = ourPrograms;
