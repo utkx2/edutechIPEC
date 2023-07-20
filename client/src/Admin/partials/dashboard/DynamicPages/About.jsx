@@ -3,43 +3,45 @@ import React from 'react'
 import { useState } from "react";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
+import { BASE_URL } from '../../../../config'; 
 
 export default function About() {
-  const [formData, setFormData] = useState({
-    pnr: "",
-    companyname: "",
-    detail: "",
-    value: "",
-    status: "",
-    country: "",
-    state: "",
-    city: "",
-    sector: ""
-});
+  const [aboutIPEC, setAboutIPEC] = useState()
 
-const clearInputs = () => {
-    setFormData({
-        pnr: "",
-        companyname: "",
-        detail: "",
-        value: "",
-        status: "",
-        country: "",
-        state: "",
-        city: "",
-        sector: ""
-    });
+  const [ipecAdvantages, setIpecAdvantages] = useState({
+    title1: '',
+    title2: '',
+    title3: '',
+    title4: '',
+    desc1: '',
+    desc2: '',
+    desc3: '',
+    desc4: ''
+  })
+
+  const [ipecPedagogy, setIpecPedagogy] = useState({
+    title1: '',
+    title2: '',
+    title3: '',
+    title4: '',
+    desc1: '',
+    desc2: '',
+    desc3: '',
+    desc4: ''
+  })
+
+
+const handleChangePedagogy = (e) => {
+    const { name, value } = e.target;
+    setIpecPedagogy((prevData) => ({
+        ...prevData,
+        [name]: value,
+    }));
 }
 
-const [carouselLinks, setCarouselLinks] = useState([
-    {name: 'link1', value: ''}
-])
-
-// const handle
-
-const handleChange = (e) => {
+const handleChangeAdvantage = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setIpecAdvantages((prevData) => ({
         ...prevData,
         [name]: value,
     }));
@@ -47,12 +49,56 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(ipecAdvantages, ipecPedagogy, aboutIPEC)
+    const ipecAdvantagesArr = [
+        {
+            title: ipecAdvantages.title1,
+            description: ipecAdvantages.desc1
+        },
+        {
+            title: ipecAdvantages.title2,
+            description: ipecAdvantages.desc2
+        },
+        {
+            title: ipecAdvantages.title3,
+            description: ipecAdvantages.desc4
+        },
+        {
+            title: ipecAdvantages.title4,
+            description: ipecAdvantages.desc4
+        }
+    ]
 
+    const ipecPedagogyArr = [
+        {
+            title: ipecPedagogy.title1,
+            description: ipecPedagogy.desc1
+        },
+        {
+            title: ipecPedagogy.title2,
+            description: ipecPedagogy.desc2
+        },
+        {
+            title: ipecPedagogy.title3,
+            description: ipecPedagogy.desc4
+        },
+        {
+            title: ipecPedagogy.title4,
+            description: ipecPedagogy.desc4
+        }
+    ]
+
+    const formData = {
+        AboutIPEC: aboutIPEC,
+        ipecAdvantages: ipecAdvantagesArr,
+        ipecPedagogy: ipecPedagogyArr
+    }
+    
     const token = localStorage.getItem("token");
 
     const requestBody = JSON.stringify(formData);
 
-    fetch(`${BASE_URL}/api/home/upload`, {
+    fetch(`${BASE_URL}/api/AboutIpec/upload`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -62,8 +108,7 @@ const handleSubmit = (e) => {
     })
         .then((response) => response.json())
         .then((data) => {
-            alert("Added")
-            clearInputs();
+            console.log("success", data); 
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -71,6 +116,29 @@ const handleSubmit = (e) => {
         });
 };
   const [sidebarOpen, setSidebarOpen] = useState(false);
+    // {
+    //     "AboutIPEC": "IPEC is a leading educational institution...",
+    //         "ipecAdvantages": [
+                // {
+                //     "title": "",
+                //     "description": ""
+                // },
+    //             {
+    //                 "title": "State-of-the-Art Infrastructure",
+    //                 "description": "We provide modern classrooms and labs..."
+    //             }
+    //         ],
+    //             "ipecPedagogy": [
+    //                 {
+    //                     "title": "Interactive Learning",
+    //                     "description": "We emphasize interactive learning methodologies..."
+    //                 },
+    //                 {
+    //                     "title": "Project-Based Learning",
+    //                     "description": "Students work on real-world projects..."
+    //                 }
+    //             ]
+    // }
   return (
     <div className="flex h-screen overflow-hidden ">
             {/* Sidebar */}
@@ -87,214 +155,200 @@ const handleSubmit = (e) => {
                             {/*---------> Table (Top Channels) */}
 
                             <h1 className="mb-4 text-2xl font-bold">About</h1>
-                            <div className="max-w-3xl px-4 py-8 mt-6 mb-6 rounded-lg shadow-2xl">
+                            <div className="max-w-3xl px-4 py-8 mt-6 mb-6 rounded-lg shadow-xl  border-[2px] border-black">
                                 <form onSubmit={handleSubmit}>
                                     {/* Global Section */}
-                                    {/* <h2 className="mb-4 text-2xl font-bold text-center "></h2> */}
-                                    {/* <p className="font-serif text-sm font-thin text-red-700">
-                                        Fields marked with an asterisk (*) are mandatory.
-                                    </p> */}
                                       <div className="p-2 rounded-lg">
                                         <h1 className="mb-4 text-xl font-bold">About content section paragraph</h1>
-                                       
                                           <textarea
                                               type="text"
-                                              name="aboutPara"
-                                              value={formData.pnr}
-                                              onChange={handleChange}
+                                              name="title"
+                                              onChange={(e) => setAboutIPEC(e.target.value)}
                                               className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                              placeholder="Enter About text"
+                                              placeholder="Enter About Desc"
                                               required
                                           />
-                                        {/* <div className="grid grid-cols-2 gap-4 ">
-                                            <div className="relative">
-                                                <label className="block mb-2 font-semibold">
-                                                    Company Name
-                                                    <span className="relative top-0 right-0 text-red-700">*</span>
-                                                </label>
-                                                <input
-                                                    required
-                                                    type="text"
-                                                    name="companyname"
-                                                    value={formData.companyname}
-                                                    onChange={handleChange}
-                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                    placeholder="Enter Name"
-                                                />
-                                            </div>
-
-                                            <label className="block mb-2 font-semibold">
-                                                Project Detail
-                                                <input
-                                                    required
-                                                    type="text"
-                                                    name="detail"
-                                                    value={formData.detail}
-                                                    onChange={handleChange}
-                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                    placeholder="Enter Detail"
-                                                />
-                                            </label>
-
-                                            <label className="block mb-2 font-semibold">
-                                                Project Value
-                                                <span className="relative top-0 right-0 text-red-700">*</span>
-                                                <input
-                                                    required
-                                                    type="number"
-                                                    name="value"
-                                                    value={formData.value}
-                                                    onChange={handleChange}
-                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                    placeholder="Enter Value"
-                                                />
-                                            </label>
-                                            <label className="block mb-2 font-semibold">
-                                                Project Status
-                                                <span className="relative top-0 right-0 text-red-700">*</span>
-                                                <input
-                                                    required
-                                                    type="text"
-                                                    name="status"
-                                                    value={formData.status}
-                                                    onChange={handleChange}
-                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                    placeholder="Enter Status"
-                                                />
-                                            </label>
-                                        </div> */}
                                       </div>
 
                                       <div className="p-2 rounded-lg">
                                         <h1 className="mb-4 text-xl font-bold">IPEC Advantaged Card Details</h1>
-                                          <input
-                                              type="text"
-                                              name="aboutAdvantage1"
-                                              value={formData.pnr}
-                                              onChange={handleChange}
-                                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                              placeholder="Enter About text"
-                                              required
-                                          />
-                                           <input
-                                              type="text"
-                                              name="aboutAdvantage2"
-                                              value={formData.pnr}
-                                              onChange={handleChange}
-                                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                              placeholder="Enter About text"
-                                              required
-                                          />
-                                           <input
-                                              type="text"
-                                              name="aboutAdvantage3"
-                                              value={formData.pnr}
-                                              onChange={handleChange}
-                                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                              placeholder="Enter About text"
-                                              required
-                                          />
-                                           <input
-                                              type="text"
-                                              name="aboutAdvantage4"
-                                              value={formData.pnr}
-                                              onChange={handleChange}
-                                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                              placeholder="Enter About text"
-                                              required
-                                          />
-                                        </div>
-
-                                    {/* <div className="p-2 mt-2 rounded-lg ">
-                                        <div className="grid grid-cols-2 gap-4">
-
-                                            <label className="block mb-2 font-semibold">
-                                                Country
-                                                <span className="relative top-0 right-0 text-red-700">*</span>
-                                                <select
-                                                    required
-                                                    name="country"
-                                                    value={formData.country}
-                                                    onChange={handleChange}
-                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                >
-                                                    <option value="">Select a country</option>
-                                                    {countryNames.map((country) => (
-                                                        <option key={country} value={country}>
-                                                            {country}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </label>
-
-                                            <label className="block mb-2 font-semibold">
-                                                Project State
-                                                <span className="relative top-0 right-0 text-red-700">*</span>
-                                                <select
-                                                    required
-                                                    name="state"
-                                                    value={formData.state}
-                                                    onChange={handleChange}
-                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                >
-                                                    <option value="">Select a state</option>
-                                                    {stateNames.map((state) => (
-                                                        <option key={state} value={state}>
-                                                            {state}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </label>
-
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-4 mt-1.5 mb-1.5">
-
-                                            <label className="block mb-2 font-semibold">
-                                                City
-                                                <span className="relative top-0 right-0 text-red-700">*</span>
+                                        <div className='flex flex-col gap-y-1'>
                                                 <input
                                                     type="text"
-                                                    name="city"
-                                                    value={formData.city}
-                                                    onChange={handleChange}
+                                                    name="title1"
+                                                    value={ipecAdvantages.title1}
+                                                    onChange={handleChangeAdvantage}
                                                     className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                    placeholder="Enter a city"
-                                                    autoComplete="off"
-                                                    list="cityNamesList"
-                                                />
-                                                <datalist id="cityNamesList">
-                                                    {cityNames.map((city) => (
-                                                        <option key={city} value={city} />
-                                                    ))}
-                                                </datalist>
-                                            </label>
-
-                                            <label className="block font-semibold">
-                                                Sector
-                                                <span className="relative top-0 right-0 text-red-700">*</span>
-                                                <input
+                                                    placeholder="Title1"
                                                     required
-                                                    type="text"
-                                                    name="sector"
-                                                    value={formData.sector}
-                                                    onChange={handleChange}
-                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                                    placeholder="Enter Sector"
                                                 />
-                                            </label>
+                                                <input
+                                                    type="text"
+                                                    name="desc1"
+                                                    value={ipecAdvantages.desc1}
+                                                    onChange={handleChangeAdvantage}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc1"
+                                                    required
+                                                />
+                                                
+                                                <input
+                                                    type="text"
+                                                    name="title2"
+                                                    value={ipecAdvantages.title2}
+                                                    onChange={handleChangeAdvantage}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Title2"
+                                                    required
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="desc2"
+                                                    value={ipecAdvantages.desc2}
+                                                    onChange={handleChangeAdvantage}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc2"
+                                                    required
+                                                />
+                                                
+                                                <input
+                                                    type="text"
+                                                    name="title3"
+                                                    value={ipecAdvantages.title3}
+                                                    onChange={handleChangeAdvantage}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Title3"
+                                                    required
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="desc3"
+                                                    value={ipecAdvantages.desc3}
+                                                    onChange={handleChangeAdvantage}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc3"
+                                                    required
+                                                />
+
+
+                                                <input
+                                                    type="text"
+                                                    name="title4"
+                                                    value={ipecAdvantages.title4}
+                                                    onChange={handleChangeAdvantage}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Title4"
+                                                    required
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="desc4"
+                                                    value={ipecAdvantages.desc4}
+                                                    onChange={handleChangeAdvantage}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc4"
+                                                    required
+                                                />
                                         </div>
+                                      </div>
 
-                                    </div> */}
-                                    <div className="w-3/4">
+                                      <div className="p-2 mt-4 rounded-lg">
+                                        <h1 className="mb-4 text-xl font-bold">IPEC Pedagogy Card Details</h1>
+                                        <div className='flex flex-col gap-y-1'>
+                                                <input
+                                                    type="text"
+                                                    name="title1"
+                                                    value={ipecPedagogy.title1}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Title1"
+                                                    required
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="desc1"
+                                                    value={ipecPedagogy.desc1}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc1"
+                                                    required
+                                                />
+                                                
+                                                <input
+                                                    type="text"
+                                                    name="title2"
+                                                    value={ipecPedagogy.title2}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Title2"
+                                                    required
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="desc2"
+                                                    value={ipecPedagogy.desc2}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc2"
+                                                    required
+                                                />
+                                                
+                                                <input
+                                                    type="text"
+                                                    name="title3"
+                                                    value={ipecPedagogy.title3}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Title3"
+                                                    required
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="desc3"
+                                                    value={ipecPedagogy.desc3}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc3"
+                                                    required
+                                                />
 
-                                        <button
-                                            type="submit"
-                                            className="bg-[#182235] hover:bg-[#111a2b] mx-6 text-white px-4 py-2 mt-8 rounded-lg font-semibold w-2/4"
-                                        >
-                                            Submit
-                                        </button>
 
-                                    </div>
+                                                <input
+                                                    type="text"
+                                                    name="title4"
+                                                    value={ipecPedagogy.title4}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Title4"
+                                                    required
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="desc4"
+                                                    value={ipecPedagogy.desc4}
+                                                    onChange={handleChangePedagogy}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Desc4"
+                                                    required
+                                                />
+
+                                                
+
+                                            
+                                        </div>
+                                      </div>
+
+
+                                        <div className="w-3/4">
+
+                                            <button
+                                                type="submit"
+                                                className="bg-[#182235] hover:bg-[#111a2b] mx-6 text-white px-4 py-2 mt-8 rounded-lg font-semibold w-2/4"
+                                            >
+                                                Submit
+                                            </button>
+
+                                        </div>
                                 </form>
 
                             </div>

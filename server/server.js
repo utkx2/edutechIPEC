@@ -42,6 +42,8 @@ app.use('/api/facultyHomePage', require('./routes/FacultyRoute'));
 app.use('/api/carousel', require('./routes/CarouselRoute'));
 app.use('/api/exam', require('./routes/ExamRoute'));
 app.use('/api/download', require('./routes/DownloadRoute'));
+app.use('/api/results', require('./routes/ResultsRoute'));
+
 
 
 app.listen(port, () => {
