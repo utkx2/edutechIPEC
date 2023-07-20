@@ -48,6 +48,24 @@ router.get("/get", async (req, res) => {
 })
 
 
+// http://localhost:3000/api/registration/get
+router.get("/get/:id", async (req, res) => {
+    const id = req.params.id;
+    try {
+        const registrationsList = await Registrations.findById({ _id: id });
+        console.log(registrationsList);
+        res.status(200).json(registrationsList);
+    }
+    catch (error) {
+        console.log('Error occurred while retrieving registrations:', error);
+        res.status(500).json({
+            error: "An error occurred while getting the registrations list "
+        });
+    }
+
+})
+
+
 // http://localhost:3000/api/registration/delete/:id
 router.delete("/delete/:id", async (req, res) => {
     const id = req.params.id;

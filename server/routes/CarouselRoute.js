@@ -72,10 +72,11 @@ router.delete('/delete/:id', async (req, res) => {
 
 module.exports = router;
 
+
 // {
-//     "collegeName": "IIT Bombay",
-//         "name": "John Doe",
-//             "facultyImg": "https://example.com/faculty-img.jpg",
-//                 "classroom": "Room A",
-//                     "experience": "10 years"
+//     "images": [
+//         "https://example.com/image1.jpg",
+//         "https://example.com/image2.jpg",
+//         "https://example.com/image3.jpg"
+//     ]
 // }
