@@ -66,6 +66,9 @@ import WebsiteContact from '../Admin/partials/dashboard/DynamicPages/Contact'
 // //Options
 // import License from "../Admin/partials/dashboard/options/licences";
 import AllUserRegistrations from "../Admin/partials/dashboard/Registrations/UserRegistrations";
+import UserRegistrationDetails from "../Admin/partials/dashboard/Registrations/UserRegistrationDetails";
+import SamplePaper from "../Admin/partials/dashboard/Downloads/SamplePaper";
+import EBrochures from "../Admin/partials/dashboard/Downloads/EBrochures";
 // import Sector from "../Admin/partials/dashboard/options/sector";
 // import Category from "../Admin/partials/dashboard/options/category";
 // import Product from "../Admin/partials/dashboard/options/product";
@@ -129,6 +132,18 @@ const DashboardRoutes = () => {
             <Route
               path="/contact"
               element={<PrivateRoute element={WebsiteContact} />}
+            />
+            <Route
+              path="/registrations/:id"
+              element={<PrivateRoute element={UserRegistrationDetails} />}
+            />
+             <Route
+              path="/downloads/sample-paper"
+              element={<PrivateRoute element={SamplePaper} />}
+            />
+             <Route
+              path="/downloads/e-brochures"
+              element={<PrivateRoute element={EBrochures} />}
             />
          </Routes>
     </div>

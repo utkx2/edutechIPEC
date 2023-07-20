@@ -79,7 +79,7 @@ function AllUserRegistrations() {
   }, []);
 
   const showDetails = (userId) => {
-    navigate(`/dashboard/user/${userId}`);
+    navigate(`/dashboard/registrations/${userId}`);
   };
 
   const handleSearchChange = (e) => {

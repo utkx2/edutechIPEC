@@ -86,7 +86,7 @@ export default function Home() {
                         <div className="container p-6 mx-auto overflow-x-auto font-mono">
                             {/*---------> Table (Top Channels) */}
 
-                            <h1 className="mb-4 text-xl font-bold">Home</h1>
+                            <h1 className="mb-4 text-2xl font-bold">Home</h1>
                             <div className="max-w-3xl px-4 py-8 mt-6 mb-6 rounded-lg shadow-2xl">
                                 <form onSubmit={handleSubmit}>
                                     {/* Global Section */}

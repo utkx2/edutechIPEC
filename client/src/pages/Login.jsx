@@ -41,7 +41,7 @@ const Login = () => {
                 } else {                    
                     // Store response in local storage
                     localStorage.setItem("token", JSON.stringify(data.authtoken));
-                    navigate("/dashboard/admin");
+                    navigate("/dashboard/users");
                     // Navigate to the desired page
                     // const user = data.user.data
                     // if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")
