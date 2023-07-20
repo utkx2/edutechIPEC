@@ -24,6 +24,14 @@ import DashboardHome from "../Admin/partials/dashboard/DashboardHome";
 // import AllEmployee from "../Admin/partials/dashboard/users/AllEmployee";
 // import AllHR from "../Admin/partials/dashboard/users/AllHR";
 import DashboardUsers from "../Admin/partials/dashboard/users/DashboardUsers";
+
+import WebsiteHome from '../Admin/partials/dashboard/DynamicPages/Home'
+import WebsiteAbout from '../Admin/partials/dashboard/DynamicPages/About'
+import WebsiteWhy from '../Admin/partials/dashboard/DynamicPages/Why'
+import WebsiteTestimonials from '../Admin/partials/dashboard/DynamicPages/Testimonials'
+import WebsiteOurPrograms from '../Admin/partials/dashboard/DynamicPages/OurPrograms'
+import WebsiteCourses from '../Admin/partials/dashboard/DynamicPages/Courses'
+import WebsiteContact from '../Admin/partials/dashboard/DynamicPages/Contact'
 // import DashboardUserDetail from "../Admin/partials/dashboard/users/DashboardUserDetail";
 
 // import DashboardCurrentTenders from "../Admin/partials/dashboard/DashboardCurrentTenders";
@@ -57,7 +65,7 @@ import DashboardUsers from "../Admin/partials/dashboard/users/DashboardUsers";
 
 // //Options
 // import License from "../Admin/partials/dashboard/options/licences";
-// import Department from "../Admin/partials/dashboard/options/department";
+import AllUserRegistrations from "../Admin/partials/dashboard/Registrations/UserRegistrations";
 // import Sector from "../Admin/partials/dashboard/options/sector";
 // import Category from "../Admin/partials/dashboard/options/category";
 // import Product from "../Admin/partials/dashboard/options/product";
@@ -89,6 +97,38 @@ const DashboardRoutes = () => {
             <Route
               path="/users"
               element={<PrivateRoute element={DashboardUsers} />}
+            />
+            <Route
+              path="/registrations"
+              element={<PrivateRoute element={AllUserRegistrations} />}
+            />
+            <Route
+              path="/home"
+              element={<PrivateRoute element={WebsiteHome} />}
+            />
+            <Route
+              path="/about"
+              element={<PrivateRoute element={WebsiteAbout} />}
+            />
+            <Route
+              path="/why"
+              element={<PrivateRoute element={WebsiteWhy} />}
+            />
+            <Route
+              path="/testimonials"
+              element={<PrivateRoute element={WebsiteTestimonials} />}
+            />
+            <Route
+              path="/our-programs"
+              element={<PrivateRoute element={WebsiteOurPrograms} />}
+            />
+            <Route
+              path="/courses"
+              element={<PrivateRoute element={WebsiteCourses} />}
+            />
+            <Route
+              path="/contact"
+              element={<PrivateRoute element={WebsiteContact} />}
             />
          </Routes>
     </div>
