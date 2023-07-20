@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const SamplePaper = require('../models/SamplePaperModel');
 const syllabus = require('../models/SyllabusModel');
+const Brochure = require('../models/BrochureModel');
 
 
 // http://localhost:3000/api/download/samplePaper/get
@@ -77,11 +78,11 @@ router.delete('/samplePaper/delete/:id', async (req, res) => {
 // http://localhost:3000/api/download/syllabus/get
 router.get('/syllabus/get', async (req, res) => {
     try {
-        const SamplePaperObject = await SamplePaper.find();
-        res.json(SamplePaperObject);
+        const syllabus = await syllabus.find();
+        res.json(syllabus);
     }
     catch (error) {
-        console.error('error fetching the samplePapers', error);
+        console.error('error fetching the syllabus', error);
         return res.status(500).json(error);
     }
 });
@@ -107,20 +108,20 @@ router.post('/syllabus/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/syllabus/edit/:id
-router.put('/edit/:id', async (req, res) => {
+router.put('syllabus/edit/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const {
             className, fileLink
         } = req.body;
-        const updatedCarousel = await syllabus.findByIdAndUpdate(
+        const updatedSyllabus = await syllabus.findByIdAndUpdate(
             id,
             {
                 className, fileLink
             },
             { new: true } // This option returns the updated document
         );
-        res.json({ message: 'carousel home page card updated successfully', CarouselLinks: updatedCarousel });
+        res.json({ message: 'syllabus home page card updated successfully', syllabus: updatedSyllabus });
     }
     catch (error) {
         console.error('error occured', error);
@@ -129,17 +130,88 @@ router.put('/edit/:id', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/syllabus/delete/:id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('syllabus/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
         await syllabus.findByIdAndRemove(id);
-        res.json({ message: 'the carousel has been removed successfully' });
+        res.json({ message: 'the syllabus has been removed successfully' });
     }
     catch (error) {
         console.error('error occured', error);
         return res.status(500).json(error);
     }
 });
+
+//     API For Brochure
+
+
+// http://localhost:3000/api/download/brochure/get
+router.get('/brochure/get', async (req, res) => {
+    try {
+        const Brochure = await Brochure.find();
+        res.json(Brochure);
+    }
+    catch (error) {
+        console.error('error fetching the Brochure', error);
+        return res.status(500).json(error);
+    }
+});
+
+
+// http://localhost:3000/api/download/brochure/upload
+router.post('/brochure/upload', async (req, res) => {
+    try {
+        const {
+            examName, fileLink
+        } = req.body;
+        const newBrochure = new Brochure({
+            examName, fileLink
+        });
+        await newBrochure.save();
+
+        res.json({ message: 'Brochure added successfully', Brochure: newBrochure });
+    }
+    catch (error) {
+        console.error('error occured', error);
+        return res.status(500).json(error);
+    }
+});
+
+// http://localhost:3000/api/download/brochure/edit/:id
+router.put('/brochure/edit/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const {
+            examName, fileLink
+        } = req.body;
+        const updatedBrochure = await Brochure.findByIdAndUpdate(
+            id,
+            {
+                examName, fileLink
+            },
+            { new: true } // This option returns the updated document
+        );
+        res.json({ message: 'Brochure home page card updated successfully', Brochure: updatedBrochure });
+    }
+    catch (error) {
+        console.error('error occured', error);
+        return res.status(500).json(error);
+    }
+});
+
+// http://localhost:3000/api/download/brochure/delete/:id
+router.delete('/brochure/delete/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Brochure.findByIdAndRemove(id);
+        res.json({ message: 'the Brochure has been removed successfully' });
+    }
+    catch (error) {
+        console.error('error occured', error);
+        return res.status(500).json(error);
+    }
+});
+
 
 
 module.exports = router;
