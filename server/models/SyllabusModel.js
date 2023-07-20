@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const SamplePaperModel = new Schema({
+const syllabusModel = new Schema({
     className: {
         type: String,
         required: true
@@ -13,6 +13,6 @@ const SamplePaperModel = new Schema({
 
 });
 
-SamplePaper = mongoose.model('SamplePaper', SamplePaperModel);
-module.exports = SamplePaper;
+syllabus = mongoose.model('Syllabus', syllabusModel);
+module.exports = syllabus;
 
