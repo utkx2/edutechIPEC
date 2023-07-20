@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import {BASE_URL} from '../../../../config'
 
-export default function SamplePaper() {
-
+export default function Syllabus() {
     const [class6, setClass6] = useState();
     const [class7, setClass7] = useState();
     const [class8, setClass8] = useState();
@@ -18,28 +17,8 @@ export default function SamplePaper() {
     const [class12, setClass12] = useState();
     const [class13, setClass13] = useState();
 
-    const clearInputs = () => {
-        // setFormData({
-        //     className: '',
-        //     fileLink: ''
-        // });
-    }
-
     // const handle
-
-    // const handleChange = (e) => {
-    //     console.log(e.target)
-    //     const { name, value } = e.target;
-    //     console.log(name)
-    //     setFormData({
-    //         className: name.slice(5),
-    //         fileLink: value
-    //     });
-    // };
-    
     const handleSubmit = (className, fileLink) => {
-        // e.preventDefault();
-        console.log(formData)
 
         const token = localStorage.getItem("token");
 
@@ -48,7 +27,7 @@ export default function SamplePaper() {
             fileLink
         });
 
-        fetch(`${BASE_URL}/api/download/samplePaper/upload`, {
+        fetch(`${BASE_URL}/api/download/syllabus/upload`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +38,6 @@ export default function SamplePaper() {
             .then((response) => response.json())
             .then((data) => {
                console.log(data, 'success')
-                clearInputs();
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -82,7 +60,7 @@ export default function SamplePaper() {
                 <div className="p-6 mx-auto overflow-x-auto font-mono ">
                     {/*---------> Table (Top Channels) */}
 
-                    <h1 className="mb-4 text-2xl font-bold">Sample Papers</h1>
+                    <h1 className="mb-4 text-2xl font-bold">Syllabus</h1>
                     <div className="px-4 py-8 mt-6 mb-6 border-[1px] border-black/20 rounded-lg shadow-xl">
                         {/* <form onSubmit={handleSubmit}> */}
                             {/* Global Section */}
