@@ -24,18 +24,6 @@ export default function SamplePaper() {
         //     fileLink: ''
         // });
     }
-
-    // const handle
-
-    // const handleChange = (e) => {
-    //     console.log(e.target)
-    //     const { name, value } = e.target;
-    //     console.log(name)
-    //     setFormData({
-    //         className: name.slice(5),
-    //         fileLink: value
-    //     });
-    // };
     
     const handleSubmit = (className, fileLink) => {
         // e.preventDefault();

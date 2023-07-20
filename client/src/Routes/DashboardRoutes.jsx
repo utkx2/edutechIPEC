@@ -29,7 +29,7 @@ import WebsiteHome from '../Admin/partials/dashboard/DynamicPages/Home'
 import WebsiteAbout from '../Admin/partials/dashboard/DynamicPages/About'
 import WebsiteWhy from '../Admin/partials/dashboard/DynamicPages/Why'
 import WebsiteTestimonials from '../Admin/partials/dashboard/DynamicPages/Testimonials'
-import WebsiteOurPrograms from '../Admin/partials/dashboard/DynamicPages/OurPrograms'
+import WebsiteResult from '../Admin/partials/dashboard/DynamicPages/Result'
 import WebsiteCourses from '../Admin/partials/dashboard/DynamicPages/Courses'
 import WebsiteContact from '../Admin/partials/dashboard/DynamicPages/Contact'
 // import DashboardUserDetail from "../Admin/partials/dashboard/users/DashboardUserDetail";
@@ -68,8 +68,13 @@ import WebsiteContact from '../Admin/partials/dashboard/DynamicPages/Contact'
 import AllUserRegistrations from "../Admin/partials/dashboard/Registrations/UserRegistrations";
 import UserRegistrationDetails from "../Admin/partials/dashboard/Registrations/UserRegistrationDetails";
 import SamplePaper from "../Admin/partials/dashboard/Downloads/SamplePaper";
-import EBrochures from "../Admin/partials/dashboard/Downloads/EBrochures";
+import EBrochures from "../Admin/partials/dashboard/Downloads/EngineeringBrochure";
 import Syllabus from "../Admin/partials/dashboard/Downloads/Syllabus";
+import EngineeringBrochure from "../Admin/partials/dashboard/Downloads/EngineeringBrochure";
+import MedicalBrochure from "../Admin/partials/dashboard/Downloads/MedicalBrochure";
+import Questions from "../Admin/partials/dashboard/Exam/Questions";
+import Answers from "../Admin/partials/dashboard/Exam/Answers";
+import List from "../Admin/partials/dashboard/Exam/List";
 // import Sector from "../Admin/partials/dashboard/options/sector";
 // import Category from "../Admin/partials/dashboard/options/category";
 // import Product from "../Admin/partials/dashboard/options/product";
@@ -123,8 +128,8 @@ const DashboardRoutes = () => {
               element={<PrivateRoute element={WebsiteTestimonials} />}
             />
             <Route
-              path="/our-programs"
-              element={<PrivateRoute element={WebsiteOurPrograms} />}
+              path="/result"
+              element={<PrivateRoute element={WebsiteResult} />}
             />
             <Route
               path="/courses"
@@ -149,6 +154,26 @@ const DashboardRoutes = () => {
             <Route
               path="/downloads/syllabus"
               element={<PrivateRoute element={Syllabus} />}
+            />
+            <Route
+              path="/downloads/engineering-brochure"
+              element={<PrivateRoute element={EngineeringBrochure} />}
+            />
+            <Route
+              path="/downloads/medical-brochure"
+              element={<PrivateRoute element={MedicalBrochure} />}
+            />
+            <Route
+              path="/questions"
+              element={<PrivateRoute element={Questions} />}
+            />
+            <Route
+              path="/answers"
+              element={<PrivateRoute element={Answers} />}
+            />
+            <Route
+              path="/list"
+              element={<PrivateRoute element={List} />}
             />
          </Routes>
     </div>
