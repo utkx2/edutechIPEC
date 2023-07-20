@@ -19,16 +19,17 @@ router.get('/get', async (req, res) => {
 // http://localhost:3000/api/facultyHomePage/upload
 router.post('/upload', async (req, res) => {
     try {
-        const { teacherDetails
+        const {
+            collegeName, name,
+            facultyImg, classroom, experience
         } = req.body;
         const newFacultyCard = new FacultyCards({
-            // collegeName, name,
-            // facultyImg, classroom, experience
-            teacherDetails
+            collegeName, name,
+            facultyImg, classroom, experience
         });
         await newFacultyCard.save();
 
-        res.json({ message: 'faculty card added successfully', card: newFacultyCard });
+        res.json({ message: 'student card added successfully', card: newFacultyCard });
     }
     catch (error) {
         console.error('error occured', error);
@@ -52,7 +53,7 @@ router.put('/edit/:id', async (req, res) => {
             },
             { new: true } // This option returns the updated document
         );
-        res.json({ message: 'faculty home page card updated successfully', card: updatedCard });
+        res.json({ message: 'Student home page card updated successfully', card: updatedCard });
     }
     catch (error) {
         console.error('error occured', error);
@@ -81,24 +82,4 @@ module.exports = router;
 //             "facultyImg": "https://example.com/faculty-img.jpg",
 //                 "classroom": "Room A",
 //                     "experience": "10 years"
-// }
-
-
-// {
-//     "teacherDetails": [
-//         {
-//             "collegeName": "ABC University",
-//             "name": "John Doe",
-//             "imageUrl": "https://example.com/john-doe.jpg",
-//             "classroom": "Room A",
-//             "experience": "5 years"
-//         },
-//         {
-//             "collegeName": "XYZ College",
-//             "name": "Jane Smith",
-//             "imageUrl": "https://example.com/jane-smith.jpg",
-//             "classroom": "Room B",
-//             "experience": "8 years"
-//         }
-//     ]
 // }
