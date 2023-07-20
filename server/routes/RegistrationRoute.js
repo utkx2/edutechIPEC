@@ -48,7 +48,7 @@ router.get("/get", async (req, res) => {
 })
 
 
-// http://localhost:3000/api/registration/get
+// http://localhost:3000/api/registration/get/:id
 router.get("/get/:id", async (req, res) => {
     const id = req.params.id;
     try {
