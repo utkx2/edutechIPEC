@@ -8,7 +8,6 @@ router.post('/upload', async (req, res) => {
 
     const { AboutIPEC, ipecAdvantages, ipecPedagogy } = req.body;
     console.log(AboutIPEC, ipecAdvantages, ipecPedagogy);
-
     try {
         const AboutObj = new About({ AboutIPEC, ipecAdvantages, ipecPedagogy });
         const savedData = await AboutObj.save();
@@ -87,3 +86,28 @@ router.delete("/remove", async (req, res) => {
 })
 
 module.exports = router;
+
+
+// {
+//     "AboutIPEC": "IPEC is a leading educational institution...",
+//         "ipecAdvantages": [
+//             {
+//                 "title": "Expert Faculty",
+//                 "description": "Our faculty members are highly experienced..."
+//             },
+//             {
+//                 "title": "State-of-the-Art Infrastructure",
+//                 "description": "We provide modern classrooms and labs..."
+//             }
+//         ],
+//             "ipecPedagogy": [
+//                 {
+//                     "title": "Interactive Learning",
+//                     "description": "We emphasize interactive learning methodologies..."
+//                 },
+//                 {
+//                     "title": "Project-Based Learning",
+//                     "description": "Students work on real-world projects..."
+//                 }
+//             ]
+//}
