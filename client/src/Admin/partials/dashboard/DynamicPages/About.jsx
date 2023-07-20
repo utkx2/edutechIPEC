@@ -33,7 +33,6 @@ export default function About() {
 
 const handleChangePedagogy = (e) => {
     const { name, value } = e.target;
-    console.log(name, value)
     setIpecPedagogy((prevData) => ({
         ...prevData,
         [name]: value,
@@ -42,7 +41,6 @@ const handleChangePedagogy = (e) => {
 
 const handleChangeAdvantage = (e) => {
     const { name, value } = e.target;
-    console.log(name, value)
     setIpecAdvantages((prevData) => ({
         ...prevData,
         [name]: value,
@@ -93,7 +91,7 @@ const handleSubmit = (e) => {
     const formData = {
         AboutIPEC: aboutIPEC,
         ipecAdvantages: ipecAdvantagesArr,
-        ipecAdvantages: ipecPedagogyArr
+        ipecPedagogy: ipecPedagogyArr
     }
     
     const token = localStorage.getItem("token");
