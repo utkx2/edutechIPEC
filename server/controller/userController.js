@@ -82,7 +82,7 @@ class User {
                     user: encode,
                 });
             }
-
+            console.log(req.body)
             // Check if the identifier is a valid email or mobile number
             const isEmail = /\S+@\S+\.\S+/.test(identifier); // Check if it matches email format
             const isMobileNumber = /^\d{10}$/.test(identifier); // Check if it's a 10-digit number

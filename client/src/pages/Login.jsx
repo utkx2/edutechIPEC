@@ -10,8 +10,8 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState('')
 
     const [formData, setFormData] = useState({
-        email: "",
-        password: "",
+        identifier: "",
+        userPassword: "",
     });
     
 
@@ -35,20 +35,17 @@ const Login = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 if(data.errors) {
                     setErrorMessage(data.errors)
                 } else {                    
                     // Store response in local storage
-                    localStorage.setItem("token", JSON.stringify(data.authtoken));
-                    navigate("/dashboard/users");
+                    localStorage.setItem("token", JSON.stringify(data.token));
                     // Navigate to the desired page
-                    // const user = data.user.data
-                    // if (user.userRole == "admin" || user.userRole == "hr" || user.userRole == "employee")
-                    //     navigate("/dashboard/users");
-                    // else if (user.userRole == "user")
-                    //     navigate('/dashboard/userDashboard')
-                    // else navigate("/");
+                    const user = data.data
+                    localStorage.setItem("user", JSON.stringify(user));
+                    if (user.userRole == "admin")
+                        navigate("/dashboard/users");
+                    else navigate("/");
                     console.log("Login successful");
                 }
             })
@@ -63,12 +60,11 @@ const Login = () => {
         <>
             <div className='flex items-center justify-center w-full p-4 py-10 bg-[#d1e9f9]'>
             <div>
-
-            
+           
                 <div className="max-w-[1444px] border py-6 px-12 shadow-lg bg-white">
 
                 <h1 className=' text-3xl text-[#1f1d5a] font-bold text-center'>
-                LOGIN FORM
+                LOGIN 
                 </h1> 
                 <div className="flex flex-col gap-4 p-6 px-4 py-8 mx-auto mt-6 md:flex-row">
                     <div className="w-full m-2 mb-4 md:w-1/2 md:mb-0">
@@ -83,9 +79,9 @@ const Login = () => {
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
                                     type="text"
-                                    name="email"
+                                    name="identifier"
                                     id="floating_email"
-                                    value={formData.email}
+                                    value={formData.identifier}
                                     onChange={handleInputChange}
                                     className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=""
@@ -94,15 +90,15 @@ const Login = () => {
                                 <label
                                     htmlFor="floating_email"
                                     className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Email
+                                    Email or Mobile Number
                                 </label>
                             </div>
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
                                     type="password"
-                                    name="password"
+                                    name="userPassword"
                                     id="floating_password"
-                                    value={formData.password}
+                                    value={formData.userPassword}
                                     onChange={handleInputChange}
                                     className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=""
@@ -114,40 +110,10 @@ const Login = () => {
                                     Password
                                 </label>
                             </div>
-                            {/* <div className="mb-4">
-                                <label className="block mb-2 font-semibold">
-                                    Email
-                                    <span className="relative top-0 right-0 text-red-700">*</span>
-                                    <input required
-                                        type="text"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                        placeholder="Enter Email" />
-                                </label>
-                            </div> */}
-                            {/* <div className="mb-4">
-                                <label className="block mb-2 font-semibold" htmlFor="password">
-                                    Password
-                                    <span className="relative top-0 right-0 text-red-700">*</span>
-                                    <input
-                                        className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                                        type="password"
-                                        id="password"
-                                        name="password"
-                                        value={formData.password}
-                                        placeholder="Enter your password"
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </label>
-                            </div> */}
                             <div className="flex items-center justify-between mb-4">
                                 <button
                                     type="submit"
                                     className="text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    
                                 >
                                     Sign In
                                 </button>

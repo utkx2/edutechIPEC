@@ -32,6 +32,7 @@ const facultyHomePage = require('./routes/FacultyRoute');
 const carousel = require('./routes/CarouselRoute');
 const download = require('./routes/DownloadRoute');
 const results = require('./routes/ResultsRoute');
+const examResults = require('./routes/ExamResults');
 
 // Routes
 app.get('/api', (req, res) => {
@@ -49,7 +50,7 @@ app.get('/api', (req, res) => {
 app.use("/api/user", userRouter);
 app.use('/api/aboutipec', aboutRouter);
 app.use('/api/exam', exam);
-
+app.use('/api/examresults', examResults);
 app.use('/api/registration', registrationRouter);
 app.use('/api/content', contentRouter);
 app.use('/api/whyIPEC', whyIPEC_Router);

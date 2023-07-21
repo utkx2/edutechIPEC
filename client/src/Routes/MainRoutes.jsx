@@ -13,8 +13,10 @@ import ContactUs from "../pages/Contact-us";
 import Career from "../pages/Career";
 import Testimonials from "../pages/Testimonials";
 import NotFound from '../pages/NotFound';
+import Exam from '../pages/Exam';
 import Login from '../pages/Login';
 import Signup from '../pages/SignUp';
+import ResultPage from '../pages/resultPage';
 
 const MainRoutes = () => {
   return (
@@ -24,6 +26,7 @@ const MainRoutes = () => {
             <Route path="/" element={<Home />} /> 
             <Route path="/about" element={<About />} />
             <Route path="/results" element={<Result />} />
+            <Route path="/result/:score" element={<ResultPage/>} />
             <Route path="/mission" element={<OurMission />} />
             <Route path="/why" element={<WhyIPEC />} />
             <Route path="/registration" element={<Registration />} />
@@ -32,6 +35,7 @@ const MainRoutes = () => {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/careers" element={<Career />} />
             <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/exam/:id" element={<Exam />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<NotFound />} />

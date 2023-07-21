@@ -22,4 +22,13 @@ router.get('/allexams', examController.getAllExams);
 //Toggle status
 router.put('/byid/:id/toggleStatus', examController.toggleStatus);
 
+//Exams with status active
+router.get('/active-exams', examController.getExamsWithStatusTrue);
+
+//Exam without answers
+router.get('/student-exam/:id', examController.getExamByIdWithoutCorrect);
+
+//Calculate Score
+router.post('/getscore/:id', examController.getExamScore);
+
 module.exports = router;
