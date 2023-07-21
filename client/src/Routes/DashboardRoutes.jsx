@@ -20,10 +20,9 @@ import EBrochures from "../Admin/partials/dashboard/Downloads/EngineeringBrochur
 import Syllabus from "../Admin/partials/dashboard/Downloads/Syllabus";
 import EngineeringBrochure from "../Admin/partials/dashboard/Downloads/EngineeringBrochure";
 import MedicalBrochure from "../Admin/partials/dashboard/Downloads/MedicalBrochure";
-import Questions from "../Admin/partials/dashboard/Exam/Questions";
-import Answers from "../Admin/partials/dashboard/Exam/Answers";
+import AddExam from "../Admin/partials/dashboard/Exam/AddExam";
 import List from "../Admin/partials/dashboard/Exam/List";
-
+import UpdateExam from "../Admin/partials/dashboard/Exam/UpdateExam";
 
 const DashboardRoutes = () => {
   return (
@@ -94,12 +93,12 @@ const DashboardRoutes = () => {
               element={<PrivateRoute element={MedicalBrochure} />}
             />
             <Route
-              path="/questions"
-              element={<PrivateRoute element={Questions} />}
+              path="/add-exam"
+              element={<PrivateRoute element={AddExam} />}
             />
             <Route
-              path="/answers"
-              element={<PrivateRoute element={Answers} />}
+              path="/update/:id"
+              element={<PrivateRoute element={UpdateExam} />}
             />
             <Route
               path="/list"

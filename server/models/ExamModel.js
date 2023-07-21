@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const { sentenceCase } = require('../config/functions');
 
 const optionSchema = new mongoose.Schema({
     text: {
         type: String,
-        required: true
+        required: true,
+        set: sentenceCase
     },
     imageUrl: {
         type: String // URL to the image for the option
@@ -13,7 +15,8 @@ const optionSchema = new mongoose.Schema({
 const questionSchema = new mongoose.Schema({
     text: {
         type: String,
-        required: true
+        required: true,
+        set: sentenceCase
     },
     imageUrl: {
         type: String // URL to the image for the question
@@ -21,43 +24,48 @@ const questionSchema = new mongoose.Schema({
     options: {
         type: [optionSchema],
         required: true,
-        // validate: [optionsLimit, 'Questions must have at least 4 options']
     },
     correctOption: {
         type: Number,
-        required: function () {
-            return this.answerType === 'multiple-choice';
-        },
-        min: 0,
-        max: 3
+        required: true,
     },
-    answerType: {
+    type: {
         type: String,
         enum: ['multiple-choice', 'text-input'],
         required: true
     },
     correctTextInputAnswer: {
-        type: String, // For text-input type questions, store the correct answer here
+        type: String,
         required: function () {
             return this.answerType === 'text-input';
-        }
+        },
+        set: (value) => value.toLowerCase(),
     }
 });
 
-function optionsLimit(val) {
-    return val.length >= 4;
-}
+questionSchema.methods.toJSON = function () {
+    const question = this.toObject();
+    delete question.correctOption;
+    delete question.correctTextInputAnswer;
+    return question;
+};
 
 const examSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        set: sentenceCase
     },
     questions: {
         type: [questionSchema],
         required: true
+    },
+    status: {
+        type: Boolean,
+        default: false
     }
-});
+},
+    { timestamps: true });
 
 const Exam = mongoose.model('Exam', examSchema);
 

@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Import Router
 const userRouter = require('./routes/userRoutes')
 const aboutRouter = require('./routes/AboutRoute');
+const exam = require('./routes/ExamRoute');
 const contentRouter = require('./routes/ContentRoute');
 const contactRouter = require('./routes/ContactRoute');
 const registrationRouter = require('./routes/RegistrationRoute');
@@ -29,7 +30,6 @@ const studentHomePage = require('./routes/StudentHomePageRoute');
 const ourPrograms = require('./routes/OurProgramsHomePageRoute');
 const facultyHomePage = require('./routes/FacultyRoute');
 const carousel = require('./routes/CarouselRoute');
-const exam = require('./routes/ExamRoute');
 const download = require('./routes/DownloadRoute');
 const results = require('./routes/ResultsRoute');
 
@@ -48,6 +48,7 @@ app.get('/api', (req, res) => {
 
 app.use("/api/user", userRouter);
 app.use('/api/aboutipec', aboutRouter);
+app.use('/api/exam', exam);
 
 app.use('/api/registration', registrationRouter);
 app.use('/api/content', contentRouter);
@@ -61,7 +62,6 @@ app.use('/api/studentHomePage', studentHomePage);
 app.use('/api/ourPrograms', ourPrograms);
 app.use('/api/facultyHomePage', facultyHomePage);
 app.use('/api/carousel', carousel);
-app.use('/api/exam', exam);
 app.use('/api/download', download);
 app.use('/api/results', results);
 
