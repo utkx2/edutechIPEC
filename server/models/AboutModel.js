@@ -1,26 +1,29 @@
 const mongoose = require('mongoose');
+const { sentenceCase } = require('../config/functions');
 const { Schema } = mongoose;
 
-const AboutModel = new Schema({
-
-    AboutIPEC: {
-        type: String,
+const AboutModel = new Schema(
+    {
+        AboutIPEC: {
+            type: String,
+            set: sentenceCase
+        },
+        ipecAdvantages: {
+            type: [{
+                title: {type: String, set:sentenceCase},
+                description: {type: String, set:sentenceCase},
+            }],
+        },
+        ipecPedagogy: {
+            type: [{
+                title: {type: String, set:sentenceCase},
+                description: {type: String, set:sentenceCase},
+            }],
+        }
     },
-    ipecAdvantages: {
-        type: [{
-            title: String,
-            description: String,
-        }],
-    },
-    ipecPedagogy: {
-        type: [{
-            title: String,
-            description: String
-        }],
-    }
-},
+    { timestamps: true }
 );
 
-const About = mongoose.model('About', AboutModel);
+const About = mongoose.model('about', AboutModel);
 
 module.exports = About;

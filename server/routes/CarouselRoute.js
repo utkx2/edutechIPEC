@@ -72,11 +72,3 @@ router.delete('/delete/:id', async (req, res) => {
 
 module.exports = router;
 
-
-// {
-//     "images": [
-//         "https://example.com/image1.jpg",
-//         "https://example.com/image2.jpg",
-//         "https://example.com/image3.jpg"
-//     ]
-// }

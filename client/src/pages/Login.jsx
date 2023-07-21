@@ -26,7 +26,7 @@ const Login = () => {
         e.preventDefault();
         console.log(formData)
         // Make API request to login
-        fetch(`${BASE_URL}/api/auth/login`, {
+        fetch(`${BASE_URL}/api/user/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
