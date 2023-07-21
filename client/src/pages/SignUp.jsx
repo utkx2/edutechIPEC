@@ -11,7 +11,6 @@ const Signup = () => {
         password: '',
         phoneNumber: '',
         role: 'user',
-        userId: 'userID'
     });
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
