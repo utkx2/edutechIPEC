@@ -12,7 +12,7 @@ function Result() {
         </div>
 
         <div className="flex justify-center max-w-6xl mx-auto overflow-x-auto text-start">
-          <table className="w-full border-[2px] border-black/10">
+          <table className="w-full md:max-w-2xl lg:max-w-4xl border-[2px] border-black/10">
             <thead>
               <tr className="w-full bg-gray-200">
                 <th className="px-4 py-2">Centre Name</th>

@@ -1,6 +1,40 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 function About() {
+  const [userData, setUserData] = useState([]);
+
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/AboutIpec/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(response)
+      if(response.status == 200){
+        console.log('successfully get all registrations')
+      }
+      if(response.status == 500){
+        console.log('failed get all registrations')
+      }
+      setUserData(response.data);
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log('useEffect')
+    fetchData();
+  }, []);
+
   return (
     <div className="bg-[#d1e9f9]">
       
@@ -13,21 +47,9 @@ function About() {
           </h2>
         </div>
         <p className="text-[16px] leading-relaxed text-center ">
-          Over the years, the name of Vidyamandir Classes (IPEC) has become
-          synonymous with success in IITJEE, NEET &amp; FOUNDATION. Our goal at
-          Vidyamandir Classes (IPEC) is to provide knowledge and guidance and
-          thereby create an environment that not only guides students to the
-          path of success but also inspires them to recognize and explore their
-          own potential.{" "}
-          <p className="mt-2 font-semibold">
-            The fact that more than 1,00,000 students appear every year for the
-            IPEC Test for the limited seats on offer is ample testimony to IPEC's
-            popularity and credence within the IITJEE, NEET &amp; FOUNDATION
-            aspirants' community.
-          </p>{" "}
-          All Courses are based on the time-tested teaching methodology, which
-          has been perfected by IPEC and has produced unmatched results in IITJEE
-          consistently over the past 35 years.
+         {userData.AboutIPEC}
+         {" "}
+          
         </p>
       </div>
 
@@ -60,8 +82,7 @@ function About() {
                   </h3>
                 </div>
                 <p className="leading-relaxed text-gray-700">
-                  Core concepts explained in a simple and easy-to-understand
-                  manner
+                {userData.ipecAdvantages}
                 </p>
               </div>
             </div>
@@ -79,8 +100,7 @@ function About() {
                   </h3>
                 </div>
                 <p className="leading-relaxed text-gray-700">
-                  Accurate and thorough explanations to ensure students
-                  internalize core concepts
+                {userData.ipecAdvantages}
                 </p>
               </div>
             </div>
@@ -98,7 +118,7 @@ function About() {
                   </h3>
                 </div>
                 <p className="leading-relaxed text-gray-700">
-                  A comprehensive set of question banks for every topic
+                {userData.ipecAdvantages}
                 </p>
               </div>
             </div>
@@ -116,8 +136,7 @@ function About() {
                   </h3>
                 </div>
                 <p className="leading-relaxed text-gray-700">
-                  These provide a simulated exam experience to students to
-                  prepare them for the pressures of IIT-JEE/NEET entrances
+                {userData.ipecAdvantages}
                 </p>
               </div>
             </div>
@@ -146,7 +165,7 @@ function About() {
                   Concept Lectures &amp; Study Material
                 </h3>
                 <p className="leading-relaxed text-gray-700">
-                  Attend Concept Lectures &amp; Access Curated Study Material
+                {userData.ipecPedagogy}
                 </p>
               </div>
               <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
@@ -159,7 +178,7 @@ function About() {
                   Live Classes &amp; Doubt Clearing
                 </h3>
                 <p className="leading-relaxed text-gray-700">
-                  Study Real Life Application &amp; Clear Doubts
+                {userData.ipecPedagogy}
                 </p>
               </div>
               <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
@@ -170,7 +189,7 @@ function About() {
                 />
                 <h3 className="mb-2 text-xl font-semibold">Online Tests</h3>
                 <p className="leading-relaxed text-gray-700">
-                  Test Your Concepts Using Curated Sample Papers
+                {userData.ipecPedagogy}
                 </p>
               </div>
               <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
@@ -183,7 +202,7 @@ function About() {
                   Performance Dashboard
                 </h3>
                 <p className="leading-relaxed text-gray-700">
-                  Evaluate Your Performances With In-Depth Reports
+                {userData.ipecPedagogy}
                 </p>
               </div>
             </div>
