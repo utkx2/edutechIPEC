@@ -17,11 +17,18 @@ function Home() {
 
 
   const [userData, setUserData] = useState({})
-
+  const [carousel, setCarousel] = useState([]);
+  const [programs, setPrograms] = useState([]);
+  const [faculty, setFaculty] = useState([]);
+  const [student, setStudent] = useState([]);
+  // http://localhost:3000/api/facultyHomePage/get
+  //  http://localhost:3000/api/ourPrograms/get/
+  //  http://localhost:3000/api/carousel/get
+  // http://localhost:3000/api/studentHomePage/get
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/home/content`,
+      const responseCarousel = await axios.get(
+        `${BASE_URL}/api/carousel/get`,
         {
           method: "GET",
           headers: {
@@ -30,8 +37,46 @@ function Home() {
           },
         }
       );
-      console.log(response)
-      setUserData(response.data)
+      // console.log(responseCarousel.data);
+      setCarousel(responseCarousel.data);
+      // console.log(carousel)
+      const responsePrograms = await axios.get(
+        `${BASE_URL}/api/ourPrograms/get/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      const responseFaculty = await axios.get(
+        `${BASE_URL}/api/facultyHomePage/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      const responseStudent = await axios.get(
+        `${BASE_URL}/api/studentHomePage/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      // console.log(responsePrograms.data);
+
+      setStudent(responseStudent.data);
+      setFaculty(responseFaculty.data);
+      setPrograms(responsePrograms.data);
+      //setUserData(response.data)
+      // console.log(responseCarousel.data);
     } catch (error) {
       console.error(error);
     }
@@ -40,6 +85,25 @@ function Home() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log('Carousel:', carousel);
+  }, [carousel]);
+
+  useEffect(() => {
+    console.log('Programs:', programs);
+  }, [programs]);
+
+  useEffect(() => {
+    console.log('Faculty:', faculty);
+  }, [faculty]);
+
+  useEffect(() => {
+    console.log('Student:', student);
+  }, [student]);
+
+  console.log(carousel[0]?.images[0]);
+
   return (
     <div className=''>
 
@@ -60,7 +124,7 @@ function Home() {
 
       <div className='my-10'>
         <h1 className=' text-3xl text-[#1f1d5a] font-bold text-center'>
-          Ouick Links
+          Quick Links
         </h1>
 
         <div className='flex items-center justify-center py-8'>
