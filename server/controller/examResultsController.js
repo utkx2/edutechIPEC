@@ -33,49 +33,44 @@ const getExamNameAndScoreByUserId = async (req, res) => {
   }
 };
 
-// Controller to get all usernames, scores, and links to download binary in text format by exam id
+// Controller to get all usernames, scores resonses by exam id
 const getUsersScoresAndTextLinksByExamId = async (req, res) => {
   const examId = req.params.examId;
 
   try {
-    const examResults = await ExamResults.findOne({ examId });
+    // Find the ExamResults document for the given examId and populate the userId field
+    const examResults = await ExamResults.findOne({ examId }).populate('results.userId');
 
     if (!examResults) {
       return res.status(404).json({ message: 'No exam results found for the exam.' });
     }
 
-    // Fetch all users
-    const users = await User.find({});
+    // Get the user ids from the examResults
+    const userIds = examResults.results.map((result) => result.userId);
 
-    const userResults = [];
-    for (const result of examResults.results) {
-      const user = users.find((user) => user._id.toString() === result.userId.toString());
+    // Find the corresponding users in the User model using the userIds
+    const users = await User.find({ _id: { $in: userIds } }).select('name');
 
-      if (user) {
-        // Step 1: Convert binary data back to a text file
-        const textFileName = `result_${user.name}.txt`;
-        const textFilePath = path.join(__dirname, '..', 'public', 'exam_results', textFileName);
-        const textFileContent = Buffer.from(result.binaryData, 'base64').toString();
-        fs.writeFileSync(textFilePath, textFileContent);
+    // Create a map of userId to username for easy lookup
+    const userIdToUsernameMap = {};
+    users.forEach((user) => {
+      userIdToUsernameMap[user._id] = user.name;
+    });
 
-        userResults.push({
-          username: user.name,
-          score: result.score,
-          linkToDownloadText: `/api/examresults/download/${result._id}`,
-          textFileName: textFileName,
-        });
-      }
-    }
+    // Map the results with usernames
+    const userResults = examResults.results.map((result) => ({
+      username: userIdToUsernameMap[result.userId._id],
+      score: result.score,
+      response: result.response,
+    }));  
 
     return res.json({ userResults });
   } catch (error) {
-    console.error('Error fetching users, scores, and links by exam id:', error);
+    console.error('Error fetching by exam id:', error);
     res.status(500).json({ message: 'Error fetching exam results.' });
   }
 };
 
-
-  
 module.exports = {
   getExamNameAndScoreByUserId,
   getUsersScoresAndTextLinksByExamId

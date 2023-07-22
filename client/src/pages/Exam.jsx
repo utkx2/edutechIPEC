@@ -29,35 +29,26 @@ const Exam = () => {
 
     const handleChangeQuestion = (questionId, questionNumber, value) => {
         (function () {
-          handleInputChange(questionId, value);
-          handleDataChange(questionNumber, value);
+            handleInputChange(questionId, value);
+            handleDataChange(questionNumber, value);
         })();
-      };
-      
+    };
 
-    const handleDataChange = (questionNumber, value) =>{
+
+    const handleDataChange = (questionNumber, value) => {
         setData((prevResponses) => ({
             ...prevResponses,
             [questionNumber]: value,
-          }));
+        }));
     }
 
     const handleInputChange = (questionId, value) => {
-        // Find the question object corresponding to the questionId
-        const question = examData.questions.find((q) => q._id === questionId);
-      
-        // Update the responses with the selected option/text input for the question
         setResponses((prevResponses) => ({
-          ...prevResponses,
-          [questionId]: value,
+            ...prevResponses,
+            [questionId]: value,
         }));
-      
-        // Call handleDataChange function here with the updated responses and question.questionNumber
-        if (question) {
-          handleDataChange(questionId, value, question.questionNumber);
-        }
-      };
-      
+    };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,24 +56,23 @@ const Exam = () => {
         console.log('Exam Responses:', responses);
         const user = JSON.parse(localStorage.getItem("user"));
 
-          // Step 3: Call the API to get the exam score and store the exam result
-          const examId = '64ba81a0eddf65d1a41c47a3';
-          const userId = user._id;
-    console.log(rdata);
-          axios.post(`http://localhost:3000/api/exam/getscore/${examId}`, {
+        // Step 3: Call the API to get the exam score and store the exam result
+        const examId = '64ba81a0eddf65d1a41c47a3';
+        const userId = user._id;
+        console.log(rdata);
+        axios.post(`http://localhost:3000/api/exam/getscore/${examId}`, {
             submittedAnswers: responses,
             userId: userId,
             response: rdata
-          })
-          .then((response) => {
-            console.log('Exam Score:', response.data.score);
-            navigate(`/result/${response.data.score}`)
-          })
-          .catch((error) => {
-            console.error('Error getting exam score:', error);
-            // Handle errors if any
-          });
-      };
+        })
+            .then((response) => {
+                console.log('Exam Score:', response.data.score);
+                navigate(`/result/${response.data.score}`)
+            })
+            .catch((error) => {
+                console.error('Error getting exam score:', error);
+            });
+    };
 
     return (
         <div className="bg-red-500 text-white ">
@@ -94,9 +84,9 @@ const Exam = () => {
                 {examData && (
                     <>
                         <h1 className="text-3xl font-bold mb-6 text-center text-black">{examData.name}</h1>
-                        {examData.questions.map((question) => (
+                        {examData.questions.map((question, questionIndex) => (
                             <div key={question._id} className="shadow-lg p-4 border border-red-800 rounded bg-white">
-                                <p className="font-medium text-black mb-2">{`Question ${question.questionNumber}: ${question.text}`}</p>
+                                <p className="font-medium text-black mb-2">{`Question ${questionIndex + 1}: ${question.text}`}</p>
                                 {question.imageUrl && <img className="w-48 h-48 p-2 m-2" src={question.imageUrl} alt={`Question ${question.text}`} />}
                                 {question.type === 'multiple-choice' ? (
                                     question.options.map((option, optionIndex) => (
@@ -106,7 +96,7 @@ const Exam = () => {
                                                 name={`question_${question._id}`}
                                                 value={optionIndex}
                                                 id={`q_${question._id}_option_${option._id}`}
-                                                onChange={(e) => handleChangeQuestion(question._id,question.questionNumber, e.target.value)}
+                                                onChange={(e) => handleChangeQuestion(question._id, questionIndex + 1, e.target.value)}
                                             />
                                             <label htmlFor={`q_${question._id}_option_${option._id}`}>
                                                 {option.imageUrl && <img className="w-48 h-48 p-2 m-2" src={option.imageUrl} alt={`Option ${option.text}`} />}
@@ -120,7 +110,7 @@ const Exam = () => {
                                             type="text"
                                             name={`question_${question._id}`}
                                             value={responses[question._id]}
-                                            onChange={(e) => handleInputChange(question._id, e.target.value)}
+                                            onChange={(e) => handleChangeQuestion(question._id, questionIndex + 1, e.target.value)}
                                             placeholder="Enter your answer..."
                                         />
 

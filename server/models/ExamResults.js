@@ -9,12 +9,11 @@ const examResultsSchema = new mongoose.Schema({
   results: [{
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Users',
       required: true,
     },
     response: {
       type: mongoose.Schema.Types.Mixed,
-      required: true,
     },
     score:{
         type:Number,
