@@ -9,15 +9,15 @@ const JWT_SECRET = 'alpha$dev';
 
 // http://localhost:3000/api/Contact/upload
 router.post('/upload', async (req, res) => {
-    const { token } = req.cookies
-    // console.log(token);
+    //  const { token } = req.cookies
+    //  console.log(token);
     let userData;
-    if (token) {
-        userData = jwt.verify(token, JWT_SECRET);
-        // console.log(userData);
-    }
+    // if (token) {
+    //     userData = jwt.verify(token, JWT_SECRET);
+    //     // console.log(userData);
+    // }
     try {
-        const userId = userData.user.id;
+        // const userId = userData.user.id;
         // console.log(userId);
         const { name, email, mobile, message } = req.body;
 
@@ -26,7 +26,6 @@ router.post('/upload', async (req, res) => {
         }
 
         const contactForm = new Contact({
-            userId,
             name,
             email,
             mobile,
