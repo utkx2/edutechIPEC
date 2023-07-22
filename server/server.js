@@ -1,51 +1,78 @@
-const connectDb = require('./db')
+require('./config/db');
+require('dotenv').config();
 const express = require('express');
-const app = express();
-const port = 3000;
-const contentRoutes = require('./routes/ContentRoute');
-const ContactRoutes = require('./routes/ContactRoute');
-const RegistrationRoute = require('./routes/RegistrationRoute');
 const bodyParser = require('body-parser');
 const cors = require("cors");
-const AboutRoute = require('./routes/AboutRoute');
-const WhyIPEC_Route = require('./routes/WhyIpecRoute');
-const FacultyHireRoute = require('./routes/FacultyHireRoute');
-const CoursesRoute = require('./routes/CoursesRoute');
-const cookieParser = require('cookie-parser');
-// const path = require('path');
+const path = require('path');
+const app = express();
 
 // Middleware
 app.use(cors());
-// app.use(express.static(path.join(__dirname, './dist')));
+app.use(express.static(path.join(__dirname, './dist')));
+app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true, parameterLimit: 50000 }));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.json(({ limit: '10mb' })));
-app.use(cookieParser());
 
+// Import Router
+const userRouter = require('./routes/userRoutes')
+const aboutRouter = require('./routes/AboutRoute');
+const exam = require('./routes/ExamRoute');
+const contentRouter = require('./routes/ContentRoute');
+const contactRouter = require('./routes/ContactRoute');
+const registrationRouter = require('./routes/RegistrationRoute');
+const whyIPEC_Router = require('./routes/WhyIpecRoute');
+const facultyHireRouter = require('./routes/FacultyHireRoute');
+const coursesRouter = require('./routes/CoursesRoute');
+const testimonials = require('./routes/TestimonialsRoute');
+const home = require('./routes/HomeRoute');
+const studentHomePage = require('./routes/StudentHomePageRoute');
+const ourPrograms = require('./routes/OurProgramsHomePageRoute');
+const facultyHomePage = require('./routes/FacultyRoute');
+const carousel = require('./routes/CarouselRoute');
+const download = require('./routes/DownloadRoute');
+const results = require('./routes/ResultsRoute');
+const examResults = require('./routes/ExamResults');
 
-connectDb();
+// Routes
+app.get('/api', (req, res) => {
+  const htmlResponse = `
+    <html>
+      <body>
+        <h1>Welcome to EduTech</h1>
+        <p>Chick <a href="https://www.edutech.com">here</a> to visit EduTech.com.</p>
+      </body>
+    </html>
+  `;
+  res.send(htmlResponse);
+});
 
-app.use('/api/auth', require('./auth/auth'));
-app.use('/api/registration', RegistrationRoute);
-app.use('/api/content', contentRoutes);
-app.use('/api/AboutIpec', AboutRoute);
-app.use('/api/whyIPEC', WhyIPEC_Route);
-app.use('/api/facultyHire', FacultyHireRoute);
-app.use('/api/Courses', CoursesRoute);
-app.use('/api/Contact', ContactRoutes);
-app.use('/api/testimonials', require('./routes/TestimonialsRoute'));
-app.use('/api/home', require('./routes/HomeRoute'));
-app.use('/api/studentHomePage', require('./routes/StudentHomePageRoute'));
-app.use('/api/ourPrograms', require('./routes/OurProgramsHomePageRoute'));
-app.use('/api/facultyHomePage', require('./routes/FacultyRoute'));
-app.use('/api/carousel', require('./routes/CarouselRoute'));
-app.use('/api/exam', require('./routes/ExamRoute'));
-app.use('/api/download', require('./routes/DownloadRoute'));
-app.use('/api/results', require('./routes/ResultsRoute'));
+app.use("/api/user", userRouter);
+app.use('/api/aboutipec', aboutRouter);
+app.use('/api/exam', exam);
+app.use('/api/examresults', examResults);
+app.use('/api/registration', registrationRouter);
+app.use('/api/content', contentRouter);
+app.use('/api/whyIPEC', whyIPEC_Router);
+app.use('/api/facultyHire', facultyHireRouter);
+app.use('/api/Courses', coursesRouter);
+app.use('/api/Contact', contactRouter);
+app.use('/api/testimonials', testimonials);
+app.use('/api/home', home);
+app.use('/api/studentHomePage', studentHomePage);
+app.use('/api/ourPrograms', ourPrograms);
+app.use('/api/facultyHomePage', facultyHomePage);
+app.use('/api/carousel', carousel);
+app.use('/api/download', download);
+app.use('/api/results', results);
 
+// Serve the React app for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './dist/index.html'));
+});
 
-
+// Start the server
+const port = process.env.PORT;
 app.listen(port, () => {
-    console.log(`app listning at port: ${port}`);
+  console.log(`Server started on port ${port}`);
 });

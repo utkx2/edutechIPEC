@@ -58,14 +58,12 @@ function About() {
       <div className="py-10 text-center">
         <div className="container px-4 mx-auto">
           <div className="flex justify-center ">
-            <h2 className="text-3xl font-bold mb-4 border-b-[6px] border-yellow-400">
-              IPEC ADVANTAGE
+            <h2 className="text-3xl font-bold mb-4 900 border-b-[6px] border-yellow-400">
+              ABOUT IPEC 
             </h2>
           </div>
-          <p className="text-lg leading-relaxed text-gray-700 ">
-            Studying at IPEC has its own set of advantages. Students are in a
-            better position to clear the competitive exams and be more. We help
-            students realize their fullest potential.
+          <p className="text-[16px] leading-relaxed text-center ">
+            {userData.AboutIPEC}
           </p>
           <div className="flex flex-wrap mt-8 -mx-2">
             <div className="w-full px-2 mb-4 sm:w-1/2 md:w-1/4 ">
@@ -142,16 +140,14 @@ function About() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* */}
+        {/* */}
 
-      <div className="py-10 text-center">
-        <div className="container px-4 mx-auto">
-          <div>
+        <div className="py-10 text-center">
+          <div className="container px-4 mx-auto">
             <div className="flex justify-center ">
               <h2 className="text-3xl font-bold mb-4 border-b-[6px] border-yellow-400">
-                IPEC Pedagogy
+                IPEC ADVANTAGE
               </h2>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
@@ -209,7 +205,7 @@ function About() {
           </div>
         </div>
       </div>
-    </div>
+      )}
     </div>
   );
 }

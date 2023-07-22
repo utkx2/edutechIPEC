@@ -138,10 +138,6 @@ function DashboardUsers() {
     }
   };
 
-  const AddUser = () => {
-    navigate("/dashboard/adduser");
-  };
-
   const downloadAsExcel = () => {
     const selectedData = currentUsers.map((user) => ({
       User: user.name,

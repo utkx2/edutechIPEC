@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import image2 from '../assets/carousel-2.jpg';
 import image3 from '../assets/carousel-3.jpg';
 

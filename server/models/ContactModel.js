@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
-const userModel = require("./UserModel");
 const { Schema } = mongoose;
 
 const ContactModel = new Schema({
-    userId: {
-        type: String,
-        ref: userModel
-    },
     name: {
         type: String,
         required: true

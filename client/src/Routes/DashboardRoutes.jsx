@@ -1,28 +1,8 @@
-// import AdminTenderResultForm from "../Admin/partials/dashboard/tenders/AdminTenderResultForm";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoutes";
 
 import DashboardHome from "../Admin/partials/dashboard/DashboardHome";
-// //Tenders
-// import AllTendersSection from "../Admin/partials/dashboard/tenders/DashboardTenders";
-// import Subcontractor from "../Admin/partials/dashboard/tenders/SubcontractorTenders";
-// import Contractor from "../Admin/partials/dashboard/tenders/ContractorTenders";
-// import Government from "../Admin/partials/dashboard/tenders/GovernmentTenders";
-// import Private from "../Admin/partials/dashboard/tenders/privateTenders";
-// import Gem from "../Admin/partials/dashboard/tenders/GemTendersForm";
 
-// import AdminForm from "../Admin/partials/dashboard/tenders/AdminTenderForm";
-// import DashboardTenderDetail from "../Admin/partials/dashboard/tenders/DashboardTenderDetail";
-
-// //Users
-// import AddAdmin from "../Admin/partials/dashboard/users/AddAdmin";
-// import AddEmployee from "../Admin/partials/dashboard/users/AddEmployee";
-// import AddHR from "../Admin/partials/dashboard/users/AddHR";
-// import AddUser from "../Admin/partials/dashboard/users/AddUser";
-
-// import AllAdmin from "../Admin/partials/dashboard/users/AllAdmin";
-// import AllEmployee from "../Admin/partials/dashboard/users/AllEmployee";
-// import AllHR from "../Admin/partials/dashboard/users/AllHR";
 import DashboardUsers from "../Admin/partials/dashboard/users/DashboardUsers";
 
 import WebsiteHome from '../Admin/partials/dashboard/DynamicPages/Home'
@@ -32,39 +12,7 @@ import WebsiteTestimonials from '../Admin/partials/dashboard/DynamicPages/Testim
 import WebsiteResult from '../Admin/partials/dashboard/DynamicPages/Result'
 import WebsiteCourses from '../Admin/partials/dashboard/DynamicPages/Courses'
 import WebsiteContact from '../Admin/partials/dashboard/DynamicPages/Contact'
-// import DashboardUserDetail from "../Admin/partials/dashboard/users/DashboardUserDetail";
 
-// import DashboardCurrentTenders from "../Admin/partials/dashboard/DashboardCurrentTenders";
-
-// //Contact Requests
-// import GemRegistrationDetail from "../Admin/partials/dashboard/requests/GemRegistration/GemRegistrationDetail";
-// import GemRegistration from "../Admin/partials/dashboard/requests/GemRegistration/GemRegitration";
-// import TenderOnlineDetail from "../Admin/partials/dashboard/requests/TenderOnline/TenderOnlineDetail";
-// import TenderOnline from "../Admin/partials/dashboard/requests/TenderOnline/TenderOnline";
-// import JointVentureDetail from "../Admin/partials/dashboard/requests/Joint-Venture/JointVentureDetail";
-// import JointVenture from "../Admin/partials/dashboard/requests/Joint-Venture/JointVenture";
-// import AuctionMaterialDetail from "../Admin/partials/dashboard/requests/Auction-Material/AuctionMaterialDetail";
-// import AuctionMaterial from "../Admin/partials/dashboard/requests/Auction-Material/AuctionMaterial";
-// import Seeker from "../Admin/partials/dashboard/requests/Seeker/SeekerForm";
-// import SeekerFormDetail from "../Admin/partials/dashboard/requests/Seeker/SeekerFormDetail";
-// import RegistrationList from "../Admin/partials/dashboard/requests/Registration-Certification/Registration/Registration";
-// import RegistrationDetails from "../Admin/partials/dashboard/requests/Registration-Certification/Registration/RegistrationDetail";
-// import IndividualDetails from "../Admin/partials/dashboard/requests/Registration-Certification/Certification/Individual/IndividualDetails";
-// import IndividualList from "../Admin/partials/dashboard/requests/Registration-Certification/Certification/Individual/Individual";
-// import CompanyDetails from "../Admin/partials/dashboard/requests/Registration-Certification/Certification/Company/CompanyDetails";
-// import CompanyList from "../Admin/partials/dashboard/requests/Registration-Certification/Certification/Company/Company";
-// import EmployerForms from "../Admin/partials/dashboard/requests/Employer-Form/EmployerForms";
-// import EmployerFormDetail from "../Admin/partials/dashboard/requests/Employer-Form/EmployerFormDetail";
-// import ContactFormList from "../Admin/partials/dashboard/requests/ContactPage";
-// import TenderOffline from "../Admin/partials/dashboard/requests/TenderOffline";
-// // import JointVenture from '../Admin/partials/dashboard/requests/Joint-Venture';
-// import Licenserequests from "../Admin/partials/dashboard/requests/License/License";
-// import OnlineBidding from "../Admin/partials/dashboard/requests/Online-Bidding";
-// import RegistrationCertification from "../Admin/partials/dashboard/requests/RegistrationCertificate";
-// import TenderResult from "../Admin/partials/dashboard/requests/Tender-Result";
-
-// //Options
-// import License from "../Admin/partials/dashboard/options/licences";
 import AllUserRegistrations from "../Admin/partials/dashboard/Registrations/UserRegistrations";
 import UserRegistrationDetails from "../Admin/partials/dashboard/Registrations/UserRegistrationDetails";
 import SamplePaper from "../Admin/partials/dashboard/Downloads/SamplePaper";
@@ -72,28 +20,10 @@ import EBrochures from "../Admin/partials/dashboard/Downloads/EngineeringBrochur
 import Syllabus from "../Admin/partials/dashboard/Downloads/Syllabus";
 import EngineeringBrochure from "../Admin/partials/dashboard/Downloads/EngineeringBrochure";
 import MedicalBrochure from "../Admin/partials/dashboard/Downloads/MedicalBrochure";
-import Questions from "../Admin/partials/dashboard/Exam/Questions";
-import Answers from "../Admin/partials/dashboard/Exam/Answers";
+import AddExam from "../Admin/partials/dashboard/Exam/AddExam";
 import List from "../Admin/partials/dashboard/Exam/List";
-// import Sector from "../Admin/partials/dashboard/options/sector";
-// import Category from "../Admin/partials/dashboard/options/category";
-// import Product from "../Admin/partials/dashboard/options/product";
-
-// import ProjectListing from '../Admin/partials/ProjectListing';
-// import AddProject from '../Admin/partials/dashboard/AddProject';
-// import Material from '../Admin/partials/dashboard/options/auctionMaterial';
-
-// import Prices from "../Admin/partials/dashboard/Prices";
-
-// // adding routes for user dashboard
-// import UserPanel from "../Admin/pages/UserPanel";
-// import AllProjects from "../Admin/partials/dashboard/AllProjects";
-// import DashboardProjectDetail from "../Admin/partials/dashboard/users/DashboardProjectDetail";
-// import AdminTenderResultList from "../Admin/partials/dashboard/tenders/AdminTenderResultList";
-// // import Government from '../Admin/partials/dashboard/tenders/GovernmentTenders';
-// // import UserDetails from '../Admin/partials/dashboard/users/DashboardUserDetail';
-
-
+import UpdateExam from "../Admin/partials/dashboard/Exam/UpdateExam";
+import ExamineesTable from "../Admin/partials/dashboard/Exam/Examinees";
 
 const DashboardRoutes = () => {
   return (
@@ -164,16 +94,20 @@ const DashboardRoutes = () => {
               element={<PrivateRoute element={MedicalBrochure} />}
             />
             <Route
-              path="/questions"
-              element={<PrivateRoute element={Questions} />}
+              path="/add-exam"
+              element={<PrivateRoute element={AddExam} />}
             />
             <Route
-              path="/answers"
-              element={<PrivateRoute element={Answers} />}
+              path="/update/:id"
+              element={<PrivateRoute element={UpdateExam} />}
             />
             <Route
               path="/list"
               element={<PrivateRoute element={List} />}
+            />
+            <Route
+              path="/examinees/:id"
+              element={<PrivateRoute element={ExamineesTable} />}
             />
          </Routes>
     </div>

@@ -6,16 +6,16 @@ import Example from './carousel';
 
 function Footer() {
   const lowernav = [
-    {name: 'mission'},
-    {name: 'course'},
-    {name: 'result'},
-    {name: 'tesimonials'},
-    {name: 'media'},
-    {name: 'about ipec'},
-    {name: 'why ipec'},
-    {name: 'registration form'},
-    {name: 'home'},
-    {name: 'contact us'}
+    { name: 'mission' },
+    { name: 'course' },
+    { name: 'result' },
+    { name: 'tesimonials' },
+    { name: 'media' },
+    { name: 'about ipec' },
+    { name: 'why ipec' },
+    { name: 'registration form' },
+    { name: 'home' },
+    { name: 'contact us' }
   ]
 
   const footerlinks1 = [
@@ -37,7 +37,7 @@ function Footer() {
     { name: 'Corporate Policies' },
     { name: 'CSR Policy' },
     { name: 'Modes of Payment' },
-  ]  
+  ]
 
   return (
     <div className="bg-[#343362] w-full">

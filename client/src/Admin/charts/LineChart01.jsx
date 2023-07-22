@@ -22,7 +22,7 @@ function LineChart01({
   const canvas = useRef(null);
   const { currentTheme } = useThemeProvider();
   const darkMode = currentTheme === 'dark';
-  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor, chartAreaBg } = chartColors; 
+  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor, chartAreaBg } = chartColors;
 
   useEffect(() => {
     const ctx = canvas.current;
@@ -75,7 +75,7 @@ function LineChart01({
     });
     setChart(newChart);
     return () => newChart.destroy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
