@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const usersController = require("../controller/userController");
-const {isAdmin, verifyToken, isNotUser } = require("../middleware/auth")
+const { isAdmin, verifyToken, isNotUser } = require("../middleware/auth")
 
 //Sign Up New User 
 router.post("/signup", usersController.postSignup);

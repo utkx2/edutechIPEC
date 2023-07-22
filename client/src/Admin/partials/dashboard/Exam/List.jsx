@@ -6,7 +6,7 @@ import Header from "../../Header";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faPowerOff } from '@fortawesome/free-solid-svg-icons';
-import {BASE_URL} from '../../../../config'
+import { BASE_URL } from '../../../../config'
 
 const ExamList = () => {
   const [exams, setExams] = useState([]);

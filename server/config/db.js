@@ -11,5 +11,5 @@ try {
   });
   console.log('Database Connected Successfully');
 } catch (err) {
-  console.log('Error:',err);
+  console.log('Error:', err);
 }

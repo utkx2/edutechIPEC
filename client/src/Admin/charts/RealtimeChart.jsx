@@ -23,7 +23,7 @@ function RealtimeChart({
   const chartValue = useRef(null);
   const chartDeviation = useRef(null);
   const { currentTheme } = useThemeProvider();
-  const darkMode = currentTheme === 'dark';  
+  const darkMode = currentTheme === 'dark';
   const { textColor, gridColor, tooltipTitleColor, tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;
 
   useEffect(() => {
@@ -102,7 +102,7 @@ function RealtimeChart({
     });
     setChart(newChart);
     return () => newChart.destroy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   // Update header values
@@ -129,7 +129,7 @@ function RealtimeChart({
       chart.options.plugins.tooltip.titleColor = tooltipTitleColor.dark;
       chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.dark;
       chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.dark;
-      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.dark;      
+      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.dark;
     } else {
       chart.options.scales.x.ticks.color = textColor.light;
       chart.options.scales.y.ticks.color = textColor.light;
@@ -137,10 +137,10 @@ function RealtimeChart({
       chart.options.plugins.tooltip.titleColor = tooltipTitleColor.light;
       chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.light;
       chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.light;
-      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light; 
+      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;
     }
     chart.update('none')
-  }, [currentTheme])    
+  }, [currentTheme])
 
 
   return (

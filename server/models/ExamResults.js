@@ -15,9 +15,9 @@ const examResultsSchema = new mongoose.Schema({
     response: {
       type: mongoose.Schema.Types.Mixed,
     },
-    score:{
-        type:Number,
-        required: true
+    score: {
+      type: Number,
+      required: true
     }
   }],
 });

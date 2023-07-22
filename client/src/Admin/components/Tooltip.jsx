@@ -46,7 +46,7 @@ function Tooltip({
       default:
         return 'text-slate-600 bg-white dark:bg-slate-700 dark:text-slate-100 border-slate-200 dark:border-slate-600';
     }
-  };    
+  };
 
   const positionInnerClasses = (position) => {
     switch (position) {

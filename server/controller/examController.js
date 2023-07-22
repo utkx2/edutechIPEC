@@ -74,10 +74,10 @@ class ExamController {
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }
-  
+
       exam.status = !exam.status;
       await exam.save();
-  
+
       return res.json(exam);
     } catch (error) {
       console.log(error);
@@ -88,47 +88,47 @@ class ExamController {
   async getExamsWithStatusTrue(req, res) {
     try {
       const examsWithStatusTrue = await Exam.find({ status: true }).select('name updatedAt');
-      return res.json({ success:true, exams:examsWithStatusTrue });
+      return res.json({ success: true, exams: examsWithStatusTrue });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Failed to get exams' });
     }
   };
 
-  async getExamByIdWithoutCorrect(req, res){
+  async getExamByIdWithoutCorrect(req, res) {
     try {
       const examId = req.params.id;
       const exam = await Exam.findById(examId, { correctOption: 0, 'questions.correctTextInputAnswer': 0 });
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }
-      return res.json({ success:true, exam:exam });
+      return res.json({ success: true, exam: exam });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Failed to get exams' });
     }
   };
 
-  async getExamScore(req, res){
+  async getExamScore(req, res) {
     try {
       const examId = req.params.id;
-      const {submittedAnswers, userId, response} = req.body;
+      const { submittedAnswers, userId, response } = req.body;
 
       // Get the exam from the database
       const exam = await Exam.findById(examId);
-  
+
       if (!exam) {
         return res.status(404).json({ message: 'Exam not found.' });
       }
-  
+
       let totalScore = 0;
-  
+
       // Calculate score for each question
       for (const question of exam.questions) {
         if (submittedAnswers[question._id] === undefined) {
           continue; // Skip questions that have not been answered
         }
-  
+
         if (question.type === 'multiple-choice') {
           // Check if the selected option matches the correct option
           if (submittedAnswers[question._id] == question.correctOption) {
@@ -141,10 +141,10 @@ class ExamController {
           }
         }
       }
-  
+
       // Check if there is an existing exam result for the given exam ID
       const existingExamResult = await ExamResults.findOne({ examId: exam._id });
-  
+
       if (existingExamResult) {
         // If an existing exam result is found, add the new result to the results array
         existingExamResult.results.push({
@@ -152,7 +152,7 @@ class ExamController {
           response: response,
           score: totalScore,
         });
-  
+
         await existingExamResult.save();
       } else {
         // If no existing exam result is found, create a new ExamResults object
@@ -164,10 +164,10 @@ class ExamController {
             score: totalScore,
           }],
         });
-  
+
         await examResult.save();
       }
-  
+
       res.json({ score: totalScore });
     } catch (error) {
       console.error('Error calculating score and storing exam result:', error);

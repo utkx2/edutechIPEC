@@ -63,7 +63,7 @@ class AboutController {
   async remove(req, res) {
     try {
       const AboutContent = await About.findOneAndDelete({});
-      res.status(200).json({success:true, message:"Deleted content successfully."});
+      res.status(200).json({ success: true, message: "Deleted content successfully." });
     } catch (error) {
       console.log('Error occurred while retrieving registrations:', error);
       res.status(500).json({

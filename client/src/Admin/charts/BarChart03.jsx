@@ -23,7 +23,7 @@ function BarChart03({
   const legend = useRef(null);
   const { currentTheme } = useThemeProvider();
   const darkMode = currentTheme === 'dark';
-  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;   
+  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;
 
   useEffect(() => {
 
@@ -148,7 +148,7 @@ function BarChart03({
       chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;
     }
     chart.update('none');
-  }, [currentTheme]);  
+  }, [currentTheme]);
 
   return (
     <div className="grow flex flex-col justify-center">

@@ -19,19 +19,19 @@ const upload = multer({ storage });
 // Upload home page content
 // http://localhost:3000/api/home/upload
 router.post('/home/upload', upload.fields([
-    { name: 'carousel', maxCount: 4 }, 
-    { name: 'faculty.images', maxCount: 4 }, 
+    { name: 'carousel', maxCount: 4 },
+    { name: 'faculty.images', maxCount: 4 },
     { name: 'selectedStudents.images', maxCount: 4 },
     { name: 'programs.*.images', maxCount: 4 },
 ]), async (req, res) => {
     try {
         const { carousel, faculty, selectedStudents, programs } = req.files;
-        const { 
-            facultyDescription, 
-            selectedStudentsDescription, 
-            selectedStudentsAIR, 
-            selectedStudentsExam, 
-            programDescription 
+        const {
+            facultyDescription,
+            selectedStudentsDescription,
+            selectedStudentsAIR,
+            selectedStudentsExam,
+            programDescription
         } = req.body;
 
         const homeContent = new Home({

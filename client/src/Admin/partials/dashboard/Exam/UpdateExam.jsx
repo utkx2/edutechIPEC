@@ -143,7 +143,7 @@ const AddExamForm = () => {
                                         Exam Name
                                     </label>
                                     <input
-                                    required
+                                        required
                                         type="text"
                                         id="examName"
                                         className="w-full border border-gray-300 px-4 py-2 rounded-md"
@@ -160,7 +160,7 @@ const AddExamForm = () => {
                                             {question.type === 'multiple-choice' ? 'Multiple Choice Question' : 'Text Input Question'}
                                         </label>
                                         <input
-                                        required
+                                            required
                                             type="text"
                                             id={`question-${questionIndex}`}
                                             className="w-full border border-gray-300 px-4 py-2 rounded-md"
@@ -173,7 +173,7 @@ const AddExamForm = () => {
                                             Image URL
                                         </label>
                                         <input
-                                        required
+                                            required
                                             type="text"
                                             id={`questionImage-${questionIndex}`}
                                             className="w-full border border-gray-300 px-4 py-2 rounded-md"
@@ -188,7 +188,7 @@ const AddExamForm = () => {
                                                 {question.options.map((option, optionIndex) => (
                                                     <div key={optionIndex} className="flex items-center mb-2">
                                                         <input
-                                                        required
+                                                            required
                                                             type="text"
                                                             className="border border-gray-300 px-4 py-2 rounded-md mr-2 w-60"
                                                             value={option.text}
@@ -203,7 +203,7 @@ const AddExamForm = () => {
                                                             Image URL
                                                         </label>
                                                         <input
-                                                        required
+                                                            required
                                                             type="text"
                                                             id={`optionImage-${questionIndex}-${optionIndex}`}
                                                             className="w-64 border border-gray-300 px-4 py-2 rounded-md"
@@ -234,7 +234,7 @@ const AddExamForm = () => {
                                                     Correct Option (Choose 1, 2, 3, or 4)
                                                 </label>
                                                 <input
-                                                required
+                                                    required
                                                     type="number"
                                                     id={`correctOption-${questionIndex}`}
                                                     className="w-16 border border-gray-300 px-4 py-2 rounded-md"
@@ -253,7 +253,7 @@ const AddExamForm = () => {
                                                     Correct Text Input Answer
                                                 </label>
                                                 <input
-                                                required
+                                                    required
                                                     type="text"
                                                     id={`correctTextInputAnswer-${questionIndex}`}
                                                     className="w-full border border-gray-300 px-4 py-2 rounded-md"

@@ -8,7 +8,7 @@ const getExamNameAndScoreByUserId = async (req, res) => {
 
   try {
     const examResults = await ExamResults.find({ 'results.userId': userId });
-// console.log(examResults)
+    // console.log(examResults)
     if (!examResults || examResults.length === 0) {
       return res.status(404).json({ message: 'No exam results found for the user.' });
     }
@@ -74,7 +74,7 @@ const getUsersScoresAndTextLinksByExamId = async (req, res) => {
       username: userIdToUsernameMap[result.userId._id],
       score: result.score,
       response: result.response,
-    }));  
+    }));
 
     return res.json({ userResults });
   } catch (error) {

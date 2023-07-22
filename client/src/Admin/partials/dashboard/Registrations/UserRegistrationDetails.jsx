@@ -72,7 +72,7 @@ const UserRegistrationDetails = () => {
 
     const downloadAsPDF = () => {
         const doc = new jsPDF();
-        const tableColumn = ["User", "Email", "Phone", "Gender", "Category", "DOB", "Father Name", "Mother Name", "Father Number",  "Mother Number", "Address Line 1", "Address Line 2", "Address Line 3", "City", "State", "Zipcode", "Message"];
+        const tableColumn = ["User", "Email", "Phone", "Gender", "Category", "DOB", "Father Name", "Mother Name", "Father Number", "Mother Number", "Address Line 1", "Address Line 2", "Address Line 3", "City", "State", "Zipcode", "Message"];
         const tableRows = [];
 
         const formDataArray = Object.values(formData);

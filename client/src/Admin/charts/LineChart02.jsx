@@ -23,7 +23,7 @@ function LineChart02({
   const legend = useRef(null);
   const { currentTheme } = useThemeProvider();
   const darkMode = currentTheme === 'dark';
-  const { textColor, gridColor, tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;  
+  const { textColor, gridColor, tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;
 
   useEffect(() => {
     const ctx = canvas.current;

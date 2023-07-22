@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const ExamineesTable = () => {
-    const { id } = useParams();
+  const { id } = useParams();
   const [examinees, setExaminees] = useState([]);
   const [selectedExaminee, setSelectedExaminee] = useState(null);
 

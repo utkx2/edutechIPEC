@@ -10,14 +10,14 @@ const AboutModel = new Schema(
         },
         ipecAdvantages: {
             type: [{
-                title: {type: String, set:sentenceCase},
-                description: {type: String, set:sentenceCase},
+                title: { type: String, set: sentenceCase },
+                description: { type: String, set: sentenceCase },
             }],
         },
         ipecPedagogy: {
             type: [{
-                title: {type: String, set:sentenceCase},
-                description: {type: String, set:sentenceCase},
+                title: { type: String, set: sentenceCase },
+                description: { type: String, set: sentenceCase },
             }],
         }
     },
