@@ -212,7 +212,7 @@ function DashboardUsers() {
                 <h1 className="mb-4 text-xl font-bold">All User</h1>
                 <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between">
                   {/* Search bar */}
-                  <div className="flex items-center justify-start flex-1 gap-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-start gap-2">
                     <input
                       type="text"
                       className="px-4 py-2 mb-2 mr-0 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow w-[300px] md:mb-0 md:mr-2 focus:outline-none"
@@ -234,7 +234,7 @@ function DashboardUsers() {
                   {/* download buttons */}
                   <div>
                     <button
-                      className="px-4 py-2 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
+                      className="px-4 py-2 mr-4 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
                       onClick={downloadAsExcel}
                     >
                       Download Excel

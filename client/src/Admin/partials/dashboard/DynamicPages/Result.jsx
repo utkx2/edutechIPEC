@@ -125,7 +125,7 @@ export default function Result() {
                           Remove Student
                         </button>
                       </div>
-                      <label className="relative block mb-2 font-semibold">
+                      <label className="relative block mb-2  font-semibold">
                         Centre Name:
                         <input
                           required
@@ -137,7 +137,7 @@ export default function Result() {
                         />
                       </label>
                       <label className="relative block mb-2 font-semibold">
-                        Student Name:
+                        Student Name
                         <input
                           required
                           type="text"
@@ -148,7 +148,7 @@ export default function Result() {
                         />
                       </label>
                       <label className="relative block mb-2 font-semibold">
-                        IPEC Roll No:
+                        IPEC Roll No
                         <input
                           required
                           type="text"
@@ -158,9 +158,9 @@ export default function Result() {
                           className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         />
                       </label>
-                      <label className="relative block mb-2 font-semibold">
+                      <label className="relative block mb-8 md:mb-2 font-semibold">
                         CRL Rank:
-                        <span className="absolute top-[-12px] left-0 text-red-700 text-[12px]">{'(must be a number)'}</span>
+                        <span className="absolute  mt-20 md:mt-0 top-[-12px] left-0 text-red-700 text-[12px]">{'(must be a number)'}</span>
                         <input
                           required
                           type="number"

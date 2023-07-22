@@ -66,14 +66,14 @@ const ExamList = () => {
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-        <main>
+      <div className=" flex flex-col flex-1 ">
+        <main className='fle'>
           {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             {/* Dashboard actions */}
             {/* Cards */}
-            <div className="grid gap-6 grid-cols-15">
+            <div className="grid gap-6 grid-cols-1 overflow-x-auto">
               {/* Table (Top Channels) */}
               <div className="p-4">
                 <div className='flex justify-between m-2'>

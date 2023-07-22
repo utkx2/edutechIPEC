@@ -208,7 +208,7 @@ export default function Contact() {
                   {/* download buttons */}
                   <div>
                     <button
-                      className="px-4 py-2 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
+                      className="px-4 py-2 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 mr-4 md:mr-2"
                       onClick={downloadAsExcel}
                     >
                       Download Excel

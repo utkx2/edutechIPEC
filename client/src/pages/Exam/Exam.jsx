@@ -75,62 +75,109 @@ const Exam = () => {
             });
     };
 
-    return (
-        <div className="bg-gray-100 text-white ">
-            <form
-                id="examForm"
-                className="max-w-7xl mx-auto space-y-4 p-6 rounded-lg shadow-md"
-                onSubmit={handleSubmit}
-            >
-                {examData && (
-                    <>
-                        <h1 className="text-3xl font-bold mb-6 text-center text-black">{examData.name}</h1>
-                        {examData.questions.map((question, questionIndex) => (
-                            <div key={question._id} className="shadow-lg  p-28  rounded-2xl bg-white">
-                                <p className="font-bold text-3xl text-black mb-2">{` ${questionIndex + 1}) ${question.text}`}</p>
-                                {question.imageUrl && <img className="w-72 h-48 p-2 ml-0 lg:ml-96" src={question.imageUrl} alt={`Question ${question.text}`} />}
-                                {question.type === 'multiple-choice' ? (
-                                    question.options.map((option, optionIndex) => (
-                                        <div key={option._id} className="flex items-center space-x-2 text-black">
-                                            <input
-                                                type="radio"
-                                                name={`question_${question._id}`}
-                                                value={optionIndex}
-                                                id={`q_${question._id}_option_${option._id}`}
-                                                onChange={(e) => handleChangeQuestion(question._id, questionIndex + 1, e.target.value)}
-                                            />
-                                            <label className='grid grid-cols-2 pb-2' htmlFor={`q_${question._id}_option_${option._id}`}>
-                                                {option.imageUrl && <img className="w-48 h-48 p-2 mt-1" src={option.imageUrl} alt={`Option ${option.text}`} />}
-                                                <span className={option.imageUrl? ' mt-20 ml-8 text-xl font-medium' : ' '}>{option.text}</span>
-                                            </label>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="flex items-center space-x-2 text-black">
-                                        <input
-                                            type="text"
-                                            name={`question_${question._id}`}
-                                            value={responses[question._id]}
-                                            onChange={(e) => handleChangeQuestion(question._id, questionIndex + 1, e.target.value)}
-                                            placeholder="Enter your answer..."
-                                        />
-
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </>
+  return (
+    <div className="bg-gray-100 text-white">
+      <form
+        id="examForm"
+        className="max-w-7xl mx-auto space-y-4 p-6 rounded-lg "
+        onSubmit={handleSubmit}
+      >
+        {examData && (
+          <>
+            <h1 className="text-3xl font-bold mb-6 text-center text-black">
+              {examData.name}
+            </h1>
+            {examData.questions.map((question, questionIndex) => (
+              <div
+                key={question._id}
+                className="shadow-lg p-6 lg:p-12 rounded-2xl bg-white"
+              >
+                <p className="font-bold text-3xl text-black mb-2">{` ${
+                  questionIndex + 1
+                }) ${question.text}`}</p>
+                {question.imageUrl && (
+                  <img
+                    className="w-48 h-32 md:w-72 md:h-48 p-2 mx-auto"
+                    src={question.imageUrl}
+                    alt={`Question ${question.text}`}
+                  />
                 )}
+                {question.type === 'multiple-choice' ? (
+                  question.options.map((option, optionIndex) => (
+                    <div
+                      key={option._id}
+                      className="flex items-center space-x-2 text-black"
+                    >
+                      <input
+                        type="radio"
+                        name={`question_${question._id}`}
+                        value={optionIndex}
+                        id={`q_${question.id}_option${option._id}`}
+                        onChange={(e) =>
+                          handleChangeQuestion(
+                            question._id,
+                            questionIndex + 1,
+                            e.target.value
+                          )
+                        }
+                      />
+                      <label
+                        className={
+                          option.imageUrl
+                            ? 'grid grid-cols-2 pb-2'
+                            : 'text-base font-medium'
+                        }
+                        htmlFor={`q_${question.id}_option${option._id}`}
+                      >
+                        {option.imageUrl && (
+                          <img
+                            className="w-24 h-24 p-2 mt-1"
+                            src={option.imageUrl}
+                            alt={`Option ${option.text}`}
+                          />
+                        )}
+                        <span
+                          className={
+                            option.imageUrl ? 'mt-12 ml-4 text-xl font-medium' : ''
+                          }
+                        >
+                          {option.text}
+                        </span>
+                      </label>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex items-center space-x-2 text-black">
+                    <input
+                      type="text"
+                      name={`question_${question._id}`}
+                      value={responses[question._id]}
+                      onChange={(e) =>
+                        handleChangeQuestion(
+                          question._id,
+                          questionIndex + 1,
+                          e.target.value
+                        )
+                      }
+                      placeholder="Enter your answer..."
+                      className="w-full md:w-96"
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </>
+        )}
 
-                <button
-                    type="submit"
-                    className="bg-black hover:bg-black text-white py-2 px-4 rounded"
-                >
-                    Submit
-                </button>
-            </form>
-        </div>
-    );
+        <button
+          type="submit"
+          className="bg-black hover:bg-black text-white py-2 px-4 rounded"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default Exam;

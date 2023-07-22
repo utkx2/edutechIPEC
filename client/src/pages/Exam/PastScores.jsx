@@ -22,7 +22,7 @@ const PastScoresTable = () => {
 
   const indexOfLastScore = currentPage * scoresPerPage;
   const indexOfFirstScore = indexOfLastScore - scoresPerPage;
-//   const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
+  const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
