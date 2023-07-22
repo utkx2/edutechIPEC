@@ -1,5 +1,6 @@
-
+import React, { useEffect, useState } from "react";
 import Student from '../assets/student-img.png'
+import axios from "axios";
 import AIR from '../assets/air.png'
 import ClassroomImg1 from '../assets/classroom-1.jpg'
 import ClassroomImg2 from '../assets/classroom-2.jpg'
@@ -8,8 +9,37 @@ import CarouselImg2 from '../assets/carousel-2.jpg'
 import CarouselImg3 from '../assets/carousel-3.jpg'
 import FacultyImg from '../assets/faculty.png'
 import { Link } from 'react-router-dom';
+import { BASE_URL } from "../config";
+import "../styles/Course.css";
+
 
 function Home() {
+
+
+  const [userData, setUserData] = useState({})
+  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/home/content`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(response)
+      setUserData(response.data)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className=''>
 
@@ -64,7 +94,7 @@ function Home() {
               
                 <img src={FacultyImg} alt="student" className=' h-[280px] w-full rounded-[8px] ' />
                 <div className='w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center justify-center p-3'>
-                  <div className='font-bold text-lg'>Pradeep Malhotra</div>
+                  <div className='text-lg font-bold'>Pradeep Malhotra</div>
                   <div>2 Year classroom programme</div>
                   <div>IIT Delhi</div>
                   <div>Teaching from past 10+years.</div>
@@ -76,7 +106,7 @@ function Home() {
               
               <img src={FacultyImg} alt="student" className=' h-[280px] w-full rounded-[8px] ' />
               <div className='w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center justify-center p-3'>
-                <div className='font-bold text-lg'>Pradeep Malhotra</div>
+                <div className='text-lg font-bold'>Pradeep Malhotra</div>
                 <div>2 Year classroom programme</div>
                 <div>IIT Delhi</div>
                 <div>Teaching from past 10+years.</div>
@@ -88,7 +118,7 @@ function Home() {
               
               <img src={FacultyImg} alt="student" className=' h-[280px] w-full rounded-[8px] ' />
               <div className='w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center justify-center p-3'>
-                <div className='font-bold text-lg'>Pradeep Malhotra</div>
+                <div className='text-lg font-bold'>Pradeep Malhotra</div>
                 <div>2 Year classroom programme</div>
                 <div>IIT Delhi</div>
                 <div>Teaching from past 10+years.</div>
