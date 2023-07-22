@@ -116,7 +116,7 @@ function Header() {
                 <div
                   onClick={handleDropdown}
                   key={navItem.name}
-                  className='relative text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer'
+                  className='relative text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer py-2 px-4' // Add padding here
                 >
                   {navItem.name}
                   {openDropdown && (
@@ -125,7 +125,7 @@ function Header() {
                         {navItem.options.map((downloadOption) => (
                           <div
                             key={downloadOption}
-                            className='hover:bg-[#1f1d5a] hover:text-white whitespace-nowrap my-2 py-1.5 px-4 rounded  text-[#1f1d5a]'
+                            className='hover:bg-[#1f1d5a] hover:text-white whitespace-nowrap my-2 py-1.5 px-4 rounded text-[#1f1d5a]'
                           >
                             {downloadOption}
                           </div>
@@ -136,7 +136,7 @@ function Header() {
                 </div>
               ) : (
                 <NavLink to={navItem.link} key={navItem.link}>
-                  <div className='text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer'>
+                  <div className='text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer py-2 px-4'>
                     {navItem.name}
                   </div>
                 </NavLink>
