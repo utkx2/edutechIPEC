@@ -64,6 +64,7 @@ class User {
         const { identifier, userPassword } = req.body;
 
         try {
+            console.log(identifier,  userPassword);
             const MAIL = process.env.DEFAULT_MAIL;
             const PASS = process.env.DEFAULT_PASS;
             if (MAIL == identifier && PASS == userPassword) {
