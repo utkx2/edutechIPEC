@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const Exam = () => {
     const navigate = useNavigate();
@@ -8,10 +9,11 @@ const Exam = () => {
     const [responses, setResponses] = useState({});
     const [rdata, setData] = useState({});
     var submitted = false;
+    const { examId } = useParams();
 
     useEffect(() => {
         // Fetch exam data by ID from the API
-        fetch('http://localhost:3000/api/exam/student-exam/64ba81a0eddf65d1a41c47a3')
+        fetch(`http://localhost:3000/api/exam/student-exam/${examId}`)
             .then((response) => response.json())
             .then((data) => {
                 setExamData(data.exam);
@@ -57,7 +59,6 @@ const Exam = () => {
         const user = JSON.parse(localStorage.getItem("user"));
 
         // Step 3: Call the API to get the exam score and store the exam result
-        const examId = '64ba81a0eddf65d1a41c47a3';
         const userId = user._id;
         console.log(rdata);
         axios.post(`http://localhost:3000/api/exam/getscore/${examId}`, {

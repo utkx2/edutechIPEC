@@ -87,7 +87,7 @@ class ExamController {
 
   async getExamsWithStatusTrue(req, res) {
     try {
-      const examsWithStatusTrue = await Exam.find({ status: true }).select('name');
+      const examsWithStatusTrue = await Exam.find({ status: true }).select('name updatedAt');
       return res.json({ success:true, exams:examsWithStatusTrue });
     } catch (error) {
       console.log(error);
@@ -113,7 +113,7 @@ class ExamController {
     try {
       const examId = req.params.id;
       const {submittedAnswers, userId, response} = req.body;
-  console.log(response)
+
       // Get the exam from the database
       const exam = await Exam.findById(examId);
   

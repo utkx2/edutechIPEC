@@ -79,7 +79,7 @@ class User {
                 const encode = jwt.verify(token, JWT_SECRET);
                 return res.json({
                     token: token,
-                    user: encode,
+                    data: encode.data,
                 });
             }
             console.log(req.body)

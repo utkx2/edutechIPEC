@@ -24,7 +24,6 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log(formData)
         // Make API request to login
         fetch(`${BASE_URL}/api/user/signin`, {
             method: "POST",
@@ -46,7 +45,6 @@ const Login = () => {
                     if (user.userRole == "admin")
                         navigate("/dashboard/users");
                     else navigate("/");
-                    console.log("Login successful");
                 }
             })
             .catch((error) => {

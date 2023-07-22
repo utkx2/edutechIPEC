@@ -8,13 +8,20 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
-  const auth = JSON.parse(localStorage.getItem("user"));
+
+  const [auth, setAuth] = useState(null);
+
+  useEffect(() => {
+    // Get the "user" object from localStorage on component mount
+    const user = JSON.parse(localStorage.getItem('user'));
+    setAuth(user);
+  }, []);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+console.log(auth)
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
     setDropdownOpen(false);
