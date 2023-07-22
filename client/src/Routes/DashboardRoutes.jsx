@@ -23,6 +23,7 @@ import MedicalBrochure from "../Admin/partials/dashboard/Downloads/MedicalBrochu
 import AddExam from "../Admin/partials/dashboard/Exam/AddExam";
 import List from "../Admin/partials/dashboard/Exam/List";
 import UpdateExam from "../Admin/partials/dashboard/Exam/UpdateExam";
+import ExamineesTable from "../Admin/partials/dashboard/Exam/Examinees";
 
 const DashboardRoutes = () => {
   return (
@@ -103,6 +104,10 @@ const DashboardRoutes = () => {
             <Route
               path="/list"
               element={<PrivateRoute element={List} />}
+            />
+            <Route
+              path="/examinees/:id"
+              element={<PrivateRoute element={ExamineesTable} />}
             />
          </Routes>
     </div>

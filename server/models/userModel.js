@@ -4,11 +4,6 @@ const { sentenceCase } = require('../config/functions');
 
 const UserModel = new mongoose.Schema(
     {
-        userId: {
-            type: String,
-            required: true,
-            index: { unique: true }
-        },
         name: {
             type: String,
             required: true,

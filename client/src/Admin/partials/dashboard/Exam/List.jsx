@@ -47,6 +47,10 @@ const ExamList = () => {
     navigate("/dashboard/add-exam");
   };
 
+  const handleView = (id) => {
+    navigate(`/dashboard/examinees/${id}`);
+  }
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
@@ -86,15 +90,16 @@ const ExamList = () => {
                   <thead>
                     <tr className="border bg-gray-100">
                       <th className="p-2 text-center">EXAM NAME</th>
-                      <th className="p-2 text-center">CREATED AT</th>
+                      <th className="p-2 text-center">CREATED ON</th>
                       <th className="p-2 text-center">STATUS</th>
                       <th className="p-2 text-center">ACTIONS</th>
+                      <th className="p-2 text-center">EXAMINEES</th>
                     </tr>
                   </thead>
                   <tbody>
                     {exams.map((exam) => (
                       <tr key={exam._id} className="border">
-                        <td className="p-2 text-center cursor-pointer">{exam.name}</td>
+                        <td className="p-2 text-center">{exam.name}</td>
                         <td className="p-2 text-center">{formatDate(exam.createdAt)}</td>
                         <td className="p-2 text-center">{exam.status ? 'Active' : 'Inactive'}</td>
                         <td className="p-2 flex justify-evenly">
@@ -116,6 +121,8 @@ const ExamList = () => {
                             <FontAwesomeIcon icon={faPowerOff} />
                           </button>
                         </td>
+                        <td className="p-2 text-center font-bold cursor-pointer underline" onClick={() => handleView(exam._id)}>VIEW</td>
+
                       </tr>
                     ))}
                   </tbody>

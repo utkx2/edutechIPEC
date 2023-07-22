@@ -1,5 +1,4 @@
 const userModel = require("../models/userModel");
-const { generateUUID } = require("../config/functions");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/keys");
@@ -33,13 +32,9 @@ class User {
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-            //Create a uuId for userId
-            const userId = generateUUID();
-
             // Create a new user document based on the UserModel
             const newUser = new userModel({
                 ...userData,
-                userId,
                 email,
                 mobileNumber,
                 password: hashedPassword,
@@ -73,7 +68,7 @@ class User {
             const PASS = process.env.DEFAULT_PASS;
             if (MAIL == identifier && PASS == userPassword) {
                 const token = jwt.sign(
-                    { data: { userId: "admin", userRole: "admin", name: "maria_dev" } },
+                    { data: { userRole: "admin", name: "maria_dev" } },
                     JWT_SECRET
                 );
                 const encode = jwt.verify(token, JWT_SECRET);
@@ -127,7 +122,7 @@ class User {
             });
         } else {
             try {
-                let User = await userModel.findOne({ userId: userId })
+                let User = await userModel.findById(userId)
                 if (User) {
                     const { password, __v, ...data } = User._doc;
                     return res.status(200).json({

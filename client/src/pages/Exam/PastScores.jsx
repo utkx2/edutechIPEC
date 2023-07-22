@@ -22,24 +22,28 @@ const PastScoresTable = () => {
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-4">Past Scores</h1>
             <div className="flex justify-center">
-                <table className="w-full border-collapse border">
-                    <thead>
-                        <tr>
-                            <th className="border p-2">SN</th>
-                            <th className="border p-2">Exam Name</th>
-                            <th className="border p-2">Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {pastScores.map((score, index) => (
-                            <tr key={index}>
-                                <td className="border p-2">{index + 1}</td>
-                                <td className="border p-2">{score.examName}</td>
-                                <td className="border p-2">{score.score}</td>
+                {pastScores.length > 0 ?
+                    <table className="w-full border-collapse border">
+                        <thead>
+                            <tr>
+                                <th className="border p-2">SN</th>
+                                <th className="border p-2">Exam Name</th>
+                                <th className="border p-2">Score</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {pastScores.map((score, index) => (
+                                <tr key={index}>
+                                    <td className="border p-2">{index + 1}</td>
+                                    <td className="border p-2">{score.examName}</td>
+                                    <td className="border p-2">{score.score}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    :
+                    <p>No Record Found</p>
+                }
             </div>
         </div>
 

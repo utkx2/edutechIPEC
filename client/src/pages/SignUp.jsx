@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../assets/signup.jpg'
 import { BASE_URL } from "../config";
-// import { locations } from "../constants/countriesData"
 
 const Signup = () => {
+
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
-        phoneNumber: '',
-        role: 'user',
+        mobileNumber: '',
     });
-    const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
 
     const handleChange = (e) => {
@@ -26,7 +26,7 @@ const Signup = () => {
         e.preventDefault();
         console.log(formData)
         // Make API request with form data
-        fetch(`${BASE_URL}/api/auth/register`, {
+        fetch(`${BASE_URL}/api/user/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,17 +37,15 @@ const Signup = () => {
             .then((data) => {
                 // Handle response data
                 console.log(data);
-                if (data.errors) {
-                    setErrorMessage(data.errors[0].msg);
+                if (data.error) {
+                    setErrorMessage(data.error);
                 } else {
-                    setSuccessMessage(data.success);
-                    setFormData({
-                        name: '',
-                        email: '',
-                        password: '',
-                        phoneNumber: '',
-                        role: 'user'
-                    });
+                    // Store response in local storage
+                    localStorage.setItem("token", JSON.stringify(data.token));
+                    // Navigate to the desired page
+                    const user = data.user
+                    localStorage.setItem("user", JSON.stringify(user));
+                    navigate("/");
                 }
             })
             .catch((error) => {
@@ -56,11 +54,9 @@ const Signup = () => {
             });
     };
 
-    const userRole = ['user', 'admin']
-
     return (
         <>
-            <div className='flex items-center justify-center w-full p-4 py-10 bg-[#d1e9f9]'>
+            <div className='flex items-center justify-center w-full p-4 py-10 bg-[#d1e9f9] text-black'>
                 <div>
 
             
@@ -79,10 +75,7 @@ const Signup = () => {
                                 />
                             </div>
 
-                    <div className="flex flex-col items-center justify-center w-full md:w-1/2">
-                        {successMessage && (
-                            <div className="mb-4 text-green-500">{successMessage}</div>
-                        )}
+                    <div className="flex flex-col items-center justify-center w-full md:w-1/2 text-black">
                         {/* <div className="flex"> */}
                             <div className="w-1/2">
                                 <form onSubmit={handleSubmit}>
@@ -126,16 +119,16 @@ const Signup = () => {
                                     <div className="relative z-0 w-full mb-6 group">
                                         <input
                                             type="number"
-                                            name="phoneNumber"
-                                            id="floating_phoneNumber"
-                                            value={formData.phoneNumber}
+                                            name="mobileNumber"
+                                            id="floating_mobileNumber"
+                                            value={formData.mobileNumber}
                                             onChange={handleChange}
                                             className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=""
                                             required
                                         />
                                         <label
-                                            htmlFor="floating_phoneNumber"
+                                            htmlFor="floating_mobileNumber"
                                             className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                             Phone Number
                                         </label>
@@ -159,45 +152,6 @@ const Signup = () => {
                                         </label>
                                     </div>
 
-                                    <div className="relative z-0 w-full mb-6 group">
-                                        <select required
-                                            name="role"
-                                            value={formData.role}
-                                            onChange={handleChange}
-                                            id="floating_role"
-                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        >
-                                            {userRole.map((userRole, index) => (
-                                                <option key={index} value={userRole}>
-                                                    {userRole}
-                                                </option>
-                                        ))}
-                                        </select>
-                                        <label
-                                            htmlFor="floating_role"
-                                            className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                            Role
-                                        </label>
-                                    </div>
-
-                                    {/* <div className="mb-4">
-                                    <label className="block font-semibold">
-                                        Role
-                                        <span className="relative top-0 right-0 text-red-700">*</span>
-                                        <select required
-                                            name="role"
-                                            value={formData.role}
-                                            onChange={handleChange}
-                                            className="block w-full px-0 pt-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            >
-                                            {userRole.map((userRole, index) => (
-                                                <option key={index} value={userRole}>
-                                                    {userRole}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                </div> */}
                                  
                                     <div className="flex items-center justify-between w-full mb-4">
                                         <button
