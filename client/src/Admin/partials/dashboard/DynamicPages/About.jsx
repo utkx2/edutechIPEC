@@ -142,6 +142,7 @@ export default function About() {
     return (
         <div className="flex h-screen overflow-hidden ">
             {/* Sidebar */}
+            
 
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
