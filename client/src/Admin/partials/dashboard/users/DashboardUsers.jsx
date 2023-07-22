@@ -9,7 +9,7 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import {BASE_URL} from '../../../../config'
+import { BASE_URL } from '../../../../config'
 
 import { Dialog } from '@headlessui/react'
 
@@ -22,27 +22,27 @@ function DashboardUsers() {
   const [subscriptionStatus, setSubscriptionStatus] = useState("all");
   const navigate = useNavigate();
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (userId) => {
     setIsOpen(false)
-    try{
-      const response = await axios.delete(`${BASE_URL}/api/auth/delete/${id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          auth: localStorage.getItem("token"),
-        },
-      })
+    try {
+      const response = await axios.delete(`${BASE_URL}/api/user/byid/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        })
       console.log(response)
-      if(response.status == 200){
+      if (response.status == 200) {
         console.log('successfully deleted')
         fetchData()
       }
-      if(response.status == 500){
+      if (response.status == 500) {
         console.log('delete failed')
       }
       return;
-    } catch (error){
+    } catch (error) {
       console.log(error)
       return;
     }
@@ -51,7 +51,7 @@ function DashboardUsers() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/auth/allusers`,
+        `${BASE_URL}/api/user/getall`,
         {
           method: "GET",
           headers: {
@@ -61,14 +61,14 @@ function DashboardUsers() {
         }
       );
       console.log(response)
-      setUserData(response.data);
+      setUserData(response.data.users);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    
+
 
     fetchData();
   }, []);
@@ -141,7 +141,7 @@ function DashboardUsers() {
   const downloadAsExcel = () => {
     const selectedData = currentUsers.map((user) => ({
       User: user.name,
-      Role: user.userRole ? user.userRole : 'student' ,
+      Role: user.userRole ? user.userRole : 'student',
       Email: user.email,
       Phone: user.phoneNumber,
     }));
@@ -193,7 +193,7 @@ function DashboardUsers() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
   const [deleteId, setDeleteId] = useState()
- 
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -212,7 +212,7 @@ function DashboardUsers() {
                 <h1 className="mb-4 text-xl font-bold">All User</h1>
                 <div className="flex flex-col mb-4 md:flex-row md:items-center md:justify-between">
                   {/* Search bar */}
-                  <div className="flex items-center justify-start flex-1 gap-2">                  
+                  <div className="flex items-center justify-start flex-1 gap-2">
                     <input
                       type="text"
                       className="px-4 py-2 mb-2 mr-0 text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded shadow w-[300px] md:mb-0 md:mr-2 focus:outline-none"
@@ -232,7 +232,7 @@ function DashboardUsers() {
                     </select>
                   </div>
                   {/* download buttons */}
-                  <div> 
+                  <div>
                     <button
                       className="px-4 py-2 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
                       onClick={downloadAsExcel}
@@ -271,7 +271,7 @@ function DashboardUsers() {
                           <th className="px-4 py-3">Role</th>
                           <th className="px-4 py-3">Email</th>
                           <th className="px-4 py-3">Phone</th>
-                          <th className="py-3 text-center"><FontAwesomeIcon icon={faTrash} style={{color: "#000",}} /></th>
+                          <th className="py-3 text-center"><FontAwesomeIcon icon={faTrash} style={{ color: "#000", }} /></th>
                         </tr>
                       </thead>
                       <tbody className="bg-white">
@@ -281,7 +281,7 @@ function DashboardUsers() {
                               <div className="flex items-center text-sm">
                                 <div
                                   onClick={() => {
-                                    showDetails(user.userId);
+                                    showDetails(user._id);
                                   }}
                                 >
                                   <p className="font-semibold text-black cursor-pointer">
@@ -303,9 +303,9 @@ function DashboardUsers() {
                             </td>
                             <td onClick={() => {
                               setIsOpen(true)
-                              setDeleteId(user.userId) 
+                              setDeleteId(user._id)
                             }} className="py-3 text-center border cursor-pointer">
-                            <FontAwesomeIcon icon={faTrash} style={{color: "#e01b24",}} />
+                              <FontAwesomeIcon icon={faTrash} style={{ color: "#e01b24", }} />
                             </td>
                             {/* <td className="px-4 py-3 text-sm border">
                               {user.country}
