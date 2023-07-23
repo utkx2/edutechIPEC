@@ -2,38 +2,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import image2 from '../assets/carousel-2.jpg';
 import image3 from '../assets/carousel-3.jpg';
-import axios from "axios";
 
 const Carousel = ({ carousel }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [carousel, setCarousel] = useState([]);
-
-  const fetchData = async () => {
-    try {
-      const responseCarousel = await axios.get(
-        `http://localhost:3000/api/carousel/get`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            auth: localStorage.getItem("token"),
-          },
-        }
-      );
-      console.log(responseCarousel.data);
-      setCarousel(responseCarousel.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    console.log("Carouselssss:", carousel);
-  }, [carousel]);
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? 2 : prev - 1));
@@ -66,15 +37,15 @@ const Carousel = ({ carousel }) => {
     <div className=""> {/* Added margin here */}
       <div id="default-carousel" className="relative w-full" data-carousel="slide">
         <div className="relative h-96  overflow-hidden rounded-lg md:h-[530px] w-full">
-          {carousel.map((slide, index) => (
+          {slides.map((slide) => (
             <div
-              key={index}
+              key={slide.id}
               className={`transform ${currentSlide === slide.id ? 'translate-x-0' : 'translate-x-full'
                 } duration-700 ease-in-out`}
               data-carousel-item
             >
               <img
-                src={slide.images}
+                src={slide.image}
                 className="absolute top-0 left-0 block object-cover w-full h-full"
                 alt={slide.alt}
               />
@@ -83,9 +54,9 @@ const Carousel = ({ carousel }) => {
         </div>
 
         <div className="absolute z-30 flex space-x-3 transform -translate-x-1/2 bottom-5 left-1/2">
-        {carousel.map((slide, index) => (
+          {slides.map((slide) => (
             <button
-              key={index}
+              key={slide.id}
               type="button"
               className={`w-3 h-3 rounded-full ${currentSlide === slide.id ? 'bg-white' : 'bg-gray-400'
                 }`}
