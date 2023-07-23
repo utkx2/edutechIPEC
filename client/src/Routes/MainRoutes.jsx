@@ -34,7 +34,7 @@ const MainRoutes = () => {
             <Route path="/why" element={<WhyIPEC />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/course" element={<Course />} />
-            <Route path="/courseDetails" element={<CourseDetails />} />
+            <Route path="/courseDetails/:id" element={<CourseDetails />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/careers" element={<Career />} />
             <Route path="/testimonials" element={<Testimonials />} />
