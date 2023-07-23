@@ -45,6 +45,23 @@ router.get("/get", async (req, res) => {
     }
 })
 
+// http://localhost:3000/api/Courses/get/:id
+router.get("/get/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const CoursesContent = await Courses.findById({ _id: id });
+        console.log(CoursesContent);
+        res.status(200).json(CoursesContent);
+    }
+    catch (error) {
+        console.log('Error occurred while retrieving registrations:', error);
+        res.status(500).json({
+            error: "An error occurred while submitting the gem registration form"
+
+        });
+    }
+})
+
 router.delete("/remove", async (req, res) => {
     try {
         const CoursesContent = await Courses.findOneAndDelete({});

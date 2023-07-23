@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../config";
 import "../styles/Course.css";
+import { useNavigate } from "react-router-dom";
 
 function Course() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const showDetails = (userId) => {
+    navigate(`/courseDetails/${userId}`);
+    console.log(userId);
+  };
 
   const fetchData = async () => {
     try {
@@ -45,7 +51,7 @@ function Course() {
           {Object.values(userData).map((course, index) => {
             console.log(course);
             delete course.__v;
-            delete course._id;
+            // delete course._id;
             return (
               <div
                 key={index}
@@ -75,13 +81,18 @@ function Course() {
                     </tbody>
                   </table>
                   <div className="flex justify-center sm:justify-end mb-6 bg-white">
-                    <Link to={`/courseDetails/${course.id}`}>
+                    {/* <Link to={`/courseDetails/${course._id}`}> */}
+                    
                       <button
                         className="bg-yellow-400 hover:bg-[#1f1d5a] hover:text-yellow-300 hover:font-bold mt-5 mx-4 py-2 px-4 rounded-[4px] border border-[#1f1d5a] cursor-pointer"
+                        onClick={() => {
+                          showDetails(course._id);
+                          console.log("sa",course._id);
+                        }}
                       >
                         Registrations
                       </button>
-                    </Link>
+                    {/* </Link> */}
                   </div>
                 </div>
               </div>
