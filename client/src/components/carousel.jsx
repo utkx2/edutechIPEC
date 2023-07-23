@@ -27,9 +27,9 @@ const Carousel = () => {
   ];
 
   return (
-    <div className="m-5"> {/* Added margin here */}
+    <div className=""> {/* Added margin here */}
       <div id="default-carousel" className="relative w-full" data-carousel="slide">
-        <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+        <div className="relative h-96  overflow-hidden rounded-lg md:h-[530px] w-full">
           {slides.map((slide) => (
             <div
               key={slide.id}
@@ -39,14 +39,14 @@ const Carousel = () => {
             >
               <img
                 src={slide.image}
-                className="absolute block w-full top-0 left-0 h-full object-cover"
+                className="absolute top-0 left-0 block object-cover w-full h-full"
                 alt={slide.alt}
               />
             </div>
           ))}
         </div>
 
-        <div className="absolute z-30 flex space-x-3 bottom-5 left-1/2 transform -translate-x-1/2">
+        <div className="absolute z-30 flex space-x-3 transform -translate-x-1/2 bottom-5 left-1/2">
           {slides.map((slide) => (
             <button
               key={slide.id}
@@ -61,7 +61,7 @@ const Carousel = () => {
 
         <button
           type="button"
-          className="absolute top-1/2 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+          className="absolute z-30 flex items-center justify-center h-full px-4 cursor-pointer top-1/2 group focus:outline-none"
           data-carousel-prev
           onClick={handlePrevSlide}
         >
@@ -87,7 +87,7 @@ const Carousel = () => {
         </button>
         <button
           type="button"
-          className="absolute top-1/2 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+          className="absolute right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer top-1/2 group focus:outline-none"
           data-carousel-next
           onClick={handleNextSlide}
         >

@@ -41,7 +41,7 @@ function Course() {
   return (
     <div className="flex items-center justify-center py-10 bg-[#d1e9f9]">
       {Object.keys(userData).length !== 0 && (
-        <div className="max-w-4xl w-full sm:w-3/4 md:w-1/2">
+        <div className="w-full max-w-3xl sm:w-3/4 ">
           {Object.values(userData).map((course, index) => {
             console.log(course);
             delete course.__v;
@@ -49,7 +49,7 @@ function Course() {
             return (
               <div
                 key={index}
-                className="flex flex-col mb-10 md:flex-row border-[1px] border-black/10 bg-white rounded-[16px] shadow-lg"
+                className="flex flex-col mb-10 md:flex-row border-[1px] border-black/10 bg-white rounded-[16px] shadow-lg sm:mx-0 mx-8"
               >
                 <div className="w-full">
                   <table className="table">
@@ -67,14 +67,14 @@ function Course() {
                     <div className="mt-5"></div>
                     <tbody className="">
                       {Object.entries(course).map((courseValArr, index) => (
-                        <tr key={index} className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                          <td className="px-4 py-1 font-bold">{courseValArr[0]}</td>
-                          <td className="col-span-2">{courseValArr[1]}</td>
+                        <tr key={index} className="grid grid-cols-1 gap-0 px-4 my-3 sm:my-0 sm:gap-2 sm:px-0 sm:grid-cols-3">
+                          <td className="px-0 py-0 font-bold sm:py-1 sm:px-4">{courseValArr[0]}</td>
+                          <td className="sm:col-span-2">{courseValArr[1]}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                  <div className="flex justify-center sm:justify-end mb-6 bg-white">
+                  <div className="flex justify-center mb-6 bg-white sm:justify-end">
                     <Link to={`/courseDetails/${course.id}`}>
                       <button
                         className="bg-yellow-400 hover:bg-[#1f1d5a] hover:text-yellow-300 hover:font-bold mt-5 mx-4 py-2 px-4 rounded-[4px] border border-[#1f1d5a] cursor-pointer"
