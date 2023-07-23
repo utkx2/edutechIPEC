@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Student from "../assets/student-img.png";
 import axios from "axios";
-import AIR from "../assets/air.png";
-import ClassroomImg1 from "../assets/classroom-1.jpg";
-import ClassroomImg2 from "../assets/classroom-2.jpg";
-import { Carousel } from "@material-tailwind/react";
-import CarouselImg2 from "../assets/carousel-2.jpg";
-import CarouselImg3 from "../assets/carousel-3.jpg";
-import FacultyImg from "../assets/faculty.png";
-import { Link } from "react-router-dom";
+import AIR from '../assets/air.png'
+import ClassroomImg1 from '../assets/classroom-1.jpg'
+import ClassroomImg2 from '../assets/classroom-2.jpg'
+// import { Carousel } from "@material-tailwind/react";
+import CarouselImg2 from '../assets/carousel-2.jpg'
+import CarouselImg3 from '../assets/carousel-3.jpg'
+import FacultyImg from '../assets/faculty.png'
+import { Link } from 'react-router-dom';
 import { BASE_URL } from "../config";
 import "../styles/Course.css";
+import Carousel from '../components/carousel'
 
 function Home() {
   const [userData, setUserData] = useState({});
@@ -24,14 +25,17 @@ function Home() {
   // http://localhost:3000/api/studentHomePage/get
   const fetchData = async () => {
     try {
-      const responseCarousel = await axios.get(`${BASE_URL}carousel/get`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          auth: localStorage.getItem("token"),
-        },
-      });
-      // console.log(responseCarousel.data);
+      const responseCarousel = await axios.get(
+        `${BASE_URL}carousel/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(responseCarousel.data);
       setCarousel(responseCarousel.data);
       // console.log(carousel)
       const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
@@ -93,27 +97,25 @@ function Home() {
     console.log("Student:", student);
   }, [student]);
 
-  console.log(carousel[0]?.images[0]);
+  // console.log(carousel[0]?.images[0]);
 
   return (
-    <div className="">
-      <div className="">
-        <Carousel
-          autoplay={true}
-          loop={true}
-          className="w-full bg-orange-200 rounded-xl "
-        >
+    <div className=''>
+
+      <div className=''>
+        <Carousel />
+        {/* <Carousel autoplay={true} loop={true} className="w-full bg-orange-200 rounded-xl">
           <img
             src={CarouselImg2}
             alt="image 2"
-            className="object-cover w-full h-[530px] md:h-[400px] sm:h-[300px] "
+            className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
           />
           <img
             src={CarouselImg3}
             alt="image 3"
-            className="object-cover w-full h-[530px] md:h-[400px] sm:h-[300px] "
+            className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
           />
-        </Carousel>
+        </Carousel> */}
       </div>
 
       <div className="my-10">
@@ -140,13 +142,23 @@ function Home() {
       </div>
 
       {/* teachers */}
-      <div className="my-10 bg-[#d1e9f9] py-10">
-        <h1 className="text-3xl text-[#1f1d5a] font-bold text-center">
-          OUR EXPERIENCED FACULTY
-        </h1>
-        <div className="flex items-center justify-center py-8">
-          <div className="grid md:grid-cols-3 gap-8">
+      <div className='my-10 bg-[#d1e9f9] py-10'>
+        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
+        <div className='flex items-center justify-center py-8'>
+          <div className='grid gap-8 md:grid-cols-3'>
+
             {/* student air card comp*/}
+            <div className="w-[340px] bg-white border mt-5 shadow-lg rounded-[16px] p-3">
+
+              <img src={FacultyImg} alt="student" className=' h-[280px] w-full rounded-[8px] ' />
+              <div className='w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3'>
+                <div className='text-lg font-bold'>Pradeep Malhotra</div>
+                <div>2 Year classroom programme</div>
+                <div>IIT Delhi</div>
+                <div>Teaching from past 10+years.</div>
+              </div>
+
+            </div>
 
             {faculty.map((facultyData) => (
               <div
@@ -159,7 +171,7 @@ function Home() {
                   className="h-[280px] w-full rounded-[8px]"
                 />
                 <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3"></div>
-                <div className="font-bold text-lg">{facultyData.name}</div>
+                <div className="text-lg font-bold">{facultyData.name}</div>
                 <div>{facultyData.classroom}</div>
                 <div>{facultyData.collegeName}</div>
                 <div>{facultyData.experience}</div>
@@ -170,35 +182,29 @@ function Home() {
       </div>
 
       {/* experience */}
-      <div className="my-10 bg-[#d1e9f9] py-10">
-        <h1 className="text-3xl text-[#1f1d5a] font-bold text-center">
-          OUR EXPERIENCED FACULTY
-        </h1>
-        <div className="flex items-center justify-center py-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* student air card comp*/}
-            <div className="relative w-[353px] rounded-[28px] bg-white border mt-5 shadow-lg">
-              <div className="m-2">
-                {student.map((studentData) => (
-                  <div
-                    key={studentData._id}
-                    className="w-[340px] bg-white border mt-5 shadow-lg rounded-[16px] p-3"
-                  >
-                    <div className="relative bg-[#E9ECF5] rounded-[20px] m-3 p-3 text-sm">
-                      {studentData.description}
-                      <img
-                        src={AIR}
-                        alt="air"
-                        className="absolute h-[97px] w-[97px] right-10 top-[85%]"
-                      />
-                    </div>
-                    <img
-                      src={studentData.studentImg}
-                      alt="student"
-                      className="absolute h-[140px] w-[104px] bottom-10 left-5"
-                    />
+      <div className='my-10 bg-[#d1e9f9] py-10'>
+        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
+        <div className='flex items-center justify-center py-8'>
+          <div className='grid gap-8 md:grid-cols-3'>
 
-                    <div className="text-[#1f1d5a] m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16">
+            {student.map(studentData => (
+                <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-5 shadow-xl">
+
+                <div className='m-2'>
+                  <div className='relative bg-[#E9ECF5] rounded-[20px] m-3 p-3 text-sm'>
+                    {studentData.description}
+                    {/* <img src={AIR} alt="air" className='absolute h-[97px] w-[97px] right-10 top-[85%]' /> */}
+                    <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-10 top-[85%]">
+                       <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-10 top-[85%] text-white font-bold leading-[10px]">
+                          <span className="text-[12px]">AIR</span>
+                          <span className="text-3xl">{studentData.air}</span>
+                       </div>
+                      </div>
+                  </div>
+
+                  <img src={studentData.studentImg} alt="student" className='absolute h-[140px] w-[104px] bottom-10 left-5' />
+
+                  <div className="text-[#1f1d5a] m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16">
                       <div className="font-bold">
                         {studentData.studentDetails.name}
                       </div>
@@ -206,14 +212,15 @@ function Home() {
                       <div>{studentData.studentDetails.enrollmentNo}</div>
                       <div>Air {studentData.air}</div>
                     </div>
-                  </div>
-                ))}
-              </div>
 
-              <div className="absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]">
-                JEE ADVANCED 2022
+                </div>
+
+                <div className='absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
+                  JEE ADVANCED 2022
+                </div>
+
               </div>
-            </div>
+            ))}
 
             
             
