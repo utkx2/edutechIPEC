@@ -15,7 +15,7 @@ const AddExamForm = () => {
     useEffect(() => {
         async function fetchExamData() {
             try {
-                const response = await fetch(`${BASE_URL}/api/exam/byid/${id}`);
+                const response = await fetch(`${BASE_URL}exam/byid/${id}`);
                 if (response.ok) {
                     const examData = await response.json();
                     setExamName(examData.exam.name);
@@ -36,7 +36,7 @@ const AddExamForm = () => {
         console.log('Questions:', questions);
 
         try {
-            const response = await fetch(`${BASE_URL}/api/exam/byid/${id}`, {
+            const response = await fetch(`${BASE_URL}exam/byid/${id}`, {
                 method: 'PUT', // Use PUT method to update the exam
                 headers: {
                     'Content-Type': 'application/json',

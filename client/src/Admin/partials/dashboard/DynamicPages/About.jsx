@@ -98,7 +98,7 @@ export default function About() {
 
         const requestBody = JSON.stringify(formData);
 
-        fetch(`${BASE_URL}/api/AboutIpec/upload`, {
+        fetch(`${BASE_URL}AboutIpec/upload`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

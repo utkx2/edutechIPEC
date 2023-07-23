@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../../../config'
 
 const ExamineesTable = () => {
   const { id } = useParams();
@@ -9,7 +10,7 @@ const ExamineesTable = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get(`http://localhost:3000/api/examresults/users/${id}`)
+    axios.get(`${BASE_URL}examresults/users/${id}`)
       .then(response => {
         setExaminees(response.data.userResults);
       })

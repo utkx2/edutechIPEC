@@ -8,7 +8,7 @@ function About() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/aboutipec/get`,
+        `${BASE_URL}aboutipec/get`,
         {
           method: "GET",
           headers: {

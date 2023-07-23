@@ -25,7 +25,7 @@ const Signup = () => {
         e.preventDefault();
         console.log(formData)
         // Make API request with form data
-        fetch(`${BASE_URL}/api/user/signup`, {
+        fetch(`${BASE_URL}user/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

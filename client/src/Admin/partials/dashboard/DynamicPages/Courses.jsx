@@ -48,7 +48,7 @@ export default function Courses() {
 
         const requestBody = JSON.stringify(formData);
 
-        fetch(`${BASE_URL}/api/Courses/upload`, {
+        fetch(`${BASE_URL}Courses/upload`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

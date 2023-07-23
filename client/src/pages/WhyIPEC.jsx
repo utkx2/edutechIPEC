@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
 
 const WhyIPEC = () => {
-  const [userData, setUserData] = useState({})
-  // api/whyIPEC/get
+  const [userData, setUserData] = useState({});
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/whyIPEC/get`,
+        `${BASE_URL}whyIPEC/get`,
         {
           method: "GET",
           headers: {
@@ -17,8 +17,7 @@ const WhyIPEC = () => {
           },
         }
       );
-      setUserData(response.data[0])
-      // setUserData(response.data);
+      setUserData(response.data[0]);
     } catch (error) {
       console.error(error);
     }
@@ -35,39 +34,39 @@ const WhyIPEC = () => {
     "https://www.vidyamandir.com/assets/images/choose%20vmc%20icon%202.png",
     "https://www.vidyamandir.com/assets/images/choose%20vmc%20icon%205.png",
     "https://www.vidyamandir.com/assets/images/choose%20vmc%20icon%206.png"
-  ]
+  ];
+
   return (
     <>
-
-    {userData.Title && (
-      <div className="bg-[#d1e9f9]">
-      <div className="max-w-6xl px-4 py-5 mx-auto">
-      <div className="">
-        <div className="flex justify-center ">
-          <h2 className="text-3xl font-bold mb-4 text-indigo-900 border-b-[6px] border-yellow-400">
-            {userData.Title}
-          </h2>
-        </div>
-        <p className="text-[16px] leading-relaxed text-center ">
-          {userData.Content}
-        </p>
-      </div>
-      
-        <div className="grid grid-cols-2 p-4 mx-20 mt-10 gap-9">
-          {userData?.Reasons.map((userDataObj, index) => ( 
-            <div key={index} className="flex flex-row items-center mx-8">
-              <img
-                src={reasonsArr[index]}
-                alt="reasons"
-                className="mr-10 w-15 h-15"
-              />
-              <p className="mt-2 text-center">{userDataObj}</p>
+      {userData.Title && (
+        <div className="bg-[#d1e9f9]">
+          <div className="max-w-6xl px-4 py-5 mx-auto">
+            <div className="">
+              <div className="flex justify-center ">
+                <h2 className="text-3xl font-bold mb-4 text-indigo-900 border-b-[6px] border-yellow-400">
+                  {userData.Title}
+                </h2>
+              </div>
+              <p className="text-[16px] leading-relaxed text-center ">
+                {userData.Content}
+              </p>
             </div>
-          ))}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 p-4 md:mx-20 mt-10 gap-9">
+              {userData?.Reasons.map((userDataObj, index) => (
+                <div key={index} className="flex flex-col items-center md:flex-row md:items-start mx-4 md:mx-8">
+                  <img
+                    src={reasonsArr[index]}
+                    alt="reasons"
+                    className="w-24 h-24 md:w-15 md:h-15 mr-0 md:mr-6 mb-4 md:mb-0"
+                  />
+                  <p className="text-center md:text-left">{userDataObj}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    )}
+      )}
     </>
   );
 };

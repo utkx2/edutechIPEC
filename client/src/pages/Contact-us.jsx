@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { AiOutlineUser, AiOutlinePhone, AiOutlineMail, AiOutlineMessage } from "react-icons/ai";
 import axios from "axios"
+import { BASE_URL } from "../config";
 
 import { RiBuilding2Line, RiMapPin2Line } from "react-icons/ri";
 
@@ -20,7 +21,7 @@ export default function ContactUs() {
     };
     // const token = localStorage.getItem('token');
     axios
-      .post("http://localhost:3000/api/Contact/upload", formData, {
+      .post(`${BASE_URL}Contact/upload`, formData, {
 
       })
       .then((response) => {

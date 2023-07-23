@@ -10,7 +10,7 @@ function Result() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/results/get`,
+        `${BASE_URL}results/get`,
         {
           method: "GET",
           headers: {

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PastScoresTable from './PastScores';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../config'
 
 const ExamPage = () => {
     const [exams, setExams] = useState([]);
 const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/exam/active-exams')
+        fetch(`${BASE_URL}exam/active-exams`)
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
@@ -20,9 +21,6 @@ const navigate = useNavigate();
     }, []);
 
     const handleCardClick = (examId) => {
-        // Assuming you have a function to navigate to the specific exam page based on the examId.
-        // Replace 'navigateToExamPage' with your actual navigation function.
-        // navigateToExamPage(examId);
         console.log(examId);
         navigate(`/exam/${examId}`)
 

@@ -24,7 +24,7 @@ function AllUserRegistrations() {
   const handleDelete = async (id) => {
     setIsOpen(false)
     try {
-      const response = await axios.delete(`${BASE_URL}/api/registration/delete/${id}`,
+      const response = await axios.delete(`${BASE_URL}registration/delete/${id}`,
         {
           method: "GET",
           headers: {
@@ -50,7 +50,7 @@ function AllUserRegistrations() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/registration/get`,
+        `${BASE_URL}registration/get`,
         {
           method: "GET",
           headers: {

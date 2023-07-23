@@ -27,7 +27,7 @@ export default function Syllabus() {
             fileLink
         });
 
-        fetch(`${BASE_URL}/api/download/syllabus/upload`, {
+        fetch(`${BASE_URL}download/syllabus/upload`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

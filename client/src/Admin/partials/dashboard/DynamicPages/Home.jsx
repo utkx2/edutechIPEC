@@ -172,7 +172,7 @@ export default function Home() {
 
         const requestBody = JSON.stringify(formDataObj);
 
-        fetch(`${BASE_URL}/api/home/upload`, {
+        fetch(`${BASE_URL}home/upload`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

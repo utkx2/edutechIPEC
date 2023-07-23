@@ -14,7 +14,7 @@ const ExamList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/api/exam/allexams`)
+    axios.get(`${BASE_URL}exam/allexams`)
       .then((response) => {
         setExams(response.data.exams);
       })
@@ -24,7 +24,7 @@ const ExamList = () => {
   }, []);
 
   const handleDeleteExam = (examId) => {
-    axios.delete(`${BASE_URL}/api/exam/byid/${examId}`)
+    axios.delete(`${BASE_URL}exam/byid/${examId}`)
       .then((response) => {
         setExams(exams.filter((exam) => exam._id !== examId));
       })
@@ -34,7 +34,7 @@ const ExamList = () => {
   };
 
   const handleChangeStatus = (examId, newStatus) => {
-    axios.put(`${BASE_URL}/api/exam/byid/${examId}/toggleStatus`, { status: newStatus })
+    axios.put(`${BASE_URL}exam/byid/${examId}/toggleStatus`, { status: newStatus })
       .then((response) => {
         setExams(exams.map((exam) => exam._id === examId ? { ...exam, status: newStatus } : exam));
       })

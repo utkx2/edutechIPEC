@@ -25,7 +25,7 @@ function DashboardUsers() {
   const handleDelete = async (userId) => {
     setIsOpen(false)
     try {
-      const response = await axios.delete(`${BASE_URL}/api/user/byid/${userId}`,
+      const response = await axios.delete(`${BASE_URL}user/byid/${userId}`,
         {
           method: "GET",
           headers: {
@@ -51,7 +51,7 @@ function DashboardUsers() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/user/getall`,
+        `${BASE_URL}user/getall`,
         {
           method: "GET",
           headers: {

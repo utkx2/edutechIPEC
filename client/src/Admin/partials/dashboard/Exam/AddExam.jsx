@@ -80,7 +80,7 @@ const AddExamForm = () => {
     console.log('Questions:', questions);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/exam/newexam`, {
+      const response = await fetch(`${BASE_URL}exam/newexam`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

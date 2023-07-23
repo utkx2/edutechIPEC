@@ -28,7 +28,7 @@ function Home() {
   const fetchData = async () => {
     try {
       const responseCarousel = await axios.get(
-        `${BASE_URL}/api/carousel/get`,
+        `${BASE_URL}carousel/get`,
         {
           method: "GET",
           headers: {
@@ -41,7 +41,7 @@ function Home() {
       setCarousel(responseCarousel.data);
       // console.log(carousel)
       const responsePrograms = await axios.get(
-        `${BASE_URL}/api/ourPrograms/get/`,
+        `${BASE_URL}ourPrograms/get/`,
         {
           method: "GET",
           headers: {
@@ -51,7 +51,7 @@ function Home() {
         }
       );
       const responseFaculty = await axios.get(
-        `${BASE_URL}/api/facultyHomePage/get`,
+        `${BASE_URL}facultyHomePage/get`,
         {
           method: "GET",
           headers: {
@@ -61,7 +61,7 @@ function Home() {
         }
       );
       const responseStudent = await axios.get(
-        `${BASE_URL}/api/studentHomePage/get`,
+        `${BASE_URL}studentHomePage/get`,
         {
           method: "GET",
           headers: {
