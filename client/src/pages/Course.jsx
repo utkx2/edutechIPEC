@@ -6,6 +6,8 @@ import "../styles/Course.css";
 
 function Course() {
   const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -17,14 +19,24 @@ function Course() {
         },
       });
       setUserData(response.data);
+      setLoading(false);
     } catch (error) {
-      console.error(error);
+      setError("Error fetching data");
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Add a loading spinner here if desired
+  }
+
+  if (error) {
+    return <div>{error}</div>; // Display the error message if there's an error
+  }
 
   return (
     <div className="flex items-center justify-center py-10 bg-[#d1e9f9]">
@@ -43,8 +55,10 @@ function Course() {
                   <table className="table">
                     <thead>
                       <tr>
-                        <th className="py-3 text-center text-white bg-[#1f1d5a] rounded-t-[16px] w-[800px]"
-                          colSpan={2}>
+                        <th
+                          className="py-3 text-center text-white bg-[#1f1d5a] rounded-t-[16px] w-[800px]"
+                          colSpan={2}
+                        >
                           {course.Title}
                         </th>
                       </tr>
@@ -61,7 +75,7 @@ function Course() {
                     </tbody>
                   </table>
                   <div className="flex justify-center sm:justify-end mb-6 bg-white">
-                    <Link to='/courseDetails'>
+                    <Link to={`/courseDetails/${course.id}`}>
                       <button
                         className="bg-yellow-400 hover:bg-[#1f1d5a] hover:text-yellow-300 hover:font-bold mt-5 mx-4 py-2 px-4 rounded-[4px] border border-[#1f1d5a] cursor-pointer"
                       >
