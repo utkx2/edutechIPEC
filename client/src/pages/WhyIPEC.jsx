@@ -8,7 +8,7 @@ const WhyIPEC = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/whyIPEC/get`,
+        `${BASE_URL}whyIPEC/get`,
         {
           method: "GET",
           headers: {

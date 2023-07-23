@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Sidebar from "../Sidebar";
 import Header from "../Header";
-import TenderStatistics from "./TenderStatistics"
-import UserStatistics from "./UserStatistics"
+// import TenderStatistics from "./TenderStatistics"
+// import UserStatistics from "./UserStatistics"
 
 const DashboardHome = () => {
 
@@ -26,8 +26,8 @@ const DashboardHome = () => {
             <div className="grid grid-cols-15 gap-6">
               {/*---------> Table (Top Channels) */}
               <div className="text-center">
-                <TenderStatistics/>
-                <UserStatistics/>
+                {/* <TenderStatistics/>
+                <UserStatistics/> */}
               </div>
             </div>
           </div>

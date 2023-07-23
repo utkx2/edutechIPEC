@@ -23,7 +23,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         // Make API request to login
-        fetch(`${BASE_URL}/api/user/signin`, {
+        fetch(`${BASE_URL}user/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import IndianStates from '../constants/IndianStates';
+import { BASE_URL } from "../config";
 
 export default function Career() {
     const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ export default function Career() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/api/facultyHire/upload', {
+            const response = await fetch(`${BASE_URL}facultyHire/upload`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

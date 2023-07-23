@@ -11,7 +11,7 @@ function Course() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/Courses/get`,
+        `${BASE_URL}Courses/get`,
         {
           method: "GET",
           headers: {

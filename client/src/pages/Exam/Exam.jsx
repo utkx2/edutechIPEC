@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../config'
 
 const Exam = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Exam = () => {
 
     useEffect(() => {
         // Fetch exam data by ID from the API
-        fetch(`http://localhost:3000/api/exam/student-exam/${examId}`)
+        fetch(`${BASE_URL}exam/student-exam/${examId}`)
             .then((response) => response.json())
             .then((data) => {
                 setExamData(data.exam);
@@ -61,7 +62,7 @@ const Exam = () => {
         // Step 3: Call the API to get the exam score and store the exam result
         const userId = user._id;
         console.log(rdata);
-        axios.post(`http://localhost:3000/api/exam/getscore/${examId}`, {
+        axios.post(`${BASE_URL}exam/getscore/${examId}`, {
             submittedAnswers: responses,
             userId: userId,
             response: rdata

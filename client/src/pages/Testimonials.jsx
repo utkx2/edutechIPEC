@@ -9,7 +9,7 @@ export default function Testimonials() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/api/testimonials/get`,
+          `${BASE_URL}testimonials/get`,
           {
             method: "GET",
             headers: {

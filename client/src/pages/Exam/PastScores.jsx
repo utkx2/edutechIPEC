@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { BASE_URL } from '../../config'
 const PastScoresTable = () => {
   const [pastScores, setPastScores] = useState([]);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
@@ -9,7 +9,7 @@ const PastScoresTable = () => {
   useEffect(() => {
     const fetchPastScores = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/examresults/score/${user._id}`);
+        const response = await fetch(`${BASE_URL}examresults/score/${user._id}`);
         const data = await response.json();
         setPastScores(data);
       } catch (error) {

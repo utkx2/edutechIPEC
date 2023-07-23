@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import IndianStates from "../constants/IndianStates";
 // import { ProgressBar, Step } from "react-step-progress-bar";
+import { BASE_URL } from "../config";
 
 const Registration = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -72,7 +73,7 @@ const Registration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3000/api/registration/upload', {
+            const response = await fetch(`${BASE_URL}registration/upload`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

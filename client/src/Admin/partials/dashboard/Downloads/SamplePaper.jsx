@@ -36,7 +36,7 @@ export default function SamplePaper() {
             fileLink
         });
 
-        fetch(`${BASE_URL}/api/download/samplePaper/upload`, {
+        fetch(`${BASE_URL}download/samplePaper/upload`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

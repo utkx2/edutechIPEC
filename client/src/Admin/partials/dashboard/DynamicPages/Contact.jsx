@@ -21,7 +21,7 @@ export default function Contact() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/Contact/allUsers`,
+        `${BASE_URL}Contact/allUsers`,
         {
           method: "GET",
           headers: {

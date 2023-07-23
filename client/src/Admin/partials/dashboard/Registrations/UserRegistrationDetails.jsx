@@ -10,6 +10,7 @@ import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from 'file-saver';
+import { BASE_URL } from '../../../../config'
 
 const UserRegistrationDetails = () => {
     const [formData, setFormData] = useState(null);
@@ -17,7 +18,7 @@ const UserRegistrationDetails = () => {
     const { id } = useParams();
     useEffect(() => {
         // Fetch data from the API
-        fetch(`http://localhost:3000/api/registration/get/${id}`)
+        fetch(`${BASE_URL}registration/get/${id}`)
             .then((response) => response.json())
             .then((data) => setFormData(data))
             .catch((error) => console.log(error));
@@ -36,7 +37,7 @@ const UserRegistrationDetails = () => {
     };
 
     function updateDetails() {
-        fetch(`http://localhost:3000/api/registration/get/${id}`, {
+        fetch(`${BASE_URL}registration/get/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
