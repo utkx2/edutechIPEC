@@ -47,7 +47,7 @@ function Footer() {
         <div className="grid max-w-3xl grid-cols-1 md:grid-cols-3 text-white">
 
           {/* Quick Links */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 pl-4 md:pl-0">
             <h1 className="mb-4 text-xl font-bold">Quick Links</h1>
             <div className="grid md:grid-cols-2 gap-3 text-md">
               <div>
@@ -73,14 +73,14 @@ function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="md:col-span-1 mt-8 md:mt-0">
+          <div className="md:col-span-1 mt-8 md:mt-0 pl-4 md:pl-0">
             <h1 className="mb-4 text-xl font-bold">Contact</h1>
             <div className="my-4">
               Ipec Classes
               Aggrawal Corporate Heights,
-              drd Floor, Plot no. A-7,
-              xxtaji Subhash Place,
-              Opposite xxzirpur Depot,
+              drd Floor,<br /> Plot no. A-7,
+              xxtaji Subhash Place,<br />
+              Opposite xxzirpur Depot,<br />
               Rohini, Delhi
             </div>
             <div className="my-4">
@@ -93,7 +93,7 @@ function Footer() {
       </div>
 
       {/* lower foot */}
-      <div className="bg-[#1F1E5A] h-[35px] text-white flex items-center justify-center text-sm">
+      <div className="bg-[#1F1E5A] pl-4 md:pl-0 h-[35px] text-white flex items-center justify-center text-sm">
         © 2023 IPEC Classes | All Rights Reserved
       </div>
     </div>
