@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import image2 from '../assets/carousel-2.jpg';
 import image3 from '../assets/carousel-3.jpg';
-import PropTypes from 'prop-types';
 
 const Carousel = ({ carousel }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
