@@ -22,7 +22,7 @@ const PastScoresTable = () => {
 
   const indexOfLastScore = currentPage * scoresPerPage;
   const indexOfFirstScore = indexOfLastScore - scoresPerPage;
-  const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
+  // const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -30,16 +30,16 @@ const PastScoresTable = () => {
 
   return (
     <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
-    {/* Dashboard actions */}
-    {/* Cards */}
-    <div className="grid gap-6 grid-cols-15">
-      {/* Table */}
-      <section className="container p-6 mx-auto overflow-x-auto font-mono">
-        <h1 className="mb-4 text-xl font-bold">Past Scores</h1>
-        {Array.isArray(pastScores) && pastScores.length > 0 ? (
-          <div className="w-full mb-8 overflow-hidden rounded-lg shadow-2xl">
-            <div className="w-full overflow-x-auto">
-              <table className="w-full">
+      {/* Dashboard actions */}
+      {/* Cards */}
+      <div className="grid gap-6 grid-cols-15">
+        {/* Table */}
+        <section className="container p-6 mx-auto overflow-x-auto font-mono">
+          <h1 className="mb-4 text-xl font-bold">Past Scores</h1>
+          {Array.isArray(pastScores) && pastScores.length > 0 ? (
+            <div className="w-full mb-8 overflow-hidden rounded-lg shadow-2xl">
+              <div className="w-full overflow-x-auto">
+                <table className="w-full">
                   <thead>
                     <tr className="font-semibold tracking-wide text-left text-gray-900 uppercase bg-gray-300 border-b border-gray-600 text-md">
                       <th className="px-4 py-3">SN</th>
@@ -48,7 +48,7 @@ const PastScoresTable = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-gray-100">
-                    {currentScores.map((score, index) => (
+                    {pastScores.map((score, index) => (
                       <tr className="text-gray-700" key={index}>
                         <td className="px-4 py-3 border ">{index + 1}</td>
                         <td className="px-4 py-3 border ">{score.examName}</td>
@@ -81,6 +81,8 @@ const PastScoresTable = () => {
                 </div>
               </div>
             </div>
+          ) : pastScores.length === 0 ? (
+            <p>Loading...</p>
           ) : (
             <p>No past scores found.</p>
           )}
