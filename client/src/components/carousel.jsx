@@ -1,9 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import image2 from '../assets/carousel-2.jpg';
 import image3 from '../assets/carousel-3.jpg';
+import axios from "axios";
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [carousel, setCarousel] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const responseCarousel = await axios.get(
+        `http://localhost:3000/api/carousel/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(responseCarousel.data);
+      setCarousel(responseCarousel.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log("Carouselssss:", carousel);
+  }, [carousel]);
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? 2 : prev - 1));
@@ -13,32 +42,32 @@ const Carousel = () => {
     setCurrentSlide((prev) => (prev === 2 ? 0 : prev + 1));
   };
 
-  const slides = [
-    {
-      id: 0,
-      image: image2,
-      alt: 'Slide 2',
-    },
-    {
-      id: 1,
-      image: image3,
-      alt: 'Slide 3',
-    },
-  ];
+  // const slides = [
+  //   {
+  //     id: 0,
+  //     image: image2,
+  //     alt: 'Slide 2',
+  //   },
+  //   {
+  //     id: 1,
+  //     image: image3,
+  //     alt: 'Slide 3',
+  //   },
+  // ];
 
   return (
     <div className=""> {/* Added margin here */}
       <div id="default-carousel" className="relative w-full" data-carousel="slide">
         <div className="relative h-96  overflow-hidden rounded-lg md:h-[530px] w-full">
-          {slides.map((slide) => (
+          {carousel.map((slide, index) => (
             <div
-              key={slide.id}
+              key={index}
               className={`transform ${currentSlide === slide.id ? 'translate-x-0' : 'translate-x-full'
                 } duration-700 ease-in-out`}
               data-carousel-item
             >
               <img
-                src={slide.image}
+                src={slide.images}
                 className="absolute top-0 left-0 block object-cover w-full h-full"
                 alt={slide.alt}
               />
@@ -47,9 +76,9 @@ const Carousel = () => {
         </div>
 
         <div className="absolute z-30 flex space-x-3 transform -translate-x-1/2 bottom-5 left-1/2">
-          {slides.map((slide) => (
+        {carousel.map((slide, index) => (
             <button
-              key={slide.id}
+              key={index}
               type="button"
               className={`w-3 h-3 rounded-full ${currentSlide === slide.id ? 'bg-white' : 'bg-gray-400'
                 }`}
