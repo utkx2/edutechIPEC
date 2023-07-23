@@ -52,39 +52,42 @@ function CourseDetails() {
       </div>
 
       <div>
-        <div
-          className="w-full max-w-6xl p-8 mx-4 shadow-2xl md:mx-auto bg-gradient-to-b from-gray-100 to-gray-50 rounded-2xl">
-          <h1 className="mb-6 text-3xl font-bold">Payment Plans</h1>
-          <hr className="mb-6 border-gray-400" />
-
+        <div className="mt-6">
           <div
-            className="items-start p-8 shadow-2xl w-96 rounded-2xl bg-gradient-to-b from-gray-300 to-gray-50"
-            style={{ color: "#fff", background: "#1f1e5a" }}
-          >
-            <div>
-              <h1 className="mb-6 text-2xl font-bold ">
-                Course Package
-              </h1>
-              <div className="flex justify-between mt-6">
-                <div>
-                  <p className="text-sm">Actual Fee</p>
-                  <div className="flex gap-4 items-center">
-                    <div className="flex items-baseline gap-3">
-                      <h2 className="text-xl font-bold line-through text-thin">$1,000</h2>
-                      <h2 className="text-xl font-bold text-thin">$890</h2>
-                      <p className="text-[10px]">Excluded GST*</p>
-                    </div>
-                    <div className="bg-[#17a2b8] p-1 rounded text-center text-[12px]">
-                      Save 11%
+            className="w-full max-w-6xl p-8 mx-4 shadow-2xl md:mx-auto bg-gradient-to-b from-gray-100 to-gray-50 rounded-2xl">
+
+            <h1 className="mb-6 text-3xl font-bold">Payment Plans</h1>
+            <hr className="mb-6 border-gray-400" />
+
+            <div
+              className="items-start p-8 w-full md:w-96 mx-auto shadow-2xl rounded-2xl bg-gradient-to-b from-gray-300 to-gray-50"
+              style={{ color: "#fff", background: "#1f1e5a" }}
+            >
+              <div>
+                <h1 className="mb-6 text-2xl font-bold ">
+                  Course Package
+                </h1>
+                <div className="flex justify-between mt-6">
+                  <div>
+                    <p className="text-sm">Actual Fee</p>
+                    <div className="flex gap-4 items-center">
+                      <div className="flex items-baseline gap-3">
+                        <h2 className="text-xl font-bold line-through text-thin">$1,000</h2>
+                        <h2 className="text-xl font-bold text-thin">$890</h2>
+                        <p className="text-[10px]">Excluded GST*</p>
+                      </div>
+                      <div className="bg-[#17a2b8] p-1 rounded text-center text-[12px]">
+                        Save 11%
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <button className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded" >
-              Pay Now
-            </button>
+              <button className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded" >
+                Pay Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
