@@ -166,7 +166,7 @@ function Home() {
                 className="w-[340px] bg-white border mt-5 shadow-lg rounded-[16px] p-3"
               >
                 <img
-                  src={FacultyImg}
+                  src={facultyData.facultyImg}
                   alt="student"
                   className="h-[280px] w-full rounded-[8px]"
                 />
