@@ -51,12 +51,7 @@ function Course() {
       {Object.keys(userData).length !== 0 && (
         <div className="w-full max-w-3xl sm:w-3/4 ">
           {Object.values(userData).map((course, index) => {
-            console.log(course);
-            delete course.__v;
-            // delete course._id;
-            // setId(course._id);
-            const id = course._id;
-            delete course._id;
+            const modifiedCourseObj = Object.entries(course).filter(courseValArr => courseValArr[0] != "_id" && courseValArr[0] != "__v")
             return (
               <div
                 key={index}
@@ -77,10 +72,10 @@ function Course() {
                     {/* added to give top margin between head and body */}
                     <div className="mt-5"></div>
                     <tbody className="">
-                      {Object.entries(course).map((courseValArr, index) => (
+                      {Object.entries(modifiedCourseObj).map((courseValArr, index) => (
                         <tr key={index} className="grid grid-cols-1 gap-0 px-4 my-3 sm:my-0 sm:gap-2 sm:px-0 sm:grid-cols-3">
-                          <td className="px-0 py-0 font-bold sm:py-1 sm:px-4">{courseValArr[0]}</td>
-                          <td className="sm:col-span-2">{courseValArr[1]}</td>
+                          <td className="px-0 py-0 font-bold sm:py-1 sm:px-4">{courseValArr[1][0]}</td>
+                          <td className="sm:col-span-2">{courseValArr[1][1]}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -91,11 +86,11 @@ function Course() {
                     <button
                       className="bg-yellow-400 hover:bg-[#1f1d5a] hover:text-yellow-300 hover:font-bold mt-5 mx-4 py-2 px-4 rounded-[4px] border border-[#1f1d5a] cursor-pointer"
                       onClick={() => {
-                        showDetails(id);
-                        console.log("sa", id);
+                        showDetails(course._id);
+                        console.log("sa", course._id);
                       }}
                     >
-                      Registrations
+                      Registration
                     </button>
                     {/* </Link> */}
                   </div>

@@ -10,12 +10,12 @@ function CourseDetails() {
       .then((response) => response.json())
       .then((data) => {
         setFormData(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => console.log(error));
 
   }, [id]);
-  console.log(formData);
+  // console.log(formData);
 
   return (
     <div className="bg-[#d1e9f9] py-10">
