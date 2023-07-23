@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import image2 from '../assets/carousel-2.jpg';
 import image3 from '../assets/carousel-3.jpg';
+import PropTypes from 'prop-types';
 
-const Carousel = () => {
+const Carousel = ({ carousel }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handlePrevSlide = () => {
@@ -13,18 +14,24 @@ const Carousel = () => {
     setCurrentSlide((prev) => (prev === 2 ? 0 : prev + 1));
   };
 
-  const slides = [
-    {
-      id: 0,
-      image: image2,
-      alt: 'Slide 2',
-    },
-    {
-      id: 1,
-      image: image3,
-      alt: 'Slide 3',
-    },
-  ];
+  // const slides = [
+  //   {
+  //     id: 0,
+  //     image: image2,
+  //     alt: 'Slide 2',
+  //   },
+  //   {
+  //     id: 1,
+  //     image: image3,
+  //     alt: 'Slide 3',
+  //   },
+  // ];
+
+  const slides = carousel[0].images.map((imageUrl, index) => ({
+    id: index,
+    image: imageUrl,
+    alt: `Slide ${index}`,
+  }))
 
   return (
     <div className=""> {/* Added margin here */}
@@ -114,6 +121,14 @@ const Carousel = () => {
       </div>
     </div>
   );
+};
+
+Carousel.propTypes = {
+  carousel: PropTypes.arrayOf(
+    PropTypes.shape({
+      images: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    }).isRequired
+  ).isRequired,
 };
 
 export default Carousel;

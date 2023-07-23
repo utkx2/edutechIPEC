@@ -103,7 +103,9 @@ function Home() {
     <div className=''>
 
       <div className=''>
-        <Carousel />
+
+        {carousel?.length > 0 && <Carousel carousel={carousel} />
+        }
         {/* <Carousel autoplay={true} loop={true} className="w-full bg-orange-200 rounded-xl">
           <img
             src={CarouselImg2}
