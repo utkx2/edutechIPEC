@@ -28,7 +28,7 @@ function CourseDetails() {
               Class Schedule
             </h2>
             <div className="flex-grow pl-6 font-mono text-xl text-gray-700" style={{ color: "#1c1950" }}>
-              <i className="far fa-calendar"></i> <strong>{formData.ClassSchedule} </strong>
+              <i className="far fa-calendar"></i> <strong>{formData?.ClassSchedule} </strong>
             </div>
           </div>
           <div className="flex flex-col mb-6 md:flex-row">
@@ -39,7 +39,7 @@ function CourseDetails() {
               <ul className="pl-8 list-disc list-inside">
                 <li className="mb-2 font-mono text-xl" style={{ color: "#1c1950" }}><strong>Comprehensive Study Material</strong></li>
                 <li className="mb-2 font-mono text-lg" style={{ color: "#1c1950" }}>
-                  {formData.StudyContent}
+                  {formData?.StudyContent}
                 </li>
                 <li className="mb-2 font-mono" style={{ color: "#1c1950" }}><strong>Recordings Of Live Classes & Class Notes (PDF)</strong></li>
                 <li className="mb-2 font-mono" style={{ color: "#1c1950" }}><strong>Live Quiz</strong></li>
@@ -55,7 +55,7 @@ function CourseDetails() {
                 <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>Non Academic Mentors</li>
                 <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>Recorded School Support Classes</li>
                 <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>
-                  {formData.ComprehensivePractice}
+                  {formData?.ComprehensivePractice}
                 </li>
                 <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>Chat Based Interaction In The Class</li>
               </ul>
