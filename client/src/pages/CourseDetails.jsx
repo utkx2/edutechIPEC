@@ -67,7 +67,7 @@ function CourseDetails() {
       <div>
         <div className="mt-6">
           <div
-            className="w-full max-w-6xl p-8 mx-4 shadow-2xl md:mx-auto bg-gradient-to-b from-gray-100 to-gray-50 rounded-2xl">
+            className="max-w-[60rem] p-8 mx-4 border shadow-xl md:mx-auto bg-gradient-to-b from-gray-100 to-gray-50 rounded-2xl my-10">
 
             <h1 className="mb-6 text-3xl font-bold">Payment Plans</h1>
             <hr className="mb-6 border-gray-400" />

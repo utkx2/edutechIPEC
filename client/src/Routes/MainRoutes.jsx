@@ -18,31 +18,33 @@ import Login from '../pages/Login';
 import Signup from '../pages/SignUp';
 import ResultPage from '../pages/resultPage';
 import ExamPage from '../pages/Exam/ExamList';
+import Media from '../pages/Media';
 
 const MainRoutes = () => {
   return (
     <>
-        <Header />
-        <Routes>
-            <Route path="/" element={<Home />} /> 
-            <Route path="/about" element={<About />} />
-            <Route path="/results" element={<Result />} />
-            <Route path="/result/:score" element={<ResultPage/>} />
-            <Route path="/exam" element={<ExamPage />} />
-            <Route path="/exam/:examId" element={<Exam />} />
-            <Route path="/mission" element={<OurMission />} />
-            <Route path="/why" element={<WhyIPEC />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/course" element={<Course />} />
-            <Route path="/courseDetails/:id" element={<CourseDetails />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/careers" element={<Career />} />
-            <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/results" element={<Result />} />
+        <Route path="/result/:score" element={<ResultPage />} />
+        <Route path="/exam" element={<ExamPage />} />
+        <Route path="/exam/:examId" element={<Exam />} />
+        <Route path="/mission" element={<OurMission />} />
+        <Route path="/why" element={<WhyIPEC />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/course" element={<Course />} />
+        <Route path="/courseDetails/:id" element={<CourseDetails />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/media" element={<Media />} />
+        <Route path="/careers" element={<Career />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
     </>
   );
 };

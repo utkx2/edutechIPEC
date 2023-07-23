@@ -9,7 +9,9 @@ function Course() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  //const [id, setId] = useState("");
   const navigate = useNavigate();
+  // let id;
   const showDetails = (userId) => {
     navigate(`/courseDetails/${userId}`);
     console.log(userId);
@@ -52,6 +54,9 @@ function Course() {
             console.log(course);
             delete course.__v;
             // delete course._id;
+            // setId(course._id);
+            const id = course._id;
+            delete course._id;
             return (
               <div
                 key={index}
@@ -82,16 +87,16 @@ function Course() {
                   </table>
                   <div className="flex justify-center sm:justify-end mb-6 bg-white">
                     {/* <Link to={`/courseDetails/${course._id}`}> */}
-                    
-                      <button
-                        className="bg-yellow-400 hover:bg-[#1f1d5a] hover:text-yellow-300 hover:font-bold mt-5 mx-4 py-2 px-4 rounded-[4px] border border-[#1f1d5a] cursor-pointer"
-                        onClick={() => {
-                          showDetails(course._id);
-                          console.log("sa",course._id);
-                        }}
-                      >
-                        Registrations
-                      </button>
+
+                    <button
+                      className="bg-yellow-400 hover:bg-[#1f1d5a] hover:text-yellow-300 hover:font-bold mt-5 mx-4 py-2 px-4 rounded-[4px] border border-[#1f1d5a] cursor-pointer"
+                      onClick={() => {
+                        showDetails(id);
+                        console.log("sa", id);
+                      }}
+                    >
+                      Registrations
+                    </button>
                     {/* </Link> */}
                   </div>
                 </div>
