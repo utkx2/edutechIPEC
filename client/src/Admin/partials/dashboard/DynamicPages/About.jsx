@@ -236,11 +236,11 @@ export default function About() {
                     </h1>
                     <div className="flex flex-col gap-y-1">
                     {userData.ipecPedagogy &&
-                      userData.ipecPedagogy.map((pedagogy, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-                        >
+              userData.ipecPedagogy.map((pedagogy, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
+                >
                           <input
                             type="text"
                             name="title"

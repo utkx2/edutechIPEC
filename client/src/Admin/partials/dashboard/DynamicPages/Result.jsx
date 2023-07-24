@@ -1,5 +1,5 @@
-import React from 'react'
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from '../../../../config';
@@ -18,6 +18,36 @@ export default function Result() {
   };
 
   const [formData, setFormData] = useState(initialData);
+
+  const [userData, setUserData] = useState({})
+  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}results/get`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
+        },
+      });
+      console.log(response.data);
+      setUserData(response.data);
+      // Populate the form with fetched data
+      if (response.data && response.data.length > 0) {
+        setFormData({
+          examName: response.data[0].examName,
+          students: response.data[0].students,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -170,7 +200,8 @@ export default function Result() {
                           className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         />
                       </label>
-                    </div>
+                      </div>
+                  
                   ))}
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
