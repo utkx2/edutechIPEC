@@ -40,11 +40,15 @@ router.post('/upload', async (req, res) => {
 router.put('/edit', async (req, res) => {
     try {
         const { introVideoUrl, cards } = req.body;
-        const testimonial = await testimonialsModel.findOneAndUpdate({
+        const update = {
             introVideoUrl,
             cards,
+        };
+        const testimonial = await testimonialsModel.findOneAndUpdate({}, update, {
+            new: true,// This option creates the document if it doesn't exist
+            upsert: true
         });
-        await testimonial.save();
+        //  await testimonial.save();
         res.json({ message: 'Video and card updated successfully', testimonial });
     }
     catch (error) {
