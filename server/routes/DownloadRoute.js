@@ -81,8 +81,8 @@ router.delete('/samplePaper/delete/:id', async (req, res) => {
 // http://localhost:3000/api/download/syllabus/get
 router.get('/syllabus/get', async (req, res) => {
     try {
-        const syllabus = await syllabus.find();
-        res.json(syllabus);
+        const syllabusData = await syllabus.find();
+        res.json(syllabusData);
     }
     catch (error) {
         console.error('error fetching the syllabus', error);
@@ -150,8 +150,8 @@ router.delete('syllabus/delete/:id', async (req, res) => {
 // http://localhost:3000/api/download/brochure/get
 router.get('/brochure/get', async (req, res) => {
     try {
-        const Brochure = await Brochure.find();
-        res.json(Brochure);
+        const BrochureData = await Brochure.find();
+        res.status(200).json(BrochureData);
     }
     catch (error) {
         console.error('error fetching the Brochure', error);
