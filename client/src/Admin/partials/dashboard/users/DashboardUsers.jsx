@@ -73,9 +73,9 @@ function DashboardUsers() {
     fetchData();
   }, []);
 
-  const showDetails = (userId) => {
-    navigate(`/dashboard/user/${userId}`);
-  };
+  // const showDetails = (userId) => {
+  //   navigate(`/dashboard/user/${userId}`);
+  // };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -276,7 +276,7 @@ function DashboardUsers() {
                                     showDetails(user._id);
                                   }}
                                 >
-                                  <p className="font-semibold text-black cursor-pointer">
+                                  <p className="font-semibold text-black">
                                     {user.name}
                                   </p>
                                 </div>

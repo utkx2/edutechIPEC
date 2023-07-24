@@ -11,12 +11,8 @@ function Header() {
     // ... (your options array)
     'E-brochures',
     'Sample Papers',
-    'Registration Form',
-    'Enrollment Forms',
-    'Application Forms',
-    'Instructions to Fill OMR',
-    'JEE Advanced Solution',
-    'JEE Mains Solution',
+    'Syllabus',
+
   ];
 
   const lowernav = [
@@ -123,12 +119,12 @@ function Header() {
                     <div className='absolute left-0 px-2 py-2 bg-white top-[138%] z-10'>
                       <div>
                         {navItem.options.map((downloadOption) => (
-                          <div
+                          <Link to={'/download'}
                             key={downloadOption}
                             className='hover:bg-[#1f1d5a] hover:text-white whitespace-nowrap my-2 py-1.5 px-4 rounded text-[#1f1d5a]'
                           >
                             {downloadOption}
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -163,7 +159,9 @@ function Header() {
                           key={downloadOption}
                           className='hover:bg-[#1f1d5a] hover:text-white whitespace-nowrap my-2 py-1.5 px-4 rounded  text-[#1f1d5a]'
                         >
-                          {downloadOption}
+                          <Link to={'/download'}>
+                            {downloadOption}
+                          </Link>
                         </div>
                       ))}
                     </div>
