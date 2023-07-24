@@ -38,18 +38,21 @@ router.post('/samplePaper/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/samplePaper/edit/:id
-router.put('/samplePaper/edit/:id', async (req, res) => {
+router.put('/samplePaper/edit/', async (req, res) => {
     try {
         const { id } = req.params;
         const {
             className, fileLink
         } = req.body;
-        const updatedCarousel = await SamplePaper.findByIdAndUpdate(
-            id,
+        console.log(className);
+        const updatedCarousel = await SamplePaper.findOneAndUpdate(
+            { className }, {
+            fileLink
+        },
             {
-                className, fileLink
-            },
-            { new: true } // This option returns the updated document
+                new: true,
+                upsert: true
+            } // This option returns the updated document
         );
         res.json({ message: 'carousel home page card updated successfully', CarouselLinks: updatedCarousel });
     }
@@ -107,21 +110,20 @@ router.post('/syllabus/upload', async (req, res) => {
     }
 });
 
-// http://localhost:3000/api/download/syllabus/edit/:id
-router.put('syllabus/edit/:id', async (req, res) => {
+// http://localhost:3000/api/download/syllabus/edit
+router.put('/syllabus/edit/', async (req, res) => {
     try {
         const { id } = req.params;
         const {
             className, fileLink
         } = req.body;
-        const updatedSyllabus = await syllabus.findByIdAndUpdate(
-            id,
-            {
-                className, fileLink
-            },
-            { new: true } // This option returns the updated document
+        const updatedSyllabus = await syllabus.findOneAndUpdate(
+            { className }, {
+            fileLink
+        },
+            { new: true, upsert: true } // This option returns the updated document
         );
-        res.json({ message: 'syllabus home page card updated successfully', syllabus: updatedSyllabus });
+        res.json({ message: 'syllabus link updated successfully', syllabus: updatedSyllabus });
     }
     catch (error) {
         console.error('error occured', error);
@@ -177,19 +179,18 @@ router.post('/brochure/upload', async (req, res) => {
     }
 });
 
-// http://localhost:3000/api/download/brochure/edit/:id
-router.put('/brochure/edit/:id', async (req, res) => {
+// http://localhost:3000/api/download/brochure/edit/
+router.put('/brochure/edit/', async (req, res) => {
     try {
         const { id } = req.params;
         const {
             examName, fileLink
         } = req.body;
-        const updatedBrochure = await Brochure.findByIdAndUpdate(
-            id,
+        const updatedBrochure = await Brochure.findOneAndUpdate({ examName },
             {
-                examName, fileLink
+                fileLink
             },
-            { new: true } // This option returns the updated document
+            { new: true, upsert: true } // This option returns the updated document
         );
         res.json({ message: 'Brochure home page card updated successfully', Brochure: updatedBrochure });
     }

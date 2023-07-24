@@ -27,8 +27,8 @@ export default function Syllabus() {
             fileLink
         });
 
-        fetch(`${BASE_URL}download/syllabus/upload`, {
-            method: "POST",
+        fetch(`${BASE_URL}download/syllabus/edit`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 auth: token,
@@ -41,7 +41,7 @@ export default function Syllabus() {
             })
             .catch((error) => {
                 console.error("Error:", error);
-                alert("Oops something went wrong!!!");
+                //  alert("Oops something went wrong!!!");
             });
     };
     const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -27,7 +27,7 @@ export default function SamplePaper() {
 
     const handleSubmit = (className, fileLink) => {
         // e.preventDefault();
-        console.log(formData)
+        // console.log(formData)
 
         const token = localStorage.getItem("token");
 
@@ -36,8 +36,8 @@ export default function SamplePaper() {
             fileLink
         });
 
-        fetch(`${BASE_URL}download/samplePaper/upload`, {
-            method: "POST",
+        fetch(`${BASE_URL}download/samplePaper/edit`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 auth: token,

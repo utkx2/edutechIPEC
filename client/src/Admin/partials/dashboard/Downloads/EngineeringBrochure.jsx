@@ -54,8 +54,8 @@ export default function EngineeringBrochure() {
 
     const requestBody = JSON.stringify(formDataObj);
 
-    fetch(`${BASE_URL}download/brochure/upload`, {
-      method: "POST",
+    fetch(`${BASE_URL}download/brochure/edit`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         auth: token,
