@@ -104,8 +104,8 @@ export default function Testimonials() {
 
     const requestBody = JSON.stringify(formData);
 
-    fetch(`${BASE_URL}testimonials/upload`, {
-      method: "POST",
+    fetch(`${BASE_URL}testimonials/edit`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         auth: token,
