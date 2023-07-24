@@ -127,9 +127,9 @@ function Home() {
 
         <div className="flex items-center justify-center py-8">
           <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6 max-w-[1244px]">
-            <div className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
+            <Link to={'/media'} className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
               Press & Media
-            </div>
+            </Link>
             <div className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
               Download NAT Syllabus
             </div>
@@ -172,11 +172,12 @@ function Home() {
                   alt="student"
                   className="h-[280px] w-full rounded-[8px]"
                 />
-                <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3"></div>
-                <div className="text-lg font-bold">{facultyData.name}</div>
-                <div>{facultyData.classroom}</div>
-                <div>{facultyData.collegeName}</div>
-                <div>{facultyData.experience}</div>
+                <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
+                  <div className="text-lg font-bold">{facultyData.name}</div>
+                  <div>{facultyData.classroom}</div>
+                  <div>{facultyData.collegeName}</div>
+                  <div>{facultyData.experience}</div>
+                </div>
               </div>
             ))}
           </div>
@@ -185,7 +186,7 @@ function Home() {
 
       {/* experience */}
       <div className='my-10 bg-[#d1e9f9] py-10'>
-        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
+        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR TRAILBLAZERS EXPERIENCE</h1>
         <div className='flex items-center justify-center py-8'>
           <div className='grid gap-8 md:grid-cols-3'>
 
@@ -198,7 +199,7 @@ function Home() {
                     {/* <img src={AIR} alt="air" className='absolute h-[97px] w-[97px] right-10 top-[85%]' /> */}
                     <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-10 top-[85%]">
                       <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-10 top-[85%] text-white font-bold leading-[10px]">
-                        <span className="text-[12px]">AIR</span>
+                        <span className="text-[12px] ">AIR</span>
                         <span className="text-3xl">{studentData.air}</span>
                       </div>
                     </div>
@@ -218,7 +219,7 @@ function Home() {
                 </div>
 
                 <div className='absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
-                  JEE ADVANCED 2022
+                  {studentData.exam}
                 </div>
 
               </div>
@@ -249,10 +250,11 @@ function Home() {
                   className="h-[310px] w-[527px]"
                 />
                 <h1 className="text-2xl">{programData.title}</h1>
-                <p className="w-5/6 text-center">{programData.description}</p>
+
+                <p className="w-5/6 text-center ">{programData.description}</p>
                 <Link
                   to="/course"
-                  className="text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2"
+                  className="text-[#1f1d5a] w-fir text-center hover:bg-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-yellow-400 hover:underline font-bold bg-yellow-400 px-8 py-2 "
                 >
                   Discover Program
                 </Link>

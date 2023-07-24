@@ -181,7 +181,7 @@ function AllUserRegistrations() {
   };
 
   const downloadAsPDF = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF('p', 'pt', 'letter');
 
     const headers = ["User", "Email", "Phone", "Gender", "Category", "DOB", "Father Name", "Mother Name", "Father Number", "Mother Number", "Address Line 1", "Address Line 2", "Address Line 3", "City", "State", "Zipcode", "Message"];
 
@@ -211,11 +211,33 @@ function AllUserRegistrations() {
     };
 
     const tableConfig = {
-      startY: 20,
+      startY: 70,
       headStyles: { fillColor: [41, 128, 185], textColor: 255 },
       bodyStyles: { fillColor: 255, textColor: 0 },
       alternateRowStyles: { fillColor: 245 },
-      margin: { top: 20 }
+      margin: { top: 2 },
+      styles: {
+        cellPadding: { right: 4, bottom: 4 }, // Reduce padding for y-axis
+        fontSize: 10,
+        cellWidth: 'wrap', // Allow wrapping text to prevent excessive expansion
+        valign: 'middle',
+        halign: 'center'
+      },
+      columnStyles: {
+        // Set a maximum width for specific columns to prevent excessive expansion
+        0: { columnWidth: 40 },
+        1: { columnWidth: 40 },
+        2: { columnWidth: 40 },
+        3: { columnWidth: 40 },
+        4: { columnWidth: 40 },
+        5: { columnWidth: 40 },
+        6: { columnWidth: 40 },
+        8: { columnWidth: 40 },
+        9: { columnWidth: 40 },
+        10: { columnWidth: 40 },
+
+        // Add more column styles if needed for other columns
+      },
     };
 
     doc.autoTable(data.headers, data.rows, tableConfig);

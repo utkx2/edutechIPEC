@@ -25,12 +25,12 @@ function OurMission() {
             <img className="object-cover w-40 md:w-48" src="https://www.vidyamandir.com/assets/images/m1.jpg" alt="Founder 2" />
             <div className="px-8 py-4">
               <p className="mt-1 leading-tight text-center md:text-left">
-                To become the first preference for all 
+                To become the first preference for all
                 students regarding their preparation
                 for all competitive &amp; scholastic exams. As a{" "}
                 <b className="font-bold">GURU</b>, to continuously foster intellectual curiosity,
                 develop critical thinking, and enable the pursuit of excellence in
-                all educational endeavors.
+                all educations.
               </p>
             </div>
           </div>
