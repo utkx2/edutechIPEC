@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { BASE_URL } from "../config";
 import "../styles/Course.css";
 import Carousel from '../components/carousel'
+import StudentJourneyImg from '../assets/student-journey.png'
 
 function Home() {
   const [userData, setUserData] = useState({});
@@ -142,9 +143,10 @@ function Home() {
           </div>
         </div>
       </div>
+      
 
       {/* teachers */}
-      <div className='my-10 bg-[#d1e9f9] py-10'>
+      <div className='mt-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
         <div className='flex items-center justify-center py-8'>
           <div className='grid gap-8 md:grid-cols-3'>
@@ -184,41 +186,45 @@ function Home() {
         </div>
       </div>
 
+      {/* <img src={StudentJourneyImg} alt="student_journey" className="w-full h-[730px] bg-cover" /> */}
+      
+
       {/* experience */}
-      <div className='my-10 bg-[#d1e9f9] py-10'>
+      <div className='mb-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR TRAILBLAZERS EXPERIENCE</h1>
         <div className='flex items-center justify-center py-8'>
           <div className='grid gap-8 md:grid-cols-3'>
 
             {student.map(studentData => (
-              <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-5 shadow-xl" key={studentData._id}>
+              <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-10 shadow-xl" key={studentData._id}>
 
                 <div className='m-2'>
-                  <div className='relative bg-[#E9ECF5] rounded-[20px] m-3 p-3 text-sm'>
+                
+                  <div className="flex items-center justify-between mx-3 mt-6">
+                    <img src={studentData.studentImg} alt="student" className='h-[140px] w-[104px]' />
+                    <div className="text-[#1f1d5a] m-3 text-sm flex flex-col items-end">
+                      <div className="font-bold">
+                        {studentData.studentDetails.name}
+                      </div>
+                      <div>{studentData.studentDetails.classRoomDetails}</div>
+                      <div>{studentData.studentDetails.enrollmentNo}</div>
+                      <div>Air {studentData.air}</div>
+                    </div>
+                  </div>
+                  
+                  <div className='relative bg-[#E9ECF5] rounded-[20px] mx-3 p-3 text-sm mb-14'>
                     {studentData.description}
-                    {/* <img src={AIR} alt="air" className='absolute h-[97px] w-[97px] right-10 top-[85%]' /> */}
-                    <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-10 top-[85%]">
-                      <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-10 top-[85%] text-white font-bold leading-[10px]">
+                  </div>
+
+                </div>
+                <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-5%] top-[-15%]">
+                      <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-0 top-0 text-white font-bold leading-[10px]">
                         <span className="text-[12px] ">AIR</span>
                         <span className="text-3xl">{studentData.air}</span>
                       </div>
                     </div>
-                  </div>
 
-                  <img src={studentData.studentImg} alt="student" className='absolute h-[140px] w-[104px] bottom-10 left-5' />
-
-                  <div className="text-[#1f1d5a] m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16">
-                    <div className="font-bold">
-                      {studentData.studentDetails.name}
-                    </div>
-                    <div>{studentData.studentDetails.classRoomDetails}</div>
-                    <div>{studentData.studentDetails.enrollmentNo}</div>
-                    <div>Air {studentData.air}</div>
-                  </div>
-
-                </div>
-
-                <div className='absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
+                <div className='absolute w-full flex bottom-0 items-center text-white bg-[#1f1d5a] text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
                   {studentData.exam}
                 </div>
 

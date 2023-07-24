@@ -25,7 +25,7 @@ function Header() {
     { name: 'media', link: '/media', dropdown: false },
     { name: 'about ipec', link: '/about', dropdown: false },
     { name: 'why ipec', link: '/why', dropdown: false },
-    { name: 'Download', link: '/#', dropdown: true, options: optionsArr },
+    { name: 'Download', link: '/download', dropdown: false },
     { name: 'Careers', link: '/careers', dropdown: false },
     { name: 'registration form', link: '/registration', dropdown: false },
     { name: 'contact us', link: '/contact', dropdown: false },
@@ -106,7 +106,7 @@ function Header() {
 
         {/* Mobile Menu */}
         {showMobileMenu && (
-          <div className='lg:hidden bg-white w-full py-4'>
+          <div className='w-full py-4 bg-white lg:hidden'>
             {lowernav.map((navItem) =>
               navItem.dropdown ? (
                 <div

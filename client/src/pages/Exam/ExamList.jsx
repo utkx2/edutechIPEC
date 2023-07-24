@@ -39,23 +39,30 @@ const navigate = useNavigate();
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 shadow-2xl">
-            <div>
-                <h1 className="text-3xl font-bold mb-4 mr-14 lg:text-center">Exams</h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ml-0 lg:ml-96 pl-0 lg:pl-44   gap-4">
-                    {exams.map((exam) => (
-                        <div
-                            key={exam._id}
-                            className="p-4  bg-gray-200 shadow-2xl rounded-md cursor-pointer hover:bg-gray-100"
-                            onClick={() => handleCardClick(exam._id)}
-                        >
-                            <h2 className="text-xl font-bold bg-white p-2 text-center ">{exam.name}</h2>
-                            <p className="text-gray-500 pt-5 font-bold">Started from: {getFormattedTime(exam.updatedAt)}</p>
+        <div className="bg-[#d1e9f9]">
+            {exams.length && (    
+                <div className="max-w-6xl px-4 py-10 mx-auto ">
+                
+                    <div className="container px-4 py-8 mx-auto bg-white shadow-2xl">
+                        <div>
+                            <h1 className="mb-4 text-3xl font-bold mr-14 lg:text-center">Exams</h1>
+                            <div className="grid grid-cols-1 gap-4 mx-10 sm:grid-cols-2 md:grid-cols-3">
+                                {exams.map((exam) => (
+                                    <div
+                                        key={exam._id}
+                                        className="p-4 bg-[#1f1d5a] rounded-3xl shadow-md cursor-pointer hover:shadow-2xl cursor-pointer"
+                                        onClick={() => handleCardClick(exam._id)}
+                                    >
+                                        <h2 className="p-2 text-xl font-bold text-center bg-white rounded-[48px] ">{exam.name}</h2>
+                                        <p className="mt-4 font-bold text-center text-white ">Started from: {getFormattedTime(exam.updatedAt)}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    ))}
+                        <PastScoresTable />
+                    </div>
                 </div>
-            </div>
-            <PastScoresTable />
+            )}
         </div>
     );
 };

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from "react";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from '../../../../config';
+import axios from 'axios';
 
 export default function Home() {
     const initialCarousel = {
@@ -14,8 +15,11 @@ export default function Home() {
     };
 
     const initialFaculty = {
-        imageUrl: '',
-        description: ''
+        name: '',
+        facultyImg: '',
+        experience: '',
+        collegeName: '',
+        classroom: ''
     };
 
     const initialDataFaculty = {
@@ -23,10 +27,13 @@ export default function Home() {
     };
 
     const initialStudents = {
-        imageUrl: '',
+        studentImg: '',
         description: '',
         air: null,
-        exam: ''
+        exam: '',
+        name: '',
+        enrollmentNo: '',
+        classRoomDetails: '',
     };
 
     const initialDataStudents = {
@@ -34,7 +41,7 @@ export default function Home() {
     };
 
     const initialPrograms = {
-        imageUrl: '',
+        title: '',
         description: ''
     };
 
@@ -156,7 +163,89 @@ export default function Home() {
         });
     };
 
+    const fetchHomeContent = async () => {
+      try{
+        const responseCarousel = await axios.get(
+          `${BASE_URL}carousel/get`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              auth: localStorage.getItem("token"),
+            },
+          }
+        );
+        setCarousel({
+          Carousels: responseCarousel.data[0].images.map(imageLink => ({
+            fileLink: imageLink
+          })
+        )})
+        const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        });
+        // console.log(responseCarousel.data.map(programObj => ({
+        //   imageUrl: programObj.title,
+        //   description: programObj.description
+        // })))
+        setPrograms({
+          Programs: responsePrograms.data.map(programObj => ({
+            title: programObj.title,
+            description: programObj.description
+          })
+        )})
+        const responseFaculty = await axios.get(
+          `${BASE_URL}facultyHomePage/get`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              auth: localStorage.getItem("token"),
+            },
+          }
+        );
+        setFaculty({
+          Faculties: responseFaculty.data.map(facultyObj => ({
+            name: facultyObj.name,
+            facultyImg: facultyObj.facultyImg,
+            classroom: facultyObj.classroom,
+            collegeName: facultyObj.collegeName,
+            experience: facultyObj.experience
+          })
+        )})
+        const responseStudent = await axios.get(
+          `${BASE_URL}studentHomePage/get`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              auth: localStorage.getItem("token"),
+            },
+          }
+        );
+        setStudents({
+          Students: responseStudent.data.map(studentObj => ({
+            name: studentObj.studentDetails.name,
+            studentImg: studentObj.studentImg,
+            enrollmentNo: studentObj.studentDetails.enrollmentNo,
+            classRoomDetails: studentObj.studentDetails.classRoomDetails,
+            air: studentObj.air,
+            exam: studentObj.exam,
+            description: studentObj.description
 
+          }))
+        })
+      } catch (err) {
+        console.log(err, 'error')
+      }
+    }
+
+    useEffect(() => {
+      fetchHomeContent()
+    }, [])
 
     const handleSubmit = () => {
         // Submit the data to the backend (You can use fetch or Axios to send data to the backend API)
@@ -255,30 +344,53 @@ export default function Home() {
                     {students.Students.map((student, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
                         <div key={index} className="gap-4 mb-4 rounded-lg">
-      <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} Name`}
+                            <input
+                              required
+                              type="text"
+                              name={`name-${index}`}
+                              value={student.name}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
                           <label className="relative block mb-2 font-semibold">
                             {`Student ${index + 1} Image`}
                             <input
                               required
                               type="text"
-                              name={`imageUrl-${index}`}
-                              value={student.imageUrl}
+                              name={`studentImg-${index}`}
+                              value={student.studentImg}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} EnrollmentNo`}
+                            <input
+                              required
+                              type="text"
+                              name={`enrollmentNo-${index}`}
+                              value={student.enrollmentNo}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} Classroom Program`}
+                            <input
+                              required
+                              type="text"
+                              name={`classRoomDetails-${index}`}
+                              value={student.classRoomDetails}
                               onChange={(e) => handleStudentsChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
                           
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Description`}
-                            <input
-                              required
-                              type="text"
-                              name={`description-${index}`}
-                              value={student.description}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                          
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                           <label className="relative block mb-2 font-semibold">
@@ -299,6 +411,17 @@ export default function Home() {
                               type="text"
                               name={`exam-${index}`}
                               value={student.exam}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block col-span-2 mb-2 font-semibold">
+                            {`Student ${index + 1} Description`}
+                            <textarea
+                              required
+                              type="text"
+                              name={`description-${index}`}
+                              value={student.description}
                               onChange={(e) => handleStudentsChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
@@ -337,31 +460,64 @@ export default function Home() {
                             <input
                               required
                               type="text"
-                              name={`imageUrl-${index}`}
-                              value={faculty.imageUrl}
+                              name={`name-${index}`}
+                              value={faculty.name}
                               onChange={(e) => handleFacultyChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
                           <label className="relative block mb-2 font-semibold">
-                            {`Faculty ${index + 1} Description`}
+                            {`Faculty ${index + 1} Image`}
                             <input
                               required
                               type="text"
-                              name={`description-${index}`}
-                              value={faculty.description}
+                              name={`facultyImg-${index}`}
+                              value={faculty.facultyImg}
                               onChange={(e) => handleFacultyChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
-                          <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-                          <button
-                            className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
-                            type="button"
-                            onClick={() => handleRemoveFaculty(index)}
-                          >
-                            Remove Link
-                          </button>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Faculty ${index + 1} College`}
+                            <input
+                              required
+                              type="text"
+                              name={`collegeName-${index}`}
+                              value={faculty.collegeName}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Faculty ${index + 1} Classroom`}
+                            <input
+                              required
+                              type="text"
+                              name={`classroom-${index}`}
+                              value={faculty.classroom}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Faculty ${index + 1} Experience`}
+                            <textarea
+                              required
+                              type="text"
+                              name={`experience-${index}`}
+                              value={faculty.experience}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <div className="mt-6">
+                            <button
+                              className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                              type="button"
+                              onClick={() => handleRemoveFaculty(index)}
+                            >
+                              Remove Link
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -380,14 +536,14 @@ export default function Home() {
                     <h2 className="my-4 text-xl font-bold">Programs</h2>
                     {programs.Programs.map((program, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
-                        <div className="grid grid-cols-2  gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                           <label className="relative block mb-2 font-semibold">
-                            {`Program ${index + 1} Image`}
+                            {`Program ${index + 1} Title`}
                             <input
                               required
                               type="text"
-                              name={`imageUrl-${index}`}
-                              value={program.imageUrl}
+                              name={`title-${index}`}
+                              value={program.title}
                               onChange={(e) => handleProgramsChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
@@ -403,7 +559,7 @@ export default function Home() {
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
-                          <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
+                          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                           <button
                             className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                             type="button"

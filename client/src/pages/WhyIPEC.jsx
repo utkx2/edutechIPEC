@@ -40,7 +40,7 @@ const WhyIPEC = () => {
     <>
       {userData.Title && (
         <div className="bg-[#d1e9f9]">
-          <div className="max-w-6xl px-4 py-5 mx-auto">
+          <div className="max-w-6xl px-4 py-10 mx-auto ">
             <div className="">
               <div className="flex justify-center ">
                 <h2 className="text-3xl font-bold mb-4 text-indigo-900 border-b-[6px] border-yellow-400">
@@ -52,13 +52,13 @@ const WhyIPEC = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 p-4 md:mx-20 mt-10 gap-9">
+            <div className="grid grid-cols-1 p-4 mt-10 md:grid-cols-2 md:mx-20 gap-9">
               {userData?.Reasons.map((userDataObj, index) => (
-                <div key={index} className="flex flex-col items-center md:flex-row md:items-start mx-4 md:mx-8">
+                <div key={index} className="flex flex-col items-center mx-4 md:flex-row md:items-start md:mx-8">
                   <img
                     src={reasonsArr[index]}
                     alt="reasons"
-                    className="w-24 h-24 md:w-15 md:h-15 mr-0 md:mr-6 mb-4 md:mb-0"
+                    className="w-24 h-24 mb-4 mr-0 md:w-15 md:h-15 md:mr-6 md:mb-0"
                   />
                   <p className="text-center md:text-left">{userDataObj}</p>
                 </div>

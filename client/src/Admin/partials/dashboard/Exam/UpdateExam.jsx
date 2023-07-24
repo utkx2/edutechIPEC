@@ -21,6 +21,7 @@ const AddExamForm = () => {
                     const examData = await response.json();
                     setExamName(examData.exam.name);
                     setQuestions(examData.exam.questions);
+                    console.log(examData.exam)
                 } else {
                     console.log('Failed to fetch exam data.');
                 }
@@ -139,16 +140,16 @@ const AddExamForm = () => {
                         <div className="grid gap-6 grid-cols-15">
                             {/* Table (Top Channels) */}
                             <div className="p-4 ">
-                                <h1 className="text-2xl font-bold mb-4">Update Exam</h1>
+                                <h1 className="mb-4 text-2xl font-bold">Update Exam</h1>
                                 <div className="mb-4">
-                                    <label htmlFor="examName" className="block text-gray-700 font-bold mb-2">
+                                    <label htmlFor="examName" className="block mb-2 font-bold text-gray-700">
                                         Exam Name
                                     </label>
                                     <input
                                         required
                                         type="text"
                                         id="examName"
-                                        className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md"
                                         value={examName}
                                         onChange={(e) => setExamName(e.target.value)}
                                         placeholder="Enter Exam Name"
@@ -157,28 +158,28 @@ const AddExamForm = () => {
 
                                 {questions.map((question, questionIndex) => (
                                     <div key={questionIndex} className="mb-4">
-                                        <h2 className="text-lg font-bold mb-2">Question {questionIndex + 1}</h2>
-                                        <label htmlFor={`question-${questionIndex}`} className="block text-gray-700 font-bold mb-2">
+                                        <h2 className="mb-2 text-lg font-bold">Question {questionIndex + 1}</h2>
+                                        <label htmlFor={`question-${questionIndex}`} className="block mb-2 font-bold text-gray-700">
                                             {question.type === 'multiple-choice' ? 'Multiple Choice Question' : 'Text Input Question'}
                                         </label>
                                         <input
                                             required
                                             type="text"
                                             id={`question-${questionIndex}`}
-                                            className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md"
                                             value={question.text}
                                             onChange={(e) => handleChangeQuestionText(questionIndex, e.target.value)}
                                             placeholder="Enter Question Text"
                                         />
 
-                                        <label htmlFor={`questionImage-${questionIndex}`} className="block text-gray-700 font-bold mb-2">
+                                        <label htmlFor={`questionImage-${questionIndex}`} className="block mb-2 font-bold text-gray-700">
                                             Image URL
                                         </label>
                                         <input
                                             required
                                             type="text"
                                             id={`questionImage-${questionIndex}`}
-                                            className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md"
                                             value={question.imageUrl}
                                             onChange={(e) => handleChangeQuestionImage(questionIndex, e.target.value)}
                                             placeholder="Enter Image URL (optional)"
@@ -192,7 +193,7 @@ const AddExamForm = () => {
                                                         <input
                                                             required
                                                             type="text"
-                                                            className="border border-gray-300 px-4 py-2 rounded-md mr-2 w-60"
+                                                            className="px-4 py-2 mr-2 border border-gray-300 rounded-md w-60"
                                                             value={option.text}
                                                             onChange={(e) => handleChangeOptionText(questionIndex, optionIndex, e.target.value)}
                                                             placeholder={`Enter Option ${optionIndex + 1}`}
@@ -200,7 +201,7 @@ const AddExamForm = () => {
 
                                                         <label
                                                             htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
-                                                            className="block text-gray-700 font-bold mb-2"
+                                                            className="block mb-2 font-bold text-gray-700"
                                                         >
                                                             Image URL
                                                         </label>
@@ -208,7 +209,7 @@ const AddExamForm = () => {
                                                             required
                                                             type="text"
                                                             id={`optionImage-${questionIndex}-${optionIndex}`}
-                                                            className="w-64 border border-gray-300 px-4 py-2 rounded-md"
+                                                            className="w-64 px-4 py-2 border border-gray-300 rounded-md"
                                                             value={option.imageUrl}
                                                             onChange={(e) => handleChangeOptionImage(questionIndex, optionIndex, e.target.value)}
                                                             placeholder="Enter Image URL for Option (optional)"
@@ -216,7 +217,7 @@ const AddExamForm = () => {
 
                                                         <button
                                                             type="button"
-                                                            className="text-red-600 font-bold ml-3"
+                                                            className="ml-3 font-bold text-red-600"
                                                             onClick={() => handleRemoveOption(questionIndex, optionIndex)}
                                                         >
                                                             <FontAwesomeIcon icon={faTrash} className="mr-1" />
@@ -225,21 +226,21 @@ const AddExamForm = () => {
                                                 ))}
                                                 <button
                                                     type="button"
-                                                    className="text-blue-600 font-bold"
+                                                    className="font-bold text-blue-600"
                                                     onClick={() => handleAddOption(questionIndex)}
                                                 >
                                                     <FontAwesomeIcon icon={faPlus} className="mr-1" />
                                                     Add Option
                                                 </button>
 
-                                                <label htmlFor={`correctOption-${questionIndex}`} className="block text-gray-700 font-bold mb-2">
+                                                <label htmlFor={`correctOption-${questionIndex}`} className="block mb-2 font-bold text-gray-700">
                                                     Correct Option (Choose 1, 2, 3, or 4)
                                                 </label>
                                                 <input
                                                     required
                                                     type="number"
                                                     id={`correctOption-${questionIndex}`}
-                                                    className="w-16 border border-gray-300 px-4 py-2 rounded-md"
+                                                    className="w-16 px-4 py-2 border border-gray-300 rounded-md"
                                                     value={(question.correctOption)} // Display 1-based option on the form
                                                     onChange={(e) => handleChangeCorrectOption(questionIndex, parseInt(e.target.value) - 1)} // Convert to 0-based index internally
                                                 />
@@ -250,7 +251,7 @@ const AddExamForm = () => {
                                             <>
                                                 <label
                                                     htmlFor={`correctTextInputAnswer-${questionIndex}`}
-                                                    className="block text-gray-700 font-bold mb-2"
+                                                    className="block mb-2 font-bold text-gray-700"
                                                 >
                                                     Correct Text Input Answer
                                                 </label>
@@ -258,7 +259,7 @@ const AddExamForm = () => {
                                                     required
                                                     type="text"
                                                     id={`correctTextInputAnswer-${questionIndex}`}
-                                                    className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                                                    className="w-full px-4 py-2 border border-gray-300 rounded-md"
                                                     value={question.correctTextInputAnswer}
                                                     onChange={(e) => handleChangeCorrectTextInputAnswer(questionIndex, e.target.value)}
                                                     placeholder="Enter Correct Text Input Answer"
@@ -268,7 +269,7 @@ const AddExamForm = () => {
 
                                         <button
                                             type="button"
-                                            className="text-red-600 font-bold border border-red-600 py-2 px-4 rounded ml-3"
+                                            className="px-4 py-2 ml-3 font-bold text-red-600 border border-red-600 rounded"
                                             onClick={() => handleRemoveQuestion(questionIndex)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} className="mr-1" />
@@ -280,7 +281,7 @@ const AddExamForm = () => {
                                 <div>
                                     <button
                                         type="button"
-                                        className="text-blue-600 font-bold border border-blue-600 py-2 px-4 rounded"
+                                        className="px-4 py-2 font-bold text-blue-600 border border-blue-600 rounded"
                                         onClick={() => handleAddQuestion('multiple-choice')}
                                     >
                                         <FontAwesomeIcon icon={faPlus} className="mr-1" />
@@ -288,7 +289,7 @@ const AddExamForm = () => {
                                     </button>
                                     <button
                                         type="button"
-                                        className="text-blue-600 font-bold ml-2 border border-blue-600 py-2 px-4 rounded"
+                                        className="px-4 py-2 ml-2 font-bold text-blue-600 border border-blue-600 rounded"
                                         onClick={() => handleAddQuestion('text-input')}
                                     >
                                         <FontAwesomeIcon icon={faPlus} className="mr-1" />
@@ -298,7 +299,7 @@ const AddExamForm = () => {
 
                                 <div>
                                     <button
-                                        className="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                                        className="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded"
                                         onClick={handleSaveExam}
                                     >
                                         <FontAwesomeIcon icon={faCheck} className="mr-1" />

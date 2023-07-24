@@ -86,6 +86,7 @@ export default function About() {
       <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
         <main>
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             <div className="container p-6 mx-auto overflow-x-auto font-mono">
               {/* Form */}

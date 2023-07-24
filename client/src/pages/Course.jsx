@@ -50,6 +50,7 @@ function Course() {
     <div className="flex items-center justify-center py-10 bg-[#d1e9f9]">
       {Object.keys(userData).length !== 0 && (
         <div className="w-full max-w-3xl sm:w-3/4 ">
+        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center mb-5'>OUR COURSES</h1>
           {Object.values(userData).map((course, index) => {
             const modifiedCourseObj = Object.entries(course).filter(courseValArr => courseValArr[0] != "_id" && courseValArr[0] != "__v")
             return (
@@ -80,7 +81,7 @@ function Course() {
                       ))}
                     </tbody>
                   </table>
-                  <div className="flex justify-center sm:justify-end mb-6 bg-white">
+                  <div className="flex justify-center mb-6 bg-white sm:justify-end">
                     {/* <Link to={`/courseDetails/${course._id}`}> */}
 
                     <button

@@ -77,19 +77,19 @@ const Downloads = () => {
     }, [syllabus]);
 
     return (
-        <div className="bg-gray-100 min-h-screen py-8">
-            <div className="container mx-auto px-8 py-4">
-                <h1 className="text-4xl font-bold text-center mb-8">IPEC Education Material</h1>
+        <div className="min-h-screen py-8 bg-[#d1e9f9]">
+            <div className="max-w-6xl px-8 py-4 mx-auto">
+                <h1 className="mb-8 text-4xl font-bold text-center">IPEC Education Material</h1>
 
-                <div className="text-center grid grid-cols-2 lg:grid-cols-2 gap-8 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-8 text-center lg:grid-cols-2 ">
                     {/* E-brochure Section */}
                     {/* medical Brochure */}
-                    <div className="bg-white rounded-lg shadow-lg p-6 ">
-                        <h2 className="text-xl font-semibold mb-4">Medical E-brochure</h2>
-                        <div className="grid grid-cols-4 gap-4 mx-16">
+                    <div className="flex flex-col items-center justify-around px-10 py-4 bg-white shadow-lg rounded-xl border-[2px] border-[#1f1d5a]">
+                        <h2 className="w-full mb-4 text-xl font-semibold text-center">Medical E-brochure</h2>
+                        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
                             {
                                 MedicalBrochureLinks.map((links, index = 0) => (
-                                    <div className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium text-center" key={links._id}>
+                                    <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 " key={links._id}>
                                         <a href={links}>Links {index + 1}</a>
                                     </div>
                                 ))
@@ -98,12 +98,12 @@ const Downloads = () => {
                         </div>
                     </div>
                     {/* engineering Brochure */}
-                    <div className="bg-white rounded-lg shadow-lg p-6">
-                        <h2 className="text-xl font-semibold mb-4">Engineering E-brochure</h2>
-                        <div className="grid grid-cols-4  gap-4 mx-16">
+                    <div className="flex flex-col items-center justify-around px-10 py-4 bg-white shadow-lg rounded-xl border-[2px] border-[#1f1d5a]">
+                        <h2 className="w-full mb-4 text-xl font-semibold text-center">Engineering E-brochure</h2>
+                        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
                             {
                                 brochure[0]?.fileLink.map((links, index = 0) => (
-                                    <div className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium text-center" key={links._id}>
+                                    <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 " key={links._id}>
                                         <a href={links}>Links {index + 1}</a>
                                     </div>
                                 ))
@@ -111,13 +111,13 @@ const Downloads = () => {
                         </div>
                     </div>
                     {/* Syllabus Section */}
-                    <div className="bg-white rounded-lg shadow-lg p-6">
-                        <h2 className="text-xl font-semibold mb-4">Syllabus</h2>
-                        <div className="grid grid-cols-4 gap-4 mx-16">
+                    <div className="flex flex-col items-center justify-around px-10 py-4 bg-white shadow-lg rounded-xl border-[2px] border-[#1f1d5a]">
+                        <h2 className="w-full mb-4 text-xl font-semibold text-center">Syllabus</h2>
+                        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
 
                             {
                                 syllabus?.map((syllabusData) => (
-                                    <div className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-center" key={syllabusData._id}>
+                                    <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 " key={syllabusData._id}>
                                         {
                                             syllabusData.className === "12th Pass" ? (<a href={syllabusData.fileLink[0]}> {syllabusData.className}</a>) : <a href={syllabusData.fileLink[0]}>Class {syllabusData.className}</a>
                                         }
@@ -125,7 +125,7 @@ const Downloads = () => {
                                     </div>
                                 ))
                             }
-                            {/* <div className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-center">
+                            {/* <div className="px-4 py-2 font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600">
                                 <a href="/syllabus/class-6">Class 6</a>
                             </div> */}
 
@@ -134,12 +134,12 @@ const Downloads = () => {
                     </div>
 
                     {/* Sample Paper Section */}
-                    <div className="bg-white rounded-lg shadow-lg p-6">
-                        <h2 className="text-xl font-semibold mb-4">Sample Paper</h2>
-                        <div className="grid     grid-cols-4 gap-4 mx-16">
+                    <div className="flex flex-col items-center justify-around px-10 py-4 bg-white shadow-lg rounded-xl whitespace-nowrap border-[2px] border-[#1f1d5a]">
+                        <h2 className="w-full mb-4 text-xl font-semibold text-center">Sample Paper</h2>
+                        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
                             {
                                 samplePaper?.map((samplePaperData) => (
-                                    <div className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium text-center" key={samplePaperData._id}>
+                                    <div className="w-full px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg " key={samplePaperData._id}>
                                         {
                                             samplePaperData.className === "12th Pass" ? (<a href={samplePaperData.fileLink[0]}> {samplePaperData.className}</a>) : <a href={samplePaperData.fileLink[0]}>Class {samplePaperData.className}</a>
                                         }
