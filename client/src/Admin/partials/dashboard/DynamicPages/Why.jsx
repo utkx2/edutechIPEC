@@ -57,8 +57,8 @@ export default function WHY() {
 
         const requestBody = JSON.stringify(formData);
 
-        fetch(`${BASE_URL}whyIPEC/upload`, {
-            method: "POST",
+        fetch(`${BASE_URL}whyIPEC/edit`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 auth: token,
