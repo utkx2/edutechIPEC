@@ -1,15 +1,13 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from "../../../../config";
 import axios from "axios";
 
 export default function WHY() {
-  const [whyIPEC, setWhyIPEC] = useState();
-  const [whyIPECContent, setWhyIPECContent] = useState();
+  const [whyIPEC, setWhyIPEC] = useState("");
+  const [whyIPECContent, setWhyIPECContent] = useState("");
   const [userData, setUserData] = useState({});
-
   const [whyIPECReasons, setWhyIPECReasons] = useState({
     reason1: "",
     reason2: "",
@@ -29,33 +27,14 @@ export default function WHY() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const ipecAdvantagesArr = [
-    //     {
-    //         title: ipecAdvantages.title1,
-    //         description: ipecAdvantages.desc1
-    //     },
-    //     {
-    //         title: ipecAdvantages.title2,
-    //         description: ipecAdvantages.desc2
-    //     },
-    //     {
-    //         title: ipecAdvantages.title3,
-    //         description: ipecAdvantages.desc4
-    //     },
-    //     {
-    //         title: ipecAdvantages.title4,
-    //         description: ipecAdvantages.desc4
-    //     }
-    // ]
-    console.log(Object.values(whyIPECReasons));
-
+    const token = localStorage.getItem("token");
     const formData = {
       Title: whyIPEC,
       Content: whyIPECContent,
       Reasons: Object.values(whyIPECReasons),
     };
 
-    const token = localStorage.getItem("token");
+
 
     const requestBody = JSON.stringify(formData);
 
@@ -70,36 +49,13 @@ export default function WHY() {
       .then((response) => response.json())
       .then((data) => {
         console.log("success", data);
+        // You can show a success message or handle the response as needed
       })
       .catch((error) => {
         console.error("Error:", error);
         alert("Oops something went wrong!!!");
       });
   };
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  // {
-  //     "AboutIPEC": "IPEC is a leading educational institution...",
-  //         "ipecAdvantages": [
-  // {
-  //     "title": "",
-  //     "description": ""
-  // },
-  //             {
-  //                 "title": "State-of-the-Art Infrastructure",
-  //                 "description": "We provide modern classrooms and labs..."
-  //             }
-  //         ],
-  //             "ipecPedagogy": [
-  //                 {
-  //                     "title": "Interactive Learning",
-  //                     "description": "We emphasize interactive learning methodologies..."
-  //                 },
-  //                 {
-  //                     "title": "Project-Based Learning",
-  //                     "description": "Students work on real-world projects..."
-  //                 }
-  //             ]
-  // }
 
   const fetchData = async () => {
     try {
@@ -111,6 +67,16 @@ export default function WHY() {
         },
       });
       setUserData(response.data[0]);
+      setWhyIPEC(response.data[0].Title || "");
+      setWhyIPECContent(response.data[0].Content || "");
+      setWhyIPECReasons(response.data[0].Reasons || {
+        reason1: "",
+        reason2: "",
+        reason3: "",
+        reason4: "",
+        reason5: "",
+        reason6: "",
+      });
     } catch (error) {
       console.error(error);
     }
@@ -120,10 +86,11 @@ export default function WHY() {
     fetchData();
   }, []);
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="flex h-screen overflow-hidden ">
       {/* Sidebar */}
-
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Content area */}
@@ -142,8 +109,8 @@ export default function WHY() {
                     <h1 className="mb-4 text-xl font-bold">Why Title</h1>
                     <textarea
                       type="text"
-                      name="why"
-                      value={userData.Title}
+                      name="whyIPEC"
+                      value={whyIPEC}
                       onChange={(e) => setWhyIPEC(e.target.value)}
                       className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                       placeholder="Enter About Desc"
@@ -155,8 +122,8 @@ export default function WHY() {
                     <h1 className="mb-4 text-xl font-bold">WHY para content</h1>
                     <textarea
                       type="text"
-                      name="whyabout"
-                      value={userData.Content}
+                      name="whyIPECContent"
+                      value={whyIPECContent}
                       onChange={(e) => setWhyIPECContent(e.target.value)}
                       className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                       placeholder="Enter About Desc"
@@ -169,23 +136,22 @@ export default function WHY() {
                       IPEC Advantaged Card Details
                     </h1>
                     <div className="flex flex-col gap-y-1">
-                      {userData.Reasons &&
-                        userData.Reasons.map((reason, index) => (
-                          <div
-                            key={index}
-                            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-                          >
-                            <input
-                              type="text"
-                              name="reason1"
-                              value={reason}
-                              onChange={handleChange}
-                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              placeholder="reason1"
-                              required
-                            />
-                          </div>
-                        ))}
+                      {Object.keys(whyIPECReasons).map((reason, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
+                        >
+                          <input
+                            type="text"
+                            name={reason}
+                            value={whyIPECReasons[reason]}
+                            onChange={handleChange}
+                            className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            placeholder={reason}
+                            required
+                          />
+                        </div>
+                      ))}
                     </div>
                   </div>
 
