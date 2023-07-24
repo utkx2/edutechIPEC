@@ -295,7 +295,7 @@ export default function Syllabus() {
                                                             placeholder="Add link"
                                                             required
                                                         />
-                                                        <button onClick={() => handleSubmit(13, class13)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
+                                                        <button onClick={() => handleSubmit("12th Pass", class13)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
                                                             Upload
                                                         </button>
                                                     </Disclosure.Panel>
