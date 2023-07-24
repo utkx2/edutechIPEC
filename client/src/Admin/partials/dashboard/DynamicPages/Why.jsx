@@ -1,14 +1,12 @@
 import React from 'react'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from '../../../../config';
-import axios from 'axios';
 
 export default function WHY() {
     const [whyIPEC, setWhyIPEC] = useState()
     const [whyIPECContent, setWhyIPECContent] = useState()
-    const [userData, setUserData] = useState({});
 
     const [whyIPECReasons, setWhyIPECReasons] = useState({
         reason1: '',
@@ -100,30 +98,6 @@ export default function WHY() {
     //                 }
     //             ]
     // }
-
-    const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `${BASE_URL}whyIPEC/get`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                auth: localStorage.getItem("token"),
-              },
-            }
-          );
-          setUserData(response.data[0]);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-    
-      useEffect(() => {
-        fetchData();
-      }, []);
-
-
     return (
         <div className="flex h-screen overflow-hidden ">
             {/* Sidebar */}
@@ -148,7 +122,7 @@ export default function WHY() {
                                         <textarea
                                             type="text"
                                             name="why"
-                                            value={userData.Title}
+                                            value={whyIPEC}
                                             onChange={(e) => setWhyIPEC(e.target.value)}
                                             className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                             placeholder="Enter About Desc"
@@ -161,7 +135,7 @@ export default function WHY() {
                                         <textarea
                                             type="text"
                                             name="whyabout"
-                                            value={userData.Content}
+                                            value={whyIPECContent}
                                             onChange={(e) => setWhyIPECContent(e.target.value)}
                                             className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                                             placeholder="Enter About Desc"
@@ -172,7 +146,6 @@ export default function WHY() {
                                     <div className="p-2 rounded-lg">
                                         <h1 className="mb-4 text-xl font-bold">IPEC Advantaged Card Details</h1>
                                         <div className='flex flex-col gap-y-1'>
-                                            {userData}
                                             <input
                                                 type="text"
                                                 name="reason1"
