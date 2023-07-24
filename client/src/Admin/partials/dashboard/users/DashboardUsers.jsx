@@ -221,15 +221,7 @@ function DashboardUsers() {
                       onChange={handleSearchChange}
                     />
                     {/* User type select bar */}
-                    <select
-                      className="px-4 py-2 mb-2 text-gray-700 bg-white border border-gray-300 rounded shadow w-fit md:mb-0 md:ml-2 focus:outline-none"
-                      value={userType}
-                      onChange={handleUserTypeChange}
-                    >
-                      <option value="all">All Users</option>
-                      <option value="admin">Admin</option>
-                      <option value="student">Student</option>
-                    </select>
+
                   </div>
                   {/* download buttons */}
                   <div>
@@ -298,7 +290,7 @@ function DashboardUsers() {
                             </td>
                             <td className="px-4 py-3 text-xs border">
                               <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                                {user.phoneNumber}
+                                {user.mobileNumber}
                               </span>
                             </td>
                             <td onClick={() => {
