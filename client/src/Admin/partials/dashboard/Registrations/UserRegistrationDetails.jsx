@@ -83,6 +83,14 @@ const UserRegistrationDetails = () => {
         doc.save('FormData.pdf');
     };
 
+    function formatDate(dateString) {
+        const dateObj = new Date(dateString);
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based, so add 1
+        const year = dateObj.getFullYear();
+
+        return `${day}-${month}-${year}`;
+    }
     const [sidebarOpen, setSidebarOpen] = useState(false);
     if (!formData) {
         return (
@@ -263,10 +271,10 @@ const UserRegistrationDetails = () => {
                                         </label>
                                         <div>
                                             <input
-                                                type="date"
+                                                type="text"
                                                 id="dob"
                                                 name="dob"
-                                                value={formData.dob}
+                                                value={formatDate(formData.dob)}
                                                 readOnly={!isEditing}
                                                 onChange={(e) =>
                                                     setFormData({ ...formData, dob: e.target.value })

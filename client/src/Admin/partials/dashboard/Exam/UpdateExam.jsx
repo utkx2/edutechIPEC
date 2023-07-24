@@ -4,12 +4,13 @@ import { faTrash, faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL } from '../../../../config'
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 const AddExamForm = () => {
     const { id } = useParams();
     const [examName, setExamName] = useState('');
     const [questions, setQuestions] = useState([]);
+    const navigate = useNavigate();
 
     // Fetch exam data from the API and prefill the form fields
     useEffect(() => {
@@ -45,6 +46,7 @@ const AddExamForm = () => {
             });
             if (response.ok) {
                 console.log('Exam updated successfully!');
+                navigate('/dashboard/list');
             } else {
                 console.log('Failed to update the exam.');
             }
@@ -238,7 +240,7 @@ const AddExamForm = () => {
                                                     type="number"
                                                     id={`correctOption-${questionIndex}`}
                                                     className="w-16 border border-gray-300 px-4 py-2 rounded-md"
-                                                    value={question.correctOption + 1} // Display 1-based option on the form
+                                                    value={(question.correctOption)} // Display 1-based option on the form
                                                     onChange={(e) => handleChangeCorrectOption(questionIndex, parseInt(e.target.value) - 1)} // Convert to 0-based index internally
                                                 />
                                             </>

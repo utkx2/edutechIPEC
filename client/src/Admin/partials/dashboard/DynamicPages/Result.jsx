@@ -94,8 +94,8 @@ export default function Result() {
 
     const requestBody = JSON.stringify(formDataObj);
 
-    fetch(`${BASE_URL}results/upload`, {
-      method: "POST",
+    fetch(`${BASE_URL}results/edit`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         auth: token,

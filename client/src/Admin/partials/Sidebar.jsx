@@ -1,4 +1,4 @@
-import React, { useState,  useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import SidebarLinkGroup from './SidebarLinkGroup';
@@ -13,7 +13,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   useEffect(() => {
     // no user so token
     const token = localStorage.getItem("token");
-    if (token.length>0 && token !== undefined) {
+    if (token.length > 0 && token !== undefined) {
       setUserData(token);
       console.log(token);
       console.log('hello world')
@@ -72,13 +72,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     }
   }, [sidebarExpanded]);
 
-//   users
-// registrations
-// exam
-// result
-// dynamic pages
-// download
-// contact requests
+  //   users
+  // registrations
+  // exam
+  // result
+  // dynamic pages
+  // download
+  // contact requests
 
   return (
     <div>
@@ -381,19 +381,19 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       </a>
                       <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
-                            <li className="mb-1 last:mb-0">
-                              <NavLink
-                                end
-                                to="/dashboard/list"
-                                className={({ isActive }) =>
-                                  'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
-                                }
-                              >
-                                <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                  List
-                                </span>
-                              </NavLink>
-                            </li>
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                              end
+                              to="/dashboard/list"
+                              className={({ isActive }) =>
+                                'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
+                              }
+                            >
+                              <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                                List
+                              </span>
+                            </NavLink>
+                          </li>
 
 
 
@@ -582,7 +582,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/dashboard/courses"
+                              to="/dashboard/coursesList"
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
                               }

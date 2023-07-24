@@ -31,14 +31,15 @@ router.get('/get', async (req, res) => {
 
 // Update an Result by Result ID with student information
 //http://localhost:3000/api/results/edit/:id
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/', async (req, res) => {
     try {
         const { examName, students } = req.body;
-        const ResultId = req.params.id;
-        const updatedResult = await Result.findByIdAndUpdate(
-            ResultId,
+        //  const ResultId = req.params.id;
+        const updatedResult = await Result.findOneAndUpdate(
+            {},
             { examName, students },
-            { new: true } // Return the updated Result after update
+            { new: true, upsert: true }
+            // Return the updated Result after update
         );
         res.json(updatedResult);
     } catch (error) {

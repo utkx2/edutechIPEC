@@ -19,6 +19,7 @@ import Signup from '../pages/SignUp';
 import ResultPage from '../pages/resultPage';
 import ExamPage from '../pages/Exam/ExamList';
 import Media from '../pages/Media';
+import Downloads from '../pages/Downloads';
 
 const MainRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const MainRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/download" element={<Downloads />} />
         <Route path="/results" element={<Result />} />
         <Route path="/result/:score" element={<ResultPage />} />
         <Route path="/exam" element={<ExamPage />} />
