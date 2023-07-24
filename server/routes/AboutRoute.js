@@ -9,6 +9,7 @@ router.post('/upload', aboutController.upload);
 router.put('/edit', aboutController.edit);
 
 //Get all details
+//http://localhost:3000/api/
 router.get("/get", aboutController.getAll);
 
 //Delete details

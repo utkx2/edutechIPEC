@@ -62,9 +62,10 @@ router.get("/get/:id", async (req, res) => {
     }
 })
 
-router.delete("/remove", async (req, res) => {
+router.delete("/remove/:id", async (req, res) => {
     try {
-        const CoursesContent = await Courses.findOneAndDelete({});
+        const { id } = req.params;
+        const CoursesContent = await Courses.findByIdAndDelete({ _id: id });
         console.log("Object Deleted:", CoursesContent);
         res.status(200).json(CoursesContent);
     }
