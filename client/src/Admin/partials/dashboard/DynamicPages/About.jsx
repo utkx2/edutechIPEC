@@ -99,8 +99,8 @@ export default function About() {
 
     const requestBody = JSON.stringify(formData);
 
-    fetch(`${BASE_URL}AboutIpec/upload`, {
-      method: "POST",
+    fetch(`${BASE_URL}AboutIpec/edit`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         auth: token,
@@ -201,32 +201,32 @@ export default function About() {
                       IPEC Advantaged Card Details
                     </h1>
                     <div className="flex flex-col gap-y-1">
-                    {userData.ipecAdvantages &&
-              userData.ipecAdvantages.map((advantage, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-                >
-                          <input
-                            type="text"
-                            name="title"
-                            value={advantage.title}
-                            onChange={handleChangeAdvantage}
-                            className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Title1"
-                            required
-                          />
-                          <input
-                            type="text"
-                            name="description"
-                            value={advantage.description}
-                            onChange={handleChangeAdvantage}
-                            className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Desc1"
-                            required
-                          />
-                        </div>
-                      ))}
+                      {userData.ipecAdvantages &&
+                        userData.ipecAdvantages.map((advantage, index) => (
+                          <div
+                            key={index}
+                            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
+                          >
+                            <input
+                              type="text"
+                              name="title"
+                              value={advantage.title}
+                              onChange={handleChangeAdvantage}
+                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              placeholder="Title1"
+                              required
+                            />
+                            <input
+                              type="text"
+                              name="description"
+                              value={advantage.description}
+                              onChange={handleChangeAdvantage}
+                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              placeholder="Desc1"
+                              required
+                            />
+                          </div>
+                        ))}
                     </div>
                   </div>
 
@@ -235,32 +235,32 @@ export default function About() {
                       IPEC Pedagogy Card Details
                     </h1>
                     <div className="flex flex-col gap-y-1">
-                    {userData.ipecPedagogy &&
-                      userData.ipecPedagogy.map((pedagogy, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
-                        >
-                          <input
-                            type="text"
-                            name="title"
-                            value={pedagogy.title}
-                            onChange={handleChangePedagogy}
-                            className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Title1"
-                            required
-                          />
-                          <input
-                            type="text"
-                            name="description"
-                            value={pedagogy.description}
-                            onChange={handleChangePedagogy}
-                            className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            placeholder="Desc1"
-                            required
-                          />
-                        </div>
-                      ))}
+                      {userData.ipecPedagogy &&
+                        userData.ipecPedagogy.map((pedagogy, index) => (
+                          <div
+                            key={index}
+                            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg"
+                          >
+                            <input
+                              type="text"
+                              name="title"
+                              value={pedagogy.title}
+                              onChange={handleChangePedagogy}
+                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              placeholder="Title1"
+                              required
+                            />
+                            <input
+                              type="text"
+                              name="description"
+                              value={pedagogy.description}
+                              onChange={handleChangePedagogy}
+                              className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              placeholder="Desc1"
+                              required
+                            />
+                          </div>
+                        ))}
                     </div>
                   </div>
 
