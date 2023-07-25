@@ -39,6 +39,7 @@ const Login = () => {
                     localStorage.setItem("token", JSON.stringify(data.token));
                     // Navigate to the desired page
                     const user = data.data;
+                    console.log(data)
                     localStorage.setItem("user", JSON.stringify(user));
                     if (user.userRole === "admin")
                         navigate("/dashboard/users");

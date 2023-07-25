@@ -16,7 +16,9 @@ export default function Courses() {
         ClassesFrequency: "",
         ClassSchedule: "",
         StudyContent: "",
-        ComprehensivePractice: ""
+        ComprehensivePractice: "",
+        price: "",
+        discount: ""
     });
 
     const clearInputs = () => {
@@ -29,7 +31,9 @@ export default function Courses() {
             ClassesFrequency: "",
             ClassSchedule: "",
             StudyContent: "",
-            ComprehensivePractice: ""
+            ComprehensivePractice: "",
+            price: "",
+            discount: ""
         });
     }
 
@@ -66,6 +70,17 @@ export default function Courses() {
                 alert("Oops something went wrong!!!");
             });
     };
+
+    const calculateDiscountedPrice = () => {
+        const price = parseFloat(formData.price);
+        const discount = parseFloat(formData.discount);
+        if (!isNaN(price) && !isNaN(discount)) {
+            const discountedPrice = price - (price * discount) / 100;
+            return discountedPrice.toFixed(2); // Rounding to 2 decimal places
+        }
+        return '';
+    };
+
     const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
         <div className="flex h-screen overflow-hidden ">
@@ -85,11 +100,6 @@ export default function Courses() {
                             <h1 className="mb-4 text-2xl font-bold">ADD Course</h1>
                             <div className="max-w-3xl px-4 py-8 mt-6 mb-6 rounded-lg shadow-xl border-[2px] border-black">
                                 <form onSubmit={handleSubmit}>
-                                    {/* Global Section */}
-                                    {/* <h2 className="mb-4 text-2xl font-bold text-center "></h2> */}
-                                    {/* <p className="font-serif text-sm font-thin text-red-700">
-                                        Fields marked with an asterisk (*) are mandatory.
-                                    </p> */}
                                     <div className="p-2 rounded-lg">
                                         <div>
 
@@ -210,6 +220,36 @@ export default function Courses() {
                                                 />
                                             </label>
 
+                                            <label className="relative block mb-2 font-semibold">
+                                                Price (Before discount)
+                                                <input
+                                                    required
+                                                    type="text"
+                                                    name="price"
+                                                    value={formData.price}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Enter Price"
+                                                />
+                                            </label>
+
+                                            <label className="relative block mb-2 font-semibold">
+                                                Discount (%)
+                                                <input
+                                                    required
+                                                    type="text"
+                                                    name="discount"
+                                                    value={formData.discount}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                                    placeholder="Enter Discount (%)"
+                                                />
+                                            </label>
+
+                                            <div>
+                                                <strong>Price After Discount: </strong>
+                                                {calculateDiscountedPrice()}
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="w-3/4">

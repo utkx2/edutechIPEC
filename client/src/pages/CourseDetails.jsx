@@ -4,18 +4,30 @@ import { useNavigate, useParams } from "react-router-dom";
 function CourseDetails() {
   const { id } = useParams();
   const [formData, setFormData] = useState(null);
+  console.log(id)
+
   useEffect(() => {
+    console.log(id)
     // http://localhost:3000/api/Courses/get/:id
     fetch(`http://localhost:3000/api/Courses/get/${id}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         setFormData(data);
         // console.log(data);
       })
       .catch((error) => console.log(error));
 
   }, [id]);
-  // console.log(formData);
+
+  const calculateDiscountedPrice = (price, dis) => {
+    const discount = parseFloat(dis);
+    if (!isNaN(price) && !isNaN(discount)) {
+        const discountedPrice = price - (price * discount) / 100;
+        return discountedPrice.toFixed(2);
+    }
+    return '';
+};
 
   return (
     <div className="bg-[#d1e9f9] py-10">
@@ -85,12 +97,12 @@ function CourseDetails() {
                     <p className="text-sm">Actual Fee</p>
                     <div className="flex gap-4 items-center">
                       <div className="flex items-baseline gap-3">
-                        <h2 className="text-xl font-bold line-through text-thin">$1,000</h2>
-                        <h2 className="text-xl font-bold text-thin">$890</h2>
+                        <h2 className="text-xl font-bold line-through text-thin">${formData?.price}</h2>
+                        <h2 className="text-xl font-bold text-thin">${calculateDiscountedPrice(formData?.price,formData?.discount )}</h2>
                         <p className="text-[10px]">Excluded GST*</p>
                       </div>
                       <div className="bg-[#17a2b8] p-1 rounded text-center text-[12px]">
-                        Save 11%
+                        Save {formData?.discount}
                       </div>
                     </div>
                   </div>

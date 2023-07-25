@@ -29,6 +29,12 @@ const CoursesModel = new Schema({
     },
     ComprehensivePractice: {
         type: String,
+    },
+    price:{
+        type:Number
+    },
+    discount:{
+        type:Number
     }
 },
 );

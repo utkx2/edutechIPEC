@@ -2,32 +2,24 @@ const express = require('express');
 const Courses = require('../models/CoursesModel');
 const router = express.Router();
 
-
 //  http://localhost:3000/api/Courses/upload
 router.post('/upload', async (req, res) => {
-
-    const { Title, AdmissionMode, CourseCode, CommencementDate, Phases, ClassesFrequency, ClassSchedule, StudyContent, ComprehensivePractice } = req.body;
-    console.log(Title, AdmissionMode, CourseCode, Phases);
-
     try {
-        const CoursesObj = new Courses({ Title, AdmissionMode, CourseCode, CommencementDate, Phases, ClassesFrequency, ClassSchedule, StudyContent, ComprehensivePractice });
-        const savedData = await CoursesObj.save();
+        const savedData = await Courses.create(req.body);
 
         res.status(200).json({
             success: true,
             message: "form submitted successfully",
-            data: savedData,
-        })
-    }
-    catch (error) {
+        });
+    } catch (error) {
+        console.log(error)
         res.status(500).json({
             success: false,
-            message: "An error occurred while submitting the gem registration form",
+            message: "Internal error.",
             error: error.message,
         });
     }
 });
-
 
 router.get("/get", async (req, res) => {
 
@@ -79,16 +71,3 @@ router.delete("/remove/:id", async (req, res) => {
 })
 
 module.exports = router;
-
-// Dummy Values in Json format to check
-// {
-//     "Title": "Introduction to Programming",
-//         "AdmissionMode": "Online",
-//             "CourseCode": "CS101",
-//                 "CommencementDate": "2023-08-01",
-//                     "Phases": "Phase 1",
-//                         "ClassesFrequency": "Twice a week",
-//                             "ClassSchedule": "Monday and Wednesday, 6 PM - 8 PM",
-//                                 "StudyContent": "Lecture slides, video tutorials, and practice exercises",
-//                                     "ComprehensivePractice": "Weekly coding assignments and quizzes"
-// }

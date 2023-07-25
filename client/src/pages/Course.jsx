@@ -38,12 +38,13 @@ function Course() {
     fetchData();
   }, []);
 
+
   if (loading) {
-    return <div>Loading...</div>; // Add a loading spinner here if desired
+    return <div>Loading...</div>; 
   }
 
   if (error) {
-    return <div>{error}</div>; // Display the error message if there's an error
+    return <div>{error}</div>; 
   }
 
   return (
