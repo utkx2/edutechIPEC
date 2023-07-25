@@ -22,6 +22,11 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        
+        if (!formData.identifier || !formData.userPassword) {
+            setErrorMessage("Please enter both email/mobile number and password.");
+            return;
+        }
         // Make API request to login
         fetch(`${BASE_URL}user/signin`, {
             method: "POST",
@@ -33,22 +38,25 @@ const Login = () => {
             .then((response) => response.json())
             .then((data) => {
                 if (data.errors) {
-                    setErrorMessage(data.errors);
+                    setErrorMessage(data.errors.message || "An error occurred.");
                 } else {
                     // Store response in local storage
                     localStorage.setItem("token", JSON.stringify(data.token));
                     // Navigate to the desired page
                     const user = data.data;
-                    console.log(data)
+                    console.log(data);
                     localStorage.setItem("user", JSON.stringify(user));
-                    if (user.userRole === "admin")
+                    if (user.userRole === "admin") {
                         navigate("/dashboard/users");
-                    else navigate("/");
+                    } else {
+                        navigate("/");
+                    }
                 }
             })
             .catch((error) => {
                 // Handle error
                 console.error(error);
+                setErrorMessage("An error occurred during login.");
             });
     };
 
@@ -69,7 +77,7 @@ const Login = () => {
                                 <form onSubmit={handleLogin}>
                                     <div className="relative z-0 w-full mb-6 group">
                                         <input
-                                            type="text"
+                                            type="email"
                                             name="identifier"
                                             id="floating_email"
                                             value={formData.identifier}
@@ -81,6 +89,9 @@ const Login = () => {
                                         <label
                                             htmlFor="floating_email"
                                             className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                            style={{
+                                                zIndex: 1
+                                            }}
                                         >
                                             Email or Mobile Number
                                         </label>
@@ -99,6 +110,9 @@ const Login = () => {
                                         <label
                                             htmlFor="floating_password"
                                             className="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                            style={{
+                                                zIndex: 1
+                                            }}
                                         >
                                             Password
                                         </label>
@@ -121,7 +135,7 @@ const Login = () => {
                                     )}
                                 </form>
                                 <div className="mt-10 text-center">
-                                    Don not have an account?{" "}
+                                    Do not have an account?{" "}
                                     <Link
                                         to="/signup"
                                         className="text-sm font-medium text-[#1f1d5a] hover:text-red-800"

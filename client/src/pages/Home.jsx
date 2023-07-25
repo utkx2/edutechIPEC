@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Student from "../assets/student-img.png";
+import { useEffect, useState } from "react";
+// import Student from "../assets/student-img.png";
 import axios from "axios";
-import AIR from '../assets/air.png'
+// import AIR from '../assets/air.png'
 import ClassroomImg1 from '../assets/classroom-1.jpg'
-import ClassroomImg2 from '../assets/classroom-2.jpg'
+// import ClassroomImg2 from '../assets/classroom-2.jpg'
 // import { Carousel } from "@material-tailwind/react";
-import CarouselImg2 from '../assets/carousel-2.jpg'
-import CarouselImg3 from '../assets/carousel-3.jpg'
+// import CarouselImg2 from '../assets/carousel-2.jpg'
+// import CarouselImg3 from '../assets/carousel-3.jpg'
 import FacultyImg from '../assets/faculty.png'
 import { Link } from 'react-router-dom';
 import { BASE_URL } from "../config";
 import "../styles/Course.css";
 import Carousel from '../components/carousel'
-import StudentJourneyImg from '../assets/student-journey.png'
+// import StudentJourneyImg from '../assets/student-journey.png'
 
 function Home() {
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
   const [carousel, setCarousel] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [faculty, setFaculty] = useState([]);
