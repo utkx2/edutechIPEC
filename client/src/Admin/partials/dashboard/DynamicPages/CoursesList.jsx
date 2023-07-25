@@ -265,6 +265,8 @@ function CoursesList() {
                                                     <th className="px-4 py-3">Course Code</th>
                                                     <th className="px-4 py-3">Admission Mode</th>
                                                     <th className="px-4 py-3">Phases</th>
+                                                    <th className="px-4 py-3">Price</th>
+                                                    <th className="px-4 py-3">Discount</th>
                                                     <th className="py-3 text-center"><FontAwesomeIcon icon={faTrash} style={{ color: "#000", }} /></th>
                                                 </tr>
                                             </thead>
@@ -294,6 +296,12 @@ function CoursesList() {
                                                             <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
                                                                 {user.Phases}
                                                             </span>
+                                                        </td>
+                                                        <td className="px-4 py-3 font-semibold border text-ms">
+                                                            {user.price}
+                                                        </td>
+                                                        <td className="px-4 py-3 font-semibold border text-ms">
+                                                            {user.discount}
                                                         </td>
                                                         <td onClick={() => {
                                                             setIsOpen(true)
