@@ -72,13 +72,13 @@ const ExamineesTable = () => {
 
         {selectedExaminee && (
           <div className="modal shadow-md fixed top-0 left-0 w-full h-full flex items-center justify-center">
-            <div className="modal-content pt-5 bg-gradient-to-r from-gray-300 to-gray-800 p-4 rounded-lg shadow-lg">
+            <div className="modal-content pt-5 bg-white border-spacing-2 border-r border-x-2 border-y-2 border-solid border-black p-4 rounded-lg shadow-lg">
               <h2 className="text-xl font-bold m-2 px-5">{selectedExaminee.username}'s Response</h2>
-              <ul className='pl-7 mt-7'>
+              <ul className='mt-7 text-xl pl-5 ml-20 mb-6'>
                 {formatResponseData(selectedExaminee.response)}
               </ul>
               <button
-                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4"
+                className="bg-red-600 ml-20  text-white font-bold py-2 px-4 rounded cursor-pointer mt-4"
                 onClick={closeModal}
               >
                 Close
