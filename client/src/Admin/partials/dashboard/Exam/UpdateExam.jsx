@@ -19,6 +19,7 @@ const AddExamForm = () => {
                 const response = await fetch(`${BASE_URL}exam/byid/${id}`);
                 if (response.ok) {
                     const examData = await response.json();
+                    console.log(examData);
                     setExamName(examData.exam.name);
                     setQuestions(examData.exam.questions);
                     console.log(examData.exam)
@@ -240,8 +241,13 @@ const AddExamForm = () => {
                                                     required
                                                     type="number"
                                                     id={`correctOption-${questionIndex}`}
+<<<<<<< Updated upstream
                                                     className="w-16 px-4 py-2 border border-gray-300 rounded-md"
                                                     value={(question.correctOption)} // Display 1-based option on the form
+=======
+                                                    className="w-16 border border-gray-300 px-4 py-2 rounded-md"
+                                                    value={(question.correctOption) + 1} // Display 1-based option on the form
+>>>>>>> Stashed changes
                                                     onChange={(e) => handleChangeCorrectOption(questionIndex, parseInt(e.target.value) - 1)} // Convert to 0-based index internally
                                                 />
                                             </>

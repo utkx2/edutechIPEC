@@ -43,12 +43,12 @@ const questionSchema = new mongoose.Schema({
     }
 });
 
-questionSchema.methods.toJSON = function () {
-    const question = this.toObject();
-    delete question.correctOption;
-    delete question.correctTextInputAnswer;
-    return question;
-};
+// questionSchema.methods.toJSON = function () {
+//     const question = this.toObject();
+//     delete question.correctOption;
+//     delete question.correctTextInputAnswer;
+//     return question;
+// };
 
 const examSchema = new mongoose.Schema({
     name: {

@@ -4,10 +4,12 @@ import { faTrash, faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL } from '../../../../config'
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AddExamForm = () => {
   const [examName, setExamName] = useState('');
   const [questions, setQuestions] = useState([]);
+  const navigate = useNavigate();
 
   const handleAddQuestion = (type) => {
     const newQuestion = {
@@ -89,6 +91,7 @@ const AddExamForm = () => {
       });
       if (response.ok) {
         console.log('Exam saved successfully!');
+        navigate('/dashboard/list');
       } else {
         console.log('Failed to save the exam.');
       }
