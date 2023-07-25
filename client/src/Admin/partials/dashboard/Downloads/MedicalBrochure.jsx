@@ -4,13 +4,9 @@ import Header from '../../Header';
 import { BASE_URL } from '../../../../config';
 
 export default function MedicalBrochure() {
-  const initialStudent = {
-    fileLink: '',
-  };
-
   const initialData = {
     examName: 'Medical',
-    Links: [initialStudent],
+    Links: ['']
   };
 
   const [formData, setFormData] = useState(initialData);
@@ -25,12 +21,11 @@ export default function MedicalBrochure() {
         const data = await response.json();
         console.log(data);
 
-        if (data.length > 1) {
-          // Update the state with the fetched data for Medical Brochure
-          const medicalBrochureLinks = data[1].fileLinks || [];
+        if (data.length > 0) {
+          // Update the state with the fetched data
           setFormData({
             ...formData,
-            Links: medicalBrochureLinks,
+            Links: data[1].fileLink || [''],
           });
         }
 
@@ -107,7 +102,7 @@ export default function MedicalBrochure() {
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             <div className="container p-6 mx-auto overflow-x-auto font-mono">
-              <h1 className="mb-4 text-2xl font-bold">Medical Brochure</h1>
+              <h1 className="mb-4 text-2xl font-bold">Engineering Brochure</h1>
               <div className="max-w-3xl px-4 py-8 mt-6 mb-6 rounded-lg shadow-xl border-[2px] border-black">
                 <form className="flex flex-col">
                   <h2 className="my-4 text-xl font-bold">Brochure Links</h2>
