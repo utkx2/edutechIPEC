@@ -241,13 +241,8 @@ const AddExamForm = () => {
                                                     required
                                                     type="number"
                                                     id={`correctOption-${questionIndex}`}
-<<<<<<< Updated upstream
-                                                    className="w-16 px-4 py-2 border border-gray-300 rounded-md"
-                                                    value={(question.correctOption)} // Display 1-based option on the form
-=======
                                                     className="w-16 border border-gray-300 px-4 py-2 rounded-md"
                                                     value={(question.correctOption) + 1} // Display 1-based option on the form
->>>>>>> Stashed changes
                                                     onChange={(e) => handleChangeCorrectOption(questionIndex, parseInt(e.target.value) - 1)} // Convert to 0-based index internally
                                                 />
                                             </>
