@@ -9,26 +9,34 @@ const Exam = () => {
     const [examData, setExamData] = useState(null);
     const [responses, setResponses] = useState({});
     const [rdata, setData] = useState({});
-    var submitted = false;
+    const [submitted, setSubmitted] = useState(false);
     const { examId } = useParams();
 
     useEffect(() => {
         // Fetch exam data by ID from the API
-        fetch(`${BASE_URL}exam/student-exam/${examId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setExamData(data.exam);
-                // Initialize responses with empty values for each question
-                const initialResponses = {};
-                data.questions.forEach((question) => {
-                    initialResponses[question._id] = '';
-                });
-                setResponses(initialResponses);
-            })
-            .catch((error) => {
-                console.error('Error fetching exam data:', error);
-            });
-    }, []);
+        const isSubmitted = JSON.parse(localStorage.getItem(`exam_${examId}_submitted`));
+    if (isSubmitted) {
+      // Exam is already submitted, redirect to a different page
+      navigate('/exam');
+      return;
+    }
+
+    // Fetch exam data by ID from the API
+    fetch(`${BASE_URL}exam/student-exam/${examId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setExamData(data.exam);
+        // Initialize responses with empty values for each question
+        const initialResponses = {};
+        data.questions.forEach((question) => {
+          initialResponses[question._id] = '';
+        });
+        setResponses(initialResponses);
+      })
+      .catch((error) => {
+        console.error('Error fetching exam data:', error);
+      });
+  }, []);
 
     const handleChangeQuestion = (questionId, questionNumber, value) => {
         (function () {
@@ -54,26 +62,31 @@ const Exam = () => {
 
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        // Log the exam responses to the console
-        console.log('Exam Responses:', responses);
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        // Step 3: Call the API to get the exam score and store the exam result
-        const userId = user._id;
-        console.log(rdata);
-        axios.post(`${BASE_URL}exam/getscore/${examId}`, {
-            submittedAnswers: responses,
-            userId: userId,
-            response: rdata
+      e.preventDefault();
+      // Log the exam responses to the console
+      console.log('Exam Responses:', responses);
+      const user = JSON.parse(localStorage.getItem("user"));
+  
+      // Step 3: Call the API to get the exam score and store the exam result
+      const userId = user._id;
+      console.log(rdata);
+      axios.post(`${BASE_URL}exam/getscore/${examId}`, {
+        submittedAnswers: responses,
+        userId: userId,
+        response: rdata
+      })
+        .then((response) => {
+          console.log('Exam Score:', response.data.score);
+          // Set the submitted state to true
+          setSubmitted(true);
+          // Store that the exam is submitted in localStorage
+          localStorage.setItem(`exam_${examId}_submitted`, JSON.stringify(true));
+          // Redirect to the result page with the score
+          navigate(`/result/${response.data.score}`);
         })
-            .then((response) => {
-                console.log('Exam Score:', response.data.score);
-                navigate(`/result/${response.data.score}`)
-            })
-            .catch((error) => {
-                console.error('Error getting exam score:', error);
-            });
+        .catch((error) => {
+          console.error('Error getting exam score:', error);
+        });
     };
 
   return (

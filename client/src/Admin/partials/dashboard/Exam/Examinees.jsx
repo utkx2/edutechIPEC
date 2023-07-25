@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { BASE_URL } from '../../../../config'
+import { BASE_URL } from '../../../../config';
 
 const ExamineesTable = () => {
   const { id } = useParams();
@@ -25,6 +25,19 @@ const ExamineesTable = () => {
 
   const closeModal = () => {
     setSelectedExaminee(null);
+  };
+
+  // Helper function to format the response data as a list of key-value pairs
+  const formatResponseData = (response) => {
+  
+    const options = Object.keys(response);
+
+    options.sort((a,b) => a.localeCompare(b));
+    return options.map((option) => (
+      <li key={option}>
+        <strong>{option}:</strong> {response[option]}
+      </li>
+    ));
   };
 
   return (
@@ -58,10 +71,12 @@ const ExamineesTable = () => {
         </table>
 
         {selectedExaminee && (
-          <div className="modal fixed top-0 left-0 w-full h-full flex items-center justify-center">
-            <div className="modal-content bg-white p-4 rounded-lg shadow-lg">
-              <h2 className="text-xl font-bold mb-2">{selectedExaminee.username}'s Response</h2>
-              <pre>{JSON.stringify(selectedExaminee.response, null, 2)}</pre>
+          <div className="modal shadow-md fixed top-0 left-0 w-full h-full flex items-center justify-center">
+            <div className="modal-content pt-5 bg-gradient-to-r from-gray-300 to-gray-800 p-4 rounded-lg shadow-lg">
+              <h2 className="text-xl font-bold m-2 px-5">{selectedExaminee.username}'s Response</h2>
+              <ul className='pl-7 mt-7'>
+                {formatResponseData(selectedExaminee.response)}
+              </ul>
               <button
                 className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4"
                 onClick={closeModal}

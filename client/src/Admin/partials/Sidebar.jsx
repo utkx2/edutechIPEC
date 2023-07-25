@@ -817,7 +817,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             </svg>
                             <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
                               {/* Form Management */}
-                              Contact Requests
+                              Price
                             </span>
                           </div>
                           {/* Icon */}
@@ -839,7 +839,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               }
                             >
                               <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                Form Prices
+                                Add Prices
                               </span>
                             </NavLink>
                           </li>

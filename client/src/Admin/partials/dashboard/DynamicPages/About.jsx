@@ -177,12 +177,12 @@ export default function About() {
                   </div>
 
                   <div className="w-3/4">
-                    <button
-                      type="submit"
-                      className="bg-[#182235] hover:bg-[#111a2b] mx-6 text-white px-4 py-2 mt-8 rounded-lg font-semibold w-2/4"
-                    >
-                      Submit
-                    </button>
+                  <button
+  type="submit"
+  className="bg-[#4A90E2] hover:bg-[#3579CC] mx-6 text-white px-4 py-2 mt-8 rounded-lg  w-2/4 transition-colors duration-300 ease-in-out font-bold text-md"
+>
+  Submit
+</button>
                   </div>
                 </form>
               </div>

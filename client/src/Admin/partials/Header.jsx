@@ -1058,7 +1058,7 @@ function Header() {
                                     />
                                   </svg>
                                   <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                    Contact Request
+                                    Price
                                   </span>
                                 </div>
                                 {/* Icon */}
@@ -1088,7 +1088,7 @@ function Header() {
                                     }
                                   >
                                     <span className="text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                                      Form Price
+                                      Add Price
                                     </span>
                                   </NavLink>
                                 </li>
