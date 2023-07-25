@@ -22,6 +22,11 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        
+        if (!formData.identifier || !formData.userPassword) {
+            setErrorMessage("Please enter both email/mobile number and password.");
+            return;
+        }
         // Make API request to login
         fetch(`${BASE_URL}user/signin`, {
             method: "POST",
@@ -33,22 +38,25 @@ const Login = () => {
             .then((response) => response.json())
             .then((data) => {
                 if (data.errors) {
-                    setErrorMessage(data.errors);
+                    setErrorMessage(data.errors.message || "An error occurred.");
                 } else {
                     // Store response in local storage
                     localStorage.setItem("token", JSON.stringify(data.token));
                     // Navigate to the desired page
                     const user = data.data;
-                    console.log(data)
+                    console.log(data);
                     localStorage.setItem("user", JSON.stringify(user));
-                    if (user.userRole === "admin")
+                    if (user.userRole === "admin") {
                         navigate("/dashboard/users");
-                    else navigate("/");
+                    } else {
+                        navigate("/");
+                    }
                 }
             })
             .catch((error) => {
                 // Handle error
                 console.error(error);
+                setErrorMessage("An error occurred during login.");
             });
     };
 
