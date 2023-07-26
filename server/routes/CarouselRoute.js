@@ -19,15 +19,17 @@ router.get('/get', async (req, res) => {
 // http://localhost:3000/api/carousel/upload
 router.post('/upload', async (req, res) => {
     try {
-        const {
-            images
-        } = req.body;
-        const newCarousels = new Carousel({
-            images
-        });
-        await newCarousels.save();
+        // console.log(req.body);
+        const newData = {
+            images: req.body
+        }
+        //  console.log(newData);
+        const options = { upsert: true, new: true };
+        const updatedData = await Carousel.findOneAndUpdate({}, newData, options);
+        //   console.log(updatedData);
+        // return res.status(200).json({ message: 'Data saved successfully', data: updatedData });
 
-        res.json({ message: 'carousel added successfully', carouselLinks: newCarousels });
+        return res.status(200).json({ message: 'carousel saved successfully', carouselLinks: updatedData });
     }
     catch (error) {
         console.error('error occured', error);

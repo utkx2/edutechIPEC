@@ -19,17 +19,17 @@ router.get('/get', async (req, res) => {
 // http://localhost:3000/api/facultyHomePage/upload
 router.post('/upload', async (req, res) => {
     try {
-        const {
-            collegeName, name,
-            facultyImg, classroom, experience
-        } = req.body;
-        const newFacultyCard = new FacultyCards({
-            collegeName, name,
-            facultyImg, classroom, experience
-        });
-        await newFacultyCard.save();
+        const facultyData = req.body; // JSON object with faculty information
+        //      console.log(req.body);
 
-        res.json({ message: 'student card added successfully', card: newFacultyCard });
+        const update = { facultyMembers: facultyData };
+        // console.log(update);
+        // Use findOneAndUpdate without filter (it will find the only entry in the collection)
+        const updatedFacultyList = await FacultyCards.findOneAndUpdate({}, update, {
+            new: true,
+            upsert: true,
+        });
+        res.json({ message: 'faculty card added successfully', card: updatedFacultyList });
     }
     catch (error) {
         console.error('error occured', error);
@@ -77,9 +77,20 @@ router.delete('/delete/:id', async (req, res) => {
 module.exports = router;
 
 // {
-//     "collegeName": "IIT Bombay",
-//         "name": "John Doe",
-//             "facultyImg": "https://example.com/faculty-img.jpg",
-//                 "classroom": "Room A",
-//                     "experience": "10 years"
+//     "facultyMembers": [
+//         {
+//             "collegeName": "ABC College",
+//             "name": "John Doe",
+//             "facultyImg": "john_doe.jpg",
+//             "classroom": "Room A",
+//             "experience": "5 years"
+//         },
+//         {
+//             "collegeName": "ABC College",
+//             "name": "Jane Smith",
+//             "facultyImg": "jane_smith.jpg",
+//             "classroom": "Room B",
+//             "experience": "10 years"
+//         }
+//     ]
 // }

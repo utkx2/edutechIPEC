@@ -19,13 +19,27 @@ router.get('/get', async (req, res) => {
 //  http://localhost:3000/api/ourPrograms/upload/
 router.post('/upload', async (req, res) => {
     try {
-        const { title, description } = req.body;
-        const OurProgramsCard = new ourPrograms({
-            title, description
-        });
-        await OurProgramsCard.save();
+        // const { title, description } = req.body;
+        // const OurProgramsCard = new ourPrograms({
+        //     title, description
+        // });
+        // await OurProgramsCard.save();
+        // console.log(req.body);
 
-        res.json({ message: 'card created' });
+        const programData = req.body; // JSON object with program information
+        // console.log(programData);
+        const update = { programs: programData };
+        console.log(update);
+        // Use findOneAndUpdate without filter (it will find the only entry in the collection)
+        const updatedPrograms = await ourPrograms.findOneAndUpdate({}, update, {
+            new: true,
+            upsert: true,
+        });
+        //  console.log(updatedPrograms);
+        res.json({ message: 'Our Programs added successfully', programs: updatedPrograms });
+
+
+        // res.json({ message: 'card created' });
     }
     catch (error) {
         console.error('error occured', error);

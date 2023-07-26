@@ -23,5 +23,10 @@ const FacultyHomePage = new Schema({
     }
 });
 
-FacultyCards = mongoose.model('FacultyCards', FacultyHomePage);
-module.exports = FacultyCards;
+const FacultiesSchema = new mongoose.Schema({
+    facultyMembers: [FacultyHomePage], // Array of faculty objects using the FacultySchema
+});
+
+const FacultiesModel = mongoose.model('Faculties', FacultiesSchema);
+
+module.exports = FacultiesModel;

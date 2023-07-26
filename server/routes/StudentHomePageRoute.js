@@ -19,16 +19,16 @@ router.get('/get', async (req, res) => {
 // http://localhost:3000/api/studentHomePage/upload
 router.post('/upload', async (req, res) => {
     try {
-        const {
-            description, air,
-            studentImg, studentDetails, exam
-        } = req.body;
-        const newStudentCard = new StudentCards({
-            description, air, studentImg, studentDetails, exam
+        const studentsData = req.body; // JSON object with students information
+        const update = { Students: studentsData };
+        //console.log(update);
+        // Use findOneAndUpdate without filter (it will find the only entry in the collection)
+        const updatedStudents = await StudentCards.findOneAndUpdate({}, update, {
+            new: true,
+            upsert: true,
         });
-        await newStudentCard.save();
-
-        res.json({ message: 'student card added successfully', card: newStudentCard });
+        // console.log(updatedStudents);
+        res.json({ message: 'student card added successfully', cards: updatedStudents });
     }
     catch (error) {
         console.error('error occured', error);
@@ -75,15 +75,27 @@ router.delete('/delete/:id', async (req, res) => {
 
 module.exports = router;
 
-
-// {
-//     "description": "This is the description.",
+// [
+//     {
+//         "description": "4 Years with IPEC have been life changing for me. From being just a student with dreams of making it to the IITs one day to today having secured AIR in JEE Advaned 2022 seems unreal.",
 //         "air": 123,
-//             "studentImg": "https://example.com/student-img.jpg",
-//                 "studentDetails": {
-//         "name": "John Doe",
-//             "classRoomDetails": "Class A",
-//                 "enrollmentNo": "12345"
+//         "studentImg": "https://www.vidyamandir.com/assets/images/testimonials/ANILESH-BANSAL-AIR-31.png",
+//         "studentDetails": {
+//             "name": "Rohan khatri",
+//             "classRoomDetails": "4 Year classroom program",
+//             "enrollmentNo": "8P22AV1109"
+//         },
+//         "exam": "JEE ADVANCED 2023"
 //     },
-//     "exam": "English"
-// }
+//     {
+//         "description": "With IPEC dreams do come true. When I joined IPEC in its Two year program I wasn’t sure what rank am I going to get. But Ipec's faculty didn’t just teach me, they transformed me into a Top Achiever. ",
+//         "air": 258,
+//         "studentImg": "https://www.vidyamandir.com/assets/images/testimonials/HARSHIL-SINGLA-AIR-198.png",
+//         "studentDetails": {
+//             "name": "Harsh Mehta",
+//             "classRoomDetails": "2 Year Classroom Program",
+//             "enrollmentNo": "10P22001210"
+//         },
+//         "exam": "JEE ADVANCED 2023"
+//     }
+// ]

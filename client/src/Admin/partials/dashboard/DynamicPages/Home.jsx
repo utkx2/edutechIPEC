@@ -6,283 +6,353 @@ import { BASE_URL } from '../../../../config';
 import axios from 'axios';
 
 export default function Home() {
-    const initialCarousel = {
-        fileLink: ''
-    };
+  const initialCarousel = {
+    fileLink: ''
+  };
 
-    const initialDataCarousel = {
-        Carousels: [initialCarousel]
-    };
+  const initialDataCarousel = {
+    Carousels: [initialCarousel]
+  };
 
-    const initialFaculty = {
-        name: '',
-        facultyImg: '',
-        experience: '',
-        collegeName: '',
-        classroom: ''
-    };
+  const initialFaculty = {
+    name: '',
+    facultyImg: '',
+    experience: '',
+    collegeName: '',
+    classroom: ''
+  };
 
-    const initialDataFaculty = {
-        Faculties: [initialFaculty]
-    };
+  const initialDataFaculty = {
+    Faculties: [initialFaculty]
+  };
 
-    const initialStudents = {
-        studentImg: '',
-        description: '',
-        air: null,
-        exam: '',
-        name: '',
-        enrollmentNo: '',
-        classRoomDetails: '',
-    };
+  const initialStudents = {
+    studentImg: '',
+    description: '',
+    air: null,
+    exam: '',
+    name: '',
+    enrollmentNo: '',
+    classRoomDetails: '',
+  };
 
-    const initialDataStudents = {
-        Students: [initialStudents]
-    };
+  const initialDataStudents = {
+    Students: [initialStudents]
+  };
 
-    const initialPrograms = {
-        title: '',
-        description: ''
-    };
+  const initialPrograms = {
+    title: '',
+    description: ''
+  };
 
-    const initialDataPrograms = {
-        Programs: [initialPrograms]
-    };
-
-
-
-    const [carousel, setCarousel] = useState(initialDataCarousel);
-    const [faculty, setFaculty] = useState(initialDataFaculty);
-    const [students, setStudents] = useState(initialDataStudents);
-    const [programs, setPrograms] = useState(initialDataPrograms);
+  const initialDataPrograms = {
+    Programs: [initialPrograms]
+  };
 
 
-    const handleCarouselChange = (index, event) => {
-        const { name, value } = event.target;
-        const newLinks = [...carousel.Carousels];
-        newLinks[index][name.slice(0, -2)] = value;
-        setCarousel({
-            ...carousel,
-            Carousels: newLinks
-        });
-    };
 
-    const handleFacultyChange = (index, event) => {
-        const { name, value } = event.target;
-        const newLinks = [...faculty.Faculties];
-        newLinks[index][name.slice(0, -2)] = value;
-        setFaculty({
-            ...faculty,
-            Faculties: newLinks
-        });
-    };
+  const [carousel, setCarousel] = useState(initialDataCarousel);
+  const [faculty, setFaculty] = useState(initialDataFaculty);
+  const [students, setStudents] = useState(initialDataStudents);
+  const [programs, setPrograms] = useState(initialDataPrograms);
 
-    const handleStudentsChange = (index, event) => {
-        const { name, value } = event.target;
-        const newLinks = [...students.Students];
-        newLinks[index][name.slice(0, -2)] = value;
-        setStudents({
-            ...carousel,
-            Students: newLinks
-        });
-    };
 
-    const handleProgramsChange = (index, event) => {
-        const { name, value } = event.target;
-        const newLinks = [...programs.Programs];
-        newLinks[index][name.slice(0, -2)] = value;
-        setPrograms({
-            ...carousel,
-            Programs: newLinks
-        });
-    };
+  const handleCarouselChange = (index, event) => {
+    const { name, value } = event.target;
+    const newLinks = [...carousel.Carousels];
+    newLinks[index][name.slice(0, -2)] = value;
+    setCarousel({
+      ...carousel,
+      Carousels: newLinks
+    });
+  };
 
-    // add *********************
-    const handleAddCarousel = () => {
-        setCarousel({
-            ...carousel,
-            Carousels: [...carousel.Carousels, initialCarousel]
-        });
-    };
+  const handleFacultyChange = (index, event) => {
+    const { name, value } = event.target;
+    const newLinks = [...faculty.Faculties];
+    newLinks[index][name.slice(0, -2)] = value;
+    setFaculty({
+      ...faculty,
+      Faculties: newLinks
+    });
+  };
 
-    const handleAddFaculty = () => {
-        setFaculty({
-            ...faculty,
-            Faculties: [...faculty.Faculties, initialFaculty]
-        });
-    };
+  const handleStudentsChange = (index, event) => {
+    const { name, value } = event.target;
+    const newLinks = [...students.Students];
+    newLinks[index][name.slice(0, -2)] = value;
+    setStudents({
+      ...carousel,
+      Students: newLinks
+    });
+  };
 
-    const handleAddStudent = () => {
-        setStudents({
-            ...students,
-            Students: [...students.Students, initialStudents]
-        });
-    };
+  const handleProgramsChange = (index, event) => {
+    const { name, value } = event.target;
+    const newLinks = [...programs.Programs];
+    newLinks[index][name.slice(0, -2)] = value;
+    setPrograms({
+      ...carousel,
+      Programs: newLinks
+    });
+  };
 
-    const handleAddProgram = () => {
-        setPrograms({
-            ...programs,
-            Programs: [...programs.Programs, initialPrograms]
-        });
-    };
+  // add *********************
+  const handleAddCarousel = () => {
+    setCarousel({
+      ...carousel,
+      Carousels: [...carousel.Carousels, initialCarousel]
+    });
+  };
 
-    // remove ***********
-    const handleRemoveCarousel = (index) => {
-        const newLinks = [...carousel.Carousels];
-        newLinks.splice(index, 1);
-        setCarousel({
-            ...carousel,
-            Carousels: newLinks
-        });
-    };
+  const handleAddFaculty = () => {
+    setFaculty({
+      ...faculty,
+      Faculties: [...faculty.Faculties, initialFaculty]
+    });
+  };
 
-    const handleRemoveFaculty = (index) => {
-        const newLinks = [...faculty.Faculties];
-        newLinks.splice(index, 1);
-        setFaculty({
-            ...faculty,
-            Faculties: newLinks
-        });
-    };
+  const handleAddStudent = () => {
+    setStudents({
+      ...students,
+      Students: [...students.Students, initialStudents]
+    });
+  };
 
-    const handleRemoveStudent = (index) => {
-        const newLinks = [...students.Students];
-        newLinks.splice(index, 1);
-        setStudents({
-            ...carousel,
-            Students: newLinks
-        });
-    };
+  const handleAddProgram = () => {
+    setPrograms({
+      ...programs,
+      Programs: [...programs.Programs, initialPrograms]
+    });
+  };
 
-    const handleRemoveProgram = (index) => {
-        const newLinks = [...programs.Programs];
-        newLinks.splice(index, 1);
-        setPrograms({
-            ...carousel,
-            Programs: newLinks
-        });
-    };
+  // remove ***********
+  const handleRemoveCarousel = (index) => {
+    const newLinks = [...carousel.Carousels];
+    newLinks.splice(index, 1);
+    setCarousel({
+      ...carousel,
+      Carousels: newLinks
+    });
+  };
 
-    const fetchHomeContent = async () => {
-      try{
-        const responseCarousel = await axios.get(
-          `${BASE_URL}carousel/get`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
-            },
-          }
-        );
-        setCarousel({
-          Carousels: responseCarousel.data[0].images.map(imageLink => ({
-            fileLink: imageLink
-          })
-        )})
-        const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
+  const handleRemoveFaculty = (index) => {
+    const newLinks = [...faculty.Faculties];
+    newLinks.splice(index, 1);
+    setFaculty({
+      ...faculty,
+      Faculties: newLinks
+    });
+  };
+
+  const handleRemoveStudent = (index) => {
+    const newLinks = [...students.Students];
+    newLinks.splice(index, 1);
+    setStudents({
+      ...carousel,
+      Students: newLinks
+    });
+  };
+
+  const handleRemoveProgram = (index) => {
+    const newLinks = [...programs.Programs];
+    newLinks.splice(index, 1);
+    setPrograms({
+      ...carousel,
+      Programs: newLinks
+    });
+  };
+
+  const fetchHomeContent = async () => {
+    try {
+      const responseCarousel = await axios.get(
+        `${BASE_URL}carousel/get`,
+        {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             auth: localStorage.getItem("token"),
           },
-        });
-        // console.log(responseCarousel.data.map(programObj => ({
-        //   imageUrl: programObj.title,
-        //   description: programObj.description
-        // })))
-        setPrograms({
-          Programs: responsePrograms.data.map(programObj => ({
-            title: programObj.title,
-            description: programObj.description
-          })
-        )})
-        const responseFaculty = await axios.get(
-          `${BASE_URL}facultyHomePage/get`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
-            },
-          }
-        );
-        setFaculty({
-          Faculties: responseFaculty.data.map(facultyObj => ({
-            name: facultyObj.name,
-            facultyImg: facultyObj.facultyImg,
-            classroom: facultyObj.classroom,
-            collegeName: facultyObj.collegeName,
-            experience: facultyObj.experience
-          })
-        )})
-        const responseStudent = await axios.get(
-          `${BASE_URL}studentHomePage/get`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              auth: localStorage.getItem("token"),
-            },
-          }
-        );
-        setStudents({
-          Students: responseStudent.data.map(studentObj => ({
-            name: studentObj.studentDetails.name,
-            studentImg: studentObj.studentImg,
-            enrollmentNo: studentObj.studentDetails.enrollmentNo,
-            classRoomDetails: studentObj.studentDetails.classRoomDetails,
-            air: studentObj.air,
-            exam: studentObj.exam,
-            description: studentObj.description
-
-          }))
-        })
-      } catch (err) {
-        console.log(err, 'error')
-      }
-    }
-
-    useEffect(() => {
-      fetchHomeContent()
-    }, [])
-
-    const handleSubmit = () => {
-        // Submit the data to the backend (You can use fetch or Axios to send data to the backend API)
-        // For this example, we'll log the data to the console.
-        const formDataObj = {
-            carousel: carousel.Carousels.map(link => link.fileLink),
-            faculty: faculty.Faculties.map(facultyObj => facultyObj),
-            selectedStudents: students.Students.map(facultyObj => facultyObj),
-            programs: programs.Programs.map(facultyObj => facultyObj)
         }
-        console.log(formDataObj)
-        const token = localStorage.getItem("token");
-
-        const requestBody = JSON.stringify(formDataObj);
-
-        fetch(`${BASE_URL}home/upload`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                auth: token,
-            },
-            body: requestBody,
+      );
+      setCarousel({
+        Carousels: responseCarousel.data[0].images.map(imageLink => ({
+          fileLink: imageLink
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("success", data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("Oops something went wrong!!!");
-            });
-        // Reset the form after submission
-        //   setFormData(initialData);
-    };
+        )
+      })
+      const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
+        },
+      });
+      // console.log(responseCarousel.data.map(programObj => ({
+      //   imageUrl: programObj.title,
+      //   description: programObj.description
+      // })))
+      console.log(responsePrograms.data[0]);
+      setPrograms({
+        Programs: responsePrograms.data[0].programs.map(programObj => ({
+          title: programObj.title,
+          description: programObj.description
+        })
+        )
+      })
+      const responseFaculty = await axios.get(
+        `${BASE_URL}facultyHomePage/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(responseFaculty.data[0]);
+      setFaculty({
+        Faculties: responseFaculty.data[0].facultyMembers.map(facultyObj => ({
+          name: facultyObj.name,
+          facultyImg: facultyObj.facultyImg,
+          classroom: facultyObj.classroom,
+          collegeName: facultyObj.collegeName,
+          experience: facultyObj.experience
+        })
+        )
+      })
+      const responseStudent = await axios.get(
+        `${BASE_URL}studentHomePage/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(responseStudent.data[0].Students);
+      setStudents({
+        Students: responseStudent.data[0].Students.map(studentObj => ({
+          name: studentObj.studentDetails.name,
+          studentImg: studentObj.studentImg,
+          enrollmentNo: studentObj.studentDetails.enrollmentNo,
+          classRoomDetails: studentObj.studentDetails.classRoomDetails,
+          air: studentObj.air,
+          exam: studentObj.exam,
+          description: studentObj.description
+        }))
+      })
+    } catch (err) {
+      console.log(err, 'error')
+    }
+  }
 
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    return (
+  useEffect(() => {
+    fetchHomeContent()
+  }, [])
+
+  const handleSubmit = () => {
+    // Submit the data to the backend (You can use fetch or Axios to send data to the backend API)
+    // For this example, we'll log the data to the console.
+    // console.log(students[0].);
+    const formDataObj = {
+      carousel: carousel.Carousels.map(link => link.fileLink),
+      faculty: faculty.Faculties.map(facultyObj => facultyObj),
+      selectedStudents: students.Students,
+      programs: programs.Programs
+    }
+    console.log(formDataObj)
+    const token = localStorage.getItem("token");
+
+    const requestBodyCarousel = JSON.stringify(formDataObj.carousel);
+    const requestBodyFaculty = JSON.stringify(formDataObj.faculty);
+    const requestBodyPrograms = JSON.stringify(formDataObj.programs);
+    const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
+
+
+    // uploading carousel
+    fetch(`${BASE_URL}carousel/upload`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+      body: requestBodyCarousel,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Oops something went wrong!!!");
+      });
+
+
+    // uploading Faculties
+    // not working have an issue of requestBodyFaculty 
+    fetch(`${BASE_URL}facultyHomePage/upload`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+      body: requestBodyFaculty,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Oops something went wrong!!!");
+      });
+    // uploading programs
+    fetch(`${BASE_URL}ourPrograms/upload/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+      body: requestBodyPrograms,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Oops something went wrong!!!");
+      });
+
+    // studentCards Page
+    fetch(`${BASE_URL}studentHomePage/upload`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+      body: requestBodyStudents,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Oops something went wrong!!!");
+      });
+
+
+
+
+    // Reset the form after submission
+    //   setFormData(initialData);
+  };
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -306,18 +376,18 @@ export default function Home() {
                     {carousel.Carousels.map((carousel, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
                         <div className="flex items-center justify-between gap-4">
-                        <div className="grid grid-cols-1 gap-4">
-                          <label className="relative block mb-2 font-semibold">
-                            {`Carousel Link ${index + 1}`}
-                            <input
-                              required
-                              type="text"
-                              name={`fileLink-${index}`}
-                              value={carousel.fileLink}
-                              onChange={(e) => handleCarouselChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                          <div className="grid grid-cols-1 gap-4">
+                            <label className="relative block mb-2 font-semibold">
+                              {`Carousel Link ${index + 1}`}
+                              <input
+                                required
+                                type="text"
+                                name={`fileLink-${index}`}
+                                value={carousel.fileLink}
+                                onChange={(e) => handleCarouselChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
                           </div>
                           <button
                             className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
@@ -344,88 +414,88 @@ export default function Home() {
                     {students.Students.map((student, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
                         <div key={index} className="gap-4 mb-4 rounded-lg">
-                        <div className="grid grid-cols-2 gap-4">
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Name`}
-                            <input
-                              required
-                              type="text"
-                              name={`name-${index}`}
-                              value={student.name}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Image`}
-                            <input
-                              required
-                              type="text"
-                              name={`studentImg-${index}`}
-                              value={student.studentImg}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} EnrollmentNo`}
-                            <input
-                              required
-                              type="text"
-                              name={`enrollmentNo-${index}`}
-                              value={student.enrollmentNo}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Classroom Program`}
-                            <input
-                              required
-                              type="text"
-                              name={`classRoomDetails-${index}`}
-                              value={student.classRoomDetails}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          
-                          
+                          <div className="grid grid-cols-2 gap-4">
+                            <label className="relative block mb-2 font-semibold">
+                              {`Student ${index + 1} Name`}
+                              <input
+                                required
+                                type="text"
+                                name={`name-${index}`}
+                                value={student.name}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
+                            <label className="relative block mb-2 font-semibold">
+                              {`Student ${index + 1} Image`}
+                              <input
+                                required
+                                type="text"
+                                name={`studentImg-${index}`}
+                                value={student.studentImg}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
+                            <label className="relative block mb-2 font-semibold">
+                              {`Student ${index + 1} EnrollmentNo`}
+                              <input
+                                required
+                                type="text"
+                                name={`enrollmentNo-${index}`}
+                                value={student.enrollmentNo}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
+                            <label className="relative block mb-2 font-semibold">
+                              {`Student ${index + 1} Classroom Program`}
+                              <input
+                                required
+                                type="text"
+                                name={`classRoomDetails-${index}`}
+                                value={student.classRoomDetails}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
+
+
                           </div>
                           <div className="grid grid-cols-2 gap-4">
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} AIR`}
-                            <input
-                              required
-                              type="text"
-                              name={`air-${index}`}
-                              value={student.air}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Exam`}
-                            <input
-                              required
-                              type="text"
-                              name={`exam-${index}`}
-                              value={student.exam}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block col-span-2 mb-2 font-semibold">
-                            {`Student ${index + 1} Description`}
-                            <textarea
-                              required
-                              type="text"
-                              name={`description-${index}`}
-                              value={student.description}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                            <label className="relative block mb-2 font-semibold">
+                              {`Student ${index + 1} AIR`}
+                              <input
+                                required
+                                type="text"
+                                name={`air-${index}`}
+                                value={student.air}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
+                            <label className="relative block mb-2 font-semibold">
+                              {`Student ${index + 1} Exam`}
+                              <input
+                                required
+                                type="text"
+                                name={`exam-${index}`}
+                                value={student.exam}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
+                            <label className="relative block col-span-2 mb-2 font-semibold">
+                              {`Student ${index + 1} Description`}
+                              <textarea
+                                required
+                                type="text"
+                                name={`description-${index}`}
+                                value={student.description}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />
+                            </label>
                           </div>
                           {/* <div className="grid grid-cols-2 gap-4"> */}
                           <button
@@ -436,17 +506,17 @@ export default function Home() {
                             Remove Link
                           </button>
                         </div>
-                      {/* </div> */}
-                    
-                    <button
-                      className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                      type="button"
-                      onClick={handleAddStudent}
-                    >
-                      Add Link
-                    </button>
-                  </div>
-                  ))}
+                        {/* </div> */}
+
+                        <button
+                          className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                          type="button"
+                          onClick={handleAddStudent}
+                        >
+                          Add Link
+                        </button>
+                      </div>
+                    ))}
                   </div>
 
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
@@ -560,14 +630,14 @@ export default function Home() {
                             />
                           </label>
                           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                          <button
-                            className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
-                            type="button"
-                            onClick={() => handleRemoveProgram(index)}
-                          >
-                            Remove Link
-                          </button>
-                        </div>
+                            <button
+                              className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                              type="button"
+                              onClick={() => handleRemoveProgram(index)}
+                            >
+                              Remove Link
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ))}
