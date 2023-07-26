@@ -21,8 +21,6 @@ function Header() {
     const token = localStorage.getItem("token");
     if (token.length > 0 && token !== undefined) {
       setUserData(token);
-      console.log(token);
-      console.log("hello world");
     } else {
       console.log("there is no id");
     }
@@ -43,9 +41,6 @@ function Header() {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
-
-  console.log(sidebarOpen);
-
   return (
     <header
       className={`sticky top-0 dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30 sm:flex sm:items-center sm:justify-between`}

@@ -22,6 +22,11 @@ const navigate = useNavigate();
 
     const handleCardClick = (examId) => {
         console.log(examId);
+        const isSubmitted = JSON.parse(localStorage.getItem(`exam_${examId}_submitted`));
+        if (isSubmitted) {
+            // Exam is already submitted, redirect to a different page
+            return;
+        }
         navigate(`/exam/${examId}`)
 
     };

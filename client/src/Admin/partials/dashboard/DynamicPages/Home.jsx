@@ -367,7 +367,7 @@ export default function Home() {
             <div className="container p-6 mx-auto overflow-x-auto font-mono">
               {/*---------> Table (Top Channels) */}
 
-              <h1 className="mb-4 text-2xl font-bold">Home</h1>
+              <h1 className="mb-4 text-2xl font-bold text-center">Home</h1>
               <div className="max-w-3xl px-4 py-8 mt-6 mb-6 mx-auto rounded-lg shadow-xl border-[2px] border-black">
                 <form className="flex flex-col">
                   <div className="border-[2px] border-black/20 p-4 rounded-md">

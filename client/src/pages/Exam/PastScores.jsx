@@ -37,7 +37,7 @@ const PastScoresTable = () => {
         <section className="container p-6 mx-auto overflow-x-auto font-mono">
           <h1 className="mb-4 text-xl font-bold">Past Scores</h1>
           {Array.isArray(pastScores) && pastScores.length > 0 ? (
-            <div className="w-full mb-8 overflow-hidden rounded-lg shadow-2xl">
+            <div className="w-full mb-8 overflow-hidden rounded-lg shadow-sm border-[2px] border-gray-400">
               <div className="w-full overflow-x-auto">
                 <table className="w-full">
                   <thead>

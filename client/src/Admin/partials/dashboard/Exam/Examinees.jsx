@@ -27,39 +27,55 @@ const ExamineesTable = () => {
     setSelectedExaminee(null);
   };
 
+  const checkOptionValue = (value) => {
+    switch(value) {
+      case '0':
+        return 'a';
+      case '1':
+        return 'b';
+      case '2':
+        return 'c';
+      case '3':
+        return 'd';
+      default:
+        return 'NA';
+    }
+  }  
+
   // Helper function to format the response data as a list of key-value pairs
   const formatResponseData = (response) => {
   
     const options = Object.keys(response);
+    console.log(response)
 
     options.sort((a,b) => a.localeCompare(b));
     return options.map((option) => (
       <li key={option}>
-        <strong>{option}:</strong> {response[option]}
+        <strong>{option}:</strong> {checkOptionValue(response[option])}
       </li>
     ));
   };
 
   return (
     <div className="items-center h-screen">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-4">Examinees in the Exam</h1>
-        <table className="w-full border-collapse border">
+      <div className="container px-4 py-8 mx-auto">
+        <h1 className="mb-4 text-3xl font-bold">Examinees in the Exam</h1>
+        <table className="w-full border border-collapse">
           <thead>
             <tr>
-              <th className="border p-2">Username</th>
-              <th className="border p-2">Score</th>
-              <th className="border p-2">View Response</th>
+              <th className="p-2 border">Username</th>
+              <th className="p-2 border">Score</th>
+              <th className="p-2 border">View Response</th>
             </tr>
           </thead>
           <tbody>
             {examinees.map((examinee, index) => (
               <tr key={index}>
-                <td className="border p-2">{examinee.username}</td>
-                <td className="border p-2">{examinee.score}</td>
-                <td className="border p-2">
+                <td className="p-2 border">{examinee.username}</td>
+                <td className="p-2 border">{examinee.score}</td>
+                <td className="p-2 border">
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+                    className="px-4 py-2 font-bold text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-700"
                     onClick={() => openModal(examinee)}
                   >
                     View Response
@@ -71,14 +87,14 @@ const ExamineesTable = () => {
         </table>
 
         {selectedExaminee && (
-          <div className="modal shadow-md fixed top-0 left-0 w-full h-full flex items-center justify-center">
-            <div className="modal-content pt-5 bg-white border-spacing-2 border-r border-x-2 border-y-2 border-solid border-black p-4 rounded-lg shadow-lg">
-              <h2 className="text-xl font-bold m-2 px-5">{selectedExaminee.username}'s Response</h2>
-              <ul className='mt-7 text-xl pl-5 ml-20 mb-6'>
+          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full shadow-md modal">
+            <div className="p-4 pt-5 bg-white border-r border-black border-solid rounded-lg shadow-lg modal-content border-spacing-2 border-x-2 border-y-2">
+              <h2 className="px-5 m-2 text-xl font-bold">{selectedExaminee.username}'s Response</h2>
+              <ul className='pl-5 mb-6 ml-20 text-xl mt-7'>
                 {formatResponseData(selectedExaminee.response)}
               </ul>
               <button
-                className="bg-red-600 ml-20  text-white font-bold py-2 px-4 rounded cursor-pointer mt-4"
+                className="px-4 py-2 mt-4 ml-20 font-bold text-white bg-red-600 rounded cursor-pointer"
                 onClick={closeModal}
               >
                 Close

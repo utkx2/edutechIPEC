@@ -37,9 +37,10 @@ const Login = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                if (data.errors) {
-                    setErrorMessage(data.errors.message || "An error occurred.");
-                } else {
+                console.log(data)
+                if (data.message) {
+                    setErrorMessage(data.message || "An error occurred.");
+                } else if(data.token) {
                     // Store response in local storage
                     localStorage.setItem("token", JSON.stringify(data.token));
                     // Navigate to the desired page

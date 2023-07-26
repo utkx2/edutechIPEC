@@ -4,7 +4,7 @@ import axios from "axios";
 import AIR from '../assets/air.png'
 import ClassroomImg1 from '../assets/classroom-1.jpg'
 import ClassroomImg2 from '../assets/classroom-2.jpg'
-import { Carousel, CarouselItem } from "@material-tailwind/react";
+import { Carousel, CarouselItem, IconButton } from "@material-tailwind/react";
 import CarouselImg2 from '../assets/carousel-2.jpg'
 import CarouselImg3 from '../assets/carousel-3.jpg'
 import FacultyImg from '../assets/faculty.png'
@@ -98,17 +98,18 @@ function Home() {
   }, [student]);
 
   // console.log(carousel[0]?.images[0]);
-  const CustomPrevArrow = () => (
-    <button className="carousel__prev-arrow">
-      <span className="material-icons">keyboard_arrow_left</span>
-    </button>
-  );
+  // const CustomPrevArrow = () => (
+  //   <button className="carousel__prev-arrow">
+  //     <span className="material-icons">keyboard_arrow_left</span>
+  //   </button>
+  // );
 
-  const CustomNextArrow = () => (
-    <button className="carousel__next-arrow">
-      <span className="material-icons">keyboard_arrow_right</span>
-    </button>
-  );
+  // const CustomNextArrow = () => (
+  //   <button className="carousel__next-arrow">
+  //     <span className="material-icons">keyboard_arrow_right</span>
+  //   </button>
+  // );
+  console.log(carousel)
 
   return (
 
@@ -119,8 +120,79 @@ function Home() {
           <Carousel carousel={links} key={links._id} />
         ))
         } */}
-        <Carousel autoplay={true} nextArrow={CustomNextArrow} prevArrow={CustomPrevArrow} loop={true} className="w-full bg-orange-200 rounded-xl">
-          <img
+        <Carousel
+        prevArrow={({ handlePrev }) => (
+        <IconButton
+          variant="text"
+          color="white"
+          size="lg"
+          onClick={handlePrev}
+          className="!absolute top-2/4 left-4 -translate-y-2/4 bg-white/30 rounded-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+            />
+          </svg>
+        </IconButton>
+      )}
+      nextArrow={({ handleNext }) => (
+        <IconButton
+          variant="text"
+          color="white"
+          size="lg"
+          onClick={handleNext}
+          className="!absolute top-2/4 !right-4 -translate-y-2/4 bg-white/30 rounded-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+            />
+          </svg>
+        </IconButton>
+      )}
+        navigation={({ setActiveIndex, activeIndex, length }) => (
+        <div className="absolute z-50 flex gap-2 bottom-4 left-2/4 -translate-x-2/4">
+          {new Array(length).fill("").map((_, i) => (
+            <span
+              key={i}
+              className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
+              }`}
+              onClick={() => setActiveIndex(i)}
+            />
+          ))}
+        </div>
+      )}
+         autoplay={true}  loop={true} className="w-full min-h-[330px] sm:[500px] md:h-[570px] ">
+          {carousel.map((imageUrl, index) => (
+              <img
+                key={imageUrl}
+                src={imageUrl}
+                alt={`image ${index}`}
+                className="w-full min-h-[330px] object-cover sm:[500px] md:h-[570px]"
+              />
+            )
+          )}
+          {/* <img
             src={carousel[0]}
             alt="image 2"
             className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
@@ -129,7 +201,7 @@ function Home() {
             src={carousel[1]}
             alt="image 3"
             className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
-          />
+          /> */}
         </Carousel>
       </div>
 
@@ -158,7 +230,7 @@ function Home() {
 
 
       {/* teachers */}
-      <div className='my-10 bg-[#d1e9f9] py-10'>
+      <div className='mt-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
         <div className='flex items-center justify-center py-8'>
           <div className='grid gap-8 md:grid-cols-3'>
@@ -199,40 +271,38 @@ function Home() {
       </div>
 
       {/* experience */}
-      <div className='my-10 bg-[#d1e9f9] py-10'>
+      <div className='mb-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR TRAILBLAZERS EXPERIENCE</h1>
         <div className='flex items-center justify-center py-8'>
           <div className='grid gap-8 md:grid-cols-3'>
 
             {student.map(studentData => (
-              <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-5 shadow-xl" key={studentData._id}>
+              <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-10 shadow-xl" key={studentData._id}>
 
                 <div className='m-2'>
-                  <div className='relative bg-[#E9ECF5] rounded-[20px] m-3 p-3 text-sm'>
-                    {studentData.description}
-                    {/* <img src={AIR} alt="air" className='absolute h-[97px] w-[97px] right-10 top-[85%]' /> */}
-                    <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-10 top-[85%]">
-                      <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-10 top-[85%] text-white font-bold leading-[10px]">
-                        <span className="text-[12px] ">AIR</span>
-                        <span className="text-3xl">{studentData.air}</span>
+                  <div className="flex items-center justify-between mx-3 mt-6">
+                    <img src={studentData.studentImg} alt="student" className='h-[140px] w-[104px]' />
+                    <div className="text-[#1f1d5a] m-3 text-sm flex flex-col items-end">
+                      <div className="font-bold">
+                        {studentData.studentDetails.name}
                       </div>
+                      <div>{studentData.studentDetails.classRoomDetails}</div>
+                      <div>{studentData.studentDetails.enrollmentNo}</div>
+                      <div>Air {studentData.air}</div>
                     </div>
                   </div>
-
-                  <img src={studentData.studentImg} alt="student" className='absolute h-[140px] w-[104px] bottom-10 left-5' />
-
-                  <div className="text-[#1f1d5a] m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16">
-                    <div className="font-bold">
-                      {studentData.studentDetails.name}
-                    </div>
-                    <div>{studentData.studentDetails.classRoomDetails}</div>
-                    <div>{studentData.studentDetails.enrollmentNo}</div>
-                    <div>Air {studentData.air}</div>
+                  <div className='relative bg-[#E9ECF5] rounded-[20px] mx-3 p-3 text-sm mb-14'>
+                    {studentData.description}
                   </div>
 
                 </div>
-
-                <div className='absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
+                <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-5%] top-[-15%]">
+                      <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-0 top-0 text-white font-bold leading-[10px]">
+                        <span className="text-[12px] ">AIR</span>
+                        <span className="text-3xl">{studentData.air}</span>
+                      </div>
+                </div>
+                <div className='absolute w-full flex bottom-0 items-center text-white bg-[#1f1d5a] text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
                   {studentData.exam}
                 </div>
 
@@ -283,7 +353,7 @@ function Home() {
       </div>
 
       {/* Home */}
-    </div >
+    </div>
 
   );
 }

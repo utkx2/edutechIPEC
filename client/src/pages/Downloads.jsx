@@ -139,7 +139,7 @@ const Downloads = () => {
                         <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
                             {
                                 samplePaper?.map((samplePaperData) => (
-                                    <div className="w-full px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg " key={samplePaperData._id}>
+                                    <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 " key={samplePaperData._id}>
                                         {
                                             samplePaperData.className === "12th Pass" ? (<a href={samplePaperData.fileLink[0]}> {samplePaperData.className}</a>) : <a href={samplePaperData.fileLink[0]}>Class {samplePaperData.className}</a>
                                         }

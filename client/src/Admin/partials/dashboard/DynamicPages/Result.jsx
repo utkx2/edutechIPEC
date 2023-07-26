@@ -9,7 +9,7 @@ export default function Result() {
     centreName: '',
     studentName: '',
     IPECRollNo: '',
-    CRLRank: ''
+    CRLRank: 0
   };
 
   const initialData = {
@@ -90,6 +90,15 @@ export default function Result() {
       examName: formData.examName,
       students: formData.students
     }
+    // [{
+    //   examname: '',
+    //   student: []
+    // },
+    // {
+    //   examname: '',
+    //   student: []
+    // }]
+    console.log(formDataObj)
     const token = localStorage.getItem("token");
 
     const requestBody = JSON.stringify(formDataObj);
@@ -111,7 +120,7 @@ export default function Result() {
         alert("Oops something went wrong!!!");
       });
     // Reset the form after submission
-    setFormData(initialData);
+    // setFormData(initialData);
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -155,7 +164,7 @@ export default function Result() {
                           Remove Student
                         </button>
                       </div>
-                      <label className="relative block mb-2  font-semibold">
+                      <label className="relative block mb-2 font-semibold">
                         Centre Name:
                         <input
                           required
@@ -188,7 +197,7 @@ export default function Result() {
                           className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                         />
                       </label>
-                      <label className="relative block mb-8 md:mb-2 font-semibold">
+                      <label className="relative block mb-8 font-semibold md:mb-2">
                         CRL Rank:
                         <span className="absolute  mt-20 md:mt-0 top-[-12px] left-0 text-red-700 text-[12px]">{'(must be a number)'}</span>
                         <input
