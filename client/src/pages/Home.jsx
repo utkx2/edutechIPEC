@@ -1,28 +1,27 @@
-import { useEffect, useState } from "react";
-// import Student from "../assets/student-img.png";
+import React, { useEffect, useState } from "react";
+import Student from "../assets/student-img.png";
 import axios from "axios";
-// import AIR from '../assets/air.png'
+import AIR from '../assets/air.png'
 import ClassroomImg1 from '../assets/classroom-1.jpg'
-// import ClassroomImg2 from '../assets/classroom-2.jpg'
-// import { Carousel } from "@material-tailwind/react";
-// import CarouselImg2 from '../assets/carousel-2.jpg'
-// import CarouselImg3 from '../assets/carousel-3.jpg'
+import ClassroomImg2 from '../assets/classroom-2.jpg'
+import { Carousel, CarouselItem } from "@material-tailwind/react";
+import CarouselImg2 from '../assets/carousel-2.jpg'
+import CarouselImg3 from '../assets/carousel-3.jpg'
 import FacultyImg from '../assets/faculty.png'
 import { Link } from 'react-router-dom';
 import { BASE_URL } from "../config";
 import "../styles/Course.css";
-import Carousel from '../components/carousel'
-// import StudentJourneyImg from '../assets/student-journey.png'
+//import Carousel from '../components/carousel'
 
 function Home() {
-  // const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({});
   const [carousel, setCarousel] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [faculty, setFaculty] = useState([]);
   const [student, setStudent] = useState([]);
-  // http://localhost:3000/api/facultyHomePage/get
-  //  http://localhost:3000/api/ourPrograms/get/
-  //  http://localhost:3000/api/carousel/get
+  // http:localhost:3000/api/facultyHomePage/get
+  //  http:localhost:3000/api/ourPrograms/get/
+  //  http:localhost:3000/api/carousel/get
   // http://localhost:3000/api/studentHomePage/get
   const fetchData = async () => {
     try {
@@ -36,8 +35,8 @@ function Home() {
           },
         }
       );
-      console.log(responseCarousel.data);
-      setCarousel(responseCarousel.data);
+      console.log(responseCarousel.data[0].images);
+      setCarousel(responseCarousel.data[0].images);
       // console.log(carousel)
       const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
         method: "GET",
@@ -67,10 +66,10 @@ function Home() {
         }
       );
       // console.log(responsePrograms.data);
-
-      setStudent(responseStudent.data);
-      setFaculty(responseFaculty.data);
-      setPrograms(responsePrograms.data);
+      //    console.log(responsePrograms.data[0].programs);
+      setStudent(responseStudent.data[0].Students);
+      setFaculty(responseFaculty.data[0].facultyMembers);
+      setPrograms(responsePrograms.data[0].programs);
       //setUserData(response.data)
       // console.log(responseCarousel.data);
     } catch (error) {
@@ -99,26 +98,39 @@ function Home() {
   }, [student]);
 
   // console.log(carousel[0]?.images[0]);
+  const CustomPrevArrow = () => (
+    <button className="carousel__prev-arrow">
+      <span className="material-icons">keyboard_arrow_left</span>
+    </button>
+  );
+
+  const CustomNextArrow = () => (
+    <button className="carousel__next-arrow">
+      <span className="material-icons">keyboard_arrow_right</span>
+    </button>
+  );
 
   return (
-    <div className=''>
 
+    <div className=''>
       <div className=''>
 
-        {carousel?.length > 0 && <Carousel carousel={carousel} />
-        }
-        {/* <Carousel autoplay={true} loop={true} className="w-full bg-orange-200 rounded-xl">
+        {/* {carousel?.length > 0 && carousel.map((links) => (
+          <Carousel carousel={links} key={links._id} />
+        ))
+        } */}
+        <Carousel autoplay={true} nextArrow={CustomNextArrow} prevArrow={CustomPrevArrow} loop={true} className="w-full bg-orange-200 rounded-xl">
           <img
-            src={CarouselImg2}
+            src={carousel[0]}
             alt="image 2"
             className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
           />
           <img
-            src={CarouselImg3}
+            src={carousel[1]}
             alt="image 3"
             className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
           />
-        </Carousel> */}
+        </Carousel>
       </div>
 
       <div className="my-10">
@@ -143,10 +155,10 @@ function Home() {
           </div>
         </div>
       </div>
-      
+
 
       {/* teachers */}
-      <div className='mt-10 bg-[#d1e9f9] py-10'>
+      <div className='my-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
         <div className='flex items-center justify-center py-8'>
           <div className='grid gap-8 md:grid-cols-3'>
@@ -186,45 +198,41 @@ function Home() {
         </div>
       </div>
 
-      {/* <img src={StudentJourneyImg} alt="student_journey" className="w-full h-[730px] bg-cover" /> */}
-      
-
       {/* experience */}
-      <div className='mb-10 bg-[#d1e9f9] py-10'>
+      <div className='my-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR TRAILBLAZERS EXPERIENCE</h1>
         <div className='flex items-center justify-center py-8'>
           <div className='grid gap-8 md:grid-cols-3'>
 
             {student.map(studentData => (
-              <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-10 shadow-xl" key={studentData._id}>
+              <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-5 shadow-xl" key={studentData._id}>
 
                 <div className='m-2'>
-                
-                  <div className="flex items-center justify-between mx-3 mt-6">
-                    <img src={studentData.studentImg} alt="student" className='h-[140px] w-[104px]' />
-                    <div className="text-[#1f1d5a] m-3 text-sm flex flex-col items-end">
-                      <div className="font-bold">
-                        {studentData.studentDetails.name}
-                      </div>
-                      <div>{studentData.studentDetails.classRoomDetails}</div>
-                      <div>{studentData.studentDetails.enrollmentNo}</div>
-                      <div>Air {studentData.air}</div>
-                    </div>
-                  </div>
-                  
-                  <div className='relative bg-[#E9ECF5] rounded-[20px] mx-3 p-3 text-sm mb-14'>
+                  <div className='relative bg-[#E9ECF5] rounded-[20px] m-3 p-3 text-sm'>
                     {studentData.description}
-                  </div>
-
-                </div>
-                <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-5%] top-[-15%]">
-                      <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-0 top-0 text-white font-bold leading-[10px]">
+                    {/* <img src={AIR} alt="air" className='absolute h-[97px] w-[97px] right-10 top-[85%]' /> */}
+                    <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-10 top-[85%]">
+                      <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-10 top-[85%] text-white font-bold leading-[10px]">
                         <span className="text-[12px] ">AIR</span>
                         <span className="text-3xl">{studentData.air}</span>
                       </div>
                     </div>
+                  </div>
 
-                <div className='absolute w-full flex bottom-0 items-center text-white bg-[#1f1d5a] text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
+                  <img src={studentData.studentImg} alt="student" className='absolute h-[140px] w-[104px] bottom-10 left-5' />
+
+                  <div className="text-[#1f1d5a] m-3 text-sm flex flex-col justify-end items-end mt-20 mb-16">
+                    <div className="font-bold">
+                      {studentData.studentDetails.name}
+                    </div>
+                    <div>{studentData.studentDetails.classRoomDetails}</div>
+                    <div>{studentData.studentDetails.enrollmentNo}</div>
+                    <div>Air {studentData.air}</div>
+                  </div>
+
+                </div>
+
+                <div className='absolute w-full flex bottom-0 items-center bg-yellow-400 text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
                   {studentData.exam}
                 </div>
 
@@ -256,7 +264,6 @@ function Home() {
                   className="h-[310px] w-[527px]"
                 />
                 <h1 className="text-2xl">{programData.title}</h1>
-
                 <p className="w-5/6 text-center ">{programData.description}</p>
                 <Link
                   to="/course"
@@ -276,7 +283,8 @@ function Home() {
       </div>
 
       {/* Home */}
-    </div>
+    </div >
+
   );
 }
 

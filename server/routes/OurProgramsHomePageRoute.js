@@ -29,7 +29,7 @@ router.post('/upload', async (req, res) => {
         const programData = req.body; // JSON object with program information
         // console.log(programData);
         const update = { programs: programData };
-        console.log(update);
+        //console.log(update);
         // Use findOneAndUpdate without filter (it will find the only entry in the collection)
         const updatedPrograms = await ourPrograms.findOneAndUpdate({}, update, {
             new: true,
