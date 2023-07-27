@@ -19,15 +19,13 @@ router.get('/get', async (req, res) => {
 // http://localhost:3000/api/studentHomePage/upload
 router.post('/upload', async (req, res) => {
     try {
-        const studentsData = req.body; // JSON object with students information
+        const studentsData = req.body;
         const update = { Students: studentsData };
-        //console.log(update);
-        // Use findOneAndUpdate without filter (it will find the only entry in the collection)
         const updatedStudents = await StudentCards.findOneAndUpdate({}, update, {
             new: true,
             upsert: true,
         });
-        // console.log(updatedStudents);
+
         res.json({ message: 'student card added successfully', cards: updatedStudents });
     }
     catch (error) {

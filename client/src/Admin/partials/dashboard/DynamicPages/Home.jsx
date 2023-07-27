@@ -227,7 +227,8 @@ export default function Home() {
           },
         }
       );
-      setStudents(responseStudent.data[0].Students)
+      console.log(responseStudent.data[0]);
+      setStudents(responseStudent.data[0])
     } catch (err) {
       console.log(err, 'error')
     }
@@ -235,7 +236,6 @@ export default function Home() {
 
   useEffect(() => {
     fetchHomeContent()
-    console.log(students);
   }, [])
 
   const handleSubmit = () => {
@@ -394,112 +394,110 @@ export default function Home() {
                     </button>
                   </div>
 
-                    {/*<h2 className="my-4 text-xl font-bold">Students</h2>
-                    {students.map((student, index) => (
+                  {students ? <div>
+
+                    <h2 className="my-4 text-xl font-bold">Students</h2>
+                    {students.Students.map((student, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
-                        <div key={index} className="gap-4 mb-4 rounded-lg">
-                          <div className="grid grid-cols-2 gap-4">
-                            <label className="relative block mb-2 font-semibold">
-                              {`Student ${index + 1} Name`}
-                              <input
-                                required
-                                type="text"
-                                name={`name-${index}`}
-                                value={student.name}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />
-                            </label>
-                            <label className="relative block mb-2 font-semibold">
-                              {`Student ${index + 1} Image`}
-                              <input
-                                required
-                                type="text"
-                                name={`studentImg-${index}`}
-                                value={student.studentImg}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />
-                            </label>
-                            <label className="relative block mb-2 font-semibold">
-                              {`Student ${index + 1} EnrollmentNo`}
-                              <input
-                                required
-                                type="text"
-                                name={`enrollmentNo-${index}`}
-                                value={student.enrollmentNo}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />
-                            </label>
-                            <label className="relative block mb-2 font-semibold">
-                              {`Student ${index + 1} Classroom Program`}
-                              <input
-                                required
-                                type="text"
-                                name={`classRoomDetails-${index}`}
-                                value={student.classRoomDetails}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />
-                            </label>
-
-
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <label className="relative block mb-2 font-semibold">
-                              {`Student ${index + 1} AIR`}
-                              <input
-                                required
-                                type="text"
-                                name={`air-${index}`}
-                                value={student.air}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />
-                            </label>
-                            <label className="relative block mb-2 font-semibold">
-                              {`Student ${index + 1} Exam`}
-                              <input
-                                required
-                                type="text"
-                                name={`exam-${index}`}
-                                value={student.exam}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />
-                            </label>
-                            <label className="relative block col-span-2 mb-2 font-semibold">
-                              {`Student ${index + 1} Description`}
-                              <textarea
-                                required
-                                type="text"
-                                name={`description-${index}`}
-                                value={student.description}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />
-                            </label>
-                          </div>
-                          <button
-                            className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
-                            type="button"
-                            onClick={() => handleRemoveStudent(index)}
-                          >
-                            Remove Link
-                          </button>
+                        <div className="grid grid-cols-2 gap-4">
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} Name`}
+                            <input
+                              required
+                              type="text"
+                              name={`name-${index}`}
+                              value={student.name}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} Image`}
+                            <input
+                              required
+                              type="text"
+                              name={`studentImg-${index}`}
+                              value={student.studentImg}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} EnrollmentNo`}
+                            <input
+                              required
+                              type="text"
+                              name={`enrollmentNo-${index}`}
+                              value={student.enrollmentNo}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} Classroom Program`}
+                            <input
+                              required
+                              type="text"
+                              name={`classRoomDetails-${index}`}
+                              value={student.classRoomDetails}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
                         </div>
-
+                        <div className="grid grid-cols-2 gap-4">
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} AIR`}
+                            <input
+                              required
+                              type="text"
+                              name={`air-${index}`}
+                              value={student.air}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Student ${index + 1} Exam`}
+                            <input
+                              required
+                              type="text"
+                              name={`exam-${index}`}
+                              value={student.exam}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block col-span-2 mb-2 font-semibold">
+                            {`Student ${index + 1} Description`}
+                            <textarea
+                              required
+                              type="text"
+                              name={`description-${index}`}
+                              value={student.description}
+                              onChange={(e) => handleStudentsChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                        </div>
                         <button
-                          className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                          className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                           type="button"
-                          onClick={handleAddStudent}
+                          onClick={() => handleRemoveStudent(index)}
                         >
-                          Add Link
+                          Remove Link
                         </button>
                       </div>
                     ))}
-                  </div> */}
+                    <button
+                      className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                      type="button"
+                      onClick={handleAddStudent}
+                    >
+                      Add Student
+                    </button>
+                  </div> : <></>}
+
 
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {/* Faculty */}

@@ -3,6 +3,18 @@ const { Schema } = mongoose;
 
 const StudentHomePage = new Schema({
     Students: [{
+        name: {
+            type: String,
+            required: true
+        },
+        enrollmentNo: {
+            type: String,
+            required: true
+        },
+        classRoomDetails: {
+            type: String,
+            required: true
+        },
         description: {
             type: String,
             required: true
