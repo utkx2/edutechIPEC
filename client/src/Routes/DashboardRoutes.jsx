@@ -25,6 +25,8 @@ import List from "../Admin/partials/dashboard/Exam/List";
 import UpdateExam from "../Admin/partials/dashboard/Exam/UpdateExam";
 import ExamineesTable from "../Admin/partials/dashboard/Exam/Examinees";
 import CoursesList from "../Admin/partials/dashboard/DynamicPages/CoursesList";
+import FacultyRegistration from "../Admin/partials/dashboard/Faculty/FacultyRegisrations";
+import FacultyRegistrationDetails from "../Admin/partials/dashboard/Faculty/FacultyRegistrationDetails";
 
 const DashboardRoutes = () => {
   return (
@@ -113,6 +115,14 @@ const DashboardRoutes = () => {
         <Route
           path="/examinees/:id"
           element={<PrivateRoute element={ExamineesTable} />}
+        />
+        <Route
+          path="/faculty-registration"
+          element={<PrivateRoute element={FacultyRegistration} />}
+        />
+        <Route
+          path="/faculty-registration/:id"
+          element={<PrivateRoute element={FacultyRegistrationDetails} />}
         />
       </Routes>
     </div>

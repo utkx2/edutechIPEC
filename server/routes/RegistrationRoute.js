@@ -5,20 +5,29 @@ const router = express.Router();
 
 // http://localhost:3000/api/registration/upload
 router.post('/upload', async (req, res) => {
+    const { firstName, lastName, email,
+        phoneNumber, gender, selectedClass, fatherName, fatherNumber, motherName, motherNumber, dob, category, addressLine1, addressLine2, addressLine3, city, state, zipCode, message } = req.body;
+    console.log(selectedClass, category);
+    console.log(req.body);
     try {
-        // Save the entire req.body object as a JSON document
-        const formData = new Registrations(req.body);
-    
-        // Save the data to the database (this assumes FormDataModel is a Mongoose model)
-        await formData.save();
-    
-        // Send a success response
-        res.status(201).json({ message: 'Form data saved successfully.' });
-      } catch (err) {
-        // Handle any unexpected errors
-        console.error('Error while saving form data:', err);
-        res.status(500).json({ message: 'An error occurred while processing the request.' });
-      }
+        const newRegistrations = new Registrations({
+            firstName, lastName, email,
+            phoneNumber, gender, selectedClass, fatherName, fatherNumber, motherName, motherNumber, dob, category, addressLine1, addressLine2, addressLine3, city, state, zipCode: zipCode, message
+        });
+        const saveForm = newRegistrations.save();
+        res.status(200).json({
+            success: true,
+            message: "form submitted successfully",
+            data: saveForm,
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "An error occurred while submitting the registration form",
+            error: error.message,
+        });
+    }
 });
 
 // http://localhost:3000/api/registration/get

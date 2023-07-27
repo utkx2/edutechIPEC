@@ -67,7 +67,7 @@ function About() {
                 IPEC ADVANTAGE
               </h2>
             </div>
-            <p className="text-lg leading-relaxed text-gray-700 ">
+            <p className="text-lg leading-relaxed text-gray-700">
               Studying at IPEC has its own set of advantages. Students are in a
               better position to clear the competitive exams and be more. We help
               students realize their fullest potential.
@@ -75,21 +75,17 @@ function About() {
             <div className="flex flex-wrap mt-8 -mx-2">
               {userData.ipecAdvantages.map((advantage, index) => (
                 <div key={index} className="w-full px-2 mb-4 sm:w-1/2 md:w-1/4 ">
-                  <div className="bg-white rounded-lg shadow-lg p-6 h-[440px]">
-                    <div className="text-center">
-                      <span>
-                        <img
-                          src={advantageImgArr[index]}
-                          alt="Detailed Theory Portions"
-                        />
-                      </span>
+                  <div className="flex items-center flex-col bg-white rounded-lg shadow-lg p-6 h-[440px]">
+                      <img
+                        src={advantageImgArr[index]}
+                        alt="Detailed Theory Portions"
+                      />
                       <h3 className="mt-4 mb-2 text-xl font-semibold">
                         {advantage.title}
                       </h3>
-                    </div>
-                    <p className="leading-relaxed text-gray-700">
-                    {advantage.description}
-                    </p>
+                      <p className="leading-relaxed text-gray-700">
+                        {advantage.description}
+                      </p>
                   </div>
                 </div>
               ))} 

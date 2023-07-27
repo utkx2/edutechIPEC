@@ -49,11 +49,9 @@ const FacultyHireModel = new Schema({
     },
     addressLine2: {
         type: String,
-        required: true
     },
     addressLine3: {
         type: String,
-        required: true
     },
     state: {
         type: String,

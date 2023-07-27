@@ -159,7 +159,7 @@ export default function Career() {
                                 </label>
                             </div>
 
-                            <div className="relative z-0 flex flex-col h-10 gap-y-2 group">
+                            <div className="relative z-0 flex flex-col h-10 mb-6 gap-y-2 group">
                                 <label htmlFor="" className="text-sm text-gray-500 ">
                                     Choose Gender
                                 </label>
@@ -320,7 +320,7 @@ export default function Career() {
                     </div>
                 </div> */}
 
-                        <div className="grid md:grid-cols-2 md:gap-6">
+                        <div className="grid gap-4 md:grid-cols-2 md:gap-6">
                             <div>
                                 <label className="mt-2 mr-5" htmlFor="dob">
                                     DOB:
@@ -392,8 +392,7 @@ export default function Career() {
                                     value={formData.addressLine2}
                                     onChange={handleChange}
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none        focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" "
-                                    required
+                                    placeholder=""
                                 />
                                 <label
                                     htmlFor="addressLine2"
@@ -411,7 +410,6 @@ export default function Career() {
                                     onChange={handleChange}
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none        focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" "
-                                    required
                                 />
                                 <label
                                     htmlFor="addressLine3"
@@ -463,7 +461,7 @@ export default function Career() {
                             <div className="grid md:grid-cols-2 md:gap-6">
                                 <div className="relative z-0 w-full mb-6 group">
                                     <input
-                                        type="Number"
+                                        type="number"
                                         name="zipcode"
                                         id="zipcode"
                                         value={formData.zipcode}

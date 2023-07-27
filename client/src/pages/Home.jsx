@@ -82,19 +82,19 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    console.log("Carousel:", carousel);
+    // console.log("Carousel:", carousel);
   }, [carousel]);
 
   useEffect(() => {
-    console.log("Programs:", programs);
+    // console.log("Programs:", programs);
   }, [programs]);
 
   useEffect(() => {
-    console.log("Faculty:", faculty);
+    // console.log("Faculty:", faculty);
   }, [faculty]);
 
   useEffect(() => {
-    console.log("Student:", student);
+    // console.log("Student:", student);
   }, [student]);
 
   // console.log(carousel[0]?.images[0]);
@@ -109,7 +109,7 @@ function Home() {
   //     <span className="material-icons">keyboard_arrow_right</span>
   //   </button>
   // );
-  console.log(carousel)
+  // console.log(carousel)
 
   return (
 
@@ -264,9 +264,9 @@ function Home() {
           {student?<div className='grid gap-8 md:grid-cols-3'>
 
             {student.map(studentData => (
-              <div className="relative w-[353px] h-auto rounded-[28px] bg-white mt-10 shadow-xl " key={studentData._id}>
-                <div className='m-2'>
-                  <div className="flex flex-col items-center justify-between mx-3 mt-6">
+              <div className="relative w-[353px] h-auto rounded-[16px] bg-white mt-10 shadow-xl " key={studentData._id}>
+                <div className=''>
+                  <div className="flex flex-col items-center justify-between mx-3 mt-3">
                     <img src={studentData.studentImg} alt="student" className='h-[280px] w-full rounded-[8px]' />
                     <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
                       <div className="font-bold">
@@ -282,13 +282,13 @@ function Home() {
                   </div>
 
                 </div>
-                <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-5%] top-[-15%]">
+                <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-10%] top-[-10%]">
                       <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-0 top-0 text-white font-bold leading-[10px]">
                         <span className="text-[12px] ">AIR</span>
                         <span className="text-3xl">{studentData.air}</span>
                       </div>
                 </div>
-                <div className='absolute w-full flex bottom-0 items-center text-white bg-[#1f1d5a] text-center font-bold justify-center rounded-b-[28px] h-[40px]'>
+                <div className='absolute w-full flex bottom-0 items-center text-white bg-[#1f1d5a] text-center font-bold justify-center rounded-b-[16px] h-[40px]'>
                   {studentData.exam}
                 </div>
 

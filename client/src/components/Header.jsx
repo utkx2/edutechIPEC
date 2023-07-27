@@ -36,7 +36,9 @@ function Header() {
   };
 
   const handleMobileMenuToggle = () => {
+    console.log('here')
     setShowMobileMenu(!showMobileMenu);
+    console.log(showMobileMenu)
   };
 
   const auth = JSON.parse(localStorage.getItem('user'));
@@ -44,13 +46,14 @@ function Header() {
 
   const logout = () => {
     localStorage.clear();
+    setShowMobileMenu(!showMobileMenu);
     navigate('/');
   };
 
   return (
     <>
       <div>
-        <div className='h-[85px] bg-white flex items-center justify-between px-8'>
+        <div className='h-[85px] bg-white flex items-center justify-between px-8 border-b lg:border-none'>
           {/* Hamburger Icon (Moved to the left side) */}
           <div className='lg:hidden'>
             <button
@@ -63,45 +66,45 @@ function Header() {
           <div className='h-[75px] w-auto'>
             <img src={Logo} alt='logo' className='h-[75px]' />
           </div>
-          <div className='flex flex-col sm:flex-row items-center gap-2 text-[12px] mt-2 mb-2 pt-2 pb-2 sm:mt-0 sm:mb-0 sm:pt-0 sm:pb-0'>
-  {auth ? (
-    <>
-      <div
-        className='text-white bg-[#1f1d5a] cursor-pointer focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
-        onClick={logout}
-      >
-        Logout
-      </div>
-      {auth.userRole === 'admin' ? (
-        <Link
-          to='/dashboard/users'
-          className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
-        >
-          Dashboard
-        </Link>
-      ) : (
-        <></>
-      )}
-      {auth.userRole === 'student' ? (
-        <Link
-          to='/exam'
-          className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
-        >
-          Exams
-        </Link>
-      ) : (
-        <></>
-      )}
-    </>
-  ) : (
-    <Link
-      to='/login'
-      className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
-    >
-      Login
-    </Link>
-  )}
-</div>
+          <div className='hidden lg:flex flex-col sm:flex-row items-center gap-2 text-[12px] mt-2 mb-2 pt-2 pb-2 sm:mt-0 sm:mb-0 sm:pt-0 sm:pb-0'>
+            {auth ? (
+              <>
+                <div
+                  className='text-white bg-[#1f1d5a] cursor-pointer font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5  text-center '
+                  onClick={logout}
+                >
+                  Logout
+                </div>
+                {auth.userRole === 'admin' ? (
+                  <Link
+                    to='/dashboard/users'
+                    className='text-white bg-[#1f1d5a] font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5  text-center '
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <></>
+                )}
+                {auth.userRole === 'student' ? (
+                  <Link
+                    to='/exam'
+                    className='text-white bg-[#1f1d5a] font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5  text-center '
+                  >
+                    Exams
+                  </Link>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <Link
+                to='/login'
+                className='text-white bg-[#1f1d5a] font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5  text-center '
+              >
+                Login
+              </Link>
+            )}
+        </div>
 
 
 
@@ -110,11 +113,11 @@ function Header() {
 
         {/* Mobile Menu */}
         {showMobileMenu && (
-          <div className='w-full py-4 bg-white lg:hidden'>
+          <div className='w-full bg-white lg:hidden'>
             {lowernav.map((navItem) =>
               navItem.dropdown ? (
                 <div
-                  onClick={handleDropdown}
+                  onClick={handleMobileMenuToggle}
                   key={navItem.name}
                   className='relative text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer py-1 px-4'
                 >
@@ -125,6 +128,7 @@ function Header() {
                         {navItem.options.map((downloadOption) => (
                           <Link to={'/download'}
                             key={downloadOption}
+                            onClick={handleMobileMenuToggle}
                             className='hover:bg-[#1f1d5a] hover:text-white whitespace-nowrap my-2 py-1.5 px-4 rounded text-[#1f1d5a]'
                           >
                             {downloadOption}
@@ -135,13 +139,55 @@ function Header() {
                   )}
                 </div>
               ) : (
-                <NavLink to={navItem.link} key={navItem.link}>
-                  <div className='text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer py-2 px-4'>
+                <NavLink onClick={handleMobileMenuToggle} to={navItem.link} key={navItem.link}>
+                  <div className='text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer py-2 px-8 hover:bg-[#1f1d5a] hover:text-white'>
                     {navItem.name}
                   </div>
                 </NavLink>
               )
             )}
+            <div className='px-8 py-2 mb-2 cursor-pointer'>
+              {auth ? (
+                <>
+                  <div
+                    className='text-white bg-[#1f1d5a] cursor-pointer font-medium rounded-lg text-sm w-fit  px-5 py-2.5  text-center mb-4'
+                    onClick={logout}
+                  >
+                    Logout
+                  </div>
+                  {auth.userRole === 'admin' ? (
+                    <Link
+                      to='/dashboard/users'
+                      onClick={() => handleMobileMenuToggle}
+                      className='text-white bg-[#1f1d5a] mt-5 cursor-pointer font-medium rounded-lg text-sm w-fit  px-5 py-2.5  text-center '
+                    >
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
+                  {auth.userRole === 'student' ? (
+                    <Link
+                      to='/exam'
+                      onClick={handleMobileMenuToggle}
+                      className='text-white bg-[#1f1d5a] font-medium rounded-lg text-sm w-fit  px-5 py-2.5  text-center '
+                    >
+                      Exams
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              ) : (
+                <Link
+                  to='/login'
+                  onClick={handleMobileMenuToggle}
+                  className='text-white bg-[#1f1d5a] font-medium rounded-lg text-sm w-fit  px-5 py-2.5  text-center '
+                >
+                  Login
+                </Link>
+              )}
+            </div>
           </div>
         )}
 
