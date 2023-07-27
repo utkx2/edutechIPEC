@@ -232,26 +232,13 @@ function Home() {
       {/* teachers */}
       <div className='mt-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
-        <div className='flex items-center justify-center py-8'>
-          <div className='grid gap-8 md:grid-cols-3'>
-
-            {/* student air card comp*/}
-            <div className="w-[340px] bg-white border mt-5 shadow-lg rounded-[16px] p-3">
-
-              <img src={FacultyImg} alt="student" className=' h-[280px] w-full rounded-[8px] ' />
-              <div className='w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3'>
-                <div className='text-lg font-bold'>Pradeep Malhotra</div>
-                <div>2 Year classroom programme</div>
-                <div>IIT Delhi</div>
-                <div>Teaching from past 10+years.</div>
-              </div>
-
-            </div>
+        <div className='flex items-center justify-center py-8 '>
+          <div className='grid gap-8 md:grid-cols-3 '>
 
             {faculty.map((facultyData) => (
               <div
                 key={facultyData._id}
-                className="w-[340px] bg-white border mt-5 shadow-lg rounded-[16px] p-3"
+                className="w-[340px] bg-white mt-5 shadow-lg rounded-[16px] p-3 border-4 border-[#1f1d5a]"
               >
                 <img
                   src={facultyData.facultyImg}
@@ -277,12 +264,11 @@ function Home() {
           {student?<div className='grid gap-8 md:grid-cols-3'>
 
             {student.map(studentData => (
-              <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-10 shadow-xl" key={studentData._id}>
-
+              <div className="relative w-[353px] h-auto rounded-[28px] bg-white mt-10 shadow-xl " key={studentData._id}>
                 <div className='m-2'>
-                  <div className="flex items-center justify-between mx-3 mt-6">
-                    <img src={studentData.studentImg} alt="student" className='h-[140px] w-[104px]' />
-                    <div className="text-[#1f1d5a] m-3 text-sm flex flex-col items-end">
+                  <div className="flex flex-col items-center justify-between mx-3 mt-6">
+                    <img src={studentData.studentImg} alt="student" className='h-[280px] w-full rounded-[8px]' />
+                    <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
                       <div className="font-bold">
                         {studentData.name}
                       </div>

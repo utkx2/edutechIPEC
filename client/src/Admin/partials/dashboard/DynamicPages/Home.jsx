@@ -450,7 +450,7 @@ export default function Home() {
                             {`Student ${index + 1} AIR`}
                             <input
                               required
-                              type="text"
+                              type="number"
                               name={`air-${index}`}
                               value={student.air}
                               onChange={(e) => handleStudentsChange(index, e)}
@@ -506,7 +506,7 @@ export default function Home() {
                       <div key={index} className="gap-4 mb-4 rounded-lg">
                         <div className="grid grid-cols-2 gap-4">
                           <label className="relative block mb-2 font-semibold">
-                            {`Faculty ${index + 1} Image`}
+                            {`Faculty ${index + 1} Name`}
                             <input
                               required
                               type="text"

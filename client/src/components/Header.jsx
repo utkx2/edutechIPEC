@@ -63,45 +63,49 @@ function Header() {
           <div className='h-[75px] w-auto'>
             <img src={Logo} alt='logo' className='h-[75px]' />
           </div>
-          <div className='flex items-center gap-4 text-[12px]'>
-            {auth ? (
-              <>
-                <div
-                  className='text-white bg-[#1f1d5a] cursor-pointer focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                  onClick={logout}
-                >
-                  Logout
-                </div>
-                {auth.userRole === 'admin' ? (
-                  <Link
-                    to='/dashboard/users'
-                    className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                  >
-                    Dashboard
-                  </Link>
-                ) : (
-                  <></>
-                )}
-                {auth.userRole === 'student' ? (
-                  <Link
-                    to='/exam'
-                    className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                  >
-                    Exams
-                  </Link>
-                ) : (
-                  <></>
-                )}
-              </>
-            ) : (
-              <Link
-                to='/login'
-                className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-              >
-                Login
-              </Link>
-            )}
-          </div>
+          <div className='flex flex-col sm:flex-row items-center gap-2 text-[12px] mt-2 mb-2 pt-2 pb-2 sm:mt-0 sm:mb-0 sm:pt-0 sm:pb-0'>
+  {auth ? (
+    <>
+      <div
+        className='text-white bg-[#1f1d5a] cursor-pointer focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
+        onClick={logout}
+      >
+        Logout
+      </div>
+      {auth.userRole === 'admin' ? (
+        <Link
+          to='/dashboard/users'
+          className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
+        >
+          Dashboard
+        </Link>
+      ) : (
+        <></>
+      )}
+      {auth.userRole === 'student' ? (
+        <Link
+          to='/exam'
+          className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
+        >
+          Exams
+        </Link>
+      ) : (
+        <></>
+      )}
+    </>
+  ) : (
+    <Link
+      to='/login'
+      className='text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit sm:w-auto px-5 py-2.5 sm:py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:px-3 sm:py-1.5'
+    >
+      Login
+    </Link>
+  )}
+</div>
+
+
+
+
         </div>
 
         {/* Mobile Menu */}
@@ -112,7 +116,7 @@ function Header() {
                 <div
                   onClick={handleDropdown}
                   key={navItem.name}
-                  className='relative text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer py-2 px-4' // Add padding here
+                  className='relative text-sm text-[#1f1d5a] font-medium uppercase cursor-pointer py-1 px-4'
                 >
                   {navItem.name}
                   {openDropdown && (
