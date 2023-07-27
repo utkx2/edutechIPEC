@@ -38,7 +38,7 @@ const ExamineesTable = () => {
       case '3':
         return 'd';
       default:
-        return 'NA';
+        return value;
     }
   }  
 
@@ -48,7 +48,7 @@ const ExamineesTable = () => {
     const options = Object.keys(response);
     console.log(response)
 
-    options.sort((a,b) => a.localeCompare(b));
+    // options.sort((a,b) => a.localeCompare(b));
     return options.map((option) => (
       <li key={option}>
         <strong>{option}:</strong> {checkOptionValue(response[option])}

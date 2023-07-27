@@ -48,7 +48,6 @@ const RegistrationsModel = new Schema({
     },
     category: {
         type: String,
-        enum: ['general', 'ews', 'sc', 'st', 'obc'],
         required: true
     },
     addressLine1: {

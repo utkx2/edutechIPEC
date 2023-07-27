@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../config";
 
 function CourseDetails() {
   const { id } = useParams();
@@ -9,7 +10,7 @@ function CourseDetails() {
   useEffect(() => {
     console.log(id)
     // http://localhost:3000/api/Courses/get/:id
-    fetch(`http://localhost:3000/api/Courses/get/${id}`)
+    fetch(`${BASE_URL}Courses/get/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data)

@@ -7,7 +7,15 @@ const Result = require('../models/ResultsModel');
 router.post('/upload', async (req, res) => {
     try {
         const { examName, students } = req.body;
-        const newResult = await Result.create({ examName, students });
+        console.log(req.body);
+        
+        const query = {};
+        const update = { examName, students };
+        const options = { new: true, upsert: true };
+
+        const newResult = await Result.findOneAndUpdate(query, update, options);
+
+        console.log(newResult);
         res.json(newResult);
     } catch (error) {
         console.error('Error creating Result:', error);

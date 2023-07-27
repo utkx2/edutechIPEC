@@ -9,23 +9,23 @@ const Registration = () => {
         firstName: "",
         lastName: "",
         email: "",
-        password: "",
-        repeatPassword: "",
-        retypeEmail: "",
+        // password: "",
+        // repeatPassword: "",
+        // retypeEmail: "",
         phoneNumber: "",
         fatherName: "",
         fatherNumber: "",
         motherName: "",
         motherNumber: "",
         dob: "",
-        category: "",
+        category: "General",
         gender: "",
         addressLine1: "",
         addressLine2: "",
         addressLine3: "",
         city: "",
         state: "",
-        zipcode: "",
+        zipCode: "",
         message: "",
     });
 
@@ -34,9 +34,9 @@ const Registration = () => {
             firstName: "",
             lastName: "",
             email: "",
-            password: "",
-            repeatPassword: "",
-            retypeEmail: "",
+            // password: "",
+            // repeatPassword: "",
+            // retypeEmail: "",
             phoneNumber: "",
             fatherName: "",
             fatherNumber: "",
@@ -50,7 +50,7 @@ const Registration = () => {
             addressLine3: "",
             city: "",
             state: "",
-            zipcode: "",
+            zipCode: "",
             message: "",
         });
     };
@@ -586,9 +586,9 @@ const Registration = () => {
                                     <input
                                         type="tel"
                                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                                        name="zipcode"
-                                        id="zipcode"
-                                        value={formData.zipcode}
+                                        name="zipCode"
+                                        id="zipCode"
+                                        value={formData.zipCode}
                                         onChange={handleChange}
                                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         placeholder=" "

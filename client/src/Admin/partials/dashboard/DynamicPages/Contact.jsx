@@ -261,7 +261,7 @@ export default function Contact() {
                               {moment(user.category).format('DD-MM-YYYY')}
                             </td>
                             <td className="px-4 py-3 font-semibold truncate border text-ms">
-                              {user.message}{'aksnlfoiauwebhfvilubaenvnaewkjbvoiwef wqjdnoiwNFCOWENOIW'}
+                              {user.message}
                             </td>
                           </tr>
                         ))}
