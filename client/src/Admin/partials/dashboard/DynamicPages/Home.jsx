@@ -188,10 +188,6 @@ export default function Home() {
           auth: localStorage.getItem("token"),
         },
       });
-      // console.log(responseCarousel.data.map(programObj => ({
-      //   imageUrl: programObj.title,
-      //   description: programObj.description
-      // })))
       console.log(responsePrograms.data[0]);
       setPrograms({
         Programs: responsePrograms.data[0].programs.map(programObj => ({
@@ -231,18 +227,7 @@ export default function Home() {
           },
         }
       );
-      console.log(responseStudent.data[0].Students);
-      setStudents({
-        Students: responseStudent.data[0].Students.map(studentObj => ({
-          name: studentObj.studentDetails.name,
-          studentImg: studentObj.studentImg,
-          enrollmentNo: studentObj.studentDetails.enrollmentNo,
-          classRoomDetails: studentObj.studentDetails.classRoomDetails,
-          air: studentObj.air,
-          exam: studentObj.exam,
-          description: studentObj.description
-        }))
-      })
+      setStudents(responseStudent.data[0].Students)
     } catch (err) {
       console.log(err, 'error')
     }
@@ -250,6 +235,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchHomeContent()
+    console.log(students);
   }, [])
 
   const handleSubmit = () => {
@@ -408,10 +394,8 @@ export default function Home() {
                     </button>
                   </div>
 
-                  <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
-                    {/* Students */}
-                    <h2 className="my-4 text-xl font-bold">Students</h2>
-                    {students.Students.map((student, index) => (
+                    {/*<h2 className="my-4 text-xl font-bold">Students</h2>
+                    {students.map((student, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
                         <div key={index} className="gap-4 mb-4 rounded-lg">
                           <div className="grid grid-cols-2 gap-4">
@@ -497,7 +481,6 @@ export default function Home() {
                               />
                             </label>
                           </div>
-                          {/* <div className="grid grid-cols-2 gap-4"> */}
                           <button
                             className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                             type="button"
@@ -506,7 +489,6 @@ export default function Home() {
                             Remove Link
                           </button>
                         </div>
-                        {/* </div> */}
 
                         <button
                           className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
@@ -517,7 +499,7 @@ export default function Home() {
                         </button>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {/* Faculty */}

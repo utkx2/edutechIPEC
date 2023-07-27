@@ -274,7 +274,7 @@ function Home() {
       <div className='mb-10 bg-[#d1e9f9] py-10'>
         <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR TRAILBLAZERS EXPERIENCE</h1>
         <div className='flex items-center justify-center py-8'>
-          <div className='grid gap-8 md:grid-cols-3'>
+          {/* <div className='grid gap-8 md:grid-cols-3'>
 
             {student.map(studentData => (
               <div className="relative w-[353px] h-auto rounded-[28px] bg-white border mt-10 shadow-xl" key={studentData._id}>
@@ -311,7 +311,7 @@ function Home() {
 
 
 
-          </div>
+          </div> */}
         </div>
       </div>
 
