@@ -5,8 +5,8 @@ class ExamController {
   async createExam(req, res) {
     console.log(req.body);
     try {
-      const { name, questions } = req.body;
-      const exam = await Exam.create({ name, questions });
+      const { name, instructions, questions } = req.body;
+      const exam = await Exam.create({ name, instructions, questions });
       res.status(200).json({ success: true, exam: exam });
     } catch (err) {
       console.log(err)

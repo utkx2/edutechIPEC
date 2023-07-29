@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const path = require('path');
 const app = express();
+const fs = require('fs');
+const multer = require('multer');
+const mongoose = require('mongoose');
 
 // Middleware
 app.use(cors());
@@ -65,6 +68,62 @@ app.use('/api/facultyHomePage', facultyHomePage);
 app.use('/api/carousel', carousel);
 app.use('/api/download', download);
 app.use('/api/results', results);
+
+
+const imageSchema = new mongoose.Schema({
+  name: String,
+  data: Buffer,
+});
+const Image = mongoose.model('Image', imageSchema);
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.get('/api/image/:id', async (req, res) => {
+  try {
+    const imageId = req.params.id;
+
+    // Find the image by ID in the MongoDB database
+    const image = await Image.findById(imageId);
+
+    if (!image) {
+      return res.status(404).json({ error: 'Image not found' });
+    }
+
+    // Convert image data to base64 and send it to the frontend
+    const base64Data = image.data.toString('base64');
+    res.json({ base64Data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+});
+
+app.post('/api/upload', async (req, res) => {
+  try {
+    const { image } = req.body;
+    console.log(image);
+    if (!image) {
+      return res.status(400).json({ error: 'No image data received.' });
+    }
+
+    // Convert base64 image data to a Buffer
+    const imageBuffer = Buffer.from(image, 'base64');
+
+    const image1 = new Image({
+      name: Date.now().toString(), // You can modify the name as per your requirement
+      data: imageBuffer,
+    });
+    savedImage = await image1.save();
+    const base64Data = image1.data.toString('base64');
+
+
+    res.status(200).json({ message: 'Image uploaded successfully', imageId: savedImage._id, base64Image: base64Data });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+});
 
 // Serve the React app for all other routes
 app.get('*', (req, res) => {

@@ -56,6 +56,11 @@ const examSchema = new mongoose.Schema({
         required: true,
         set: sentenceCase
     },
+    instructions: {
+        type: String,
+        required: true,
+        set: sentenceCase
+    },
     questions: {
         type: [questionSchema],
         required: true
