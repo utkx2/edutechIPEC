@@ -286,7 +286,7 @@ const AddExamForm = () => {
                                         onClick={() => handleAddQuestion('multiple-choice')}
                                     >
                                         <FontAwesomeIcon icon={faPlus} className="mr-1" />
-                                        Add Multiple Choice Question
+                                        Add Single Correct Question
                                     </button>
                                     <button
                                         type="button"
@@ -295,6 +295,14 @@ const AddExamForm = () => {
                                     >
                                         <FontAwesomeIcon icon={faPlus} className="mr-1" />
                                         Add Text Input Question
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="px-4 py-2 ml-2 font-bold text-blue-600 border border-blue-600 rounded"
+                                        onClick={() => handleAddQuestion('multiple-choice')}
+                                    >
+                                        <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                                        Add Multiple Correct Question
                                     </button>
                                 </div>
 
