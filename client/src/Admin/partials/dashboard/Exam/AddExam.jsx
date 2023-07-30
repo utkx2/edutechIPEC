@@ -5,11 +5,100 @@ import { BASE_URL } from '../../../../config'
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { Navigate, useNavigate } from 'react-router-dom';
+import { CloudinaryContext, Image } from 'cloudinary-react';
+import { Cloudinary as CloudinaryCore } from '@cloudinary/url-gen';
+import axios from 'axios';
 
 const AddExamForm = () => {
+
+  const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
+
   const [examName, setExamName] = useState('');
+  const [examInstruction, setExamInstruction] = useState('');
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
+
+  const [imageUrl, setImageUrl] = useState('');
+
+
+  const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
+    try {
+      console.log(option);
+      const formData = new FormData();
+      formData.append('file', imageBlob);
+      formData.append('upload_preset', 'abfrwxrc');
+
+      fetch(`https://api.cloudinary.com/v1_1/doaxcuxex/upload`, {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the Cloudinary response here
+          console.log('Cloudinary Response:', data);
+          const imageUrl = data.secure_url;
+          setImageUrl(imageUrl);
+
+          if (option) {
+            const updatedQuestions = [...questions];
+            updatedQuestions[index].options[optionIndex].imageUrl = imageUrl;
+            setQuestions(updatedQuestions);
+          }
+          else {
+            const updatedQuestions = [...questions];
+            updatedQuestions[index].imageUrl = imageUrl;
+
+            console.log(updatedQuestions[index].imageUrl)
+            setQuestions(updatedQuestions);
+          }
+
+          return imageUrl;
+        })
+        .catch((error) => {
+          console.error('Error uploading image to Cloudinary:', error);
+        });
+    } catch (error) {
+      console.error('Error uploading image to Cloudinary:', error);
+    }
+  };
+
+  // const handleGetImage = async () => {
+  //   try {
+  //     // Fetch image data from the server
+  //     const response = await fetch(`${BASE_URL}image/64c49d3ca552407bfd454ad3`); // Replace "your-image-id" with the actual ID of the image you want to fetch
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log(data.base64Data);
+  //       setImageBase64(data.base64Data);
+
+  //     } else {
+  //       alert('Failed to fetch image data');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     alert('Something went wrong');
+  //   }
+  // };
+
+  const handleUpload = async (index, optionIndex, option) => {
+    console.log(index);
+    try {
+      // Request image from clipboard (as base64)
+
+      const clipboardImage = await navigator.clipboard.read();
+      const imageBlob = clipboardImage[0].types.includes('image/png')
+        ? await clipboardImage[0].getType('image/png')
+        : await clipboardImage[0].getType('image/jpeg');
+      // Convert Blob to base64 string
+      console.log(imageBlob);
+
+      handleCloudinaryUpload(imageBlob, index, optionIndex, option)
+    } catch (error) {
+      console.error('Error:', error);
+      //alert('Something went wrong');
+    }
+  }
 
   const handleAddQuestion = (type) => {
     const newQuestion = {
@@ -37,6 +126,7 @@ const AddExamForm = () => {
 
   const handleChangeQuestionImage = (index, imageUrl) => {
     const updatedQuestions = [...questions];
+    console.log(imageUrl);
     updatedQuestions[index].imageUrl = imageUrl;
     setQuestions(updatedQuestions);
   };
@@ -79,6 +169,7 @@ const AddExamForm = () => {
 
   const handleSaveExam = async () => {
     console.log('Exam Name:', examName);
+    console.log('Exam Instructions:', examInstruction);
     console.log('Questions:', questions);
 
     try {
@@ -87,7 +178,7 @@ const AddExamForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: examName, questions }),
+        body: JSON.stringify({ name: examName, instructions: examInstruction, questions }),
       });
       if (response.ok) {
         console.log('Exam saved successfully!');
@@ -131,6 +222,19 @@ const AddExamForm = () => {
                     placeholder="Enter Exam Name"
                   />
                 </div>
+                <div className="mb-4">
+                  <label htmlFor="examName" className="block text-gray-700 font-bold mb-2">
+                    Exam Instructions
+                  </label>
+                  <input
+                    type="text"
+                    id="examInstruction"
+                    className="w-full border border-gray-300 px-4 py-2 rounded-md"
+                    value={examInstruction}
+                    onChange={(e) => setExamInstruction(e.target.value)}
+                    placeholder="Enter Exam Instructions"
+                  />
+                </div>
 
                 {questions.map((question, questionIndex) => (
                   <div key={questionIndex} className="mb-4">
@@ -150,6 +254,11 @@ const AddExamForm = () => {
                     <label htmlFor={`questionImage-${questionIndex}`} className="block text-gray-700 font-bold mb-2">
                       Image URL
                     </label>
+                    <div>
+                      <button id="uploadButton" onClick={() => handleUpload(questionIndex, 0, false)}>Upload Image from Clipboard</button>
+                      {/* <button id="getImageButton" onClick={handleGetImage}>Get Image</button> */}
+                      {imageUrl && <img src={imageUrl} alt="Pasted Image" />}
+                    </div>
                     <input
                       type="text"
                       id={`questionImage-${questionIndex}`}
@@ -178,6 +287,11 @@ const AddExamForm = () => {
                             >
                               Image URL
                             </label>
+                            <div>
+                              <button id="uploadButton" onClick={() => handleUpload(questionIndex, optionIndex, true)}>Upload Image from Clipboard</button>
+                              {/* <button id="getImageButton" onClick={handleGetImage}>Get Image</button>
+                              {imageUrl && <img src={imageUrl} alt="Pasted Image" />} */}
+                            </div>
                             <input
                               type="text"
                               id={`optionImage-${questionIndex}-${optionIndex}`}
@@ -280,8 +394,8 @@ const AddExamForm = () => {
             </div>
           </div>
         </main>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
