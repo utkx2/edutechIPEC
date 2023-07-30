@@ -5,8 +5,8 @@ class ExamController {
   async createExam(req, res) {
     console.log(req.body);
     try {
-      const { name, instructions, questions } = req.body;
-      const exam = await Exam.create({ name, instructions, questions });
+      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, status } = req.body;
+      const exam = await Exam.create({ name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, status });
       res.status(200).json({ success: true, exam: exam });
     } catch (err) {
       console.log(err)
@@ -112,8 +112,10 @@ class ExamController {
   async getExamScore(req, res) {
     try {
       const examId = req.params.id;
+      console.log(examId);
       const { submittedAnswers, userId, response } = req.body;
-
+      console.log(req.body);
+      console.log(submittedAnswers, response);
       // Get the exam from the database
       const exam = await Exam.findById(examId);
 
@@ -122,22 +124,44 @@ class ExamController {
       }
 
       let totalScore = 0;
-
+      let questionMark = exam.questionMarks;
+      let totalMarks = exam.maxMarks;
       // Calculate score for each question
       for (const question of exam.questions) {
         if (submittedAnswers[question._id] === undefined) {
           continue; // Skip questions that have not been answered
         }
 
-        if (question.type === 'multiple-choice') {
-          // Check if the selected option matches the correct option
-          if (submittedAnswers[question._id] == question.correctOption) {
-            totalScore++;
+        // if (question.type === 'multiple-choice') {
+        //   // Check if the selected option matches the correct option
+        //   if (submittedAnswers[question._id] == question.correctOption) {
+        //     totalScore++;
+        //   }
+        // }
+        // else
+        if (question.type === 'multiple-choice' || question.type === 'multiple-correct' || question.type === 'matrix-match') {
+          const submittedAnswer = submittedAnswers[question._id];
+          const correctOption = question.correctOption;
+          // Check if the arrays have the same length and if all elements match
+          if (
+            Array.isArray(submittedAnswer) &&
+            Array.isArray(correctOption) &&
+            submittedAnswer.length === correctOption.length &&
+            submittedAnswer.every((option) => correctOption.includes(option))
+          ) {
+            totalScore = totalScore + questionMark;
           }
-        } else if (question.type === 'text-input') {
+          else {
+            totalScore -= exam.mcqNegativeMarks;
+          }
+        }
+        else if (question.type === 'text-input') {
           // Check if the text input answer matches the correctTextInputAnswer
           if (submittedAnswers[question._id].toLowerCase() == question.correctTextInputAnswer.toLowerCase()) {
-            totalScore++;
+            totalScore += questionMark;
+          }
+          else {
+            totalScore -= exam.textNegativeMarks;
           }
         }
       }
@@ -167,8 +191,8 @@ class ExamController {
 
         await examResult.save();
       }
-
-      res.json({ score: totalScore });
+      // totalScore *= questionMark;
+      res.json({ score: totalScore, maxMarks: totalMarks });
     } catch (error) {
       console.error('Error calculating score and storing exam result:', error);
       res.status(500).json({ message: 'Error calculating score and storing exam result.' });

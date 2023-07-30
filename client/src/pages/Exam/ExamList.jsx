@@ -5,7 +5,7 @@ import { BASE_URL } from '../../config'
 
 const ExamPage = () => {
     const [exams, setExams] = useState([]);
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`${BASE_URL}exam/active-exams`)
@@ -45,9 +45,9 @@ const navigate = useNavigate();
 
     return (
         <div className="bg-[#d1e9f9]">
-            {exams.length && (    
+            {exams.length && (
                 <div className="max-w-6xl px-4 py-10 mx-auto ">
-                
+
                     <div className="container px-4 py-8 mx-auto bg-white shadow-2xl">
                         <div>
                             <h1 className="mb-4 text-3xl font-bold mr-14 lg:text-center">Exams</h1>
@@ -55,7 +55,7 @@ const navigate = useNavigate();
                                 {exams.map((exam) => (
                                     <div
                                         key={exam._id}
-                                        className="p-4 bg-[#1f1d5a] rounded-3xl shadow-md cursor-pointer hover:shadow-2xl cursor-pointer"
+                                        className="p-4 bg-[#1f1d5a] rounded-3xl shadow-md cursor-pointer hover:shadow-2xl "
                                         onClick={() => handleCardClick(exam._id)}
                                     >
                                         <h2 className="p-2 text-xl font-bold text-center bg-white rounded-[48px] ">{exam.name}</h2>
