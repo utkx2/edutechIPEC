@@ -26,12 +26,12 @@ const questionSchema = new mongoose.Schema({
         required: true,
     },
     correctOption: {
-        type: Number,
+        type: [Number],
         required: true,
     },
     type: {
         type: String,
-        enum: ['multiple-choice', 'text-input'],
+        enum: ['multiple-choice', 'text-input', 'multiple-correct', 'matrix-match'],
         required: true
     },
     correctTextInputAnswer: {
@@ -68,6 +68,26 @@ const examSchema = new mongoose.Schema({
     status: {
         type: Boolean,
         default: false
+    },
+    maxMarks: {
+        type: Number,
+        required: true,
+    },
+    questionMarks: {
+        type: Number,
+        required: true,
+    },
+    textNegativeMarks: {
+        type: Number,
+        required: true,
+    },
+    mcqNegativeMarks: {
+        type: Number,
+        required: true,
+    },
+    totalTime: {
+        type: Number,
+        required: true,
     }
 },
     { timestamps: true });
