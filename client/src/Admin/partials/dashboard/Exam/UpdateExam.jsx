@@ -9,16 +9,15 @@ import { CloudinaryContext, Image } from 'cloudinary-react';
 import { Cloudinary as CloudinaryCore } from '@cloudinary/url-gen';
 import axios from 'axios';
 
-const AddExamForm = () => {
-
+const UpdateExamForm = () => {
     const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
     const { id } = useParams();
     const [examName, setExamName] = useState('');
     const [questions, setQuestions] = useState([]);
     const navigate = useNavigate();
+    const [answers, setAnswers] = useState([]);
+    const [questionAnswers, setQuestionAnswers] = useState({});
     const [imageUrl, setImageUrl] = useState('');
-
-    // Fetch exam data from the API and prefill the form fields
     useEffect(() => {
         async function fetchExamData() {
             try {
@@ -28,6 +27,8 @@ const AddExamForm = () => {
                     console.log(examData);
                     setExamName(examData.exam.name);
                     setQuestions(examData.exam.questions);
+                    setAnswers(examData.answers)
+                    console.log(examData.answers,"setAnswers");
                     console.log(examData.exam)
                 } else {
                     console.log('Failed to fetch exam data.');
@@ -36,14 +37,8 @@ const AddExamForm = () => {
                 console.error('Error occurred while fetching exam data:', error);
             }
         }
-
         fetchExamData();
     }, []);
-
-
-
-
-
     const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
         try {
             console.log(option);
@@ -74,7 +69,6 @@ const AddExamForm = () => {
                         console.log(updatedQuestions[index].imageUrl)
                         setQuestions(updatedQuestions);
                     }
-
                     return imageUrl;
                 })
                 .catch((error) => {
@@ -84,27 +78,20 @@ const AddExamForm = () => {
             console.error('Error uploading image to Cloudinary:', error);
         }
     };
-
-
     const handleUpload = async (index, optionIndex, option) => {
         console.log(index);
         try {
-            // Request image from clipboard (as base64)
-
             const clipboardImage = await navigator.clipboard.read();
             const imageBlob = clipboardImage[0].types.includes('image/png')
                 ? await clipboardImage[0].getType('image/png')
                 : await clipboardImage[0].getType('image/jpeg');
-            // Convert Blob to base64 string
             console.log(imageBlob);
 
             handleCloudinaryUpload(imageBlob, index, optionIndex, option)
         } catch (error) {
             console.error('Error:', error);
-            //alert('Something went wrong');
         }
     }
-
     const handleSaveExam = async () => {
         console.log('Exam Name:', examName);
         console.log('Questions:', questions);
@@ -127,96 +114,178 @@ const AddExamForm = () => {
             console.error('Error occurred while updating the exam:', error);
         }
     };
-
     const handleAddQuestion = (type) => {
-        const newQuestion = {
-            type: type,
-            text: '',
-            imageUrl: '',
-            options: type === 'multiple-choice' ? [{ text: '', imageUrl: '' }, { text: '', imageUrl: '' }] : [],
-            correctOption: 0, // Default to the first option (index 0) when adding a new question.
-            correctTextInputAnswer: '',
-        };
-        setQuestions([...questions, newQuestion]);
+      const newQuestion = {
+        type: type,
+        text: "",
+        imageUrl: "",
+        options: type === "multiple-choice" ? [{ text: "", imageUrl: "" }] : [],
+        correctOption: 0,
+        correctTextInputAnswer: "",
+      };
+      setQuestions([...questions, newQuestion]);
+      if (type === 'multiple-correct') {
+        setAnswers([...answers, []]);
+      }
     };
-
     const handleRemoveQuestion = (index) => {
         const updatedQuestions = [...questions];
         updatedQuestions.splice(index, 1);
         setQuestions(updatedQuestions);
     };
-
     const handleChangeQuestionText = (index, text) => {
         const updatedQuestions = [...questions];
         updatedQuestions[index].text = text;
         setQuestions(updatedQuestions);
     };
-
     const handleChangeQuestionImage = (index, imageUrl) => {
         const updatedQuestions = [...questions];
         updatedQuestions[index].imageUrl = imageUrl;
         setQuestions(updatedQuestions);
     };
-
     const handleChangeOptionText = (questionIndex, optionIndex, text) => {
         const updatedQuestions = [...questions];
         updatedQuestions[questionIndex].options[optionIndex].text = text;
         setQuestions(updatedQuestions);
     };
-
     const handleChangeOptionImage = (questionIndex, optionIndex, imageUrl) => {
         const updatedQuestions = [...questions];
         updatedQuestions[questionIndex].options[optionIndex].imageUrl = imageUrl;
         setQuestions(updatedQuestions);
     };
-
     const handleAddOption = (questionIndex) => {
         const updatedQuestions = [...questions];
         updatedQuestions[questionIndex].options.push({ text: '', imageUrl: '' });
         setQuestions(updatedQuestions);
     };
-
     const handleRemoveOption = (questionIndex, optionIndex) => {
         const updatedQuestions = [...questions];
         updatedQuestions[questionIndex].options.splice(optionIndex, 1);
         setQuestions(updatedQuestions);
     };
-
     const handleChangeCorrectOption = (questionIndex, correctOption) => {
         const updatedQuestions = [...questions];
         updatedQuestions[questionIndex].correctOption = correctOption;
         setQuestions(updatedQuestions);
     };
-
     const handleChangeCorrectTextInputAnswer = (questionIndex, correctTextInputAnswer) => {
-        const updatedQuestions = [...questions];
-        updatedQuestions[questionIndex].correctTextInputAnswer = correctTextInputAnswer;
+        const updatedAnswers = [...questions];
+        updatedAnswers[questionIndex].correctTextInputAnswer = correctTextInputAnswer;
         setQuestions(updatedQuestions);
     };
-
-
+    const handleAddAnswer = (questionIndex) => {
+      setQuestionAnswers((prevAnswers) => ({
+        ...prevAnswers,
+        [questionIndex]: [...(prevAnswers[questionIndex] || []), { number: "" }],
+      }));
+    };
+    const handleRemoveAnswer = (questionIndex, answerIndex) => {
+      setQuestionAnswers((prevAnswers) => {
+        const currentAnswers = prevAnswers[questionIndex] || [];
+        const updatedAnswers = currentAnswers.filter((answer, index) => index !== answerIndex);
+        return { ...prevAnswers, [questionIndex]: updatedAnswers };
+      });
+    };
+    const handleChangeAnswerNumber = (questionIndex, answerIndex, number) => {
+      setQuestionAnswers((prevAnswers) => {
+        const currentAnswers = prevAnswers[questionIndex] || [];
+        const updatedAnswers = currentAnswers.map((answer, index) =>
+          index === answerIndex ? { ...answer, number } : answer
+        );
+        return { ...prevAnswers, [questionIndex]: updatedAnswers };
+      });
+    };console.log(answers,"answerIndex");
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
     return (
         <div className="flex h-screen overflow-hidden">
-            {/* Sidebar */}
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-            {/* Content area */}
             <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
                 <main>
-                    {/* Site header */}
                     <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
                     <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
-                        {/* Dashboard actions */}
-                        {/* Cards */}
                         <div className="grid gap-6 grid-cols-15">
-                            {/* Table (Top Channels) */}
                             <div className="p-4 ">
                                 <h1 className="mb-4 text-2xl font-bold">Update Exam</h1>
                                 <div className="mb-4">
                                     <label htmlFor="examName" className="block mb-2 font-bold text-gray-700">
                                         Exam Name
                                     </label>
+                                    <div className="flex justify-between">
+                  <div className="mb-4">
+                    <label
+                      htmlFor="examName"
+                      className="block mb-2 font-bold text-gray-700"
+                    >
+                      Total Time taken for exam:
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      id="total_time"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                      placeholder="Total Time "
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="examName"
+                      className="block mb-2 font-bold text-gray-700"
+                    >
+                      Total Marks for Exam:
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      id="total_exam"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                      placeholder="Total Marks"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="examName"
+                      className="block mb-2 font-bold text-gray-700"
+                    >
+                      Negative Marks for MCQ:
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      id="Negative_Marks_Mcq"
+                      placeholder="Negative Marks"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="examName"
+                      className="block mb-2 font-bold text-gray-700"
+                    >
+                      Negative Marks for Integer type:
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      id="Negative_Marks_Integer"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                      placeholder="Negative Marks"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="examName"
+                      className="block mb-2 font-bold text-gray-700"
+                    >
+                      Per Question Marks:
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      id="per_Question_Mark"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                      placeholder="Per Question Marks"
+                    />
+                  </div>
+                </div>
                                     <input
                                         required
                                         type="text"
@@ -227,8 +296,7 @@ const AddExamForm = () => {
                                         placeholder="Enter Exam Name"
                                     />
                                 </div>
-
-                                {questions.map((question, questionIndex) => (
+                                {questions.length > 0 && questions.map((question, questionIndex) => (
                                     <div key={questionIndex} className="mb-4">
                                         <h2 className="mb-2 text-lg font-bold">Question {questionIndex + 1}</h2>
                                         <label htmlFor={`question-${questionIndex}`} className="block mb-2 font-bold text-gray-700">
@@ -243,8 +311,6 @@ const AddExamForm = () => {
                                             onChange={(e) => handleChangeQuestionText(questionIndex, e.target.value)}
                                             placeholder="Enter Question Text"
                                         />
-
-
                                         <label htmlFor={`questionImage-${questionIndex}`} className="block text-gray-700 font-bold mt-2 mb-2">
                                             Image URL
                                         </label>
@@ -262,7 +328,6 @@ const AddExamForm = () => {
                                             onChange={(e) => handleChangeQuestionImage(questionIndex, e.target.value)}
                                             placeholder="Enter Image URL (optional)"
                                         />
-
                                         {question.type === 'multiple-choice' && (
                                             <>
                                                 <div className="mt-2 mb-1 font-bold">Options:</div>
@@ -276,7 +341,6 @@ const AddExamForm = () => {
                                                             onChange={(e) => handleChangeOptionText(questionIndex, optionIndex, e.target.value)}
                                                             placeholder={`Enter Option ${optionIndex + 1}`}
                                                         />
-
                                                         <label
                                                             htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
                                                             className="block mb-2 font-bold text-gray-700"
@@ -285,8 +349,6 @@ const AddExamForm = () => {
                                                         </label>
                                                         <div>
                                                             <button id="uploadButton" onClick={() => handleUpload(questionIndex, optionIndex, true)}>Upload Image from Clipboard</button>
-                                                            {/* <button id="getImageButton" onClick={handleGetImage}>Get Image</button>
-                              {imageUrl && <img src={imageUrl} alt="Pasted Image" />} */}
                                                         </div>
                                                         <input
                                                             required
@@ -329,8 +391,103 @@ const AddExamForm = () => {
                                                 />
                                             </>
                                         )}
-
-                                        {question.type === 'text-input' && (
+{question.type === "multiple-correct" && (
+                      <>
+                        <div className="mt-2 mb-1 font-bold">Options:</div>
+        {question.options.map((option, optionIndex) => (
+          <div key={optionIndex} className="flex items-center mb-2">
+            <input
+              required
+              type="text"
+              className="px-4 py-2 mr-2 border border-gray-300 rounded-md w-60"
+              value={option.text}
+              onChange={(e) =>
+                handleChangeOptionText(
+                  questionIndex,
+                  optionIndex,
+                  e.target.value
+                )
+              }
+              placeholder={`Enter Option ${optionIndex + 1}`}
+            />
+            <label
+                                                            htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
+                                                            className="block mb-2 font-bold text-gray-700"
+                                                        >
+                                                            Image URL
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="text"
+                                                            id={`optionImage-${questionIndex}-${optionIndex}`}
+                                                            className="w-64 px-4 py-2 border border-gray-300 rounded-md"
+                                                            value={option.imageUrl}
+                                                            onChange={(e) => handleChangeOptionImage(questionIndex, optionIndex, e.target.value)}
+                                                            placeholder="Enter Image URL for Option (optional)"
+                                                        /><div>
+                                                            <button className='' id="uploadButton" onClick={() => handleUpload(questionIndex, optionIndex, true)}>Upload Image from Clipboard</button>
+                                                        </div>
+            <button
+              type="button"
+              className="text-red-600 font-bold ml-3"
+              onClick={() => handleRemoveOption(questionIndex, optionIndex)}
+            >
+              <FontAwesomeIcon icon={faTrash} className="mr-1" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          className="text-blue-600 font-bold"
+          onClick={() => handleAddOption(questionIndex)}
+        >
+          <FontAwesomeIcon icon={faPlus} className="mr-1" />
+          Add Option
+        </button>
+                        <div className="mt-2 mb-1 font-bold">Answers:</div>
+                        {questionAnswers[questionIndex]?.map((answer, answerIndex) => (
+                          <div
+                            key={answerIndex}
+                            className="flex items-center mb-2"
+                          >
+                            <input
+                              required
+                              type="number"
+                              className="w-16 border border-gray-300 px-4 py-2 rounded-md"
+                              value={answer.number}
+                              onChange={(e) =>
+                                handleChangeAnswerNumber(
+                                  questionIndex,
+                                  answerIndex,
+                                  e.target.value
+                                )
+                              }
+                              placeholder={`Enter Answer ${answerIndex + 1}`}
+                            />
+                            <button
+                              type="button"
+                              className="ml-3 font-bold text-red-600"
+                              onClick={() =>
+                                handleRemoveAnswer(questionIndex, answerIndex)
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                className="mr-1"
+                              />
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          className="font-bold text-blue-600"
+                          onClick={() => handleAddAnswer(questionIndex)}
+                        >
+                          <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                          Add Answer
+                        </button>
+                      </>
+                    )}                                        {question.type === 'text-input' && (
                                             <>
                                                 <label
                                                     htmlFor={`correctTextInputAnswer-${questionIndex}`}
@@ -349,7 +506,6 @@ const AddExamForm = () => {
                                                 />
                                             </>
                                         )}
-
                                         <button
                                             type="button"
                                             className="px-4 py-2 ml-3 font-bold text-red-600 border border-red-600 rounded"
@@ -360,43 +516,40 @@ const AddExamForm = () => {
                                         </button>
                                     </div>
                                 ))}
-
-                                <div>
-                                    <button
-                                        type="button"
-                                        className="px-4 py-2 font-bold text-blue-600 border border-blue-600 rounded"
-                                        onClick={() => handleAddQuestion('multiple-choice')}
-                                    >
-                                        <FontAwesomeIcon icon={faPlus} className="mr-1" />
-                                        Add Single Correct Question
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="px-4 py-2 ml-2 font-bold text-blue-600 border border-blue-600 rounded"
-                                        onClick={() => handleAddQuestion('text-input')}
-                                    >
-                                        <FontAwesomeIcon icon={faPlus} className="mr-1" />
-                                        Add Text Input Question
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="px-4 py-2 ml-2 font-bold text-blue-600 border border-blue-600 rounded"
-                                        onClick={() => handleAddQuestion('multiple-choice')}
-                                    >
-                                        <FontAwesomeIcon icon={faPlus} className="mr-1" />
-                                        Add Multiple Correct Question
-                                    </button>
-                                </div>
-
-                                <div>
-                                    <button
-                                        className="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded"
-                                        onClick={handleSaveExam}
-                                    >
-                                        <FontAwesomeIcon icon={faCheck} className="mr-1" />
-                                        Save Exam
-                                    </button>
-                                </div>
+<div>
+                  <button
+                    type="button"
+                    className="text-blue-600 font-bold border border-blue-600 py-2 px-4 rounded"
+                    onClick={() => handleAddQuestion("multiple-choice")}
+                  >
+                    <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                    Add Multiple Choice Question
+                  </button>
+                  <button
+                    type="button"
+                    className="text-blue-600 font-bold ml-2 border border-blue-600 py-2 px-4 rounded"
+                    onClick={() => handleAddQuestion("text-input")}
+                  >
+                    <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                    Add Text Input Question
+                  </button>
+                  <button
+                    type="button"
+                    className="px-4 py-2 ml-2 font-bold text-blue-600 border border-blue-600 rounded"
+                    onClick={() => handleAddQuestion("multiple-correct", true)}
+                  >
+                    <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                    Add Multiple Correct Question
+                  </button>
+                  <button
+                    type="button"
+                    className="px-4 py-2 ml-2 font-bold text-blue-600 border border-blue-600 rounded"
+                    onClick={() => handleAddQuestion("matrices", true)}
+                  >
+                    <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                    Add Matrices type Question
+                  </button>
+                </div>
                             </div>
                         </div>
                     </div>
@@ -404,6 +557,5 @@ const AddExamForm = () => {
             </div>
         </div>
     );
-};
-
-export default AddExamForm;
+}
+export default UpdateExamForm;
