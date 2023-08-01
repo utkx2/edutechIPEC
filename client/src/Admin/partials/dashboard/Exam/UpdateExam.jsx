@@ -28,7 +28,7 @@ const UpdateExamForm = () => {
                     setExamName(examData.exam.name);
                     setQuestions(examData.exam.questions);
                     setAnswers(examData.answers)
-                    console.log(examData.answers,"setAnswers");
+                    console.log(examName,"setAnswers");
                     console.log(examData.exam)
                 } else {
                     console.log('Failed to fetch exam data.');
@@ -213,7 +213,7 @@ const UpdateExamForm = () => {
                                     <div className="flex justify-between">
                   <div className="mb-4">
                     <label
-                      htmlFor="examName"
+                      htmlFor="totalTime"
                       className="block mb-2 font-bold text-gray-700"
                     >
                       Total Time taken for exam:
@@ -221,14 +221,14 @@ const UpdateExamForm = () => {
                     <input
                       required
                       type="text"
-                      id="total_time"
+                      id="totalTime"
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Total Time "
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="examName"
+                      htmlFor="maxMarks"
                       className="block mb-2 font-bold text-gray-700"
                     >
                       Total Marks for Exam:
@@ -236,14 +236,14 @@ const UpdateExamForm = () => {
                     <input
                       required
                       type="text"
-                      id="total_exam"
+                      id="maxMarks"
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Total Marks"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="examName"
+                      htmlFor="mcqNegativeMarks"
                       className="block mb-2 font-bold text-gray-700"
                     >
                       Negative Marks for MCQ:
@@ -251,13 +251,13 @@ const UpdateExamForm = () => {
                     <input
                       required
                       type="text"
-                      id="Negative_Marks_Mcq"
+                      id="mcqNegativeMarks"
                       placeholder="Negative Marks"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="examName"
+                      htmlFor="textNegativeMarks"
                       className="block mb-2 font-bold text-gray-700"
                     >
                       Negative Marks for Integer type:
@@ -265,14 +265,14 @@ const UpdateExamForm = () => {
                     <input
                       required
                       type="text"
-                      id="Negative_Marks_Integer"
+                      id="textNegativeMarks"
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Negative Marks"
                     />
                   </div>
                   <div className="mb-4">
                     <label
-                      htmlFor="examName"
+                      htmlFor="questionMarks"
                       className="block mb-2 font-bold text-gray-700"
                     >
                       Per Question Marks:
@@ -280,7 +280,7 @@ const UpdateExamForm = () => {
                     <input
                       required
                       type="text"
-                      id="per_Question_Mark"
+                      id="questionMarks"
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Per Question Marks"
                     />
@@ -455,6 +455,7 @@ const UpdateExamForm = () => {
                               type="number"
                               className="w-16 border border-gray-300 px-4 py-2 rounded-md"
                               value={answer.number}
+                              id='correctOption'
                               onChange={(e) =>
                                 handleChangeAnswerNumber(
                                   questionIndex,
@@ -462,7 +463,7 @@ const UpdateExamForm = () => {
                                   e.target.value
                                 )
                               }
-                              placeholder={`Enter Answer ${answerIndex + 1}`}
+                              placeholder={` ${answerIndex + 1}`}
                             />
                             <button
                               type="button"
