@@ -12,10 +12,23 @@ import axios from 'axios';
 const UpdateExamForm = () => {
     const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
     const { id } = useParams();
-    const [examName, setExamName] = useState('');
+    const [examName, setExamName] = useState("");
+    const [examInstruction, setExamInstruction] = useState("");
     const [questions, setQuestions] = useState([]);
-    const navigate = useNavigate();
     const [answers, setAnswers] = useState([]);
+    const [totalTime, setTotalTime] = useState('');
+    const [maxMarks, setMaxMarks] = useState('');
+    const [questionMarks, setQuestionMarks] = useState('');
+    const [textNegativeMarks, setTextNegativeMarks]= useState('');
+    const [mcqNegativeMarks, setMcqNegativeMarks] = useState('');
+    const [options, setOptions] = useState([
+      { text: "", imageUrl: "" },
+      { text: "", imageUrl: "" },
+      { text: "", imageUrl: "" },
+      { text: "", imageUrl: "" },
+      { text: "", imageUrl: "" },
+    ]);
+    const navigate = useNavigate();
     const [questionAnswers, setQuestionAnswers] = useState({});
     const [imageUrl, setImageUrl] = useState('');
     useEffect(() => {
@@ -28,7 +41,11 @@ const UpdateExamForm = () => {
                     setExamName(examData.exam.name);
                     setQuestions(examData.exam.questions);
                     setAnswers(examData.answers)
-                    console.log(examName,"setAnswers");
+                    setMaxMarks(examData.exam.maxMarks)
+                    setTotalTime(examData.exam.totalTime)
+                    setMcqNegativeMarks(examData.exam.mcqNegativeMarks)
+                    setTextNegativeMarks(examData.exam.textNegativeMarks)
+                    setQuestionMarks(examData.exam.questionMarks)
                     console.log(examData.exam)
                 } else {
                     console.log('Failed to fetch exam data.');
@@ -102,7 +119,26 @@ const UpdateExamForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name: examName, questions }),
+                body: JSON.stringify({
+                  name: examName,
+                instructions: examInstruction,
+                questions: questions.map((question) => ({
+                  text: question.text,
+                  imageUrl: question.imageUrl,
+                  options: question.options.map((option) => ({
+                    text: option.text,
+                    imageUrl: option.imageUrl,
+                  })),
+                  correctOption: question.correctOption,
+                  type: question.type,
+                  correctTextInputAnswer: question.correctTextInputAnswer
+                })),
+                totalTime: totalTime,
+                maxMarks: maxMarks,
+                questionMarks: questionMarks,
+                textNegativeMarks: textNegativeMarks,
+                mcqNegativeMarks: mcqNegativeMarks
+                }),
             });
             if (response.ok) {
                 console.log('Exam updated successfully!');
@@ -222,6 +258,8 @@ const UpdateExamForm = () => {
                       required
                       type="text"
                       id="totalTime"
+                      value={totalTime}
+                      onChange={(e) => setTotalTime(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Total Time "
                     />
@@ -237,6 +275,8 @@ const UpdateExamForm = () => {
                       required
                       type="text"
                       id="maxMarks"
+                      value={maxMarks}
+                      onChange={(e) => setMaxMarks(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Total Marks"
                     />
@@ -252,6 +292,8 @@ const UpdateExamForm = () => {
                       required
                       type="text"
                       id="mcqNegativeMarks"
+                      value={mcqNegativeMarks}
+                      onChange={(e) => setMcqNegativeMarks(e.target.value)}
                       placeholder="Negative Marks"
                     />
                   </div>
@@ -266,6 +308,8 @@ const UpdateExamForm = () => {
                       required
                       type="text"
                       id="textNegativeMarks"
+                      value={textNegativeMarks}
+                      onChange={(e) => setTextNegativeMarks(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Negative Marks"
                     />
@@ -281,11 +325,19 @@ const UpdateExamForm = () => {
                       required
                       type="text"
                       id="questionMarks"
+                      value={questionMarks}
+                      onChange={(e) => setQuestionMarks(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Per Question Marks"
                     />
                   </div>
-                </div>
+                </div><div className="mb-4">
+                  <label
+                    htmlFor="examName"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Exam Name
+                  </label>
                                     <input
                                         required
                                         type="text"
@@ -295,6 +347,7 @@ const UpdateExamForm = () => {
                                         onChange={(e) => setExamName(e.target.value)}
                                         placeholder="Enter Exam Name"
                                     />
+                                </div>
                                 </div>
                                 {questions.length > 0 && questions.map((question, questionIndex) => (
                                     <div key={questionIndex} className="mb-4">
@@ -552,6 +605,16 @@ const UpdateExamForm = () => {
                   </button>
                 </div>
                             </div>
+                            <div className='text-center'>
+                    <button
+                          type="button"
+                          className="px-4 py-2 ml-2 font-bold text-blue-600 border border-blue-600 rounded"
+                          onClick={() => handleSaveExam()}
+                        >
+                          <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                          Save
+                        </button>
+                    </div>
                         </div>
                     </div>
                 </main>

@@ -17,8 +17,8 @@ class ExamController {
   async editExam(req, res) {
     try {
       const examId = req.params.id;
-      const { name, questions } = req.body;
-      const exam = await Exam.findByIdAndUpdate(examId, { name, questions }, { new: true });
+      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks } = req.body;
+      const exam = await Exam.findByIdAndUpdate(examId, { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks }, { new: true });
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }

@@ -15,6 +15,18 @@ const AddExamForm = () => {
   const [examInstruction, setExamInstruction] = useState("");
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const [totalTime, setTotalTime] = useState('');
+  const [maxMarks, setMaxMarks] = useState('');
+  const [questionMarks, setQuestionMarks] = useState('');
+  const [textNegativeMarks, setTextNegativeMarks]= useState('');
+  const [mcqNegativeMarks, setMcqNegativeMarks] = useState('');
+  const [options, setOptions] = useState([
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+  ]);
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("");
   const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
@@ -73,7 +85,7 @@ const AddExamForm = () => {
       text: "",
       imageUrl: "",
       options: type === "multiple-choice" ? [{ text: "", imageUrl: "" }] : [],
-      correctOption: 0,
+      correctOption: [],
       correctTextInputAnswer: "",
     };
     setQuestions([...questions, newQuestion]);
@@ -110,10 +122,10 @@ const AddExamForm = () => {
     updatedQuestions[questionIndex].options.push({ text: "", imageUrl: "" });
     setQuestions(updatedQuestions);
   };
-  const handleRemoveOption = (questionIndex, optionIndex) => {
-    const updatedQuestions = [...questions];
-    updatedQuestions[questionIndex].options.splice(optionIndex, 1);
-    setQuestions(updatedQuestions);
+  const handleRemoveOption = (index) => {
+    const updatedOptions = [...options];
+    updatedOptions.splice(index, 1);
+    setOptions(updatedOptions);
   };
   const handleChangeCorrectOption = (questionIndex, correctOption) => {
     const updatedQuestions = [...questions];
@@ -141,8 +153,23 @@ const AddExamForm = () => {
         },
         body: JSON.stringify({
           name: examName,
-          instructions: examInstruction,
-          questions,
+        instructions: examInstruction,
+        questions: questions.map((question) => ({
+          text: question.text,
+          imageUrl: question.imageUrl,
+          options: question.options.map((option) => ({
+            text: option.text,
+            imageUrl: option.imageUrl,
+          })),
+          correctOption: question.correctOption,
+          type: question.type,
+          correctTextInputAnswer: question.correctTextInputAnswer
+        })),
+        totalTime: totalTime,
+        maxMarks: maxMarks,
+        questionMarks: questionMarks,
+        textNegativeMarks: textNegativeMarks,
+        mcqNegativeMarks: mcqNegativeMarks
         }),
       });
       if (response.ok) {
@@ -199,6 +226,8 @@ const AddExamForm = () => {
                       required
                       type="text"
                       id="totalTime"
+                      value={totalTime}
+                      onChange={(e) => setTotalTime(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Total Time "
                     />
@@ -214,6 +243,8 @@ const AddExamForm = () => {
                       required
                       type="text"
                       id="maxMarks"
+                      value={maxMarks}
+                      onChange={(e) => setMaxMarks(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Total Marks"
                     />
@@ -229,6 +260,8 @@ const AddExamForm = () => {
                       required
                       type="text"
                       id="mcqNegativeMarks"
+                      value={mcqNegativeMarks}
+                      onChange={(e) => setMcqNegativeMarks(e.target.value)}
                       placeholder="Negative Marks"
                     />
                   </div>
@@ -243,6 +276,8 @@ const AddExamForm = () => {
                       required
                       type="text"
                       id="textNegativeMarks"
+                      value={textNegativeMarks}
+                      onChange={(e) => setTextNegativeMarks(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Negative Marks"
                     />
@@ -258,6 +293,8 @@ const AddExamForm = () => {
                       required
                       type="text"
                       id="questionMarks"
+                      value={questionMarks}
+                      onChange={(e) => setQuestionMarks(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md"
                       placeholder="Per Question Marks"
                     />
@@ -295,7 +332,6 @@ const AddExamForm = () => {
                     placeholder="Enter Exam Instructions"
                   />
                 </div>
-
                 {questions.map((question, questionIndex) => (
                   <div key={questionIndex} className="mb-4">
                     <h2 className="text-lg font-bold mb-2">
@@ -319,7 +355,6 @@ const AddExamForm = () => {
                       }
                       placeholder="Enter Question Text"
                     />
-
                     <label
                       htmlFor={`questionImage-${questionIndex}`}
                       className="block text-gray-700 font-bold mb-2"
