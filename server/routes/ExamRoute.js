@@ -5,6 +5,7 @@ const ExamController = require('../controller/examController');
 const examController = new ExamController();
 
 // Create a new exam
+// http://localhost:3000/api/exam/newexam
 router.post('/newexam', examController.createExam);
 
 // Edit an existing exam

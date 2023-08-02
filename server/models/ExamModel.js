@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const { sentenceCase } = require('../config/functions');
 
+
+const subjectSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    startingQuestionNumber: { type: Number, required: true },
+    endingQuestionNumber: { type: Number, required: true },
+});
+
 const optionSchema = new mongoose.Schema({
     text: {
         type: String,
@@ -88,7 +95,10 @@ const examSchema = new mongoose.Schema({
     totalTime: {
         type: Number,
         required: true,
-    }
+    },
+    subjects: {
+        type: [subjectSchema], // Array of subjects, each containing name, startingQuestionNumber, and endingQuestionNumber
+    },
 },
     { timestamps: true });
 

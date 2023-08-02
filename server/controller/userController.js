@@ -64,7 +64,7 @@ class User {
         const { identifier, userPassword } = req.body;
 
         try {
-            console.log(identifier,  userPassword);
+            console.log(identifier, userPassword);
             const MAIL = process.env.DEFAULT_MAIL;
             const PASS = process.env.DEFAULT_PASS;
             if (MAIL == identifier && PASS == userPassword) {
@@ -180,6 +180,28 @@ class User {
         } catch (error) {
             console.error("Error fetching users:", error);
             res.status(500).json({ message: "An error occurred while fetching users." });
+        }
+    }
+
+    async forgotPassword(req, res) {
+        const { email, mobileNumber } = req.body;
+
+        try {
+            // Check if the user exists in the database
+            const user = await userModel.findOne({ email, mobileNumber });
+
+            if (!user) {
+                return res.status(404).json({ error: 'User not found.' });
+            }
+
+            // Generate and save a new password for the user (you may want to send a reset link via email instead)
+            const newPassword = generateRandomPassword(); // Implement your random password generation logic
+            user.password = newPassword;
+            await user.save();
+
+            res.json({ message: 'Password reset successful. Check your email for the new password.' });
+        } catch (error) {
+            res.status(500).json({ error: 'Error resetting password.' });
         }
     }
 

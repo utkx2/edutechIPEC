@@ -145,7 +145,7 @@ const AddExamForm = () => {
     console.log("Exam Name:", examName);
     console.log("Exam Instructions:", examInstruction);
     console.log("Questions:", questions);
-    
+
     try {
       const response = await fetch(`${BASE_URL}exam/newexam`, {
         method: "POST",
@@ -155,6 +155,7 @@ const AddExamForm = () => {
         body: JSON.stringify({
           name: examName,
           instructions: examInstruction,
+          subjects: subjects,     // code written by me
           questions: questions.map((question, questionIndex) => ({
             text: question.text,
             imageUrl: question.imageUrl,
@@ -208,6 +209,19 @@ const AddExamForm = () => {
   };
   console.log(answers, "answerIndex");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // code written by me
+  const [subjects, setSubjects] = useState([]);
+
+  const handleAddSubject = () => {
+    setSubjects([...subjects, { name: '', startingQuestionNumber: '', endingQuestionNumber: '' }]);
+  };
+
+  const handleChange = (index, field, value) => {
+    const updatedSubjects = [...subjects];
+    updatedSubjects[index][field] = value;
+    setSubjects(updatedSubjects);
+  };
+  // code written by me
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -304,6 +318,42 @@ const AddExamForm = () => {
                     />
                   </div>
                 </div>
+                {/* code written by me */}
+                <div className="mb-4">
+                  <label
+                    htmlFor="questionMarks"
+                    className="block mb-2 font-bold text-gray-700"
+                  >
+                    Add Subjects
+                  </label>
+                  {subjects.map((subject, index) => (
+                    <div key={index} className="mb-4 flex justify-between">
+                      <input
+                        type="text"
+                        placeholder="Subject Name"
+                        value={subject.name}
+                        onChange={(e) => handleChange(index, 'name', e.target.value)}
+                        className=" mx-4  w-full  border border-gray-300 rounded-md"
+                      />
+                      <input
+                        type="number"
+                        placeholder="Starting Question Number"
+                        value={subject.startingQuestionNumber}
+                        onChange={(e) => handleChange(index, 'startingQuestionNumber', e.target.value)}
+                        className="px-12 w-full border border-gray-300 rounded-md"
+                      />
+                      <input
+                        type="number"
+                        placeholder="Ending Question Number"
+                        value={subject.endingQuestionNumber}
+                        onChange={(e) => handleChange(index, 'endingQuestionNumber', e.target.value)}
+                        className=" mx-4 w-full py-2 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                  ))}
+                  <button onClick={handleAddSubject}>Add Subject</button>
+                </div>
+                {/* code written by me */}
                 <div className="mb-4">
                   <label
                     htmlFor="examName"
@@ -409,9 +459,8 @@ const AddExamForm = () => {
                                       e.target.value
                                     )
                                   }
-                                  placeholder={`Enter Option ${
-                                    optionIndex + 1
-                                  }`}
+                                  placeholder={`Enter Option ${optionIndex + 1
+                                    }`}
                                 />
                                 <label
                                   htmlFor={`optionImage-${questionIndex}-${optionIndex}`}

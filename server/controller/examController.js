@@ -5,8 +5,8 @@ class ExamController {
   async createExam(req, res) {
     console.log(req.body);
     try {
-      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks } = req.body;
-      const exam = await Exam.create({ name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks });
+      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects } = req.body;
+      const exam = await Exam.create({ name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects });
       res.status(200).json({ success: true, exam: exam });
     } catch (err) {
       console.log(err)
@@ -17,8 +17,8 @@ class ExamController {
   async editExam(req, res) {
     try {
       const examId = req.params.id;
-      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks } = req.body;
-      const exam = await Exam.findByIdAndUpdate(examId, { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks }, { new: true });
+      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects } = req.body;
+      const exam = await Exam.findByIdAndUpdate(examId, { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects }, { new: true });
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }
