@@ -4,7 +4,7 @@ const { sentenceCase } = require('../config/functions');
 const optionSchema = new mongoose.Schema({
     text: {
         type: String,
-        required: true,
+        // required: true,
         set: sentenceCase
     },
     imageUrl: {
@@ -58,7 +58,7 @@ const examSchema = new mongoose.Schema({
     },
     instructions: {
         type: String,
-        required: true,
+        // required: true,
         set: sentenceCase
     },
     questions: {
