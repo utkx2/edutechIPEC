@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 const questionsData = [
   {
     id: 1,
@@ -127,12 +128,14 @@ const subjects = ["Physics", "Chemistry", "Mathematics"];
 
 function OnlineExamPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [timer, setTimer] = useState(600);
+  const [timer, setTimer] = useState(0);
   const [attemptedButUnanswered, setAttemptedButUnanswered] = useState(false);
   const [rightSectionVisible, setRightSectionVisible] = useState(true);
   const [selectedAnswers, setSelectedAnswers] = useState(
     new Array(questionsData.length).fill("")
   );
+  const [examData, setExamData] = useState(null);
+  const { examId } = useParams();
 
   const toggleRightSectionVisibility = () => {
     setRightSectionVisible((prevVisible) => !prevVisible);
@@ -141,6 +144,27 @@ function OnlineExamPage() {
   const [visitedQuestions, setVisitedQuestions] = useState(
     new Array(questionsData.length).fill(false)
   );
+
+  useEffect(() => {
+    const fetchExamData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/exam/student-exam/${examId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch exam data");
+        }
+        const data = await response.json();
+        setExamData(data.exam);
+        console.log(examData);
+        setTimer(data.exam.totalTime);
+        console.log(timer);
+      } catch (error) {
+        console.error(error);
+        // Handle error here if necessary
+      }
+    };
+
+    fetchExamData();
+  }, [examId]);
 
   const handleQuestionNavigation = (questionIndex) => {
     setCurrentQuestionIndex(questionIndex);
@@ -153,18 +177,19 @@ function OnlineExamPage() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimer((prevTimer) => prevTimer -1)
+      setTimer((prevTimer) => prevTimer - 1);
     }, 1000);
 
     return () => {
       clearInterval(interval);
-    }
-  }, []);
+    };
+  }, [timer]);
 
-  const formatTime = (timeInSeconds) =>{
-    const minutes = Math.floor(timeInSeconds / 60);
+  const formatTime = (timeInSeconds) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 
   useEffect(() => {
@@ -175,7 +200,7 @@ function OnlineExamPage() {
 
 
   const SubmitExam = (req, res) => {
-    alert("You have completed the exam!");
+    // alert("You have completed the exam!");
   }
 
   const submitAnswer = () => {
@@ -241,8 +266,13 @@ function OnlineExamPage() {
 
 
   const renderNavigationRows = () => {
+    if (!examData || !examData.questions) {
+      // If examData is not available yet, return an empty div
+      return <div></div>;
+    }
+
     const rows = [];
-    const totalQuestions = questionsData.length;
+    const totalQuestions = examData.questions.length;
     const buttonsPerRow = 3;
 
     for (let i = 0; i < totalQuestions; i += buttonsPerRow) {
@@ -276,10 +306,10 @@ function OnlineExamPage() {
 
   return (
     <div className="flex relative h-screen">
-      {/* <div className={`flex-1 border-r-2 border-black ${rightSectionVisible ? '' : 'hidden'}`}> */}
+      {/* ... Left section ... */}
       <div className="flex-1 border-r-2 border-black">
         <div className="flex-1 p-8">
-          <div className="flex">
+        <div className="flex">
           <h1 className="flex mt-1">{subjects.map((subject) => (
                   <button
                     key={subject}
@@ -295,41 +325,53 @@ function OnlineExamPage() {
             Time Left: {formatTime(timer)}
           </div>
           </div>
-          <div>
-            <hr className="mt-4"/>
-            <div className="mb-4">
-              {/* Subject tabs */}
-              <div className="flex text-lg font-bold mt-1">
-              Question No. {currentQuestionIndex + 1}.
-                <p className=" absolute right-96 ">
-                  Mark/s: <span className="text-green-700">4.00</span> |
-                  Negative Mark/s: <span className="text-red-700">2.00</span>
-                </p>
+          {examData && (
+            <><hr className="mt-4"/>
+              <div className="mb-4">
+                {/* Subject tabs */}
+                <div className="flex text-lg font-bold mt-1">
+                  Question No. {currentQuestionIndex + 1}.
+                  <p className="absolute right-96">
+                    Mark/s: <span className="text-green-700">{examData.questionMarks}</span> |
+                    Negative Mark/s: <span className="text-red-700">{examData.mcqNegativeMarks}</span>
+                  </p>
+                </div>
               </div>
-            </div>
-            <hr />
-            <p className="mb-4 font-bold text-3xl"> 
-              {questionsData[currentQuestionIndex].question}
-            </p>
-            <div>
-              {questionsData[currentQuestionIndex].options.map(
-                (option, index) => (
-                  <label key={index} className="block text-xl font-bold mb-2">
+              <hr />
+              <p className="mb-4 font-bold text-3xl">
+                {examData.questions[currentQuestionIndex].text}
+              </p>
+              {examData.questions[currentQuestionIndex].imageUrl && (
+              <img
+                src={examData.questions[currentQuestionIndex].imageUrl}
+                alt="Question"
+                className="w-800 h-600 mx-auto mb-4"
+              />
+            )}
+              <div>
+                {examData.questions[currentQuestionIndex].options.map((option, index) => (
+                  <label key={index} className=" text-xl font-bold mb-2 flex items-center">
                     <input
                       type="radio"
                       name="option"
-                      value={option}
-                      checked={selectedAnswers[currentQuestionIndex] === option}
+                      value={option.text}
+                      checked={selectedAnswers[currentQuestionIndex] === option.text}
                       onChange={handleOptionChange}
                       className="mr-2"
                     />
-                    {option}
+                    {option.text}
+                    {option.imageUrl && (
+                      <img
+                        src={option.imageUrl}
+                        alt={`Option ${index + 1}`}
+                        className="w-200 h-150 ml-5"
+                      />
+                    )}
                   </label>
-                )
-              )}
-            </div>
-          </div>
-
+                ))}
+              </div>
+            </>
+          )}
           <div className="flex absolute bottom-32 justify-between mt-4 border-t-2 pt-2 border-black">
             <div className="ml-20">
               <button
