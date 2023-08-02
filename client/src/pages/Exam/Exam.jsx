@@ -341,7 +341,19 @@ function OnlineExamPage() {
               <p className="mb-4 font-bold text-3xl">
                 {examData.questions[currentQuestionIndex].text}
               </p>
-              {examData.questions[currentQuestionIndex].imageUrl && (
+              {examData.questions[currentQuestionIndex].type === "text-input" ? (
+              <div>
+                <input
+                  type="text"
+                  value={selectedAnswers[currentQuestionIndex]}
+                  // onChange={handleTextInputChange}
+                  className="w-96 px-4 py-2 border border-gray-400 rounded"
+                  placeholder="Enter your answer here"
+                />
+              </div>
+            ) :(
+              <>
+              {examData.questions[currentQuestionIndex].imageUrl && (   
               <img
                 src={examData.questions[currentQuestionIndex].imageUrl}
                 alt="Question"
@@ -369,7 +381,7 @@ function OnlineExamPage() {
                     )}
                   </label>
                 ))}
-              </div>
+              </div></>)}
             </>
           )}
           <div className="flex absolute bottom-32 justify-between mt-4 border-t-2 pt-2 border-black">
