@@ -15,11 +15,11 @@ const AddExamForm = () => {
   const [examInstruction, setExamInstruction] = useState("");
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
-  const [totalTime, setTotalTime] = useState('');
-  const [maxMarks, setMaxMarks] = useState('');
-  const [questionMarks, setQuestionMarks] = useState('');
-  const [textNegativeMarks, setTextNegativeMarks]= useState('');
-  const [mcqNegativeMarks, setMcqNegativeMarks] = useState('');
+  const [totalTime, setTotalTime] = useState("");
+  const [maxMarks, setMaxMarks] = useState("");
+  const [questionMarks, setQuestionMarks] = useState("");
+  const [textNegativeMarks, setTextNegativeMarks] = useState("");
+  const [mcqNegativeMarks, setMcqNegativeMarks] = useState("");
   const [options, setOptions] = useState([
     { text: "", imageUrl: "" },
     { text: "", imageUrl: "" },
@@ -145,6 +145,7 @@ const AddExamForm = () => {
     console.log("Exam Name:", examName);
     console.log("Exam Instructions:", examInstruction);
     console.log("Questions:", questions);
+    
     try {
       const response = await fetch(`${BASE_URL}exam/newexam`, {
         method: "POST",
@@ -153,23 +154,23 @@ const AddExamForm = () => {
         },
         body: JSON.stringify({
           name: examName,
-        instructions: examInstruction,
-        questions: questions.map((question) => ({
-          text: question.text,
-          imageUrl: question.imageUrl,
-          options: question.options.map((option) => ({
-            text: option.text,
-            imageUrl: option.imageUrl,
+          instructions: examInstruction,
+          questions: questions.map((question, questionIndex) => ({
+            text: question.text,
+            imageUrl: question.imageUrl,
+            options: question.options.map((option) => ({
+              text: option.text,
+              imageUrl: option.imageUrl,
+            })),
+            correctOption: question.correctOption,
+            type: question.type,
+            correctTextInputAnswer: question.correctTextInputAnswer,
           })),
-          correctOption: question.correctOption,
-          type: question.type,
-          correctTextInputAnswer: question.correctTextInputAnswer
-        })),
-        totalTime: totalTime,
-        maxMarks: maxMarks,
-        questionMarks: questionMarks,
-        textNegativeMarks: textNegativeMarks,
-        mcqNegativeMarks: mcqNegativeMarks
+          totalTime: totalTime,
+          maxMarks: maxMarks,
+          questionMarks: questionMarks,
+          textNegativeMarks: textNegativeMarks,
+          mcqNegativeMarks: mcqNegativeMarks,
         }),
       });
       if (response.ok) {
@@ -184,7 +185,6 @@ const AddExamForm = () => {
   };
   const handleAddAnswer = (questionIndex) => {
     const updatedAnswers = [...answers];
-    console.log(updatedAnswers);
     const lastAnswerIndex = updatedAnswers[questionIndex].length - 1;
     const lastAnswer = updatedAnswers[questionIndex][lastAnswerIndex];
     const newAnswerNumber =
@@ -200,9 +200,13 @@ const AddExamForm = () => {
   };
   const handleChangeAnswerNumber = (questionIndex, answerIndex, number) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[questionIndex][answerIndex].number = number;
+    const parsedNumber = parseInt(number);
+    updatedAnswers[questionIndex][answerIndex].number = isNaN(parsedNumber)
+      ? ""
+      : (parsedNumber + 1).toString();
     setAnswers(updatedAnswers);
-  };console.log(answers,"answerIndex");
+  };
+  console.log(answers, "answerIndex");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="flex h-screen overflow-hidden">
@@ -439,8 +443,7 @@ const AddExamForm = () => {
                                       optionIndex
                                     )
                                   }
-                                >
-                                </button>
+                                ></button>
                               </div>
                             ))}
                           </div>
@@ -460,18 +463,21 @@ const AddExamForm = () => {
                             className="flex items-center mb-2"
                           >
                             <input
-                              required
                               type="number"
+                              id={`correctOption-${questionIndex}`}
                               className="w-16 border border-gray-300 px-4 py-2 rounded-md"
-                              value={answer.number}
-                              onChange={(e) =>
-                                handleChangeAnswerNumber(
+                              value={question.correctOption
+                                .map((index) => index + 1)
+                                .join(", ")} // Convert back to 1-based index for display
+                              onChange={(e) => {
+                                const correctOptions = e.target.value
+                                  .split(",")
+                                  .map((option) => parseInt(option.trim()) - 1); // Convert to 0-based index
+                                handleChangeCorrectOption(
                                   questionIndex,
-                                  answerIndex,
-                                  e.target.value
-                                )
-                              }
-                              placeholder={`Enter Answer ${answerIndex + 1}`}
+                                  correctOptions
+                                );
+                              }}
                             />
                             <button
                               type="button"
