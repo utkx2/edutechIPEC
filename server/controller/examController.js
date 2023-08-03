@@ -47,6 +47,7 @@ class ExamController {
     try {
       const examId = req.params.id;
       const exam = await Exam.findById(examId);
+      console.log(exam);
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }
@@ -98,7 +99,8 @@ class ExamController {
   async getExamByIdWithoutCorrect(req, res) {
     try {
       const examId = req.params.id;
-      const exam = await Exam.findById(examId, { correctOption: 0, 'questions.correctTextInputAnswer': 0 });
+      const exam = await Exam.findById(examId, { correctOption: 0, correctTextInputAnswer: 0 });
+      console.log(exam);
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }

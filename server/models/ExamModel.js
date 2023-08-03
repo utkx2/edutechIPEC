@@ -34,7 +34,7 @@ const questionSchema = new mongoose.Schema({
     },
     correctOption: {
         type: [Number],
-        required: true,
+        // required: true,
     },
     type: {
         type: String,

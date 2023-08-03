@@ -1,127 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 import { useParams } from 'react-router-dom';
 const questionsData = [
-  {
-    id: 1,
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "4",
-  },
-  {
-    id: 2,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Paris",
-  },
-  {
-    id: 10,
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "5",
-  },
-  {
-    id: 32,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pais",
-  },
-  {
-    id: 4,
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "54",
-  },
-  {
-    id: 5,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "aris",
-  },
-  {
-    id: 6,
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "43",
-  },
-  {
-    id: 7,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pars",
-  },
-  {
-    id: 8,
-    question: "What is 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: "423",
-  },
-  {
-    id: 9,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pis",
-  },
-  {
-    id: 10,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pifss",
-  },
-  {
-    id: 11,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pswis",
-  },
-  {
-    id: 12,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pidwqs",
-  },
-  {
-    id: 13,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Piewws",
-  },
-  {
-    id: 14,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pites",
-  },
-  {
-    id: 15,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Pitys",
-  },
-  {
-    id: 15,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Preis",
-  },
-  {
-    id: 16,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Piuys",
-  },
-  {
-    id: 17,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Piyrds",
-  },
-  {
-    id: 18,
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Rome"],
-    answer: "Piergyrds",
-  },
+  
 ];
 
 const subjects = ["Physics", "Chemistry", "Mathematics"];
@@ -165,10 +46,10 @@ function OnlineExamPage() {
         }
         const data = await response.json();
         setExamData(data.exam);
-        console.log(examData);
-        setTimer(data.exam.totalTime);
-        console.log(timer);
-        console.log(examData.subjects, "subject");
+        console.log(data.exam);
+        // setTimer(data.exam.totalTime);
+        // console.log(timer);
+        // console.log(examData.subjects, "subject");
       } catch (error) {
         console.error(error);
         // Handle error here if necessary
@@ -178,6 +59,12 @@ function OnlineExamPage() {
     fetchExamData();
   }, [examId]);
 
+  const handleTextInputChange = (e) => {
+    const newSelectedAnswers = [...selectedAnswers];
+    newSelectedAnswers[currentQuestionIndex] = e.target.value;
+    setSelectedAnswers(newSelectedAnswers);
+  };
+
   const handleQuestionNavigation = (questionIndex) => {
     setCurrentQuestionIndex(questionIndex);
     setVisitedQuestions((prevVisitedQuestions) => {
@@ -186,6 +73,35 @@ function OnlineExamPage() {
       return newVisitedQuestions;
     });
   };
+
+  const handleSubmitExam = (e) => {
+    e.preventDefault();
+    // Log the exam responses to the console
+    console.log('Exam Responses:', examData);
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    // Step 3: Call the API to get the exam score and store the exam result
+    const userId = user._id;
+
+    // for(var i = 0; i < examData.questions.correctOption.length(); i++) {
+    //     examData.options[questions.correctOption[i]] = examData.options[questions.correctOption[i]].text;
+    // }
+    // console.log(selectedAnswers);
+    axios.post(`http://localhost:3000/api/exam/getscore/${examId}`, {
+      submittedAnswers: examData,
+        userId: userId,
+        response: selectedAnswers
+    })
+        .then((examData) => {
+            console.log('Exam Score:', examData.data.score);
+            console.log('examData:', examData);
+            console.log('Exam Max Score:', examData.data.maxMarks);
+            // navigate(`/result/${exam.data.score}`)
+        })
+        .catch((error) => {
+            console.error('Error getting exam score:', error);
+        });
+};
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -226,20 +142,24 @@ function OnlineExamPage() {
 
   const saveAndNext = () => {
     if (isAnswered) {
-      setAttemptedButUnanswered(false);
+      // Save the selected answer
       setSelectedAnswers((prevSelectedAnswers) => {
         const newSelectedAnswers = [...prevSelectedAnswers];
         newSelectedAnswers[currentQuestionIndex] =
           selectedAnswers[currentQuestionIndex] || "Marked for Review";
         return newSelectedAnswers;
       });
+  
+      // Move to the next question
       const nextQuestionIndex = currentQuestionIndex + 1;
-      if (nextQuestionIndex < questionsData.length) {
+      if (nextQuestionIndex < examData.questions.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
       } else {
-        setCurrentQuestionIndex(0); // Move to the first question when on the last question
+        // If it's the last question, move to the first question
+        setCurrentQuestionIndex(0);
       }
     } else {
+      // Show an alert if the user tries to navigate without selecting an option
       setAttemptedButUnanswered(true);
       alert("Please choose an option before proceeding to the next question.");
     }
@@ -381,35 +301,56 @@ function OnlineExamPage() {
                   />
                 ) : null}
                 <div>
+                {examData.questions[currentQuestionIndex].type === "text-input" ? (
+              <div>
+                <input
+                  type="text"
+                  value={selectedAnswers[currentQuestionIndex]}
+                  onChange={handleTextInputChange}
+                  className="w-96 px-4 py-2 border border-gray-400 rounded"
+                  placeholder="Enter your answer here"
+                />
+              </div>
+            ) : (
+              <>
+                {/* Display images and options for other types of questions */}
+                <div>
+                  {/* Display question image */}
+                  {examData.questions[currentQuestionIndex].imageUrl && (
+                    <img
+                      src={examData.questions[currentQuestionIndex].imageUrl}
+                      alt={`Question ${currentQuestionIndex + 1}`}
+                      className="max-h-96 mx-auto mb-4"
+                    />
+                  )}
+
+                  {/* Display options */}
                   {examData.questions[currentQuestionIndex].options.map(
                     (option, index) => (
-                      <label
-                        key={index}
-                        className="text-xl font-bold mb-2 flex items-center"
-                      >
+                      <label key={index} className="block text-xl font-bold mb-2">
                         <input
                           type="radio"
                           name="option"
                           value={option.text}
-                          checked={
-                            selectedAnswers[currentQuestionIndex] ===
-                            option.text
-                          }
+                          checked={selectedAnswers[currentQuestionIndex] === option.text}
                           onChange={handleOptionChange}
                           className="mr-2"
                         />
-                        {option.text}
-                        {option.imageUrl ? (
+                        {option.imageUrl && (
                           <img
                             src={option.imageUrl}
-                            // alt={`Option ${index + 1}`}
-                            className="w-200 h-150 ml-5"
+                            alt={`Option ${index + 1}`}
+                            className="max-h-24 mr-2"
                           />
-                        ) : null}
+                        )}
+                        {option.text}
                       </label>
                     )
                   )}
                 </div>
+              </>
+            )}
+          </div>
               </>
             )}
           <div className="flex absolute bottom-32 justify-between mt-4 border-t-2 pt-2 border-black">
@@ -461,8 +402,9 @@ function OnlineExamPage() {
                 Save and Next
               </button>
               <button
-                onClick={submitAnswer}
+                // onClick={submitAnswer}
                 disabled={!isAnswered}
+                onClick={handleSubmitExam}
                 className={`px-4 py-2 mt-5 md:mt-0 rounded ${
                   selectedAnswers[currentQuestionIndex] !== ""
                     ? "bg-blue-500 text-white"

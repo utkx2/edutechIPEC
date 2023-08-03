@@ -21,12 +21,13 @@ const getExamNameAndScoreByUserId = async (req, res) => {
 
       if (userExamResult) {
         // Find the exam based on examId in the results
-        const exam = await Exam.findById(examResult.examId).select('name');
-
+        const exam = await Exam.findById(examResult.examId);
+console.log(exam);
         if (exam) {
           userExamResults.push({
             examName: exam.name,
             score: userExamResult.score,
+            maxMarks: exam.maxMarks,
           });
         }
       }

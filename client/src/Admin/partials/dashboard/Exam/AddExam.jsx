@@ -82,7 +82,7 @@ const AddExamForm = () => {
       text: "",
       imageUrl: "",
       options: type === "multiple-choice" ? [{ text: "", imageUrl: "" }] : [],
-      correctOption: [],
+      correctOption: type === "multiple-correct" ? [] : null,
       correctTextInputAnswer: "",
     };
     setQuestions([...questions, newQuestion]);
@@ -119,15 +119,25 @@ const AddExamForm = () => {
     updatedQuestions[questionIndex].options.push({ text: "", imageUrl: "" });
     setQuestions(updatedQuestions);
   };
-  const handleRemoveOption = (index) => {
-    const updatedOptions = [...options];
-    updatedOptions.splice(index, 1);
-    setOptions(updatedOptions);
+  const handleRemoveOption = (questionIndex, optionIndex) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[questionIndex].options.splice(optionIndex, 1);
+    setQuestions(updatedQuestions);
   };
   const handleChangeCorrectOption = (questionIndex, correctOption) => {
     const updatedQuestions = [...questions];
     updatedQuestions[questionIndex].correctOption = correctOption;
-    setQuestions(updatedQuestions);
+    setQuestions(...[updatedQuestions]);
+    console.log(answers, "answer");
+    console.log(questions,"question");
+  };
+  const handleChangeAnswerNumber = (questionIndex, answerIndex, number) => {
+    const updatedAnswers = [...answers];
+    const parsedNumber = parseInt(number);
+    updatedAnswers[questionIndex][answerIndex].number = isNaN(parsedNumber)
+      ? ""
+      : (parsedNumber + 1).toString();
+    setAnswers(...updatedAnswers, [updatedAnswers]);
   };
   const handleChangeCorrectTextInputAnswer = (
     questionIndex,
@@ -195,14 +205,6 @@ const AddExamForm = () => {
     updatedAnswers[questionIndex].splice(answerIndex, 1);
     setAnswers(updatedAnswers);
   };
-  const handleChangeAnswerNumber = (questionIndex, answerIndex, number) => {
-    const updatedAnswers = [...answers];
-    const parsedNumber = parseInt(number);
-    updatedAnswers[questionIndex][answerIndex].number = isNaN(parsedNumber)
-      ? ""
-      : (parsedNumber + 1).toString();
-    setAnswers(updatedAnswers);
-  };
   console.log(answers, "answerIndex");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   // code written by me
@@ -216,7 +218,11 @@ const AddExamForm = () => {
     updatedSubjects[index][field] = value;
     setSubjects(updatedSubjects);
   };
-  // code written by me
+  const handleChangeCorrectAnswer = (questionIndex, correctAnswer) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions[questionIndex].correctOption = correctAnswer;
+    setQuestions(updatedQuestions);
+  };
   return (
     <div className="flex flex-col h-screen sm:flex-row sm:overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -429,7 +435,7 @@ const AddExamForm = () => {
                       }
                       placeholder="Enter Image URL (optional)"
                     />
-                    {question.type === "multiple-correct" && (
+     {question.type === "multiple-correct" && (
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>
                         {question.options.map((option, optionIndex) => (
@@ -482,53 +488,29 @@ const AddExamForm = () => {
           <FontAwesomeIcon icon={faPlus} className="mr-1" />
           Add Option
         </button>
-                        <div className="mt-2 mb-1 font-bold">Answers:</div>
-                        {answers[questionIndex].map((answer, answerIndex) => (
-                          <div
-                            key={answerIndex}
-                            className="flex items-center mb-2"
-                          >
-                            <input
-                              type="number"
-                              id={`correctOption-${questionIndex}`}
-                              className="w-16 border border-gray-300 px-4 py-2 rounded-md"
-                              value={question.correctOption
-                                .map((index) => index + 1)
-                                .join(", ")} // Convert back to 1-based index for display
-                              onChange={(e) => {
-                                const correctOptions = e.target.value
-                                  .split(",")
-                                  .map((option) => parseInt(option.trim()) - 1); // Convert to 0-based index
-                                handleChangeCorrectOption(
-                                  questionIndex,
-                                  correctOptions
-                                );
-                              }}
-                            />
-                            <button
-                              type="button"
-                              className="ml-3 font-bold text-red-600"
-                              onClick={() =>
-                                handleRemoveAnswer(questionIndex, answerIndex)
-                              }
-                            >
-                              <FontAwesomeIcon
-                                icon={faTrash}
-                                className="mr-1"
-                              />
-                            </button>
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          className="font-bold text-blue-600"
-                          onClick={() => handleAddAnswer(questionIndex)}
-                        >
-                          <FontAwesomeIcon icon={faPlus} className="mr-1" />
-                          Add Answer
-                        </button>
-                      </>
-                    )}
+    
+
+    <div className="mt-2 mb-1 font-bold">Correct Answer (Choose multiple)</div>
+    {question.options.map((option, optionIndex) => (
+      <div key={optionIndex} className="md:flex items-center mb-2">
+        <input
+          type="checkbox"
+          className="mr-2"
+          checked={question.correctOption.includes(optionIndex)}
+          onChange={() => {
+            const newCorrectOption = question.correctOption.includes(
+              optionIndex
+            )
+              ? question.correctOption.filter((index) => index !== optionIndex)
+              : [...question.correctOption, optionIndex];
+            handleChangeCorrectAnswer(questionIndex, newCorrectOption);
+          }}
+        />
+        <span>{`Option ${optionIndex + 1}`}</span>
+      </div>
+    ))}
+  </>
+)}
                     {question.type === "multiple-choice" && (
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>

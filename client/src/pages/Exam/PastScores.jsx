@@ -12,6 +12,7 @@ const PastScoresTable = () => {
         const response = await fetch(`${BASE_URL}examresults/score/${user._id}`);
         const data = await response.json();
         setPastScores(data);
+        console.log(data);
       } catch (error) {
         console.error('Error fetching past scores:', error);
       }
@@ -45,6 +46,8 @@ const PastScoresTable = () => {
                       <th className="px-4 py-3">SN</th>
                       <th className="px-4 py-3">Exam Name</th>
                       <th className="px-4 py-3">Score</th>
+                      <th className="px-4 py-3">Max Marks</th>
+                      {/* <th className="px-4 py-3"> Marks</th> */}
                     </tr>
                   </thead>
                   <tbody className="bg-gray-100">
@@ -53,6 +56,8 @@ const PastScoresTable = () => {
                         <td className="px-4 py-3 border ">{index + 1}</td>
                         <td className="px-4 py-3 border ">{score.examName}</td>
                         <td className="px-4 py-3 border">{score.score}</td>
+                        {/* <td className="px-4 py-3 border">{score.score}</td> */}
+                        <td className="px-4 py-3 border">{score.maxMarks}</td>
                       </tr>
                     ))}
                   </tbody>
