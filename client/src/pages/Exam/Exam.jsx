@@ -136,6 +136,17 @@ function OnlineExamPage() {
   );
   const [examData, setExamData] = useState(null);
   const { examId } = useParams();
+  const handleSubjectClick = (subjectName) => {
+    const selectedSubject = examData.subjects.find(
+      (subject) => subject.name === subjectName
+    );
+
+    if (selectedSubject) {
+      setCurrentQuestionIndex(selectedSubject.startingQuestionNumber - 1);
+    }
+  };
+  
+  
 
   const toggleRightSectionVisibility = () => {
     setRightSectionVisible((prevVisible) => !prevVisible);
@@ -157,6 +168,7 @@ function OnlineExamPage() {
         console.log(examData);
         setTimer(data.exam.totalTime);
         console.log(timer);
+        console.log(examData.subjects, "subject");
       } catch (error) {
         console.error(error);
         // Handle error here if necessary
@@ -189,8 +201,10 @@ function OnlineExamPage() {
     const hours = Math.floor(timeInSeconds / 3600);
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
 
   useEffect(() => {
     if(timer ===0){
@@ -212,13 +226,18 @@ function OnlineExamPage() {
 
   const saveAndNext = () => {
     if (isAnswered) {
-      // submitAnswer();
       setAttemptedButUnanswered(false);
+      setSelectedAnswers((prevSelectedAnswers) => {
+        const newSelectedAnswers = [...prevSelectedAnswers];
+        newSelectedAnswers[currentQuestionIndex] =
+          selectedAnswers[currentQuestionIndex] || "Marked for Review";
+        return newSelectedAnswers;
+      });
       const nextQuestionIndex = currentQuestionIndex + 1;
       if (nextQuestionIndex < questionsData.length) {
         setCurrentQuestionIndex(nextQuestionIndex);
       } else {
-        alert("You have completed the exam!");
+        setCurrentQuestionIndex(0); // Move to the first question when on the last question
       }
     } else {
       setAttemptedButUnanswered(true);
@@ -303,89 +322,98 @@ function OnlineExamPage() {
 
     return rows;
   };
+  if (!examData) {
+    // Exam data is not available yet, return null or a loading spinner
+    return null;
+  }
+
 
   return (
-    <div className="flex relative h-screen">
+    <div className="flex flex-col md:flex-row h-screen">
       {/* ... Left section ... */}
-      <div className="flex-1 border-r-2 border-black">
-        <div className="flex-1 p-8">
-        <div className="flex">
-          <h1 className="flex mt-1">{subjects.map((subject) => (
-                  <button
-                    key={subject}
-                    onClick={() => {
-                     
-                    }}
-                    className="px-4 py-2 mr-4 rounded bg-blue-500 text-white"
-                  >
-                    {subject}
-                  </button>
-                ))}</h1>
-          <div className="absolute right-96 font-semibold text-xl">
-            Time Left: {formatTime(timer)}
+      <div className="flex-1 pb-96 border-r-2 border-black">
+      <div className="flex-1 p-4 md:p-8">
+        <div className="md:flex md:items-center md:justify-between mb-4">
+        <h1 className="flex mt-1">
+  {examData.subjects.map((subject, index) => (
+    <button
+      key={index}
+      onClick={() => handleSubjectClick(subject.name)}
+      className="px-4 py-2 mr-4 rounded bg-blue-500 text-white"
+    >
+      {subject.name}
+    </button>
+  ))}
+</h1>
+<div className="absolute mt-5 md:mt-0 right-4 md:right-96 font-semibold text-xl">
+              Time Left: {formatTime(timer)}
+            </div>
           </div>
-          </div>
-          {examData && (
-            <><hr className="mt-4"/>
-              <div className="mb-4">
-                {/* Subject tabs */}
-                <div className="flex text-lg font-bold mt-1">
-                  Question No. {currentQuestionIndex + 1}.
-                  <p className="absolute right-96">
-                    Mark/s: <span className="text-green-700">{examData.questionMarks}</span> |
-                    Negative Mark/s: <span className="text-red-700">{examData.mcqNegativeMarks}</span>
-                  </p>
-                </div>
-              </div>
-              <hr />
-              <p className="mb-4 font-bold text-3xl">
-                {examData.questions[currentQuestionIndex].text}
-              </p>
-              {examData.questions[currentQuestionIndex].type === "text-input" ? (
-              <div>
-                <input
-                  type="text"
-                  value={selectedAnswers[currentQuestionIndex]}
-                  // onChange={handleTextInputChange}
-                  className="w-96 px-4 py-2 border border-gray-400 rounded"
-                  placeholder="Enter your answer here"
-                />
-              </div>
-            ) :(
+          {examData &&
+            examData.questions &&
+            examData.questions[currentQuestionIndex] && (
               <>
-              {examData.questions[currentQuestionIndex].imageUrl && (   
-              <img
-                src={examData.questions[currentQuestionIndex].imageUrl}
-                alt="Question"
-                className="w-800 h-600 mx-auto mb-4"
-              />
+                <hr className="mt-4" />
+                <div className="mb-4">
+                  <div className="flex text-lg font-bold mt-1">
+                    Question No. {currentQuestionIndex + 1}.
+                    <p className="absolute hidden md:flex right-4 md:right-96">
+                      Mark/s:{" "}
+                      <span className=" text-green-700">
+                        {examData.questionMarks}
+                      </span>{" "}
+                      | Negative Mark/s:{" "}
+                      <span className="text-red-700">
+                        {examData.mcqNegativeMarks}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <hr />
+                <p className="mb-4 font-bold text-3xl">
+                  {examData.questions[currentQuestionIndex].text}
+                </p>
+                {examData.questions[currentQuestionIndex].imageUrl ? (
+                  <img
+                    src={examData.questions[currentQuestionIndex].imageUrl}
+                    // alt={`Question ${currentQuestionIndex + 1}`}
+                    className="w-800 h-600 mx-auto mb-4"
+                  />
+                ) : null}
+                <div>
+                  {examData.questions[currentQuestionIndex].options.map(
+                    (option, index) => (
+                      <label
+                        key={index}
+                        className="text-xl font-bold mb-2 flex items-center"
+                      >
+                        <input
+                          type="radio"
+                          name="option"
+                          value={option.text}
+                          checked={
+                            selectedAnswers[currentQuestionIndex] ===
+                            option.text
+                          }
+                          onChange={handleOptionChange}
+                          className="mr-2"
+                        />
+                        {option.text}
+                        {option.imageUrl ? (
+                          <img
+                            src={option.imageUrl}
+                            // alt={`Option ${index + 1}`}
+                            className="w-200 h-150 ml-5"
+                          />
+                        ) : null}
+                      </label>
+                    )
+                  )}
+                </div>
+              </>
             )}
-              <div>
-                {examData.questions[currentQuestionIndex].options.map((option, index) => (
-                  <label key={index} className=" text-xl font-bold mb-2 flex items-center">
-                    <input
-                      type="radio"
-                      name="option"
-                      value={option.text}
-                      checked={selectedAnswers[currentQuestionIndex] === option.text}
-                      onChange={handleOptionChange}
-                      className="mr-2"
-                    />
-                    {option.text}
-                    {option.imageUrl && (
-                      <img
-                        src={option.imageUrl}
-                        alt={`Option ${index + 1}`}
-                        className="w-200 h-150 ml-5"
-                      />
-                    )}
-                  </label>
-                ))}
-              </div></>)}
-            </>
-          )}
           <div className="flex absolute bottom-32 justify-between mt-4 border-t-2 pt-2 border-black">
-            <div className="ml-20">
+            <div className="md:ml-20">
               <button
                 onClick={() =>
                   setSelectedAnswers((prevSelectedAnswers) => {
@@ -411,7 +439,7 @@ function OnlineExamPage() {
                     return newSelectedAnswers;
                   })
                 }
-                className={`px-4 py-2 rounded ${
+                className={`px-4 mt-5 md:mt-0 py-2 rounded ${
                   selectedAnswers[currentQuestionIndex] !== ""
                     ? "bg-gray-400  text-white"
                     : `bg-yellow-500 ${markedForReview}`
@@ -420,7 +448,7 @@ function OnlineExamPage() {
                 Marked for Review
               </button>
             </div>
-            <div className="ml-96 pl-96">
+            <div className="md:ml-96 md:pl-96">
               <button
                 onClick={saveAndNext}
                 disabled={!isAnswered}
@@ -435,7 +463,7 @@ function OnlineExamPage() {
               <button
                 onClick={submitAnswer}
                 disabled={!isAnswered}
-                className={`px-4 py-2 rounded ${
+                className={`px-4 py-2 mt-5 md:mt-0 rounded ${
                   selectedAnswers[currentQuestionIndex] !== ""
                     ? "bg-blue-500 text-white"
                     : "bg-gray-400 text-gray-700 cursor-not-allowed"
@@ -454,7 +482,7 @@ function OnlineExamPage() {
         </div>
       </div>
       
-    <div className={`p-2 min-w-1/4 border-r-2 border-black border-1-2 bg-gray-200 flex-shrink-0 ${rightSectionVisible ? '' : 'hidden'}`}>
+      <div className={`p-2 min-w-1/4 border-r-2 border-black border-1-2 bg-gray-200 flex-shrink-0 ${rightSectionVisible ? '' : 'hidden'}`}>
         <div className="mb-4">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg5ksHjzMIjf__4XViE2UamI31OUfxJb1YzQ&usqp=CAU"
