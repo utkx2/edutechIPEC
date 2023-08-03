@@ -246,7 +246,7 @@ const UpdateExamForm = () => {
                                     <label htmlFor="examName" className="block mb-2 font-bold text-gray-700">
                                         Exam Name
                                     </label>
-                                    <div className="flex justify-between">
+                                    <div className="md:flex justify-between">
                   <div className="mb-4">
                     <label
                       htmlFor="totalTime"
@@ -385,7 +385,7 @@ const UpdateExamForm = () => {
                                             <>
                                                 <div className="mt-2 mb-1 font-bold">Options:</div>
                                                 {question.options.map((option, optionIndex) => (
-                                                    <div key={optionIndex} className="flex items-center mb-2">
+                                                    <div key={optionIndex} className="md:flex items-center mb-2">
                                                         <input
                                                             required
                                                             type="text"
@@ -448,7 +448,7 @@ const UpdateExamForm = () => {
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>
         {question.options.map((option, optionIndex) => (
-          <div key={optionIndex} className="flex items-center mb-2">
+          <div key={optionIndex} className="md:flex items-center mb-2">
             <input
               required
               type="text"

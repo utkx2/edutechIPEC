@@ -7,7 +7,6 @@ import Header from "../../Header";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CloudinaryContext, Image } from "cloudinary-react";
 import { Cloudinary as CloudinaryCore } from "@cloudinary/url-gen";
-import axios from "axios";
 const AddExamForm = () => {
   const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
   const [examName, setExamName] = useState("");
@@ -219,16 +218,16 @@ const AddExamForm = () => {
   };
   // code written by me
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex flex-col h-screen sm:flex-row sm:overflow-hidden">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
         <main>
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
-            <div className="grid gap-6 grid-cols-15">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-15">
               <div className="p-4 ">
                 <h1 className="text-2xl font-bold mb-4">Add New Exam</h1>
-                <div className="flex justify-between">
+                <div className="md:flex  justify-between">
                   <div className="mb-4">
                     <label
                       htmlFor="totalTime"
@@ -434,7 +433,7 @@ const AddExamForm = () => {
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>
                         {question.options.map((option, optionIndex) => (
-          <div key={optionIndex} className="flex items-center mb-2">
+          <div key={optionIndex} className="md:flex items-center mb-2">
             <input
               required
               type="text"
@@ -536,7 +535,7 @@ const AddExamForm = () => {
                         {question.options.map((option, optionIndex) => (
                           <div
                             key={optionIndex}
-                            className="flex items-center mb-2"
+                            className="md:flex items-center mb-2"
                           >
                             <input
                               type="text"
@@ -549,7 +548,7 @@ const AddExamForm = () => {
                                   e.target.value
                                 )
                               }
-                              placeholder={`Enter Option ${optionIndex + 1}`}
+                              placeholder={`Enters Option ${optionIndex + 1}`}
                             />
                             <label
                               htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
