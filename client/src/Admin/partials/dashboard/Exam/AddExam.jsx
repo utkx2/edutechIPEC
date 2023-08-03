@@ -8,7 +8,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { CloudinaryContext, Image } from "cloudinary-react";
 import { Cloudinary as CloudinaryCore } from "@cloudinary/url-gen";
 import axios from "axios";
-
 const AddExamForm = () => {
   const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
   const [examName, setExamName] = useState("");
@@ -65,7 +64,6 @@ const AddExamForm = () => {
       console.error("Error uploading image to Cloudinary:", error);
     }
   };
-
   const handleUpload = async (index, optionIndex, option) => {
     console.log(index);
     try {
@@ -145,7 +143,6 @@ const AddExamForm = () => {
     console.log("Exam Name:", examName);
     console.log("Exam Instructions:", examInstruction);
     console.log("Questions:", questions);
-
     try {
       const response = await fetch(`${BASE_URL}exam/newexam`, {
         method: "POST",
@@ -215,7 +212,6 @@ const AddExamForm = () => {
   const handleAddSubject = () => {
     setSubjects([...subjects, { name: '', startingQuestionNumber: '', endingQuestionNumber: '' }]);
   };
-
   const handleChange = (index, field, value) => {
     const updatedSubjects = [...subjects];
     updatedSubjects[index][field] = value;
@@ -438,73 +434,55 @@ const AddExamForm = () => {
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>
                         {question.options.map((option, optionIndex) => (
-                          <div
-                            key={optionIndex}
-                            className="flex items-center mb-2"
-                          >
-                            {question.options.map((option, optionIndex) => (
-                              <div
-                                key={optionIndex}
-                                className="flex items-center mb-2"
-                              >
-                                <input
-                                  required
-                                  type="text"
-                                  className="px-4 py-2 mr-2 border border-gray-300 rounded-md w-60"
-                                  value={option.text}
-                                  onChange={(e) =>
-                                    handleChangeOptionText(
-                                      questionIndex,
-                                      optionIndex,
-                                      e.target.value
-                                    )
-                                  }
-                                  placeholder={`Enter Option ${optionIndex + 1
-                                    }`}
-                                />
-                                <label
-                                  htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
-                                  className="block mb-2 font-bold text-gray-700"
-                                >
-                                  Image URL
-                                </label>
-                                <input
-                                  required
-                                  type="text"
-                                  id={`optionImage-${questionIndex}-${optionIndex}`}
-                                  className="w-64 px-4 py-2 border border-gray-300 rounded-md"
-                                  value={option.imageUrl}
-                                  onChange={(e) =>
-                                    handleChangeOptionImage(
-                                      questionIndex,
-                                      optionIndex,
-                                      e.target.value
-                                    )
-                                  }
-                                  placeholder="Enter Image URL for Option (optional)"
-                                />
-                                <button
-                                  type="button"
-                                  className="ml-3 font-bold text-red-600"
-                                  onClick={() =>
-                                    handleRemoveOption(
-                                      questionIndex,
-                                      optionIndex
-                                    )
-                                  }
-                                ></button>
-                              </div>
-                            ))}
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          className="font-bold text-blue-600"
-                          onClick={() => handleAddOption(questionIndex)}
-                        >
-                          <FontAwesomeIcon icon={faPlus} className="mr-1" />
-                          Add Option
-                        </button>
+          <div key={optionIndex} className="flex items-center mb-2">
+            <input
+              required
+              type="text"
+              className="px-4 py-2 mr-2 border border-gray-300 rounded-md w-60"
+              value={option.text}
+              onChange={(e) =>
+                handleChangeOptionText(
+                  questionIndex,
+                  optionIndex,
+                  e.target.value
+                )
+              }
+              placeholder={`Enter Option ${optionIndex + 1}`}
+            />
+            <label
+                                                            htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
+                                                            className="block mb-2 font-bold text-gray-700"
+                                                        >
+                                                            Image URL
+                                                        </label>
+                                                        <input
+                                                            required
+                                                            type="text"
+                                                            id={`optionImage-${questionIndex}-${optionIndex}`}
+                                                            className="w-64 px-4 py-2 border border-gray-300 rounded-md"
+                                                            value={option.imageUrl}
+                                                            onChange={(e) => handleChangeOptionImage(questionIndex, optionIndex, e.target.value)}
+                                                            placeholder="Enter Image URL for Option (optional)"
+                                                        /><div>
+                                                            <button className='' id="uploadButton" onClick={() => handleUpload(questionIndex, optionIndex, true)}>Upload Image from Clipboard</button>
+                                                        </div>
+            <button
+              type="button"
+              className="text-red-600 font-bold ml-3"
+              onClick={() => handleRemoveOption(questionIndex, optionIndex)}
+            >
+              <FontAwesomeIcon icon={faTrash} className="mr-1" />
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          className="text-blue-600 font-bold"
+          onClick={() => handleAddOption(questionIndex)}
+        >
+          <FontAwesomeIcon icon={faPlus} className="mr-1" />
+          Add Option
+        </button>
                         <div className="mt-2 mb-1 font-bold">Answers:</div>
                         {answers[questionIndex].map((answer, answerIndex) => (
                           <div
@@ -552,7 +530,6 @@ const AddExamForm = () => {
                         </button>
                       </>
                     )}
-
                     {question.type === "multiple-choice" && (
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>
