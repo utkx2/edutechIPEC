@@ -27,8 +27,6 @@ function OnlineExamPage() {
     }
   };
 
-
-
   const toggleRightSectionVisibility = () => {
     setRightSectionVisible((prevVisible) => !prevVisible);
   };
@@ -341,7 +339,7 @@ function OnlineExamPage() {
                 </div>
               </>
             )}
-          <div className="flex absolute bottom-32 justify-between mt-4 border-t-2 pt-2 border-black">
+          <div className="fixed bottom-0 left-0 w-full bg-white border-t-2 border-black p-4">
             <div className="md:ml-20">
               <button
                 onClick={() =>
