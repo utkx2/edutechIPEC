@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 const questionsData = [
-  
+
 ];
 
 const subjects = ["Physics", "Chemistry", "Mathematics"];
@@ -26,8 +26,8 @@ function OnlineExamPage() {
       setCurrentQuestionIndex(selectedSubject.startingQuestionNumber - 1);
     }
   };
-  
-  
+
+
 
   const toggleRightSectionVisibility = () => {
     setRightSectionVisible((prevVisible) => !prevVisible);
@@ -47,9 +47,6 @@ function OnlineExamPage() {
         const data = await response.json();
         setExamData(data.exam);
         console.log(data.exam);
-        // setTimer(data.exam.totalTime);
-        // console.log(timer);
-        // console.log(examData.subjects, "subject");
       } catch (error) {
         console.error(error);
         // Handle error here if necessary
@@ -83,25 +80,21 @@ function OnlineExamPage() {
     // Step 3: Call the API to get the exam score and store the exam result
     const userId = user._id;
 
-    // for(var i = 0; i < examData.questions.correctOption.length(); i++) {
-    //     examData.options[questions.correctOption[i]] = examData.options[questions.correctOption[i]].text;
-    // }
-    // console.log(selectedAnswers);
     axios.post(`http://localhost:3000/api/exam/getscore/${examId}`, {
       submittedAnswers: examData,
-        userId: userId,
-        response: selectedAnswers
+      userId: userId,
+      response: selectedAnswers
     })
-        .then((examData) => {
-            console.log('Exam Score:', examData.data.score);
-            console.log('examData:', examData);
-            console.log('Exam Max Score:', examData.data.maxMarks);
-            // navigate(`/result/${exam.data.score}`)
-        })
-        .catch((error) => {
-            console.error('Error getting exam score:', error);
-        });
-};
+      .then((examData) => {
+        console.log('Exam Score:', examData.data.score);
+        console.log('examData:', examData);
+        console.log('Exam Max Score:', examData.data.maxMarks);
+        // navigate(`/result/${exam.data.score}`)
+      })
+      .catch((error) => {
+        console.error('Error getting exam score:', error);
+      });
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -123,11 +116,10 @@ function OnlineExamPage() {
   };
 
   useEffect(() => {
-    if(timer ===0){
+    if (timer === 0) {
       SubmitExam();
     }
   })
-
 
   const SubmitExam = (req, res) => {
     // alert("You have completed the exam!");
@@ -149,7 +141,7 @@ function OnlineExamPage() {
           selectedAnswers[currentQuestionIndex] || "Marked for Review";
         return newSelectedAnswers;
       });
-  
+
       // Move to the next question
       const nextQuestionIndex = currentQuestionIndex + 1;
       if (nextQuestionIndex < examData.questions.length) {
@@ -197,12 +189,10 @@ function OnlineExamPage() {
     } else if (!isNotVisited) {
       return "bg-red-500 text-white"; // Not answered but visited
     }
-    else if(!isAnswered){
+    else if (!isAnswered) {
       return "bg-violet-500 text-white"
     }
   };
-
-
 
   const renderNavigationRows = () => {
     if (!examData || !examData.questions) {
@@ -221,13 +211,11 @@ function OnlineExamPage() {
           <button
             key={j}
             onClick={() => handleQuestionNavigation(j)}
-            className={`flex-1 py-4 mr-2 rounded ${
-              selectedAnswers !== ""
+            className={`flex-1 py-4 mr-2 rounded ${selectedAnswers !== ""
                 ? " text-black"
                 : "bg-red-500 text-white"
-            } ${getQuestionButtonClass(j)} ${
-              j === currentQuestionIndex ? "bg-blue-600" : ""
-            }`}
+              } ${getQuestionButtonClass(j)} ${j === currentQuestionIndex ? "bg-blue-600" : ""
+              }`}
           >
             {`Q${j + 1}`}
           </button>
@@ -249,23 +237,23 @@ function OnlineExamPage() {
 
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row h-screen overflow-x-hidden">
       {/* ... Left section ... */}
       <div className="flex-1 pb-96 border-r-2 border-black">
-      <div className="flex-1 p-4 md:p-8">
-        <div className="md:flex md:items-center md:justify-between mb-4">
-        <h1 className="flex mt-1">
-  {examData.subjects.map((subject, index) => (
-    <button
-      key={index}
-      onClick={() => handleSubjectClick(subject.name)}
-      className="px-4 py-2 mr-4 rounded bg-blue-500 text-white"
-    >
-      {subject.name}
-    </button>
-  ))}
-</h1>
-<div className="absolute mt-5 md:mt-0 right-4 md:right-96 font-semibold text-xl">
+        <div className="flex-1 p-4 md:p-8">
+          <div className="md:flex md:items-center md:justify-between mb-4">
+            <h1 className="flex mt-1">
+              {examData.subjects.map((subject, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSubjectClick(subject.name)}
+                  className="px-4 py-2 mr-4 rounded bg-blue-500 text-white"
+                >
+                  {subject.name}
+                </button>
+              ))}
+            </h1>
+            <div className="absolute mt-5 md:mt-0 right-4 md:right-96 font-semibold text-xl">
               Time Left: {formatTime(timer)}
             </div>
           </div>
@@ -301,56 +289,56 @@ function OnlineExamPage() {
                   />
                 ) : null}
                 <div>
-                {examData.questions[currentQuestionIndex].type === "text-input" ? (
-              <div>
-                <input
-                  type="text"
-                  value={selectedAnswers[currentQuestionIndex]}
-                  onChange={handleTextInputChange}
-                  className="w-96 px-4 py-2 border border-gray-400 rounded"
-                  placeholder="Enter your answer here"
-                />
-              </div>
-            ) : (
-              <>
-                {/* Display images and options for other types of questions */}
-                <div>
-                  {/* Display question image */}
-                  {examData.questions[currentQuestionIndex].imageUrl && (
-                    <img
-                      src={examData.questions[currentQuestionIndex].imageUrl}
-                      alt={`Question ${currentQuestionIndex + 1}`}
-                      className="max-h-96 mx-auto mb-4"
-                    />
-                  )}
-
-                  {/* Display options */}
-                  {examData.questions[currentQuestionIndex].options.map(
-                    (option, index) => (
-                      <label key={index} className="block text-xl font-bold mb-2">
-                        <input
-                          type="radio"
-                          name="option"
-                          value={option.text}
-                          checked={selectedAnswers[currentQuestionIndex] === option.text}
-                          onChange={handleOptionChange}
-                          className="mr-2"
-                        />
-                        {option.imageUrl && (
+                  {examData.questions[currentQuestionIndex].type === "text-input" ? (
+                    <div>
+                      <input
+                        type="text"
+                        value={selectedAnswers[currentQuestionIndex]}
+                        onChange={handleTextInputChange}
+                        className="w-96 px-4 py-2 border border-gray-400 rounded"
+                        placeholder="Enter your answer here"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      {/* Display images and options for other types of questions */}
+                      <div>
+                        {/* Display question image */}
+                        {examData.questions[currentQuestionIndex].imageUrl && (
                           <img
-                            src={option.imageUrl}
-                            alt={`Option ${index + 1}`}
-                            className="max-h-24 mr-2"
+                            src={examData.questions[currentQuestionIndex].imageUrl}
+                            alt={`Question ${currentQuestionIndex + 1}`}
+                            className="max-h-96 mx-auto mb-4"
                           />
                         )}
-                        {option.text}
-                      </label>
-                    )
+
+                        {/* Display options */}
+                        {examData.questions[currentQuestionIndex].options.map(
+                          (option, index) => (
+                            <label key={index} className="block text-xl font-bold mb-2">
+                              <input
+                                type="radio"
+                                name="option"
+                                value={option.text}
+                                checked={selectedAnswers[currentQuestionIndex] === option.text}
+                                onChange={handleOptionChange}
+                                className="mr-2"
+                              />
+                              {option.imageUrl && (
+                                <img
+                                  src={option.imageUrl}
+                                  alt={`Option ${index + 1}`}
+                                  className="max-h-24 mr-2"
+                                />
+                              )}
+                              {option.text}
+                            </label>
+                          )
+                        )}
+                      </div>
+                    </>
                   )}
                 </div>
-              </>
-            )}
-          </div>
               </>
             )}
           <div className="flex absolute bottom-32 justify-between mt-4 border-t-2 pt-2 border-black">
@@ -363,11 +351,10 @@ function OnlineExamPage() {
                     return newSelectedAnswers;
                   })
                 }
-                className={`px-4 py-2 mr-4 rounded ${
-                  selectedAnswers[currentQuestionIndex] !== ""
+                className={`px-4 py-2 mr-4 rounded ${selectedAnswers[currentQuestionIndex] !== ""
                     ? "bg-yellow-500"
                     : "bg-gray-400"
-                }`}
+                  }`}
               >
                 Clear Response
               </button>
@@ -380,11 +367,10 @@ function OnlineExamPage() {
                     return newSelectedAnswers;
                   })
                 }
-                className={`px-4 mt-5 md:mt-0 py-2 rounded ${
-                  selectedAnswers[currentQuestionIndex] !== ""
+                className={`px-4 mt-5 md:mt-0 py-2 rounded ${selectedAnswers[currentQuestionIndex] !== ""
                     ? "bg-gray-400  text-white"
                     : `bg-yellow-500 ${markedForReview}`
-                }`}
+                  }`}
               >
                 Marked for Review
               </button>
@@ -393,11 +379,10 @@ function OnlineExamPage() {
               <button
                 onClick={saveAndNext}
                 disabled={!isAnswered}
-                className={`px-4 py-2 mr-4 rounded ${
-                  selectedAnswers[currentQuestionIndex] !== ""
+                className={`px-4 py-2 mr-4 rounded ${selectedAnswers[currentQuestionIndex] !== ""
                     ? "bg-blue-500 text-white"
                     : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                }`}
+                  }`}
               >
                 Save and Next
               </button>
@@ -405,25 +390,18 @@ function OnlineExamPage() {
                 // onClick={submitAnswer}
                 disabled={!isAnswered}
                 onClick={handleSubmitExam}
-                className={`px-4 py-2 mt-5 md:mt-0 rounded ${
-                  selectedAnswers[currentQuestionIndex] !== ""
+                className={`px-4 py-2 mt-5 md:mt-0 rounded ${selectedAnswers[currentQuestionIndex] !== ""
                     ? "bg-blue-500 text-white"
                     : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                }`}
+                  }`}
               >
                 Submit Exam
               </button>
-              {/* <button
-        className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded"
-        onClick={toggleRightSectionVisibility}
-      >
-        {rightSectionVisible ? "Hide" : "Show"} Right Section
-      </button> */}
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className={`p-2 min-w-1/4 border-r-2 border-black border-1-2 bg-gray-200 flex-shrink-0 ${rightSectionVisible ? '' : 'hidden'}`}>
         <div className="mb-4">
           <img

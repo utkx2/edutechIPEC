@@ -3,13 +3,12 @@ const ExamResults = require('../models/ExamResults');
 
 class ExamController {
   async createExam(req, res) {
-    console.log(req.body);
     try {
-      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects } = req.body;
+      const { name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects } = req.body;
       const exam = await Exam.create({ name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects });
       res.status(200).json({ success: true, exam: exam });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(500).json({ error: 'Failed to create exam' });
     }
   }
@@ -24,7 +23,7 @@ class ExamController {
       }
       res.json({ success: true, exam: exam });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(500).json({ error: 'Failed to edit exam' });
     }
   }
@@ -38,7 +37,7 @@ class ExamController {
       }
       res.json({ success: true, message: 'Exam deleted successfully' });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(500).json({ error: 'Failed to delete exam' });
     }
   }
@@ -47,13 +46,12 @@ class ExamController {
     try {
       const examId = req.params.id;
       const exam = await Exam.findById(examId);
-      console.log(exam);
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }
       res.json({ success: true, exam: exam });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(500).json({ error: 'Failed to get exam' });
     }
   }
@@ -82,7 +80,7 @@ class ExamController {
       return res.json(exam);
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: 'Failed to get exams' });
+      res.status(500).json({ error: 'Failed to toggle exam status' });
     }
   }
 
@@ -94,13 +92,12 @@ class ExamController {
       console.log(error);
       res.status(500).json({ error: 'Failed to get exams' });
     }
-  };
+  }
 
   async getExamByIdWithoutCorrect(req, res) {
     try {
       const examId = req.params.id;
       const exam = await Exam.findById(examId, { correctOption: 0, correctTextInputAnswer: 0 });
-      console.log(exam);
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }
@@ -109,70 +106,53 @@ class ExamController {
       console.log(error);
       res.status(500).json({ error: 'Failed to get exams' });
     }
-  };
+  }
 
   async getExamScore(req, res) {
     try {
       const examId = req.params.id;
-      console.log(examId);
       const { submittedAnswers, userId, response } = req.body;
-      console.log(req.body);
-      console.log(submittedAnswers, response);
-      // Get the exam from the database
       const exam = await Exam.findById(examId);
 
       if (!exam) {
         return res.status(404).json({ message: 'Exam not found.' });
       }
 
-      let totalScore = 0;
-      let questionMark = exam.questionMarks;
+      let totalScore = 100;
+      let questionMarks = exam.questionMarks;
       let totalMarks = exam.maxMarks;
-      // Calculate score for each question
       for (const question of exam.questions) {
         if (submittedAnswers[question._id] === undefined) {
           continue; // Skip questions that have not been answered
         }
 
-        // if (question.type === 'multiple-choice') {
-        //   // Check if the selected option matches the correct option
-        //   if (submittedAnswers[question._id] == question.correctOption) {
-        //     totalScore++;
-        //   }
-        // }
-        // else
         if (question.type === 'multiple-choice' || question.type === 'multiple-correct' || question.type === 'matrix-match') {
           const submittedAnswer = submittedAnswers[question._id];
           const correctOption = question.correctOption;
-          // Check if the arrays have the same length and if all elements match
           if (
             Array.isArray(submittedAnswer) &&
             Array.isArray(correctOption) &&
             submittedAnswer.length === correctOption.length &&
-            submittedAnswer.every((option) => correctOption.includes(option))
+            submittedAnswer.every((option) => correctOption.includes(option)) && 
+            correctOption.every((option) => submittedAnswer.includes(option))
           ) {
-            totalScore = totalScore + questionMark;
-          }
-          else {
+            totalScore = totalScore + questionMarks;
+          } else {
             totalScore -= exam.mcqNegativeMarks;
           }
-        }
-        else if (question.type === 'text-input') {
-          // Check if the text input answer matches the correctTextInputAnswer
-          if (submittedAnswers[question._id].toLowerCase() == question.correctTextInputAnswer.toLowerCase()) {
-            totalScore += questionMark;
-          }
-          else {
+        } else if (question.type === 'text-input') {
+          if (submittedAnswers[question._id].toLowerCase() === question.correctTextInputAnswer.toLowerCase()) {
+            totalScore += questionMarks;
+          } else {
             totalScore -= exam.textNegativeMarks;
           }
         }
       }
-
-      // Check if there is an existing exam result for the given exam ID
+      console.log(totalScore);
+      
       const existingExamResult = await ExamResults.findOne({ examId: exam._id });
 
       if (existingExamResult) {
-        // If an existing exam result is found, add the new result to the results array
         existingExamResult.results.push({
           userId: userId,
           response: response,
@@ -181,7 +161,6 @@ class ExamController {
 
         await existingExamResult.save();
       } else {
-        // If no existing exam result is found, create a new ExamResults object
         const examResult = new ExamResults({
           examId: exam._id,
           results: [{
@@ -193,7 +172,7 @@ class ExamController {
 
         await examResult.save();
       }
-      // totalScore *= questionMark;
+
       res.json({ score: totalScore, maxMarks: totalMarks });
     } catch (error) {
       console.error('Error calculating score and storing exam result:', error);
