@@ -18,13 +18,6 @@ const AddExamForm = () => {
   const [questionMarks, setQuestionMarks] = useState("");
   const [textNegativeMarks, setTextNegativeMarks] = useState("");
   const [mcqNegativeMarks, setMcqNegativeMarks] = useState("");
-  const [options, setOptions] = useState([
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-  ]);
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("");
   const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
@@ -39,7 +32,6 @@ const AddExamForm = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          // Handle the Cloudinary response here
           console.log("Cloudinary Response:", data);
           const imageUrl = data.secure_url;
           setImageUrl(imageUrl);
@@ -131,14 +123,6 @@ const AddExamForm = () => {
     console.log(answers, "answer");
     console.log(questions,"question");
   };
-  const handleChangeAnswerNumber = (questionIndex, answerIndex, number) => {
-    const updatedAnswers = [...answers];
-    const parsedNumber = parseInt(number);
-    updatedAnswers[questionIndex][answerIndex].number = isNaN(parsedNumber)
-      ? ""
-      : (parsedNumber + 1).toString();
-    setAnswers(...updatedAnswers, [updatedAnswers]);
-  };
   const handleChangeCorrectTextInputAnswer = (
     questionIndex,
     correctTextInputAnswer
@@ -190,16 +174,6 @@ const AddExamForm = () => {
       console.error("Error occurred while saving the exam:", error);
     }
   };
-  const handleAddAnswer = (questionIndex) => {
-    const updatedAnswers = [...answers];
-    const lastAnswerIndex = updatedAnswers[questionIndex].length - 1;
-    const lastAnswer = updatedAnswers[questionIndex][lastAnswerIndex];
-    const newAnswerNumber =
-      lastAnswer !== undefined ? parseInt(lastAnswer.number) + 1 : 1;
-    const newAnswer = { number: newAnswerNumber.toString() };
-    updatedAnswers[questionIndex].push(newAnswer);
-    setAnswers(updatedAnswers);
-  };
   const handleRemoveAnswer = (questionIndex, answerIndex) => {
     const updatedAnswers = [...answers];
     updatedAnswers[questionIndex].splice(answerIndex, 1);
@@ -207,9 +181,7 @@ const AddExamForm = () => {
   };
   console.log(answers, "answerIndex");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  // code written by me
   const [subjects, setSubjects] = useState([]);
-
   const handleAddSubject = () => {
     setSubjects([...subjects, { name: '', startingQuestionNumber: '', endingQuestionNumber: '' }]);
   };
@@ -319,7 +291,6 @@ const AddExamForm = () => {
                     />
                   </div>
                 </div>
-                {/* code written by me */}
                 <div className="mb-4">
                   <label
                     htmlFor="questionMarks"
@@ -354,7 +325,6 @@ const AddExamForm = () => {
                   ))}
                   <button onClick={handleAddSubject}>Add Subject</button>
                 </div>
-                {/* code written by me */}
                 <div className="mb-4">
                   <label
                     htmlFor="examName"
@@ -488,8 +458,6 @@ const AddExamForm = () => {
           <FontAwesomeIcon icon={faPlus} className="mr-1" />
           Add Option
         </button>
-    
-
     <div className="mt-2 mb-1 font-bold">Correct Answer (Choose multiple)</div>
     {question.options.map((option, optionIndex) => (
       <div key={optionIndex} className="md:flex items-center mb-2">
@@ -588,7 +556,7 @@ const AddExamForm = () => {
                           htmlFor={`correctOption-${questionIndex}`}
                           className="block text-gray-700 font-bold mb-2"
                         >
-                          Correct Option (Choose 1, 2, 3, or 4)
+                          Correct Option (Choose 0, 1, 2 or 3)
                         </label>
                         <input
                           type="number"

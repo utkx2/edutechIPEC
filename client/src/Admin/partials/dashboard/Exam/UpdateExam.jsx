@@ -7,8 +7,6 @@ import Header from "../../Header";
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { CloudinaryContext, Image } from 'cloudinary-react';
 import { Cloudinary as CloudinaryCore } from '@cloudinary/url-gen';
-import axios from 'axios';
-
 const UpdateExamForm = () => {
     const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
     const { id } = useParams();
@@ -21,13 +19,6 @@ const UpdateExamForm = () => {
     const [questionMarks, setQuestionMarks] = useState('');
     const [textNegativeMarks, setTextNegativeMarks]= useState('');
     const [mcqNegativeMarks, setMcqNegativeMarks] = useState('');
-    const [options, setOptions] = useState([
-      { text: "", imageUrl: "" },
-      { text: "", imageUrl: "" },
-      { text: "", imageUrl: "" },
-      { text: "", imageUrl: "" },
-      { text: "", imageUrl: "" },
-    ]);
     const navigate = useNavigate();
     const [questionAnswers, setQuestionAnswers] = useState({});
     const [imageUrl, setImageUrl] = useState('');
@@ -69,7 +60,6 @@ const UpdateExamForm = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    // Handle the Cloudinary response here
                     console.log('Cloudinary Response:', data);
                     const imageUrl = data.secure_url;
                     setImageUrl(imageUrl);
@@ -232,6 +222,11 @@ const UpdateExamForm = () => {
       });
     };console.log(answers,"answerIndex");
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const handleChangeCorrectAnswer = (questionIndex, correctAnswer) => {
+      const updatedQuestions = [...questions];
+      updatedQuestions[questionIndex].correctOption = correctAnswer;
+      setQuestions(updatedQuestions);
+    };
     return (
         <div className="flex h-screen overflow-hidden">
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -369,7 +364,6 @@ const UpdateExamForm = () => {
                                         </label>
                                         <div>
                                             <button id="uploadButton" onClick={() => handleUpload(questionIndex, 0, false)}>Upload Image from Clipboard</button>
-                                            {/* <button id="getImageButton" onClick={handleGetImage}>Get Image</button> */}
                                             {imageUrl && <img src={imageUrl} alt="Pasted Image" />}
                                         </div>
                                         <input
@@ -432,7 +426,7 @@ const UpdateExamForm = () => {
                                                 </button>
 
                                                 <label htmlFor={`correctOption-${questionIndex}`} className="block mb-2 font-bold text-gray-700">
-                                                    Correct Option (Choose 1, 2, 3, or 4)
+                                                    Correct Option (Choose 0, 1, 2 or 3)
                                                 </label>
                                                 <input
                                                     required
@@ -498,48 +492,24 @@ const UpdateExamForm = () => {
           Add Option
         </button>
                         <div className="mt-2 mb-1 font-bold">Answers:</div>
-                        {questionAnswers[questionIndex]?.map((answer, answerIndex) => (
-                          <div
-                            key={answerIndex}
-                            className="flex items-center mb-2"
-                          >
-                            <input
-                              required
-                              type="number"
-                              className="w-16 border border-gray-300 px-4 py-2 rounded-md"
-                              value={answer.number}
-                              id='correctOption'
-                              onChange={(e) =>
-                                handleChangeAnswerNumber(
-                                  questionIndex,
-                                  answerIndex,
-                                  e.target.value
-                                )
-                              }
-                              placeholder={` ${answerIndex + 1}`}
-                            />
-                            <button
-                              type="button"
-                              className="ml-3 font-bold text-red-600"
-                              onClick={() =>
-                                handleRemoveAnswer(questionIndex, answerIndex)
-                              }
-                            >
-                              <FontAwesomeIcon
-                                icon={faTrash}
-                                className="mr-1"
-                              />
-                            </button>
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          className="font-bold text-blue-600"
-                          onClick={() => handleAddAnswer(questionIndex)}
-                        >
-                          <FontAwesomeIcon icon={faPlus} className="mr-1" />
-                          Add Answer
-                        </button>
+                        {question.options.map((option, optionIndex) => (
+      <div key={optionIndex} className="md:flex items-center mb-2">
+        <input
+          type="checkbox"
+          className="mr-2"
+          checked={question.correctOption.includes(optionIndex)}
+          onChange={() => {
+            const newCorrectOption = question.correctOption.includes(
+              optionIndex
+            )
+              ? question.correctOption.filter((index) => index !== optionIndex)
+              : [...question.correctOption, optionIndex];
+            handleChangeCorrectAnswer(questionIndex, newCorrectOption);
+          }}
+        />
+        <span>{`Option ${optionIndex + 1}`}</span>
+      </div>
+    ))}
                       </>
                     )}                                        {question.type === 'text-input' && (
                                             <>
