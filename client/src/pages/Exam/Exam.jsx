@@ -18,7 +18,7 @@ function OnlineExamPage() {
   const [examData, setExamData] = useState(null);
   const { examId } = useParams();
   const navigate = useNavigate();
-  // const [submitted, setSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const handleSubjectClick = (subjectName) => {
     const selectedSubject = examData.subjects.find(
       (subject) => subject.name === subjectName
@@ -68,23 +68,30 @@ function OnlineExamPage() {
     });
   };
 
-  const handleSubmitExam = (e) => {
+  const handleSubmitExam = () => {
     // e.preventDefault();
     // Log the exam examData to the console
+
+    if(!examData){
+      console.error('ExamData');
+      return;
+    }
+    
     console.log('Exam examData:', examData);
     const user = JSON.parse(localStorage.getItem("user"));
   
     // Step 3: Convert examData and selectedAnswers to the desired format
     const responsePayload = {};
+    const submittedAnswersPayload = {};
+  
     examData.questions.forEach((question, index) => {
       const questionNumber = index + 1;
-      responsePayload[questionNumber] = selectedAnswers[index] || ''; // Use an empty string as the default value if the answer is not provided
-    });
-  
-    const submittedAnswersPayload = {};
-    examData.questions.forEach((question, index) => {
-      const questionId = question._id;
-      submittedAnswersPayload[questionId] = selectedAnswers[index] || '';
+      const selectedAnswer = selectedAnswers[index];
+      if (selectedAnswer !== undefined && selectedAnswer !== null) {
+        // Use the selected answer if it's not empty
+        responsePayload[questionNumber] = selectedAnswer;
+        submittedAnswersPayload[question._id] = selectedAnswer;
+      }
     });
   
     // Step 4: Call the API to get the exam score and store the exam result
@@ -100,11 +107,13 @@ function OnlineExamPage() {
         console.log('Exam Score:', examData.data.score);
         localStorage.setItem(`exam_${examId}_submitted`, JSON.stringify(true));
         navigate(`/result/${examData.data.score}`);
+        setIsSubmitted(true);
       })
       .catch((error) => {
         console.error('Error getting exam score:', error);
       });
   };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -125,10 +134,10 @@ function OnlineExamPage() {
   };
 
   useEffect(() => {
-    if (timer === 0) {
-      // handleSubmitExam();
+    if (timer === 0 && !isSubmitted) {
+      handleSubmitExam(); // Call the submit function when the timer reaches zero
     }
-  }, [timer]);
+  }, [timer, isSubmitted]);
 
   const saveAndNext = () => {
     if (isAnswered) {
@@ -296,6 +305,7 @@ function OnlineExamPage() {
 
     return rows;
   };
+  
   if (!examData) {
     // Exam data is not available yet, return null or a loading spinner
     return null;

@@ -13,7 +13,7 @@ const PastScoresTable = () => {
         const data = await response.json();
         setPastScores(data);
         console.log(data);
-        console.log(data.negativeCount);
+        console.log(data.NegativeCount);
       } catch (error) {
         console.error('Error fetching past scores:', error);
       }
@@ -22,9 +22,13 @@ const PastScoresTable = () => {
     fetchPastScores();
   }, [user._id]);
 
+  // const sortedScores = pastScores.slice().sort((a,b) =>  b._id.localCompare(a._id))
+  // const reverseScore = pastScores.slice().reverse();
+
   const indexOfLastScore = currentPage * scoresPerPage;
-const indexOfFirstScore = indexOfLastScore - scoresPerPage;
-const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
+  const indexOfFirstScore = indexOfLastScore - scoresPerPage;
+  const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
+
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
