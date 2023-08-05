@@ -12,9 +12,7 @@ function OnlineExamPage() {
   const [timer, setTimer] = useState(0);
   const [attemptedButUnanswered, setAttemptedButUnanswered] = useState(false);
   const [rightSectionVisible, setRightSectionVisible] = useState(true);
-  const [selectedAnswers, setSelectedAnswers] = useState(
-    new Array(questionsData.length).fill("")
-  );
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [examData, setExamData] = useState(null);
   const { examId } = useParams();
   const handleSubjectClick = (subjectName) => {
@@ -155,9 +153,27 @@ function OnlineExamPage() {
     }
   };
 
-  const handleOptionChange = (e) => {
+  const handleOptionChange = (index, checked) => {
+    const questionType = examData.questions[currentQuestionIndex].type;
     const newSelectedAnswers = [...selectedAnswers];
-    newSelectedAnswers[currentQuestionIndex] = e.target.value;
+  
+    if (!newSelectedAnswers[currentQuestionIndex]) {
+      newSelectedAnswers[currentQuestionIndex] = []; // Initialize the array if it's not present
+    }
+  
+    // For multiple-choice and multiple-correct type questions, store selected option indices
+    if (questionType === "multiple-choice" || questionType === "multiple-correct") {
+      if (checked) {
+        // If the selected option index is not in the array, add it (select)
+        newSelectedAnswers[currentQuestionIndex].push(index);
+      } else {
+        // Otherwise, remove it from the array (deselect)
+        newSelectedAnswers[currentQuestionIndex] = newSelectedAnswers[
+          currentQuestionIndex
+        ].filter((selectedIndex) => selectedIndex !== index);
+      }
+    }
+
     setSelectedAnswers(newSelectedAnswers);
     setAttemptedButUnanswered(false); // Reset to false when an option is selected.
   };
@@ -192,16 +208,66 @@ function OnlineExamPage() {
     }
   };
 
+
+  const renderOptions = () => {
+    if (!examData || !examData.questions || !examData.questions[currentQuestionIndex]) {
+      // If examData is not available yet or the current question is not available, return null or a loading state
+      return null;
+    }
+
+    const questionType = examData.questions[currentQuestionIndex].type;
+
+    if (questionType === "multiple-choice" || questionType === "multiple-correct") {
+      // For multiple-choice and multiple-correct questions, render checkboxes
+      return (
+        <div>
+          {examData.questions[currentQuestionIndex].options.map((option, index) => (
+            <label key={index} className="block text-xl font-bold mb-2">
+              <input
+                type="checkbox"
+                name={`option_${index}`}
+                checked={selectedAnswers[currentQuestionIndex]?.includes(index) || false}
+                onChange={(e) => handleOptionChange(index, e.target.checked)}
+                className="mr-2"
+              />
+              {option.imageUrl && (
+                <img
+                  src={option.imageUrl}
+                  alt={`Option ${index + 1}`}
+                  className="max-h-24 mr-2"
+                />
+              )}
+              {option.text}
+            </label>
+          ))}
+        </div>
+      );
+    } else {
+      // For text-input type questions, render an input box
+      return (
+        <div>
+          <input
+            type="text"
+            value={selectedAnswers[currentQuestionIndex]}
+            onChange={handleTextInputChange}
+            className="w-96 px-4 py-2 border border-gray-400 rounded"
+            placeholder="Enter your answer here"
+          />
+        </div>
+      );
+    }
+  };
+  
   const renderNavigationRows = () => {
     if (!examData || !examData.questions) {
       // If examData is not available yet, return an empty div
       return <div></div>;
     }
-
+  
     const rows = [];
     const totalQuestions = examData.questions.length;
     const buttonsPerRow = 3;
-
+  
     for (let i = 0; i < totalQuestions; i += buttonsPerRow) {
       const rowButtons = [];
       for (let j = i; j < i + buttonsPerRow && j < totalQuestions; j++) {
@@ -209,11 +275,13 @@ function OnlineExamPage() {
           <button
             key={j}
             onClick={() => handleQuestionNavigation(j)}
-            className={`flex-1 py-4 mr-2 rounded ${selectedAnswers !== ""
-                ? " text-black"
+            className={`flex-1 py-4 mr-2 rounded ${
+              selectedAnswers[j]?.length > 0
+                ? "text-black"
                 : "bg-red-500 text-white"
-              } ${getQuestionButtonClass(j)} ${j === currentQuestionIndex ? "bg-blue-600" : ""
-              }`}
+            } ${getQuestionButtonClass(j)} ${
+              j === currentQuestionIndex ? "bg-blue-600" : ""
+            }`}
           >
             {`Q${j + 1}`}
           </button>
@@ -225,9 +293,10 @@ function OnlineExamPage() {
         </div>
       );
     }
-
+  
     return rows;
   };
+  
   if (!examData) {
     // Exam data is not available yet, return null or a loading spinner
     return null;
@@ -287,55 +356,9 @@ function OnlineExamPage() {
                   />
                 ) : null}
                 <div>
-                  {examData.questions[currentQuestionIndex].type === "text-input" ? (
-                    <div>
-                      <input
-                        type="text"
-                        value={selectedAnswers[currentQuestionIndex]}
-                        onChange={handleTextInputChange}
-                        className="w-96 px-4 py-2 border border-gray-400 rounded"
-                        placeholder="Enter your answer here"
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      {/* Display images and options for other types of questions */}
-                      <div>
-                        {/* Display question image */}
-                        {examData.questions[currentQuestionIndex].imageUrl && (
-                          <img
-                            src={examData.questions[currentQuestionIndex].imageUrl}
-                            alt={`Question ${currentQuestionIndex + 1}`}
-                            className="max-h-96 mx-auto mb-4"
-                          />
-                        )}
-
-                        {/* Display options */}
-                        {examData.questions[currentQuestionIndex].options.map(
-                          (option, index) => (
-                            <label key={index} className="block text-xl font-bold mb-2">
-                              <input
-                                type="radio"
-                                name="option"
-                                value={option.text}
-                                checked={selectedAnswers[currentQuestionIndex] === option.text}
-                                onChange={handleOptionChange}
-                                className="mr-2"
-                              />
-                              {option.imageUrl && (
-                                <img
-                                  src={option.imageUrl}
-                                  alt={`Option ${index + 1}`}
-                                  className="max-h-24 mr-2"
-                                />
-                              )}
-                              {option.text}
-                            </label>
-                          )
-                        )}
-                      </div>
-                    </>
-                  )}
+                <div>
+                  {renderOptions()}
+                </div>
                 </div>
               </>
             )}
