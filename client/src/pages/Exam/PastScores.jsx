@@ -4,7 +4,7 @@ const PastScoresTable = () => {
   const [pastScores, setPastScores] = useState([]);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [currentPage, setCurrentPage] = useState(1);
-  const [scoresPerPage] = useState(3);
+  const [scoresPerPage] = useState(4);
 
   useEffect(() => {
     const fetchPastScores = async () => {
@@ -13,6 +13,7 @@ const PastScoresTable = () => {
         const data = await response.json();
         setPastScores(data);
         console.log(data);
+        console.log(data.negativeCount);
       } catch (error) {
         console.error('Error fetching past scores:', error);
       }
@@ -22,8 +23,8 @@ const PastScoresTable = () => {
   }, [user._id]);
 
   const indexOfLastScore = currentPage * scoresPerPage;
-  const indexOfFirstScore = indexOfLastScore - scoresPerPage;
-  // const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
+const indexOfFirstScore = indexOfLastScore - scoresPerPage;
+const currentScores = pastScores.slice(indexOfFirstScore, indexOfLastScore);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -45,19 +46,19 @@ const PastScoresTable = () => {
                     <tr className="font-semibold tracking-wide text-left text-gray-900 uppercase bg-gray-300 border-b border-gray-600 text-md">
                       <th className="px-4 py-3">SN</th>
                       <th className="px-4 py-3">Exam Name</th>
-                      <th className="px-4 py-3">Score</th>
+                      <th className="px-4 py-3">Student Score</th>
                       <th className="px-4 py-3">Max Marks</th>
-                      {/* <th className="px-4 py-3"> Marks</th> */}
+                      <th className="px-4 py-3">No. of Negative Question</th>
                     </tr>
                   </thead>
                   <tbody className="bg-gray-100">
-                    {pastScores.map((score, index) => (
+                  {currentScores.map((score, index) => (
                       <tr className="text-gray-700" key={index}>
                         <td className="px-4 py-3 border ">{index + 1}</td>
                         <td className="px-4 py-3 border ">{score.examName}</td>
                         <td className="px-4 py-3 border">{score.score}</td>
-                        {/* <td className="px-4 py-3 border">{score.score}</td> */}
                         <td className="px-4 py-3 border">{score.maxMarks}</td>
+                        <td className="px-4 py-3 border">{score.NegativeCount}</td>
                       </tr>
                     ))}
                   </tbody>

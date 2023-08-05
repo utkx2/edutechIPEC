@@ -23,6 +23,9 @@ const examResultsSchema = new mongoose.Schema({
     score: {
       type: Number,
       required: true
+    },
+    negativeCount: {
+      type: Number
     }
   }],
 });

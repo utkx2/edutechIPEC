@@ -18,17 +18,18 @@ const getExamNameAndScoreByUserId = async (req, res) => {
 
     for (const examResult of examResults) {
       const userExamResult = examResult.results.find((result) => result.userId.toString() === userId);
-      console.log(userExamResult);
+      console.log(userExamResult, "userExamResult");
 
       if (userExamResult) {
         // Find the exam based on examId in the results
         const exam = await Exam.findById(examResult.examId);
-        // console.log(exam);
+        console.log(userExamResult);
         if (exam) {
           userExamResults.push({
             examName: exam.name,
             score: userExamResult.score,
             maxMarks: exam.maxMarks,
+            NegativeCount: userExamResult.negativeCount
           });
         }
       }

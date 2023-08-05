@@ -118,7 +118,8 @@ class ExamController {
         return res.status(404).json({ message: 'Exam not found.' });
       }
 
-      let totalScore = 100;
+      let totalScore = 0;
+      let NegativeCount = 0;
       let questionMarks = exam.questionMarks;
       let totalMarks = exam.maxMarks;
       for (const question of exam.questions) {
@@ -139,17 +140,19 @@ class ExamController {
             totalScore = totalScore + questionMarks;
           } else {
             totalScore -= exam.mcqNegativeMarks;
+            NegativeCount++;
           }
         } else if (question.type === 'text-input') {
           if (submittedAnswers[question._id].toLowerCase() === question.correctTextInputAnswer.toLowerCase()) {
             totalScore += questionMarks;
           } else {
             totalScore -= exam.textNegativeMarks;
+            NegativeCount++;
           }
         }
       }
       console.log(totalScore);
-      
+      console.log(NegativeCount);
       const existingExamResult = await ExamResults.findOne({ examId: exam._id });
 
       if (existingExamResult) {
@@ -157,6 +160,7 @@ class ExamController {
           userId: userId,
           response: response,
           score: totalScore,
+          negativeCount: NegativeCount
         });
 
         await existingExamResult.save();
@@ -167,6 +171,7 @@ class ExamController {
             userId: userId,
             response: response,
             score: totalScore,
+            negativeCount: NegativeCount
           }],
         });
 

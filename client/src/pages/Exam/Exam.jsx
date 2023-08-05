@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../../config'
+import { Navigate, useNavigate } from "react-router-dom";
 const questionsData = [
 
 ];
@@ -15,6 +17,8 @@ function OnlineExamPage() {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [examData, setExamData] = useState(null);
   const { examId } = useParams();
+  const navigate = useNavigate();
+  // const [submitted, setSubmitted] = useState(false);
   const handleSubjectClick = (subjectName) => {
     const selectedSubject = examData.subjects.find(
       (subject) => subject.name === subjectName
@@ -25,10 +29,6 @@ function OnlineExamPage() {
     }
   };
 
-  const toggleRightSectionVisibility = () => {
-    setRightSectionVisible((prevVisible) => !prevVisible);
-  };
-
   const [visitedQuestions, setVisitedQuestions] = useState(
     new Array(questionsData.length).fill(false)
   );
@@ -36,16 +36,17 @@ function OnlineExamPage() {
   useEffect(() => {
     const fetchExamData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/exam/student-exam/${examId}`);
+        const response = await fetch(`${BASE_URL}exam/student-exam/${examId}`)
         if (!response.ok) {
           throw new Error("Failed to fetch exam data");
         }
         const data = await response.json();
         setExamData(data.exam);
+        setTimer(data.exam.totalTime)
         console.log(data.exam);
+        console.log(data.exam.totalTime);
       } catch (error) {
         console.error(error);
-        // Handle error here if necessary
       }
     };
 
@@ -68,30 +69,42 @@ function OnlineExamPage() {
   };
 
   const handleSubmitExam = (e) => {
-    e.preventDefault();
-    // Log the exam responses to the console
-    console.log('Exam Responses:', examData);
+    // e.preventDefault();
+    // Log the exam examData to the console
+    console.log('Exam examData:', examData);
     const user = JSON.parse(localStorage.getItem("user"));
-
-    // Step 3: Call the API to get the exam score and store the exam result
+  
+    // Step 3: Convert examData and selectedAnswers to the desired format
+    const responsePayload = {};
+    examData.questions.forEach((question, index) => {
+      const questionNumber = index + 1;
+      responsePayload[questionNumber] = selectedAnswers[index] || ''; // Use an empty string as the default value if the answer is not provided
+    });
+  
+    const submittedAnswersPayload = {};
+    examData.questions.forEach((question, index) => {
+      const questionId = question._id;
+      submittedAnswersPayload[questionId] = selectedAnswers[index] || '';
+    });
+  
+    // Step 4: Call the API to get the exam score and store the exam result
     const userId = user._id;
-
-    axios.post(`http://localhost:3000/api/exam/getscore/${examId}`, {
-      submittedAnswers: examData,
+    console.log(responsePayload);
+    console.log(submittedAnswersPayload);
+    axios.post(`${BASE_URL}exam/getscore/${examId}`, {
+      response: responsePayload,
+      submittedAnswers: submittedAnswersPayload,
       userId: userId,
-      response: selectedAnswers
     })
       .then((examData) => {
         console.log('Exam Score:', examData.data.score);
-        console.log('examData:', examData);
-        console.log('Exam Max Score:', examData.data.maxMarks);
-        // navigate(`/result/${exam.data.score}`)
+        localStorage.setItem(`exam_${examId}_submitted`, JSON.stringify(true));
+        navigate(`/result/${examData.data.score}`);
       })
       .catch((error) => {
         console.error('Error getting exam score:', error);
       });
   };
-
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -113,20 +126,9 @@ function OnlineExamPage() {
 
   useEffect(() => {
     if (timer === 0) {
-      SubmitExam();
+      // handleSubmitExam();
     }
-  })
-
-  const SubmitExam = (req, res) => {
-    // alert("You have completed the exam!");
-  }
-
-  const submitAnswer = () => {
-    // Save the selectedAnswer to your data storage (e.g., state or backend)
-    // You need to implement the actual data storage logic here
-    alert(`Are you really want to submit the exam?`);
-  };
-
+  }, [timer]);
 
   const saveAndNext = () => {
     if (isAnswered) {
@@ -263,11 +265,11 @@ function OnlineExamPage() {
       // If examData is not available yet, return an empty div
       return <div></div>;
     }
-  
+
     const rows = [];
     const totalQuestions = examData.questions.length;
     const buttonsPerRow = 3;
-  
+
     for (let i = 0; i < totalQuestions; i += buttonsPerRow) {
       const rowButtons = [];
       for (let j = i; j < i + buttonsPerRow && j < totalQuestions; j++) {
@@ -275,13 +277,11 @@ function OnlineExamPage() {
           <button
             key={j}
             onClick={() => handleQuestionNavigation(j)}
-            className={`flex-1 py-4 mr-2 rounded ${
-              selectedAnswers[j]?.length > 0
-                ? "text-black"
+            className={`flex-1 py-4 mr-2 rounded ${selectedAnswers !== ""
+                ? " text-black"
                 : "bg-red-500 text-white"
-            } ${getQuestionButtonClass(j)} ${
-              j === currentQuestionIndex ? "bg-blue-600" : ""
-            }`}
+              } ${getQuestionButtonClass(j)} ${j === currentQuestionIndex ? "bg-blue-600" : ""
+              }`}
           >
             {`Q${j + 1}`}
           </button>
@@ -293,10 +293,9 @@ function OnlineExamPage() {
         </div>
       );
     }
-  
+
     return rows;
   };
-  
   if (!examData) {
     // Exam data is not available yet, return null or a loading spinner
     return null;
