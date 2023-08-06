@@ -4,6 +4,9 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from '../../../../config';
 import axios from 'axios';
+import PhotoUploader from './PhotoUploader';
+import StudentPhotoUploader from './StudentPhotoUploader';
+import FacultyPhotoUploader from './FacultyPhotoUploader';
 
 export default function Home() {
   const initialCarousel = {
@@ -49,13 +52,75 @@ export default function Home() {
     Programs: [initialPrograms]
   };
 
-
-
   const [carousel, setCarousel] = useState(initialDataCarousel);
   const [faculty, setFaculty] = useState(initialDataFaculty);
   const [students, setStudents] = useState(initialDataStudents);
   const [programs, setPrograms] = useState(initialDataPrograms);
+  const [photos, setPhotos] = useState([]);
+  const [photoNumber, setPhotoNumber] = useState(null);
+  const [studentPhotos, setStudentPhotos] = useState([]);
+  const [boolean, setBoolean] = useState(false);
+  //const photo = [];
+  console.log(photos);
+  useEffect(() => {
+    setBoolean(true);
+  }, [studentPhotos])
+  console.log(boolean);
+  if (boolean) {
+    const updatedStudents = {
+      Students: students.Students.map((student, i) =>
+        i === photoNumber ? { ...student, studentImg: studentPhotos[photoNumber] } : student
+      ),
+    };
 
+    // Now set the updated students object as the new state
+    setStudents(updatedStudents);
+    setBoolean(false)
+    console.log(students.Students)
+  }
+  // if (photos) {
+  //   setCarousel({
+  //     Carousels: photos.map(imageLink => ({
+  //       fileLink: imageLink
+  //     })
+  //     )
+  //   })
+  // }
+  console.log(faculty);
+  console.log(carousel);
+  console.log(photoNumber);
+  const handleItemClick = (index) => {
+    // Store the clicked index in the state variable
+    setPhotos(carousel.Carousels);
+    setPhotoNumber(index);
+    console.log(carousel.Carousels[index].fileLink);
+    carousel.Carousels[index].fileLink = photos[index];
+    console.log(carousel.Carousels[index].fileLink);
+  };
+  console.log(studentPhotos);
+  console.log(students.Students);
+
+  const studentsObj = students.Students;
+  const imageLinks = studentsObj.map((student) => student.studentImg);
+  const handleItemClickStudent = (index) => {
+    // Store the clicked index in the state variable
+    if (photoNumber == null) {
+      setStudentPhotos(imageLinks);
+    }
+    console.log("clicked");
+    setPhotoNumber(index);
+    // studentPhotos[index] = undefined;
+    console.log(students.Students[index]);
+    console.log(studentPhotos[index]);
+    console.log(students.Students[index].studentImg);
+    const updatedStudents = {
+      Students: students.Students.map((student, i) =>
+        i === photoNumber ? { ...student, studentImg: studentPhotos[photoNumber] } : student
+      ),
+    };
+    setStudents(updatedStudents);
+    // console.log(carousel.Carousels[index].fileLink);
+  };
 
   const handleCarouselChange = (index, event) => {
     const { name, value } = event.target;
@@ -330,9 +395,6 @@ export default function Home() {
         alert("Oops something went wrong!!!");
       });
 
-
-
-
     // Reset the form after submission
     //   setFormData(initialData);
   };
@@ -362,7 +424,7 @@ export default function Home() {
                     {carousel.Carousels.map((carousel, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
                         <div className="flex items-center justify-between gap-4">
-                          <div className="grid grid-cols-1 gap-4">
+                          <div className="grid grid-cols-1 gap-4 ">
                             <label className="relative block mb-2 font-semibold">
                               {`Carousel Link ${index + 1}`}
                               <input
@@ -375,13 +437,18 @@ export default function Home() {
                               />
                             </label>
                           </div>
-                          <button
-                            className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
-                            type="button"
-                            onClick={() => handleRemoveCarousel(index)}
-                          >
-                            Remove Link
-                          </button>
+                          <div className='ml-20 flex '>
+                            <div onClick={() => handleItemClick(index)}>
+                              <PhotoUploader photos={photos} onChange={setPhotos} index={index} />
+                            </div >
+                            <button
+                              className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                              type="button"
+                              onClick={() => handleRemoveCarousel(index)}
+                            >
+                              Remove Link
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -413,6 +480,7 @@ export default function Home() {
                           </label>
                           <label className="relative block mb-2 font-semibold">
                             {`Student ${index + 1} Image`}
+
                             <input
                               required
                               type="text"
@@ -480,8 +548,11 @@ export default function Home() {
                             />
                           </label>
                         </div>
+                        <div onClick={() => handleItemClickStudent(index)}>
+                          <StudentPhotoUploader photos={students} onChange={setStudents} index={index} />
+                        </div>
                         <button
-                          className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                          className="px-4 py-2 mt-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                           type="button"
                           onClick={() => handleRemoveStudent(index)}
                         >
@@ -560,7 +631,11 @@ export default function Home() {
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
+                          <div >
+                            <FacultyPhotoUploader photos={faculty} onChange={setFaculty} index={index} />
+                          </div>
                           <div className="mt-6">
+
                             <button
                               className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                               type="button"

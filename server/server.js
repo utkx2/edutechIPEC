@@ -8,6 +8,9 @@ const app = express();
 const fs = require('fs');
 const multer = require('multer');
 const mongoose = require('mongoose');
+const { promisify } = require('util');
+const writeFileAsync = promisify(fs.writeFile);
+const cloudinary = require('cloudinary').v2;
 
 // Middleware
 app.use(cors());
@@ -36,6 +39,14 @@ const carousel = require('./routes/CarouselRoute');
 const download = require('./routes/DownloadRoute');
 const results = require('./routes/ResultsRoute');
 const examResults = require('./routes/ExamResults');
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 
 // Routes
 app.get('/api', (req, res) => {
@@ -124,6 +135,45 @@ app.post('/api/upload', async (req, res) => {
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
+
+// upload the photo of home section of admin
+app.use('/api/home/', express.static(path.join(__dirname, '/uploads').replace(/\\/g, '/')));
+const multerMiddleware = multer();
+app.post('/api/home/uploadImage', multerMiddleware.array('photos', 100), async (req, res) => {
+  console.log(req.body);
+  try {
+    const uploadedFiles = [];
+
+    for (const file of req.files) {
+      // Convert the file buffer to a temporary file on the server
+      const tempFilePath = `uploads/${Date.now()}_${file.originalname}`;
+      await writeFileAsync(tempFilePath, file.buffer);
+
+      // Upload the temporary file to Cloudinary
+      const uploadedFile = await cloudinary.uploader.upload(tempFilePath, {
+        folder: 'uploads', // Specify the folder in Cloudinary where the file should be saved
+        use_filename: true // Use the original filename
+      });
+
+      // Store the public URL of the uploaded file in the array
+      uploadedFiles.push(uploadedFile.secure_url);
+
+      // Delete the temporary file from the server
+      fs.unlinkSync(tempFilePath);
+    }
+    console.log(uploadedFiles);
+    res.json(uploadedFiles);
+
+  }
+  catch (error) {
+    console.error('Error uploading file to Cloudinary:', error);
+    res.status(500).json({ error: 'Error uploading file to Cloudinary' });
+  }
+});
+
+
+
+
 
 // Serve the React app for all other routes
 app.get('*', (req, res) => {

@@ -33,3 +33,67 @@ router.get('/student-exam/:id', examController.getExamByIdWithoutCorrect);
 router.post('/getscore/:id', examController.getExamScore);
 
 module.exports = router;
+
+
+
+// {
+//     "name": "Sample Exam",
+//         "instructions": "These are the exam instructions.",
+//             "questions": [
+//                 {
+//                     "text": "What is the capital of France?",
+//                     "imageUrl": "https://example.com/question-image.jpg",
+//                     "options": [
+//                         {
+//                             "text": "London",
+//                             "imageUrl": "https://example.com/option1-image.jpg"
+//                         },
+//                         {
+//                             "text": "Rome",
+//                             "imageUrl": "https://example.com/option4-image.jpg"
+//                         }
+//                     ],
+//                     "correctOption": [1],
+//                     "type": "multiple-choice"
+//                 },
+//                 {
+//                     "text": "What is 2 + 2?",
+//                     "imageUrl": "https://example.com/question2-image.jpg",
+//                     "options": [
+//                         {
+//                             "text": "3"
+//                         },
+//                         {
+//                             "text": "4"
+//                         },
+//                         {
+//                             "text": "6"
+//                         }
+//                     ],
+//                     "correctOption": [1],
+//                     "type": "multiple-choice"
+//                 },
+//                 {
+//                     "text": "Solve for x: 2x + 5 = 15",
+//                     "type": "text-input",
+//                     "correctTextInputAnswer": "5"
+//                 }
+//             ],
+//                 "maxMarks": 100,
+//                     "questionMarks": 5,
+//                         "textNegativeMarks": 1,
+//                             "mcqNegativeMarks": 2,
+//                                 "totalTime": 120,
+//                                     "subjects": [
+//                                         {
+//                                             "name": "Mathematics",
+//                                             "startingQuestionNumber": 1,
+//                                             "endingQuestionNumber": 2
+//                                         },
+//                                         {
+//                                             "name": "General Knowledge",
+//                                             "startingQuestionNumber": 3,
+//                                             "endingQuestionNumber": 3
+//                                         }
+//                                     ]
+// }

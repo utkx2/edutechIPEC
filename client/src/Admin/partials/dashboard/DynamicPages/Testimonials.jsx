@@ -9,6 +9,60 @@ export default function Testimonials() {
   const [userData, setUserData] = useState({});
   const [cards, setCards] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [questions, setQuestions] = useState([]);
+  const [imageUrl1, setImageUrl1] = useState("");
+
+
+
+  const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
+    try {
+      console.log(option);
+      const formData = new FormData();
+      formData.append("file", imageBlob);
+      formData.append("upload_preset", "abfrwxrc");
+      fetch(`https://api.cloudinary.com/v1_1/doaxcuxex/upload`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the Cloudinary response here
+          console.log("Cloudinary Response:", data);
+          const imageUrl = data.secure_url;
+          setImageUrl1(imageUrl);
+          if (option) {
+            const cards = [...cards];
+            cards[index].imageUrl = imageUrl1;
+            setCards(cards);
+          } else {
+            const cards1 = [...cards];
+            cards1[index].imageUrl = imageUrl1;
+
+            console.log(cards1[index].imageUrl);
+            setCards(cards1);
+          }
+          return imageUrl;
+        })
+        .catch((error) => {
+          console.error("Error uploading image to Cloudinary:", error);
+        });
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+    }
+  };
+  const handleUpload = async (index, optionIndex, option) => {
+    console.log(index);
+    try {
+      const clipboardImage = await navigator.clipboard.read();
+      const imageBlob = clipboardImage[0].types.includes("image/png")
+        ? await clipboardImage[0].getType("image/png")
+        : await clipboardImage[0].getType("image/jpeg");
+      console.log(imageBlob);
+      handleCloudinaryUpload(imageBlob, index, optionIndex, option);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -129,6 +183,13 @@ export default function Testimonials() {
                             placeholder="ImageUrl"
                             required
                           />
+                          <div>
+                            <button
+                              onClick={() => handleUpload(index, 0, false)}
+                            >
+                              Upload Image
+                            </button>
+                          </div>
                           <input
                             type="text"
                             name="examName"
