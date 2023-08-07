@@ -2,6 +2,8 @@ import { useState } from "react";
 import IndianStates from "../constants/IndianStates";
 // import { ProgressBar, Step } from "react-step-progress-bar";
 import { BASE_URL } from "../config";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Registration = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -94,10 +96,12 @@ const Registration = () => {
             if (response.ok) {
                 const responseData = await response.json();
                 console.log('Form submitted successfully', responseData);
-                alert('Form submitted successfully');
+                toast.success("admin card sent on your mail");
+                //   alert('Form submitted successfully');
             } else {
                 console.log('Form submission failed', response.statusText);
-                alert('Form submission failed');
+                toast.error("error during submission of form")
+                //  alert('Form submission failed');
             }
         } catch (error) {
             console.log('Error submitting form', error);
@@ -644,6 +648,7 @@ const Registration = () => {
               Submit
             </button>
                     </form>
+                    <ToastContainer />
                 </div>
             </div>
         </div>

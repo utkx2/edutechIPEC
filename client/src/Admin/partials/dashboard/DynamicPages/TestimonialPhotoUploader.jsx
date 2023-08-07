@@ -4,7 +4,7 @@ import axios from "axios";
 import { BASE_URL } from '../../../../config';
 
 
-export default function PhotoUploader({ photos, onChange, index }) {
+export default function TestimonialPhotoUploader({ photos, onChange, index }) {
 
     const [photoslink, setPhotoslink] = useState('');
     const [message, setMessage] = useState('');
@@ -22,11 +22,14 @@ export default function PhotoUploader({ photos, onChange, index }) {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(response => {
             const { data: filenames } = response;
-            setPhotoslink(filenames[0]);
+            // setPhotoslink(filenames[0]);
             console.log(filenames[0]);
             console.log(photos)
-            photos[index].fileLink = (filenames[0]);
-            console.log(photos);
+            // photos[index].fileLink = (filenames[0]);
+            console.log(photos, index);
+            console.log(photos[index].imageUrl);
+            photos[index].imageUrl = filenames[0];
+            console.log(photos)
             onChange(photos);
             setMessage("photo updated ");
             setShowMessage(true)
@@ -62,7 +65,7 @@ export default function PhotoUploader({ photos, onChange, index }) {
     )
 }
 
-PhotoUploader.propTypes = {
+TestimonialPhotoUploader.propTypes = {
     photos: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired

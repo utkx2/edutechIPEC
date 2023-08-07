@@ -3,6 +3,38 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/keys");
 require('dotenv').config();
+const nodemailer = require('nodemailer');
+
+let otpGlobal;
+
+const sendEmail = async (mail) => {
+    try {
+        // Create a Nodemailer transporter
+        const transporter = nodemailer.createTransport({
+            service: 'gmail', // e.g., 'gmail'
+            auth: {
+                user: 't.guptacool1909@gmail.com',
+                pass: 'hdquiboomzjchpiz',
+            },
+        });
+        // Set up email data
+        var OTP1 = Math.floor(Math.random() * 10000) + 10000;
+        otpGlobal = OTP1;
+        const mailOptions = {
+            from: 'palkeshpatna@gmail.com',
+            to: `${mail}`,
+            subject: 'OTP verification',
+            text: `OTP: ${OTP1}`,
+        };
+        // Send the email with attached PDF
+        console.log(otpGlobal);
+        await transporter.sendMail(mailOptions);
+        return true;
+
+    } catch (err) {
+        console.error('Error sending email:', err);
+    }
+};
 
 class User {
 
@@ -60,6 +92,34 @@ class User {
         }
     }
 
+    async sendMail(req, res) {
+        let mail = req.params.userEmail;
+        const status = await sendEmail(mail);
+        if (status) {
+            res.json({ status: true });
+        }
+    }
+
+    async verify(req, res) {
+
+        try {
+            const {
+                otp
+            } = req.body;
+            console.log(otp);
+            if (Number(otp) === otpGlobal) {
+                res.json({ status: true, message: "success" });
+            }
+            else {
+                res.status(500).json({ error: 'Invalid OTP' });
+            }
+            // Check if email already exists in the database
+
+        } catch (error) {
+            // If there's an error, handle it here
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
     async postSignIn(req, res) {
         const { identifier, userPassword } = req.body;
 

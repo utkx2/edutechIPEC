@@ -7,6 +7,11 @@ const { isAdmin, verifyToken, isNotUser } = require("../middleware/auth")
 //Sign Up New User 
 router.post("/signup", usersController.postSignup);
 
+router.post('/sendMail/:userEmail', usersController.sendMail);
+
+// Verifying User
+router.post('/verify', usersController.verify);
+
 //Sign In New User 
 router.post("/signin", usersController.postSignIn);
 

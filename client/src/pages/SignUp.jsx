@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../assets/signup.jpg'
-import { BASE_URL } from "../config";
+import { BASE_URL } from '../config';
+import axios from "axios";
 
 const Signup = () => {
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -25,33 +25,19 @@ const Signup = () => {
         e.preventDefault();
         console.log(formData)
         // Make API request with form data
-        fetch(`${BASE_URL}user/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                // Handle response data
-                console.log(data);
-                if (data.error) {
-                    setErrorMessage(data.error);
-                } else {
-                    // Store response in local storage
-                    localStorage.setItem("token", JSON.stringify(data.token));
-                    // Navigate to the desired page
-                    const user = data.user
-                    localStorage.setItem("user", JSON.stringify(user));
-                    navigate("/");
+        axios
+            .post(`${BASE_URL}user/sendMail/${formData.email}`).then((response) => {
+                console.log(response.data);
+                if (response.data.status) {
+                    navigate("/verify-otp", { state: formData });
                 }
-            })
-            .catch((error) => {
-                // Handle error
-                console.log(error);
-            });
+                else {
+                    console.log("error");
+                }
+            }
+            )
     };
+    // navigate("/verify-otp");
 
     return (
         <>

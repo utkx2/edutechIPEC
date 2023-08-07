@@ -20,6 +20,7 @@ import ResultPage from '../pages/resultPage';
 import ExamPage from '../pages/Exam/ExamList';
 import Media from '../pages/Media';
 import Downloads from '../pages/Downloads';
+import VerificationPage from '../pages/VerificationPage';
 
 const MainRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const MainRoutes = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/verify-otp" element={<VerificationPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/download" element={<Downloads />} />
         <Route path="/results" element={<Result />} />

@@ -1,7 +1,40 @@
 const express = require('express');
 const Registrations = require('../models/RegistrationsModel');
 const router = express.Router();
+const PDFDocument = require('pdfkit');
+const nodemailer = require('nodemailer');
+// const axios = require('axios');
 
+
+const sendEmail = async (pdfBuffer, email) => {
+    try {
+        // Create a Nodemailer transporter
+        const transporter = nodemailer.createTransport({
+            service: 'gmail', // e.g., 'gmail'
+            auth: {
+                user: 't.guptacool1909@gmail.com',
+                pass: 'hdquiboomzjchpiz',
+            },
+        });
+        // Set up email data
+        const mailOptions = {
+            from: 'palkeshpatna@gmail.com',
+            to: `${email}`,
+            subject: 'IPEC Exam Admit Card',
+            text: 'Please find the PDF attached.',
+            attachments: [
+                {
+                    filename: 'AdmitCard.pdf',
+                    content: pdfBuffer,
+                },
+            ],
+        };
+        // Send the email with attached PDF
+        await transporter.sendMail(mailOptions);
+    } catch (err) {
+        console.error('Error sending email:', err);
+    }
+};
 
 // http://localhost:3000/api/registration/upload
 router.post('/upload', async (req, res) => {
@@ -9,6 +42,54 @@ router.post('/upload', async (req, res) => {
         phoneNumber, gender, selectedClass, fatherName, fatherNumber, motherName, motherNumber, dob, category, addressLine1, addressLine2, addressLine3, city, state, zipCode, message } = req.body;
     console.log(selectedClass, category);
     console.log(req.body);
+
+    const dataFromAPI = req.body;
+
+    const doc = new PDFDocument();
+    const buffers = [];
+
+    doc.on('data', (chunk) => buffers.push(chunk));
+    doc.on('end', () => {
+        const pdfBuffer = Buffer.concat(buffers);
+        sendEmail(pdfBuffer, email);
+    });
+
+    const columns = 2;
+    const columnGap = 20;
+    const columnWidth = (doc.page.width - columnGap) / columns;
+
+    // Function to add text to the PDF in two columns
+    const addToColumns = (text1, text2) => {
+        doc.text(text1, { width: columnWidth, align: 'left' })
+            .text(text2, { width: columnWidth, align: 'left' })
+            .moveDown(0.5); // Add some space between rows
+    };
+
+    // Add text to the PDF in two columns
+    doc.fontSize(18).text('Personal Information', { align: 'center' });
+    addToColumns('Full Name:', `${firstName} ${lastName}`);
+    addToColumns('Email:', email);
+    addToColumns('Phone Number:', phoneNumber);
+    addToColumns('Gender:', gender);
+    addToColumns('Selected Class:', selectedClass);
+
+    doc.fontSize(18).text('Parent Information', { align: 'center' });
+    addToColumns(`Father's Name:`, fatherName);
+    addToColumns(`Father's Phone Number:`, fatherNumber);
+
+    doc.fontSize(18).text('Address', { align: 'center' });
+
+    addToColumns('City:', city);
+    addToColumns('State:', state);
+
+    doc.fontSize(18).text('Other Information', { align: 'center' });
+    addToColumns('Date of Birth:', dob);
+    addToColumns('Category:', category);
+
+    doc.end();
+
+
+
     try {
         const newRegistrations = new Registrations({
             firstName, lastName, email,
