@@ -31,6 +31,6 @@ const QuickLinksSchema = new mongoose.Schema({
     quickLinks: [QuickLinks], // Array of faculty objects using the FacultySchema
 });
 
-const FacultiesModel = mongoose.model('quickLinks', QuickLinksSchema);
+const QuickLinksModel = mongoose.model('quickLinks', QuickLinksSchema);
 
-module.exports = FacultiesModel;
+module.exports = QuickLinksModel;

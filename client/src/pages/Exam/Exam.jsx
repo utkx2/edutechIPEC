@@ -81,7 +81,7 @@ function OnlineExamPage() {
     // Log the exam examData to the console
 
     if (!examData) {
-      // console.error('ExamData');
+      console.error('ExamData');
       return;
     }
 

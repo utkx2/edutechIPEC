@@ -39,6 +39,7 @@ const carousel = require('./routes/CarouselRoute');
 const download = require('./routes/DownloadRoute');
 const results = require('./routes/ResultsRoute');
 const examResults = require('./routes/ExamResults');
+const quickLinkHomePage = require('./routes/QuickLinksRoute');
 
 
 cloudinary.config({
@@ -79,7 +80,7 @@ app.use('/api/facultyHomePage', facultyHomePage);
 app.use('/api/carousel', carousel);
 app.use('/api/download', download);
 app.use('/api/results', results);
-
+app.use('/api/QuickLinkHomePage', quickLinkHomePage)
 
 const imageSchema = new mongoose.Schema({
   name: String,
@@ -89,6 +90,7 @@ const Image = mongoose.model('Image', imageSchema);
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
 
 app.get('/api/image/:id', async (req, res) => {
   try {

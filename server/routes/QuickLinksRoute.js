@@ -1,34 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const FacultyCards = require('../models/QuickLinks');
+const QuickLinksModel = require('../models/QuickLinksModel');
 
-// http://localhost:3000/api/facultyHomePage/get
+// http://localhost:3000/api/QuickLinkHomePage/get
 router.get('/get', async (req, res) => {
     try {
-        const facultyHomePageCards = await FacultyCards.find();
-        res.json(facultyHomePageCards);
+        const QuickLinksHomePageCards = await QuickLinksModel.find();
+        res.json(QuickLinksHomePageCards);
     }
     catch (error) {
-        console.error('error fetching the student cards', error);
+        console.error('error fetching the Quick Links cards', error);
         return res.status(500).json(error);
     }
 });
 
 
-// http://localhost:3000/api/facultyHomePage/upload
+// http://localhost:3000/api/QuickLinkHomePage/upload
 router.post('/upload', async (req, res) => {
     try {
-        const facultyData = req.body; // JSON object with faculty information
+        const quickLinksData = req.body; // JSON object with faculty information
         //      console.log(req.body);
-
-        const update = { facultyMembers: facultyData };
+        console.log(quickLinksData);
+        const update = { quickLinks: quickLinksData };
         // console.log(update);
         // Use findOneAndUpdate without filter (it will find the only entry in the collection)
-        const updatedFacultyList = await FacultyCards.findOneAndUpdate({}, update, {
+        const updatedQuickLinksList = await QuickLinksModel.findOneAndUpdate({}, update, {
             new: true,
             upsert: true,
         });
-        res.json({ message: 'faculty card added successfully', card: updatedFacultyList });
+        res.json({ message: 'Quick Links card added successfully', card: updatedQuickLinksList });
     }
     catch (error) {
         console.error('error occured', error);
@@ -36,23 +36,17 @@ router.post('/upload', async (req, res) => {
     }
 });
 
-// http://localhost:3000/api/facultyHomePage/edit/:id
+// http://localhost:3000/api/QuickLinkHomePage/edit/:id
 router.put('/edit/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const {
-            collegeName, name,
-            facultyImg, classroom, experience
-        } = req.body;
-        const updatedCard = await FacultyCards.findByIdAndUpdate(
+        const data = req.body;
+        const updatedCard = await QuickLinksModel.findByIdAndUpdate(
             id,
-            {
-                collegeName, name,
-                facultyImg, classroom, experience
-            },
+            { data },
             { new: true } // This option returns the updated document
         );
-        res.json({ message: 'Student home page card updated successfully', card: updatedCard });
+        res.json({ message: 'Quick Links home page card updated successfully', card: updatedCard });
     }
     catch (error) {
         console.error('error occured', error);
@@ -60,11 +54,11 @@ router.put('/edit/:id', async (req, res) => {
     }
 });
 
-// http://localhost:3000/api/facultyHomePage/delete/:id
+// http://localhost:3000/api/QuickLinkHomePage/delete/:id
 router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        await FacultyCards.findByIdAndRemove(id);
+        await QuickLinksModel.findByIdAndRemove(id);
         res.json({ message: 'the card has been removed successfully' });
     }
     catch (error) {
