@@ -210,7 +210,7 @@ function Home() {
           Quick Links
         </h1>
 
-        <div className="flex items-center justify-center py-8">
+        {/* <div className="flex items-center justify-center py-8">
           <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6 max-w-[1244px]">
             <Link to={'/media'} className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
               Press & Media
@@ -225,7 +225,33 @@ function Home() {
               IPEC Assessment
             </div>
           </div>
+        </div> */}
+        <div className='mt-10 bg-[#d1e9f9] py-10'>
+        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
+        <div className='flex items-center justify-center py-8 '>
+          <div className='grid gap-8 md:grid-cols-3 '>
+
+            {faculty.map((facultyData) => (
+              <div
+                key={facultyData._id}
+                className="w-[340px] bg-white mt-5 shadow-lg rounded-[16px] p-3 border-4 border-[#1f1d5a]"
+              >
+                <img
+                  src={facultyData.facultyImg}
+                  alt="student"
+                  className="h-[280px] w-full rounded-[8px]"
+                />
+                <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
+                  <div className="text-lg font-bold">{facultyData.name}</div>
+                  <div>{facultyData.classroom}</div>
+                  <div>{facultyData.collegeName}</div>
+                  <div>{facultyData.experience}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+      </div>
       </div>
 
 

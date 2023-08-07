@@ -3,7 +3,7 @@ import Logo from '../assets/logo.jpg'
 import Student from '../assets//student-img.png'
 import AIR from '../assets/air.png'
 import Example from './carousel';
-
+import { Link } from 'react-router-dom';
 function Footer() {
   const lowernav = [
     { name: 'mission' },
@@ -19,28 +19,25 @@ function Footer() {
   ]
 
   const footerlinks1 = [
-    { name: 'ipec edge' },
-    { name: 'Video' },
-    { name: 'ipec Centers' },
-    { name: 'business partners' },
-    { name: 'iit-jee', colorChange: true },
-    { name: 'medical', colorChange: true },
-    { name: 'foundation', colorChange: true },
-    { name: 'results', colorChange: true },
+    { name: 'HOME', link: '/' },
+    { name: 'MISSION', link: '/mission' },
+    { name: 'COURSE', link: '/course' },
+    { name: 'Result', link: '/results' },
+    { name: 'MEDIA', link: '/media' },
+    { name: 'ABOUT IPEC', link: '/about' },
+    { name: 'WHY IPEC', link: '/why' },
+    { name: 'CONTACT US', link: '/contact' },
+    { name: 'REGISTRATION FORM', link: '/registration' },
   ]
   const footerlinks2 = [
     { name: 'Terms & Conditions' },
     { name: 'Refund Policy' },
     { name: 'Privacy Policy' },
-    { name: 'Transfer Policy' },
-    { name: 'Facilitation Policy' },
-    { name: 'Corporate Policies' },
-    { name: 'CSR Policy' },
-    { name: 'Modes of Payment' },
+
   ]
 
   return (
-    <div className="bg-[#343362] w-full">
+    <div className="bg-[#343362] w-full relative">
 
       {/* upper foot */}
       <div className="flex items-center justify-center py-8">
@@ -57,14 +54,14 @@ function Footer() {
                     className={`my-3 text-sm uppercase cursor-pointer ${
                       footLink.colorChange ? 'text-yellow-400' : ''
                     }`}
-                  >
+                  ><Link to={footLink.link}>
                     {footLink.name}
-                  </div>
+                    </Link></div>
                 ))}
               </div>
-              <div>
+              <div className='absolute bottom-20 right-2/4'>
                 {footerlinks2.map(footLink => (
-                  <div key={footLink.name} className="my-3 text-sm uppercase cursor-pointer">
+                  <div key={footLink.name} className="my-3  text-sm uppercase cursor-pointer">
                     {footLink.name}
                   </div>
                 ))}

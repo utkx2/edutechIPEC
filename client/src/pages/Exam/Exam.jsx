@@ -81,11 +81,7 @@ function OnlineExamPage() {
     // Log the exam examData to the console
 
     if (!examData) {
-<<<<<<< Updated upstream
       // console.error('ExamData');
-=======
-      console.error('ExamData');
->>>>>>> Stashed changes
       return;
     }
 
