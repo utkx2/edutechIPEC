@@ -24,6 +24,10 @@ const QuickLinks = new Schema({
     product: {
         type: String,
         required: true
+    },
+    image: {
+        type: String,
+        required: true,
     }
 });
 
