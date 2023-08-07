@@ -705,6 +705,103 @@ export default function Home() {
                     </button>
                   </div>
 
+                  <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
+                    {/* Faculty */}
+                    <h2 className="my-4 text-xl font-bold">Quick Links</h2>
+                    {faculty.Faculties.map((faculty, index) => (
+                      <div key={index} className="gap-4 mb-4 rounded-lg">
+                        <div className="grid grid-cols-2 gap-4">
+                          <label className="relative block mb-2 font-semibold">
+                            {`Quick Link Tittle ${index + 1} `}
+                            <input
+                              required
+                              type="text"
+                              name={`name-${index}`}
+                              value={faculty.name}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Series Start On ${index + 1}`}
+                            <input
+                              required
+                              type="text"
+                              name={`facultyImg-${index}`}
+                              value={faculty.facultyImg}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Series Ends On ${index + 1}`}
+                            <input
+                              required
+                              type="text"
+                              name={`facultyImg-${index}`}
+                              value={faculty.facultyImg}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`No. of Exams: ${index + 1} `}
+                            <input
+                              required
+                              type="text"
+                              name={`collegeName-${index}`}
+                              value={faculty.collegeName}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Price ${index + 1}`}
+                            <input
+                              required
+                              type="text"
+                              name={`classroom-${index}`}
+                              value={faculty.classroom}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Child Product: ${index + 1}`}
+                            <textarea
+                              required
+                              type="text"
+                              name={`experience-${index}`}
+                              value={faculty.experience}
+                              onChange={(e) => handleFacultyChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <div >
+                            <FacultyPhotoUploader photos={faculty} onChange={setFaculty} index={index} />
+                          </div>
+                          <div className="mt-6">
+
+                            <button
+                              className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                              type="button"
+                              onClick={() => handleRemoveFaculty(index)}
+                            >
+                              Remove Link
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <button
+                      className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                      type="button"
+                      onClick={handleAddFaculty}
+                    >
+                      Add Link
+                    </button>
+                  </div>
+
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                     type="button"
