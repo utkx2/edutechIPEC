@@ -116,7 +116,7 @@ export default function Contact() {
     const selectedData = currentUsers.map((user) => ({
       User: user.name,
       Email: user.email,
-      Phone: user.phoneNumber,
+      Phone: user.mobile,
       Date: moment(user.category).format('DD-MM-YYYY'),
       Message: user.message
     }));
@@ -143,7 +143,7 @@ export default function Contact() {
     const selectedData = currentUsers.map((user) => [
       user.name,
       user.email,
-      user.phoneNumber,
+      user.mobile,
       moment(user.category).format('DD-MM-YYYY'),
       user.message
     ]);
@@ -238,15 +238,15 @@ export default function Contact() {
                           <tr className="text-gray-700" key={user._id}>
                             <td className="px-4 py-3 border">
                               <div className="flex items-center text-sm">
-                                <div
+                                {/* <div
                                   onClick={() => {
                                     showDetails(user._id);
                                   }}
-                                >
-                                  <p className="font-semibold text-black cursor-pointer whitespace-nowrap">
+                                > */}
+                                  <p className="font-semibold text-black whitespace-nowrap">
                                     {user.name}
                                   </p>
-                                </div>
+                                {/* </div> */}
                               </div>
                             </td>
                             <td className="px-4 py-3 font-semibold border text-ms">

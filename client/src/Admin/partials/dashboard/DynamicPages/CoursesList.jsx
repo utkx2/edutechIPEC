@@ -275,15 +275,15 @@ function CoursesList() {
                                                     <tr className="text-gray-700" key={user._id}>
                                                         <td className="px-4 py-3 border">
                                                             <div className="flex items-center text-sm">
-                                                                <div
+                                                                {/* <div
                                                                     onClick={() => {
                                                                         showDetails(user._id);
                                                                     }}
-                                                                >
-                                                                    <p className="font-semibold text-black cursor-pointer">
+                                                                > */}
+                                                                    <p className="font-semibold text-black">
                                                                         {user.Title}
                                                                     </p>
-                                                                </div>
+                                                                {/* </div> */}
                                                             </div>
                                                         </td>
                                                         <td className="px-4 py-3 font-semibold border text-ms">

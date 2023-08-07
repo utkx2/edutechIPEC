@@ -149,12 +149,12 @@ function About() {
           </div>
 
           {/* */}
-          <div>
+          {/* <div>
             <h1>Image Upload</h1>
             <button id="uploadButton" onClick={handleUpload}>Upload Image from Clipboard</button>
             <button id="getImageButton" onClick={handleGetImage}>Get Image</button>
             {imageUrl && <img src={imageUrl} alt="Pasted Image" />}
-          </div>
+          </div> */}
 
           <div className="py-10 text-center">
             <div className="container px-4 mx-auto">

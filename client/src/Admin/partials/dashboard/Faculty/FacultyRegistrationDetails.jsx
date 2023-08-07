@@ -425,22 +425,6 @@ const FacultyRegistrationDetails = () => {
                                     </div>
                                     <div>
                                         <label className="block mb-2 text-xl font-medium">
-                                            City
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="w-full p-2 py-4 text-lg bg-gray-200 border border-gray-300 rounded-md"
-                                            value={formData.city}
-                                            readOnly={!isEditing}
-                                            onChange={(e) =>
-                                                setFormData({ ...formData, city: e.target.value })
-                                            }
-                                        />
-                                    </div>
-                                </div>
-                                <div className="grid gap-10 mt-5 md:grid-cols-2 md:mt-0">
-                                    <div>
-                                        <label className="block mb-2 text-xl font-medium">
                                             Zip Code
                                         </label>
                                         <input
@@ -453,6 +437,9 @@ const FacultyRegistrationDetails = () => {
                                             }
                                         />
                                     </div>
+                                </div>
+                                <div className="grid gap-10 mt-5 md:grid-cols-2 md:mt-0">
+                                    
 
                                 </div>
                                 <div>

@@ -40,7 +40,7 @@ const FacultyHireModel = new Schema({
     },
     category: {
         type: String,
-        enum: ['general', 'ews', 'sc', 'st', 'obc'],
+        // enum: ['general', 'ews', 'sc', 'st', 'obc', 'disability'],
         required: true
     },
     addressLine1: {

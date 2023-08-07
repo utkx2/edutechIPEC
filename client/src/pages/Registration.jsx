@@ -52,23 +52,36 @@ const Registration = () => {
         });
     };
 
-    const handleEdit = () => {
-        setIsEditing(true);
+    const handleZipCodeKeyPress = (e) => {
+        const key = e.key;
+        if (key === 'e') {
+            e.preventDefault();
+        }
     };
 
-    const handleUpdate = (id) => {
-        // Perform update logic here with the updated form data
-        // You can send a request to the API to update the data
-        // After updating, set isEditing to false to exit editing mode
-        setIsEditing(false);
-    };
+    const [genderSelected, setGenderSelected] = useState(false);
+    const [categorySelected, setcategorySelected] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+    
+        if (e.target.name === "email") {
+          setEmailAlreadyPresent(false);
+        }
+    
+        if (e.target.name === "gender") {
+          setGenderSelected(true);
+        }
+        if (e.target.name === "category") {
+          setcategorySelected(true);
+        }
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!categorySelected) {
+            return;
+          }
         try {
             const response = await fetch(`${BASE_URL}registration/upload`, {
                 method: 'POST',
@@ -352,6 +365,11 @@ const Registration = () => {
                                         >
                                             Female
                                         </label>
+                                        {!genderSelected && (
+                  <p className="text-red-500 text-sm mt-2">
+                    Please select a gender
+                  </p>
+                )}
                                     </div>
                                 </div>
                             </div>
@@ -472,6 +490,7 @@ const Registration = () => {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 >
                                     <option disabled>Choose Category</option>
+                                    <option ></option>
                                     <option value="gen">General</option>
                                     <option value="ews">EWS</option>
                                     <option value="obc">OBC</option>
@@ -479,6 +498,11 @@ const Registration = () => {
                                     <option value="st">ST</option>
                                     <option value="dis">Disability</option>
                                 </select>
+                                {categorySelected === false && (
+                  <p className="text-red-500 text-sm mt-2">
+                    Please select category
+                  </p>
+                )}
                             </div>
                         </div>
 
@@ -587,6 +611,7 @@ const Registration = () => {
                                         id="zipCode"
                                         value={formData.zipCode}
                                         onChange={handleChange}
+                                        onKeyPress={handleZipCodeKeyPress}
                                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         placeholder=" "
                                         required
@@ -611,13 +636,13 @@ const Registration = () => {
                             placeholder="Write your thoughts here..."
                         ></textarea>
 
-                        <button
-                            type="submit"
-                            className="my-10 text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            onSubmit={handleSubmit}
-                        >
-                            Submit
-                        </button>
+<button
+              type="submit"
+              className="my-10 text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              disabled={!genderSelected || !categorySelected}
+            >
+              Submit
+            </button>
                     </form>
                 </div>
             </div>

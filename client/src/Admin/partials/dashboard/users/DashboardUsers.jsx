@@ -14,6 +14,7 @@ import { BASE_URL } from '../../../../config'
 import { Dialog } from '@headlessui/react'
 
 function DashboardUsers() {
+  const [serialNumbers, setSerialNumbers] = useState([]);
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(8);
@@ -60,8 +61,14 @@ function DashboardUsers() {
           },
         }
       );
-      console.log(response)
-      setUserData(response.data.users);
+  
+      const usersWithSerialNumbers = response.data.users.map((user, index) => ({
+        ...user,
+        serialNumber: index + 1,
+      }));
+  
+      setUserData(usersWithSerialNumbers);
+      setSerialNumbers(usersWithSerialNumbers.map(user => user.serialNumber));
     } catch (error) {
       console.error(error);
     }
@@ -139,11 +146,12 @@ function DashboardUsers() {
   };
 
   const downloadAsExcel = () => {
-    const selectedData = currentUsers.map((user) => ({
+    const selectedData = currentUsers.map((user, index) => ({
+      SerialNumber: serialNumbers[index],
       User: user.name,
       Role: user.userRole ? user.userRole : 'student',
       Email: user.email,
-      Phone: user.phoneNumber,
+      Phone: user.mobileNumber,
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(selectedData);
@@ -163,13 +171,14 @@ function DashboardUsers() {
   const downloadAsPDF = () => {
     const doc = new jsPDF();
 
-    const headers = ["User", "Role", "Email", "Phone"];
+    const headers = ["Serial No.","User", "Role", "Email", "Phone"];
 
-    const selectedData = currentUsers.map((user) => [
+    const selectedData = currentUsers.map((user, index) => [
+      serialNumbers[index],
       user.name,
       user.userRole ? user.userRole : 'student',
       user.email,
-      user.phoneNumber
+      user.mobileNumber
     ]);
 
     const data = {
@@ -239,26 +248,12 @@ function DashboardUsers() {
                     </button>
                   </div>
                 </div>
-                {/* Download buttons */}
-                {/* <div className="flex flex-col justify-end mb-4 md:flex-row">
-                  <button
-                    className="px-4 py-2 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
-                    onClick={downloadAsExcel}
-                  >
-                    Download Excel
-                  </button>
-                  <button
-                    className="px-4 py-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
-                    onClick={downloadAsPDF}
-                  >
-                    Download PDF
-                  </button>
-                </div> */}
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                   <div className="w-full overflow-x-auto">
                     <table className="w-full">
                       <thead>
                         <tr className="font-semibold tracking-wide text-left text-gray-900 uppercase bg-gray-100 border-b border-gray-600 text-md">
+                          <th className="px-4 py-3">Serial Number</th>
                           <th className="px-4 py-3">User</th>
                           <th className="px-4 py-3">Role</th>
                           <th className="px-4 py-3">Email</th>
@@ -267,8 +262,9 @@ function DashboardUsers() {
                         </tr>
                       </thead>
                       <tbody className="bg-white">
-                        {currentUsers.map((user) => (
+                        {currentUsers.map((user, index) => (
                           <tr className="text-gray-700" key={user._id}>
+                            <td className="px-4 py-3 border">{serialNumbers[index]}</td>
                             <td className="px-4 py-3 border">
                               <div className="flex items-center text-sm">
                                 <div
@@ -366,7 +362,7 @@ function DashboardUsers() {
         <div className="fixed inset-0 flex items-center justify-center p-4">
           {/* The actual dialog panel  */}
           <Dialog.Panel className="max-w-md px-12 py-10 mx-auto bg-white rounded">
-            <Dialog.Title>Are you sure you want to delete the user?</Dialog.Title>
+            <Dialog.Title>Are you sure you want to delete the use</Dialog.Title>
             <div className="flex items-center justify-end gap-4 mt-5">
               <button onClick={() => handleDelete(deleteId)} className="px-4 py-2 text-white bg-red-700 rounded-[8px] cursor-pointer">Delete</button>
               <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-white bg-gray-700 rounded-[8px] cursor-pointer">Cancel</button>

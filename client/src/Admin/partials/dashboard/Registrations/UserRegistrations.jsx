@@ -162,7 +162,7 @@ function AllUserRegistrations() {
       AddressLine3: user.addressLine3,
       City: user.city,
       State: user.state,
-      Zipcode: user.zipcode,
+      Zipcode: user.zipCode,
       Message: user.message
     }));
 
@@ -201,7 +201,7 @@ function AllUserRegistrations() {
       user.addressLine3,
       user.city,
       user.state,
-      user.zipcode,
+      user.zipCode,
       user.message
     ]);
 
@@ -413,7 +413,7 @@ function AllUserRegistrations() {
         <div className="fixed inset-0 flex items-center justify-center p-4">
           {/* The actual dialog panel  */}
           <Dialog.Panel className="max-w-md px-12 py-10 mx-auto bg-white rounded">
-            <Dialog.Title>Are you sure you want to delete the user?</Dialog.Title>
+            <Dialog.Title>Do you want to delete the Registration form?</Dialog.Title>
             <div className="flex items-center justify-end gap-4 mt-5">
               <button onClick={() => handleDelete(deleteId)} className="px-4 py-2 text-white bg-red-700 rounded-[8px] cursor-pointer">Delete</button>
               <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-white bg-gray-700 rounded-[8px] cursor-pointer">Cancel</button>

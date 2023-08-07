@@ -98,8 +98,8 @@ function CourseDetails() {
                     <p className="text-sm">Actual Fee</p>
                     <div className="flex gap-4 items-center">
                       <div className="flex items-baseline gap-3">
-                        <h2 className="text-xl font-bold line-through text-thin">${formData?.price}</h2>
-                        <h2 className="text-xl font-bold text-thin">${calculateDiscountedPrice(formData?.price,formData?.discount )}</h2>
+                        <h2 className="text-xl font-bold line-through text-thin">₹{formData?.price}</h2>
+                        <h2 className="text-xl font-bold text-thin">₹{calculateDiscountedPrice(formData?.price,formData?.discount )}</h2>
                         <p className="text-[10px]">Excluded GST*</p>
                       </div>
                       <div className="bg-[#17a2b8] p-1 rounded text-center text-[12px]">
