@@ -25,8 +25,10 @@ export default function QuickLinksPhotoUploader({ photos, onChange, index }) {
             setPhotoslink(filenames[0]);
             console.log(filenames[0]);
             console.log(photos);
-            photos.facultyImg = filenames[0];
-            console.log(photos.facultyImg);
+            photos.QuickLinks[index].image = filenames[0]
+            console.log(photos, index);
+            // photos.facultyImg = filenames[0];
+            //  console.log(photos.facultyImg);
             console.log(photos);
             setMessage("photo updated ");
             setShowMessage(true)

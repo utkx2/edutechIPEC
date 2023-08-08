@@ -332,7 +332,7 @@ export default function Home() {
           },
         }
       );
-      console.log(responseQuickLinks.data[0],"quick");
+      console.log(responseQuickLinks.data[0], "quick");
       setquickLinks({
         QuickLinks: responseQuickLinks.data[0].quickLinks.map(facultyObj => ({
           end: facultyObj.end,
@@ -814,7 +814,7 @@ export default function Home() {
                             />
                           </label>
                           <label className="relative block mb-2 font-semibold">
-                          {`No. of Exams: ${index + 1} `}
+                            {`No. of Exams: ${index + 1} `}
                             <input
                               required
                               type="text"
@@ -848,7 +848,7 @@ export default function Home() {
                             />
                           </label>
                           <div >
-                            {/* <FacultyPhotoUploader photos={faculty} onChange={setFaculty} index={index} /> */}
+                            <QuickLinksPhotoUploader photos={quickLinks} onChange={setquickLinks} index={index} />
                           </div>
                           <div className="mt-6">
 
