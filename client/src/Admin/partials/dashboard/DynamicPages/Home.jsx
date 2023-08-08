@@ -7,6 +7,7 @@ import axios from 'axios';
 import PhotoUploader from './PhotoUploader';
 import StudentPhotoUploader from './StudentPhotoUploader';
 import FacultyPhotoUploader from './FacultyPhotoUploader';
+import QuickLinksPhotoUploader from './QuickLinksPhotoUploader';
 
 export default function Home() {
   const initialCarousel = {
@@ -27,6 +28,19 @@ export default function Home() {
 
   const initialDataFaculty = {
     Faculties: [initialFaculty]
+  };
+
+  const initialQuickLinks = {
+    end: '',
+    image: '',
+    number: '',
+    price: '',
+    product: '',
+    start: '',
+  };
+
+  const initialDataQuickLinks = {
+    QuickLinks: [initialQuickLinks]
   };
 
   const initialStudents = {
@@ -54,6 +68,7 @@ export default function Home() {
 
   const [carousel, setCarousel] = useState(initialDataCarousel);
   const [faculty, setFaculty] = useState(initialDataFaculty);
+  const [quickLinks, setquickLinks] = useState(initialDataQuickLinks);
   const [students, setStudents] = useState(initialDataStudents);
   const [programs, setPrograms] = useState(initialDataPrograms);
   const [photos, setPhotos] = useState([]);
@@ -142,6 +157,16 @@ export default function Home() {
     });
   };
 
+  const handleQuickLinksChange = (index, event) => {
+    const { name, value } = event.target;
+    const newLinks = [...quickLinks.QuickLinks];
+    newLinks[index][name.slice(0, -2)] = value;
+    setquickLinks({
+      ...quickLinks,
+      QuickLinks: newLinks
+    });
+  };
+
   const handleStudentsChange = (index, event) => {
     const { name, value } = event.target;
     const newLinks = [...students.Students];
@@ -176,6 +201,12 @@ export default function Home() {
       Faculties: [...faculty.Faculties, initialFaculty]
     });
   };
+  const handleAddQuickLinks = () => {
+    setquickLinks({
+      ...quickLinks,
+      QuickLinks: [...quickLinks.QuickLinks, initialQuickLinks]
+    });
+  };
 
   const handleAddStudent = () => {
     setStudents({
@@ -207,6 +238,15 @@ export default function Home() {
     setFaculty({
       ...faculty,
       Faculties: newLinks
+    });
+  };
+
+  const handleRemoveQuickLinks = (index) => {
+    const newLinks = [...quickLinks.QuickLinks];
+    newLinks.splice(index, 1);
+    setquickLinks({
+      ...quickLinks,
+      QuickLinks: newLinks
     });
   };
 
@@ -282,6 +322,27 @@ export default function Home() {
         })
         )
       })
+      const responseQuickLinks = await axios.get(
+        `${BASE_URL}QuickLinkHomePage/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(responseQuickLinks.data[0],"quick");
+      setquickLinks({
+        QuickLinks: responseQuickLinks.data[0].quickLinks.map(facultyObj => ({
+          end: facultyObj.end,
+          image: facultyObj.image,
+          number: facultyObj.number,
+          product: facultyObj.product,
+          start: facultyObj.start
+        })
+        )
+      })
       const responseStudent = await axios.get(
         `${BASE_URL}studentHomePage/get`,
         {
@@ -310,6 +371,7 @@ export default function Home() {
     const formDataObj = {
       carousel: carousel.Carousels.map(link => link.fileLink),
       faculty: faculty.Faculties.map(facultyObj => facultyObj),
+      quickLinks: quickLinks.QuickLinks.map(facultyObj => facultyObj),
       selectedStudents: students.Students,
       programs: programs.Programs
     }
@@ -318,6 +380,7 @@ export default function Home() {
 
     const requestBodyCarousel = JSON.stringify(formDataObj.carousel);
     const requestBodyFaculty = JSON.stringify(formDataObj.faculty);
+    const requestBodyQuickLinks = JSON.stringify(formDataObj.quickLinks);
     const requestBodyPrograms = JSON.stringify(formDataObj.programs);
     const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
 
@@ -350,6 +413,23 @@ export default function Home() {
         auth: token,
       },
       body: requestBodyFaculty,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Oops something went wrong!!!");
+      });
+
+    fetch(`${BASE_URL}QuickLinkHomePage/upload`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        auth: token,
+      },
+      body: requestBodyQuickLinks,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -708,84 +788,74 @@ export default function Home() {
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {/* Faculty */}
                     <h2 className="my-4 text-xl font-bold">Quick Links</h2>
-                    {faculty.Faculties.map((faculty, index) => (
+                    {quickLinks.QuickLinks.map((faculty, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
                         <div className="grid grid-cols-2 gap-4">
                           <label className="relative block mb-2 font-semibold">
-                            {`Quick Link Tittle ${index + 1} `}
+                            {`Series Start On ${index + 1} `}
                             <input
                               required
                               type="text"
-                              name={`name-${index}`}
-                              value={faculty.name}
-                              onChange={(e) => handleFacultyChange(index, e)}
+                              name={`end-${index}`}
+                              value={faculty.end}
+                              onChange={(e) => handleQuickLinksChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
                           <label className="relative block mb-2 font-semibold">
-                            {`Series Start On ${index + 1}`}
+                            {`Quick Links Image ${index + 1}`}
                             <input
                               required
                               type="text"
-                              name={`facultyImg-${index}`}
-                              value={faculty.facultyImg}
-                              onChange={(e) => handleFacultyChange(index, e)}
+                              name={`image-${index}`}
+                              value={faculty.image}
+                              onChange={(e) => handleQuickLinksChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
                           <label className="relative block mb-2 font-semibold">
-                            {`Series Ends On ${index + 1}`}
+                          {`No. of Exams: ${index + 1} `}
                             <input
                               required
                               type="text"
-                              name={`facultyImg-${index}`}
-                              value={faculty.facultyImg}
-                              onChange={(e) => handleFacultyChange(index, e)}
+                              name={`number-${index}`}
+                              value={faculty.number}
+                              onChange={(e) => handleQuickLinksChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
                           <label className="relative block mb-2 font-semibold">
-                            {`No. of Exams: ${index + 1} `}
-                            <input
-                              required
-                              type="text"
-                              name={`collegeName-${index}`}
-                              value={faculty.collegeName}
-                              onChange={(e) => handleFacultyChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Price ${index + 1}`}
-                            <input
-                              required
-                              type="text"
-                              name={`classroom-${index}`}
-                              value={faculty.classroom}
-                              onChange={(e) => handleFacultyChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
+                            {/* {`Price ${index + 1}`} */}
                             {`Child Product: ${index + 1}`}
+                            <input
+                              required
+                              type="text"
+                              name={`product-${index}`}
+                              value={faculty.product}
+                              onChange={(e) => handleQuickLinksChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Series End On ${index + 1}`}
                             <textarea
                               required
                               type="text"
-                              name={`experience-${index}`}
-                              value={faculty.experience}
-                              onChange={(e) => handleFacultyChange(index, e)}
+                              name={`start-${index}`}
+                              value={faculty.start}
+                              onChange={(e) => handleQuickLinksChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
                           <div >
-                            <FacultyPhotoUploader photos={faculty} onChange={setFaculty} index={index} />
+                            {/* <FacultyPhotoUploader photos={faculty} onChange={setFaculty} index={index} /> */}
                           </div>
                           <div className="mt-6">
 
                             <button
                               className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                               type="button"
-                              onClick={() => handleRemoveFaculty(index)}
+                              onClick={() => handleRemoveQuickLinks(index)}
                             >
                               Remove Link
                             </button>
@@ -796,7 +866,7 @@ export default function Home() {
                     <button
                       className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                       type="button"
-                      onClick={handleAddFaculty}
+                      onClick={handleAddQuickLinks}
                     >
                       Add Link
                     </button>

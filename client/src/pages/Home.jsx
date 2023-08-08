@@ -18,6 +18,7 @@ function Home() {
   const [carousel, setCarousel] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [faculty, setFaculty] = useState([]);
+  const [quickLinks, setQuickLink] = useState([]);
   const [student, setStudent] = useState([]);
   // http:localhost:3000/api/facultyHomePage/get
   //  http:localhost:3000/api/ourPrograms/get/
@@ -55,6 +56,16 @@ function Home() {
           },
         }
       );
+      const responseQuickLink = await axios.get(
+        `${BASE_URL}QuickLinkHomePage/get`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
       const responseStudent = await axios.get(
         `${BASE_URL}studentHomePage/get`,
         {
@@ -69,6 +80,7 @@ function Home() {
          console.log(responseStudent.data[0].Students);
       setStudent(responseStudent.data[0].Students);
       setFaculty(responseFaculty.data[0].facultyMembers);
+      setQuickLink(responseQuickLink.data[0].quickLinks);
       setPrograms(responsePrograms.data[0].programs);
       //setUserData(response.data)
       // console.log(responseCarousel.data);
@@ -207,7 +219,7 @@ function Home() {
 
       <div className="my-10">
         <h1 className=" text-3xl text-[#1f1d5a] font-bold text-center">
-          Quick Links
+          {/* Quick Links */}
         </h1>
 
         {/* <div className="flex items-center justify-center py-8">
@@ -227,25 +239,25 @@ function Home() {
           </div>
         </div> */}
         <div className='mt-10 bg-[#d1e9f9] py-10'>
-        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>OUR EXPERIENCED FACULTY</h1>
+        <h1 className='text-3xl text-[#1f1d5a] font-bold text-center'>Quick Links</h1>
         <div className='flex items-center justify-center py-8 '>
           <div className='grid gap-8 md:grid-cols-3 '>
 
-            {faculty.map((facultyData) => (
+            {quickLinks.map((facultyData) => (
               <div
                 key={facultyData._id}
                 className="w-[340px] bg-white mt-5 shadow-lg rounded-[16px] p-3 border-4 border-[#1f1d5a]"
               >
                 <img
-                  src={facultyData.facultyImg}
+                  src={facultyData.image}
                   alt="student"
                   className="h-[280px] w-full rounded-[8px]"
                 />
                 <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
-                  <div className="text-lg font-bold">{facultyData.name}</div>
-                  <div>{facultyData.classroom}</div>
-                  <div>{facultyData.collegeName}</div>
-                  <div>{facultyData.experience}</div>
+                  <div className="text-lg font-bold">{facultyData.product}</div>
+                  <div>{facultyData.start}</div>
+                  <div>{facultyData.end}</div>
+                  <div>{facultyData.number}</div>
                 </div>
               </div>
             ))}
