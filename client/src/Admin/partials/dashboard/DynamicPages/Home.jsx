@@ -1,111 +1,94 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
-import { BASE_URL } from '../../../../config';
-import axios from 'axios';
-import PhotoUploader from './PhotoUploader';
-import StudentPhotoUploader from './StudentPhotoUploader';
-import FacultyPhotoUploader from './FacultyPhotoUploader';
-import QuickLinksPhotoUploader from './QuickLinksPhotoUploader';
-
+import { BASE_URL } from "../../../../config";
+import axios from "axios";
+import PhotoUploader from "./PhotoUploader";
+import StudentPhotoUploader from "./StudentPhotoUploader";
+import FacultyPhotoUploader from "./FacultyPhotoUploader";
+import QuickLinksPhotoUploader from "./QuickLinksPhotoUploader";
 export default function Home() {
   const initialCarousel = {
-    fileLink: ''
+    fileLink: "",
   };
-
   const initialDataCarousel = {
-    Carousels: [initialCarousel]
+    Carousels: [initialCarousel],
   };
-
   const initialFaculty = {
-    name: '',
-    facultyImg: '',
-    experience: '',
-    collegeName: '',
-    classroom: ''
+    name: "",
+    facultyImg: "",
+    experience: "",
+    collegeName: "",
+    classroom: "",
   };
-
   const initialDataFaculty = {
-    Faculties: [initialFaculty]
+    Faculties: [initialFaculty],
   };
-
   const initialQuickLinks = {
-    end: '',
-    image: '',
-    number: '',
-    price: '',
-    product: '',
-    start: '',
+    end: "",
+    image: "",
+    number: "",
+    price: "",
+    product: "",
+    start: "",
   };
-
   const initialDataQuickLinks = {
-    QuickLinks: [initialQuickLinks]
+    QuickLinks: [initialQuickLinks],
   };
-
   const initialStudents = {
-    studentImg: '',
-    description: '',
+    studentImg: "",
+    description: "",
     air: null,
-    exam: '',
-    name: '',
-    enrollmentNo: '',
-    classRoomDetails: '',
+    exam: "",
+    name: "",
+    enrollmentNo: "",
+    classRoomDetails: "",
   };
-
   const initialDataStudents = {
-    Students: [initialStudents]
+    Students: [initialStudents],
   };
-
   const initialPrograms = {
-    title: '',
-    description: ''
+    title: "",
+    description: "",
   };
-
   const initialDataPrograms = {
-    Programs: [initialPrograms]
+    Programs: [initialPrograms],
   };
-
   const [carousel, setCarousel] = useState(initialDataCarousel);
+  const [carouselCount, setcarouselCount] = useState(0);
   const [faculty, setFaculty] = useState(initialDataFaculty);
+  const [facultyCount, setfacultyCount] = useState(0);
   const [quickLinks, setquickLinks] = useState(initialDataQuickLinks);
   const [students, setStudents] = useState(initialDataStudents);
+  const [studentsCount, setstudentsCount] = useState(0);
   const [programs, setPrograms] = useState(initialDataPrograms);
   const [photos, setPhotos] = useState([]);
   const [photoNumber, setPhotoNumber] = useState(null);
   const [studentPhotos, setStudentPhotos] = useState([]);
+  const [quickLinksCount, setquickLinksCount] = useState(0);
   const [boolean, setBoolean] = useState(false);
-  //const photo = [];
   console.log(photos);
   useEffect(() => {
     setBoolean(true);
-  }, [studentPhotos])
+  }, [studentPhotos]);
   console.log(boolean);
   if (boolean) {
     const updatedStudents = {
       Students: students.Students.map((student, i) =>
-        i === photoNumber ? { ...student, studentImg: studentPhotos[photoNumber] } : student
+        i === photoNumber
+          ? { ...student, studentImg: studentPhotos[photoNumber] }
+          : student
       ),
     };
-
-    // Now set the updated students object as the new state
     setStudents(updatedStudents);
-    setBoolean(false)
-    console.log(students.Students)
+    setBoolean(false);
+    console.log(students.Students);
   }
-  // if (photos) {
-  //   setCarousel({
-  //     Carousels: photos.map(imageLink => ({
-  //       fileLink: imageLink
-  //     })
-  //     )
-  //   })
-  // }
   console.log(faculty);
   console.log(carousel);
   console.log(photoNumber);
   const handleItemClick = (index) => {
-    // Store the clicked index in the state variable
     setPhotos(carousel.Carousels);
     setPhotoNumber(index);
     console.log(carousel.Carousels[index].fileLink);
@@ -114,178 +97,159 @@ export default function Home() {
   };
   console.log(studentPhotos);
   console.log(students.Students);
-
   const studentsObj = students.Students;
   const imageLinks = studentsObj.map((student) => student.studentImg);
   const handleItemClickStudent = (index) => {
-    // Store the clicked index in the state variable
     if (photoNumber == null) {
       setStudentPhotos(imageLinks);
     }
     console.log("clicked");
     setPhotoNumber(index);
-    // studentPhotos[index] = undefined;
     console.log(students.Students[index]);
     console.log(studentPhotos[index]);
     console.log(students.Students[index].studentImg);
     const updatedStudents = {
       Students: students.Students.map((student, i) =>
-        i === photoNumber ? { ...student, studentImg: studentPhotos[photoNumber] } : student
+        i === photoNumber
+          ? { ...student, studentImg: studentPhotos[photoNumber] }
+          : student
       ),
     };
     setStudents(updatedStudents);
-    // console.log(carousel.Carousels[index].fileLink);
   };
-
   const handleCarouselChange = (index, event) => {
     const { name, value } = event.target;
     const newLinks = [...carousel.Carousels];
     newLinks[index][name.slice(0, -2)] = value;
     setCarousel({
       ...carousel,
-      Carousels: newLinks
+      Carousels: newLinks,
     });
   };
-
   const handleFacultyChange = (index, event) => {
     const { name, value } = event.target;
     const newLinks = [...faculty.Faculties];
     newLinks[index][name.slice(0, -2)] = value;
     setFaculty({
       ...faculty,
-      Faculties: newLinks
+      Faculties: newLinks,
     });
   };
-
   const handleQuickLinksChange = (index, event) => {
     const { name, value } = event.target;
     const newLinks = [...quickLinks.QuickLinks];
     newLinks[index][name.slice(0, -2)] = value;
     setquickLinks({
       ...quickLinks,
-      QuickLinks: newLinks
+      QuickLinks: newLinks,
     });
   };
-
   const handleStudentsChange = (index, event) => {
     const { name, value } = event.target;
     const newLinks = [...students.Students];
     newLinks[index][name.slice(0, -2)] = value;
     setStudents({
       ...carousel,
-      Students: newLinks
+      Students: newLinks,
     });
   };
-
   const handleProgramsChange = (index, event) => {
     const { name, value } = event.target;
     const newLinks = [...programs.Programs];
     newLinks[index][name.slice(0, -2)] = value;
     setPrograms({
       ...carousel,
-      Programs: newLinks
+      Programs: newLinks,
     });
   };
-
-  // add *********************
   const handleAddCarousel = () => {
     setCarousel({
       ...carousel,
-      Carousels: [...carousel.Carousels, initialCarousel]
+      Carousels: [...carousel.Carousels, initialCarousel],
     });
+    setcarouselCount(carouselCount +1);
   };
-
   const handleAddFaculty = () => {
     setFaculty({
       ...faculty,
-      Faculties: [...faculty.Faculties, initialFaculty]
+      Faculties: [...faculty.Faculties, initialFaculty],
     });
+    setfacultyCount(facultyCount +1);
   };
   const handleAddQuickLinks = () => {
     setquickLinks({
       ...quickLinks,
-      QuickLinks: [...quickLinks.QuickLinks, initialQuickLinks]
+      QuickLinks: [...quickLinks.QuickLinks, initialQuickLinks],
     });
+    setquickLinksCount(quickLinksCount + 1);
   };
-
   const handleAddStudent = () => {
     setStudents({
       ...students,
-      Students: [...students.Students, initialStudents]
+      Students: [...students.Students, initialStudents],
     });
+    setstudentsCount(studentsCount +1);
   };
-
   const handleAddProgram = () => {
     setPrograms({
       ...programs,
-      Programs: [...programs.Programs, initialPrograms]
+      Programs: [...programs.Programs, initialPrograms],
     });
   };
-
-  // remove ***********
   const handleRemoveCarousel = (index) => {
     const newLinks = [...carousel.Carousels];
     newLinks.splice(index, 1);
     setCarousel({
       ...carousel,
-      Carousels: newLinks
+      Carousels: newLinks,
     });
   };
-
   const handleRemoveFaculty = (index) => {
     const newLinks = [...faculty.Faculties];
     newLinks.splice(index, 1);
     setFaculty({
       ...faculty,
-      Faculties: newLinks
+      Faculties: newLinks,
     });
   };
-
   const handleRemoveQuickLinks = (index) => {
     const newLinks = [...quickLinks.QuickLinks];
     newLinks.splice(index, 1);
     setquickLinks({
       ...quickLinks,
-      QuickLinks: newLinks
+      QuickLinks: newLinks,
     });
   };
-
   const handleRemoveStudent = (index) => {
     const newLinks = [...students.Students];
     newLinks.splice(index, 1);
     setStudents({
       ...carousel,
-      Students: newLinks
+      Students: newLinks,
     });
   };
-
   const handleRemoveProgram = (index) => {
     const newLinks = [...programs.Programs];
     newLinks.splice(index, 1);
     setPrograms({
       ...carousel,
-      Programs: newLinks
+      Programs: newLinks,
     });
   };
-
   const fetchHomeContent = async () => {
     try {
-      const responseCarousel = await axios.get(
-        `${BASE_URL}carousel/get`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            auth: localStorage.getItem("token"),
-          },
-        }
-      );
+      const responseCarousel = await axios.get(`${BASE_URL}carousel/get`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
+        },
+      });
       setCarousel({
-        Carousels: responseCarousel.data[0].images.map(imageLink => ({
-          fileLink: imageLink
-        })
-        )
-      })
+        Carousels: responseCarousel.data[0].images.map((imageLink) => ({
+          fileLink: imageLink,
+        })),
+      });
       const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
         method: "GET",
         headers: {
@@ -295,12 +259,11 @@ export default function Home() {
       });
       console.log(responsePrograms.data[0]);
       setPrograms({
-        Programs: responsePrograms.data[0].programs.map(programObj => ({
+        Programs: responsePrograms.data[0].programs.map((programObj) => ({
           title: programObj.title,
-          description: programObj.description
-        })
-        )
-      })
+          description: programObj.description,
+        })),
+      });
       const responseFaculty = await axios.get(
         `${BASE_URL}facultyHomePage/get`,
         {
@@ -313,15 +276,14 @@ export default function Home() {
       );
       console.log(responseFaculty.data[0]);
       setFaculty({
-        Faculties: responseFaculty.data[0].facultyMembers.map(facultyObj => ({
+        Faculties: responseFaculty.data[0].facultyMembers.map((facultyObj) => ({
           name: facultyObj.name,
           facultyImg: facultyObj.facultyImg,
           classroom: facultyObj.classroom,
           collegeName: facultyObj.collegeName,
-          experience: facultyObj.experience
-        })
-        )
-      })
+          experience: facultyObj.experience,
+        })),
+      });
       const responseQuickLinks = await axios.get(
         `${BASE_URL}QuickLinkHomePage/get`,
         {
@@ -334,15 +296,14 @@ export default function Home() {
       );
       console.log(responseQuickLinks.data[0], "quick");
       setquickLinks({
-        QuickLinks: responseQuickLinks.data[0].quickLinks.map(facultyObj => ({
+        QuickLinks: responseQuickLinks.data[0].quickLinks.map((facultyObj) => ({
           end: facultyObj.end,
           image: facultyObj.image,
           number: facultyObj.number,
           product: facultyObj.product,
-          start: facultyObj.start
-        })
-        )
-      })
+          start: facultyObj.start,
+        })),
+      });
       const responseStudent = await axios.get(
         `${BASE_URL}studentHomePage/get`,
         {
@@ -354,38 +315,29 @@ export default function Home() {
         }
       );
       console.log(responseStudent.data[0]);
-      setStudents(responseStudent.data[0])
+      setStudents(responseStudent.data[0]);
     } catch (err) {
-      console.log(err, 'error')
+      console.log(err, "error");
     }
-  }
-
+  };
   useEffect(() => {
-    fetchHomeContent()
-  }, [])
-
+    fetchHomeContent();
+  }, []);
   const handleSubmit = () => {
-    // Submit the data to the backend (You can use fetch or Axios to send data to the backend API)
-    // For this example, we'll log the data to the console.
-    // console.log(students[0].);
     const formDataObj = {
-      carousel: carousel.Carousels.map(link => link.fileLink),
-      faculty: faculty.Faculties.map(facultyObj => facultyObj),
-      quickLinks: quickLinks.QuickLinks.map(facultyObj => facultyObj),
+      carousel: carousel.Carousels.map((link) => link.fileLink),
+      faculty: faculty.Faculties.map((facultyObj) => facultyObj),
+      quickLinks: quickLinks.QuickLinks.map((facultyObj) => facultyObj),
       selectedStudents: students.Students,
-      programs: programs.Programs
-    }
-    console.log(formDataObj)
+      programs: programs.Programs,
+    };
+    console.log(formDataObj);
     const token = localStorage.getItem("token");
-
     const requestBodyCarousel = JSON.stringify(formDataObj.carousel);
     const requestBodyFaculty = JSON.stringify(formDataObj.faculty);
     const requestBodyQuickLinks = JSON.stringify(formDataObj.quickLinks);
     const requestBodyPrograms = JSON.stringify(formDataObj.programs);
     const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
-
-
-    // uploading carousel
     fetch(`${BASE_URL}carousel/upload`, {
       method: "POST",
       headers: {
@@ -402,10 +354,6 @@ export default function Home() {
         console.error("Error:", error);
         alert("Oops something went wrong!!!");
       });
-
-
-    // uploading Faculties
-    // not working have an issue of requestBodyFaculty 
     fetch(`${BASE_URL}facultyHomePage/upload`, {
       method: "POST",
       headers: {
@@ -456,8 +404,6 @@ export default function Home() {
         console.error("Error:", error);
         alert("Oops something went wrong!!!");
       });
-
-    // studentCards Page
     fetch(`${BASE_URL}studentHomePage/upload`, {
       method: "POST",
       headers: {
@@ -474,32 +420,26 @@ export default function Home() {
         console.error("Error:", error);
         alert("Oops something went wrong!!!");
       });
-
-    // Reset the form after submission
-    //   setFormData(initialData);
   };
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-      {/* Content area */}
+      {" "}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />{" "}
       <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
         <main>
-          {/* Site header */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
+          {" "}
+          <Header
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />{" "}
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             <div className="container p-6 mx-auto overflow-x-auto font-mono">
-              {/*---------> Table (Top Channels) */}
-
+              {" "}
               <h1 className="mb-4 text-2xl font-bold text-center">Home</h1>
               <div className="max-w-3xl px-4 py-8 mt-6 mb-6 mx-auto rounded-lg shadow-xl border-[2px] border-black">
                 <form className="flex flex-col">
                   <div className="border-[2px] border-black/20 p-4 rounded-md">
-                    {/* Carousel Links */}
                     <h2 className="my-4 text-xl font-bold">Carousel Links</h2>
                     {carousel.Carousels.map((carousel, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
@@ -515,149 +455,180 @@ export default function Home() {
                                 onChange={(e) => handleCarouselChange(index, e)}
                                 className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                               />
-                            </label>
-                          </div>
-                          <div className='ml-20 flex '>
+                            </label>{" "}
+                          </div>{" "}
+                          <div className="ml-20 flex ">
+                            {" "}
                             <div onClick={() => handleItemClick(index)}>
-                              <PhotoUploader photos={photos} onChange={setPhotos} index={index} />
-                            </div >
+                              {" "}
+                              <PhotoUploader
+                                photos={photos}
+                                onChange={setPhotos}
+                                index={index}
+                              />{" "}
+                            </div>{" "}
                             <button
                               className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                               type="button"
                               onClick={() => handleRemoveCarousel(index)}
                             >
-                              Remove Link
-                            </button>
-                          </div>
-                        </div>
+                              {" "}
+                              Remove Link{" "}
+                            </button>{" "}
+                          </div>{" "}
+                        </div>{" "}
                       </div>
-                    ))}
+                    ))}{" "}
+                    {carouselCount < 3 && carousel.Carousels.length<3 && (
                     <button
                       className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                       type="button"
                       onClick={handleAddCarousel}
                     >
-                      Add Link
-                    </button>
-                  </div>
-
-                  {students ? <div>
-
-                    <h2 className="my-4 text-xl font-bold">Students</h2>
-                    {students.Students.map((student, index) => (
-                      <div key={index} className="gap-4 mb-4 rounded-lg">
-                        <div className="grid grid-cols-2 gap-4">
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Name`}
-                            <input
-                              required
-                              type="text"
-                              name={`name-${index}`}
-                              value={student.name}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Image`}
-
-                            <input
-                              required
-                              type="text"
-                              name={`studentImg-${index}`}
-                              value={student.studentImg}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} EnrollmentNo`}
-                            <input
-                              required
-                              type="text"
-                              name={`enrollmentNo-${index}`}
-                              value={student.enrollmentNo}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Classroom Program`}
-                            <input
-                              required
-                              type="text"
-                              name={`classRoomDetails-${index}`}
-                              value={student.classRoomDetails}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                      {" "}
+                      Add Link{" "}
+                    </button>)}{" "}
+                  </div>{" "}
+                  {students ? (
+                    <div>
+                      {" "}
+                      <h2 className="my-4 text-xl font-bold">Students</h2>{" "}
+                      {students.Students.map((student, index) => (
+                        <div key={index} className="gap-4 mb-4 rounded-lg">
+                          {" "}
+                          <div className="grid grid-cols-2 gap-4">
+                            {" "}
+                            <label className="relative block mb-2 font-semibold">
+                              {" "}
+                              {`Student ${index + 1} Name`}{" "}
+                              <input
+                                required
+                                type="text"
+                                name={`name-${index}`}
+                                value={student.name}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />{" "}
+                            </label>{" "}
+                            <label className="relative block mb-2 font-semibold">
+                              {" "}
+                              {`Student ${index + 1} Image`}{" "}
+                              <input
+                                required
+                                type="text"
+                                name={`studentImg-${index}`}
+                                value={student.studentImg}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />{" "}
+                            </label>{" "}
+                            <label className="relative block mb-2 font-semibold">
+                              {" "}
+                              {`Student ${index + 1} EnrollmentNo`}{" "}
+                              <input
+                                required
+                                type="text"
+                                name={`enrollmentNo-${index}`}
+                                value={student.enrollmentNo}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />{" "}
+                            </label>{" "}
+                            <label className="relative block mb-2 font-semibold">
+                              {" "}
+                              {`Student ${index + 1} Classroom Program`}{" "}
+                              <input
+                                required
+                                type="text"
+                                name={`classRoomDetails-${index}`}
+                                value={student.classRoomDetails}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />{" "}
+                            </label>{" "}
+                          </div>{" "}
+                          <div className="grid grid-cols-2 gap-4">
+                            {" "}
+                            <label className="relative block mb-2 font-semibold">
+                              {" "}
+                              {`Student ${index + 1} AIR`}{" "}
+                              <input
+                                required
+                                type="number"
+                                name={`air-${index}`}
+                                value={student.air}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />{" "}
+                            </label>{" "}
+                            <label className="relative block mb-2 font-semibold">
+                              {" "}
+                              {`Student ${index + 1} Exam`}{" "}
+                              <input
+                                required
+                                type="text"
+                                name={`exam-${index}`}
+                                value={student.exam}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />{" "}
+                            </label>{" "}
+                            <label className="relative block col-span-2 mb-2 font-semibold">
+                              {" "}
+                              {`Student ${index + 1} Description`}{" "}
+                              <textarea
+                                required
+                                type="text"
+                                name={`description-${index}`}
+                                value={student.description}
+                                onChange={(e) => handleStudentsChange(index, e)}
+                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              />{" "}
+                            </label>{" "}
+                          </div>{" "}
+                          <div onClick={() => handleItemClickStudent(index)}>
+                            {" "}
+                            <StudentPhotoUploader
+                              photos={students}
+                              onChange={setStudents}
+                              index={index}
+                            />{" "}
+                          </div>{" "}
+                          <button
+                            className="px-4 py-2 mt-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                            type="button"
+                            onClick={() => handleRemoveStudent(index)}
+                          >
+                            {" "}
+                            Remove Link{" "}
+                          </button>{" "}
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} AIR`}
-                            <input
-                              required
-                              type="number"
-                              name={`air-${index}`}
-                              value={student.air}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block mb-2 font-semibold">
-                            {`Student ${index + 1} Exam`}
-                            <input
-                              required
-                              type="text"
-                              name={`exam-${index}`}
-                              value={student.exam}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <label className="relative block col-span-2 mb-2 font-semibold">
-                            {`Student ${index + 1} Description`}
-                            <textarea
-                              required
-                              type="text"
-                              name={`description-${index}`}
-                              value={student.description}
-                              onChange={(e) => handleStudentsChange(index, e)}
-                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                        </div>
-                        <div onClick={() => handleItemClickStudent(index)}>
-                          <StudentPhotoUploader photos={students} onChange={setStudents} index={index} />
-                        </div>
-                        <button
-                          className="px-4 py-2 mt-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
-                          type="button"
-                          onClick={() => handleRemoveStudent(index)}
-                        >
-                          Remove Link
-                        </button>
-                      </div>
-                    ))}
-                    <button
-                      className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                      type="button"
-                      onClick={handleAddStudent}
-                    >
-                      Add Student
-                    </button>
-                  </div> : <></>}
-
-
+                      ))}{" "}
+                      {studentsCount < 3 && students.Students.length<3 && (
+                      <button
+                        className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                        type="button"
+                        onClick={handleAddStudent}
+                      >
+                        {" "}
+                        Add Student{" "}
+                      </button>)}{" "}
+                    </div>
+                  ) : (
+                    <></>
+                  )}{" "}
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
-                    {/* Faculty */}
-                    <h2 className="my-4 text-xl font-bold">Faculty</h2>
+                    {" "}
+                    {/* Faculty */}{" "}
+                    <h2 className="my-4 text-xl font-bold">Faculty</h2>{" "}
                     {faculty.Faculties.map((faculty, index) => (
                       <div key={index} className="gap-4 mb-4 rounded-lg">
+                        {" "}
                         <div className="grid grid-cols-2 gap-4">
+                          {" "}
                           <label className="relative block mb-2 font-semibold">
-                            {`Faculty ${index + 1} Name`}
+                            {" "}
+                            {`Faculty ${index + 1} Name`}{" "}
                             <input
                               required
                               type="text"
@@ -665,10 +636,11 @@ export default function Home() {
                               value={faculty.name}
                               onChange={(e) => handleFacultyChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                            />{" "}
+                          </label>{" "}
                           <label className="relative block mb-2 font-semibold">
-                            {`Faculty ${index + 1} Image`}
+                            {" "}
+                            {`Faculty ${index + 1} Image`}{" "}
                             <input
                               required
                               type="text"
@@ -676,10 +648,11 @@ export default function Home() {
                               value={faculty.facultyImg}
                               onChange={(e) => handleFacultyChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                            />{" "}
+                          </label>{" "}
                           <label className="relative block mb-2 font-semibold">
-                            {`Faculty ${index + 1} College`}
+                            {" "}
+                            {`Faculty ${index + 1} College`}{" "}
                             <input
                               required
                               type="text"
@@ -687,10 +660,11 @@ export default function Home() {
                               value={faculty.collegeName}
                               onChange={(e) => handleFacultyChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                            />{" "}
+                          </label>{" "}
                           <label className="relative block mb-2 font-semibold">
-                            {`Faculty ${index + 1} Classroom`}
+                            {" "}
+                            {`Faculty ${index + 1} Classroom`}{" "}
                             <input
                               required
                               type="text"
@@ -698,10 +672,10 @@ export default function Home() {
                               value={faculty.classroom}
                               onChange={(e) => handleFacultyChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
+                            />{" "}
+                          </label>{" "}
                           <label className="relative block mb-2 font-semibold">
-                            {`Faculty ${index + 1} Experience`}
+                            {`Faculty ${index + 1} Experience`}{" "}
                             <textarea
                               required
                               type="text"
@@ -709,13 +683,18 @@ export default function Home() {
                               value={faculty.experience}
                               onChange={(e) => handleFacultyChange(index, e)}
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                            />
-                          </label>
-                          <div >
-                            <FacultyPhotoUploader photos={faculty} onChange={setFaculty} index={index} />
-                          </div>
+                            />{" "}
+                          </label>{" "}
+                          <div>
+                            {" "}
+                            <FacultyPhotoUploader
+                              photos={faculty}
+                              onChange={setFaculty}
+                              index={index}
+                            />{" "}
+                          </div>{" "}
                           <div className="mt-6">
-
+                            {" "}
                             <button
                               className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                               type="button"
@@ -727,15 +706,15 @@ export default function Home() {
                         </div>
                       </div>
                     ))}
+                    {facultyCount < 3 && faculty.Faculties.length<3 && (
                     <button
                       className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                       type="button"
                       onClick={handleAddFaculty}
                     >
                       Add Link
-                    </button>
-                  </div>
-
+                    </button>)}
+                  </div>{" "}
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {/* Programs */}
                     <h2 className="my-4 text-xl font-bold">Programs</h2>
@@ -783,8 +762,7 @@ export default function Home() {
                     >
                       Add Link
                     </button>
-                  </div>
-
+                  </div>{" "}
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {/* Faculty */}
                     <h2 className="my-4 text-xl font-bold">Quick Links</h2>
@@ -847,11 +825,14 @@ export default function Home() {
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
-                          <div >
-                            <QuickLinksPhotoUploader photos={quickLinks} onChange={setquickLinks} index={index} />
+                          <div>
+                            <QuickLinksPhotoUploader
+                              photos={quickLinks}
+                              onChange={setquickLinks}
+                              index={index}
+                            />
                           </div>
                           <div className="mt-6">
-
                             <button
                               className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                               type="button"
@@ -863,15 +844,15 @@ export default function Home() {
                         </div>
                       </div>
                     ))}
+                    {quickLinksCount < 3 && quickLinks.QuickLinks.length<3 && (
                     <button
                       className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                       type="button"
                       onClick={handleAddQuickLinks}
                     >
                       Add Link
-                    </button>
-                  </div>
-
+                    </button>)}
+                  </div>{" "}
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                     type="button"

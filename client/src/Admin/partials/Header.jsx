@@ -504,13 +504,13 @@ function Header() {
                       }}
                     </SidebarLinkGroup>
                     {/* Job Board */}
-                    <SidebarLinkGroup
+                    {/* <SidebarLinkGroup
                       activecondition={pathname.includes("job")}
                     >
                       {(handleClick, open) => {
                         return (
-                          <React.Fragment>
-                            <a
+                          <React.Fragment> */}
+                            {/* <a
                               href="#0"
                               className={`block text-slate-200 truncate transition duration-150 ${
                                 pathname.includes("job")
@@ -559,7 +559,7 @@ function Header() {
                                     Result
                                   </span>
                                 </div>
-                                {/* Icon */}
+                                 Icon 
                                 <div className="flex ml-2 shrink-0">
                                   <svg
                                     className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${
@@ -571,8 +571,8 @@ function Header() {
                                   </svg>
                                 </div>
                               </div>
-                            </a>
-                            <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            // </a> */}
+                            {/* <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                               <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
                                 <li className="mb-1 last:mb-0">
                                   <NavLink
@@ -592,11 +592,11 @@ function Header() {
                                 </li>
                                 
                               </ul>
-                            </div>
-                          </React.Fragment>
+                            </div> */}
+                          {/* </React.Fragment>
                         );
                       }}
-                    </SidebarLinkGroup>
+                    </SidebarLinkGroup> */}
                     {/* Tasks */}
                     <SidebarLinkGroup
                       activecondition={pathname.includes("tasks")}

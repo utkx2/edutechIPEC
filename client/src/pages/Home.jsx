@@ -259,6 +259,9 @@ function Home() {
                   <div>{facultyData.end}</div>
                   <div>{facultyData.number}</div>
                 </div>
+                <button className="bg-blue-400 ml-2 text-white p-2 font-medium">
+                  View Details
+                </button>
               </div>
             ))}
           </div>
