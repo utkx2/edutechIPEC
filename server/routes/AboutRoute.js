@@ -11,7 +11,7 @@ router.put('/edit', isAdmin, aboutController.edit);
 
 //Get all details
 //http://localhost:3000/api/
-router.get("/get", verifyToken, aboutController.getAll);
+router.get("/get", aboutController.getAll);
 
 //Delete details
 router.delete("/remove", isAdmin, aboutController.remove);
