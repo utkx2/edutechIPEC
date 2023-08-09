@@ -3,6 +3,8 @@ const Registrations = require('../models/RegistrationsModel');
 const router = express.Router();
 const PDFDocument = require('pdfkit');
 const nodemailer = require('nodemailer');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 // const axios = require('axios');
 
 
@@ -112,7 +114,7 @@ router.post('/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/registration/get
-router.get("/get", async (req, res) => {
+router.get("/get", isAdmin, async (req, res) => {
 
     try {
         const registrationsList = await Registrations.find();
@@ -148,7 +150,7 @@ router.get("/get/:id", async (req, res) => {
 
 
 // http://localhost:3000/api/registration/delete/:id
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", isAdmin, async (req, res) => {
     const id = req.params.id;
     console.log(id);
     try {

@@ -1,40 +1,64 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/keys");
+const userModel = require("../models/userModel");
 
-exports.verifyToken = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+exports.verifyToken = async (req, res, next) => {
+    const token = req.headers.auth;
+    console.log(token)
+    if (!token) {
+        return res.status(401).json({
+            success: false,
+            message: "Sign In Please!!!"
+        });
+    }
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: "Access denied. No token provided." });
-  }
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
 
-  const token = authHeader.split(' ')[1];
+        const userId = decoded.data._id;
+        //   console.log(userId);
+        if (req.userRole === "student") {
+            const user = await userModel.findById(userId);
+            console.log(user);
+            req.userRole = user.userRole;
+            // req.userId = user.userId;
+            req._id = user._id;
+        }
 
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.userRole = decoded.data.userRole;
-    next();
-  } catch (err) {
-    console.error(err);
-    return res.status(403).json({ error: "Invalid token." });
-  }
+
+        next();
+    } catch (err) {
+        console.error(err);
+        return res.status(403).json({ error: "Invalid token." });
+    }
 };
 
-exports.isAdmin = (req, res, next) => {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ error: "Access denied. No token provided." });
-  }
-
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    if (decoded.data.userRole != 0) {
-      return res.status(403).json({ error: "Access denied. Admin role required." });
+exports.isAdmin = async (req, res, next) => {
+    const token = req.headers.auth || req.query.token || req.cookies.token;
+    console.log(token);
+    if (!token) {
+        return res.status(401).json({ error: "Access denied. No token provided." });
     }
-    next();
-  } catch (err) {
-    console.log(err);
-    return res.status(403).json({ error: "Invalid token." });
-  }
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        console.log(decoded.data);
+        //    const userId = decoded.data._id;
+        console.log(decoded.data.userRole)
+        if (decoded.data.userRole === "admin") {
+            //   console.log("admin")
+        }
+
+        // const user = await userModel.findById(userId);
+        // console.log(user);
+        // req.userRole = user.userRole;
+
+        if (decoded.data.userRole != "admin") {
+            return res.status(403).json({ error: "Access denied. Admin role required." });
+        }
+        next();
+    } catch (err) {
+        console.log(err);
+        return res.status(403).json({ error: "Invalid token." });
+    }
 };

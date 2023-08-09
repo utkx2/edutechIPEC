@@ -1,9 +1,11 @@
 const express = require('express');
 const Courses = require('../models/CoursesModel');
 const router = express.Router();
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 //  http://localhost:3000/api/Courses/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
         const savedData = await Courses.create(req.body);
 
@@ -54,7 +56,7 @@ router.get("/get/:id", async (req, res) => {
     }
 })
 
-router.delete("/remove/:id", async (req, res) => {
+router.delete("/remove/:id", isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const CoursesContent = await Courses.findByIdAndDelete({ _id: id });

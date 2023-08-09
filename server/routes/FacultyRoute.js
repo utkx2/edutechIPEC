@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const FacultyCards = require('../models/FacultyModel');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 
 // http://localhost:3000/api/facultyHomePage/get
@@ -17,7 +19,7 @@ router.get('/get', async (req, res) => {
 
 
 // http://localhost:3000/api/facultyHomePage/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
         const facultyData = req.body; // JSON object with faculty information
         //      console.log(req.body);
@@ -38,7 +40,7 @@ router.post('/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/facultyHomePage/edit/:id
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -62,7 +64,7 @@ router.put('/edit/:id', async (req, res) => {
 });
 
 // http://localhost:3000/api/facultyHomePage/delete/:id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await FacultyCards.findByIdAndRemove(id);

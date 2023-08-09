@@ -1,10 +1,12 @@
 const express = require('express');
 const whyIPEC = require('../models/WhyIpecModel');
 const router = express.Router();
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 
 //  http://localhost:3000/api/whyIPEC/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
 
     const { Title, Content, Reasons } = req.body;
     console.log(Title, Content, Reasons);
@@ -29,7 +31,7 @@ router.post('/upload', async (req, res) => {
 });
 
 //  http://localhost:3000/api/whyIPEC/edit
-router.put('/edit', async (req, res) => {
+router.put('/edit', isAdmin, async (req, res) => {
 
     const { Title, Content, Reasons } = req.body;
     console.log(Title, Content, Reasons);
@@ -74,7 +76,7 @@ router.get("/get", async (req, res) => {
     }
 })
 
-router.delete("/remove", async (req, res) => {
+router.delete("/remove", isAdmin, async (req, res) => {
     try {
         const whyIPEC_Content = await whyIPEC.findOneAndDelete({});
         console.log("Object Deleted:", whyIPEC_Content);

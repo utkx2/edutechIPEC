@@ -81,6 +81,7 @@ export default function Home() {
           : student
       ),
     };
+    // Now set the updated students object as the new state
     setStudents(updatedStudents);
     setBoolean(false);
     console.log(students.Students);
@@ -338,6 +339,9 @@ export default function Home() {
     const requestBodyQuickLinks = JSON.stringify(formDataObj.quickLinks);
     const requestBodyPrograms = JSON.stringify(formDataObj.programs);
     const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
+
+    console.log(token);
+    // uploading carousel
     fetch(`${BASE_URL}carousel/upload`, {
       method: "POST",
       headers: {

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const StudentCards = require('../models/StudentHomePageModel');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 
 // http://localhost:3000/api/studentHomePage/get
@@ -17,7 +19,7 @@ router.get('/get', async (req, res) => {
 
 
 // http://localhost:3000/api/studentHomePage/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
         const studentsData = req.body;
         const update = { Students: studentsData };
@@ -35,7 +37,7 @@ router.post('/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/studentHomePage/edit/:id
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -59,7 +61,7 @@ router.put('/edit/:id', async (req, res) => {
 });
 
 // http://localhost:3000/api/studentHomePage/delete/:id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await StudentCards.findByIdAndRemove(id);

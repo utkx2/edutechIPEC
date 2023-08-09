@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Carousel = require('../models/CarouselModel');
-
+const { verifyToken, isAdmin } = require('../middleware/auth')
 
 // http://localhost:3000/api/carousel/get
 router.get('/get', async (req, res) => {
@@ -16,10 +16,11 @@ router.get('/get', async (req, res) => {
 });
 
 
+
 // http://localhost:3000/api/carousel/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
-        // console.log(req.body);
+        console.log(req.body);
         const newData = {
             images: req.body
         }
@@ -38,7 +39,7 @@ router.post('/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/carousel/edit/:id
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -60,7 +61,7 @@ router.put('/edit/:id', async (req, res) => {
 });
 
 // http://localhost:3000/api/carousel/delete/:id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await Carousel.findByIdAndRemove(id);

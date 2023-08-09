@@ -3,12 +3,14 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 const JWT_SECRET = 'alpha$dev';
 
 
 // http://localhost:3000/api/Contact/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', verifyToken, async (req, res) => {
     //  const { token } = req.cookies
     //  console.log(token);
     let userData;
@@ -20,7 +22,6 @@ router.post('/upload', async (req, res) => {
         // const userId = userData.user.id;
         // console.log(userId);
         const { name, email, mobile, message } = req.body;
-
         if (!name || !email || !mobile || !message) {
             return res.status(400).json({ error: "All fields are required" });
         }
@@ -42,7 +43,7 @@ router.post('/upload', async (req, res) => {
 });
 
 //  http://localhost:3000/api/Contact/allUsers
-router.get('/allUsers', async (req, res) => {
+router.get('/allUsers', isAdmin, async (req, res) => {
     try {
         const usersList = await Contact.find();
         res.json(usersList).status(200);

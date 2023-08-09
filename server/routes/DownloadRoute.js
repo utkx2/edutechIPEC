@@ -3,6 +3,8 @@ const router = express.Router();
 const SamplePaper = require('../models/SamplePaperModel');
 const syllabus = require('../models/SyllabusModel');
 const Brochure = require('../models/BrochureModel');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 
 // http://localhost:3000/api/download/samplePaper/get
@@ -19,7 +21,7 @@ router.get('/samplePaper/get', async (req, res) => {
 
 
 // http://localhost:3000/api/download/samplePaper/upload
-router.post('/samplePaper/upload', async (req, res) => {
+router.post('/samplePaper/upload', isAdmin, async (req, res) => {
     try {
         const {
             className, fileLink
@@ -38,7 +40,7 @@ router.post('/samplePaper/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/samplePaper/edit/:id
-router.put('/samplePaper/edit/', async (req, res) => {
+router.put('/samplePaper/edit/', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -63,7 +65,7 @@ router.put('/samplePaper/edit/', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/samplePaper/delete/:id
-router.delete('/samplePaper/delete/:id', async (req, res) => {
+router.delete('/samplePaper/delete/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await SamplePaper.findByIdAndRemove(id);
@@ -92,7 +94,7 @@ router.get('/syllabus/get', async (req, res) => {
 
 
 // http://localhost:3000/api/download/syllabus/upload
-router.post('/syllabus/upload', async (req, res) => {
+router.post('/syllabus/upload', isAdmin, async (req, res) => {
     try {
         const {
             className, fileLink
@@ -111,7 +113,7 @@ router.post('/syllabus/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/syllabus/edit
-router.put('/syllabus/edit/', async (req, res) => {
+router.put('/syllabus/edit/', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -132,7 +134,7 @@ router.put('/syllabus/edit/', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/syllabus/delete/:id
-router.delete('syllabus/delete/:id', async (req, res) => {
+router.delete('syllabus/delete/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await syllabus.findByIdAndRemove(id);
@@ -161,7 +163,7 @@ router.get('/brochure/get', async (req, res) => {
 
 
 // http://localhost:3000/api/download/brochure/upload
-router.post('/brochure/upload', async (req, res) => {
+router.post('/brochure/upload', isAdmin, async (req, res) => {
     try {
         const {
             examName, fileLink
@@ -180,7 +182,7 @@ router.post('/brochure/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/brochure/edit/
-router.put('/brochure/edit/', async (req, res) => {
+router.put('/brochure/edit/', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -201,7 +203,7 @@ router.put('/brochure/edit/', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/brochure/delete/:id
-router.delete('/brochure/delete/:id', async (req, res) => {
+router.delete('/brochure/delete/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await Brochure.findByIdAndRemove(id);

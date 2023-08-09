@@ -210,8 +210,8 @@ class User {
         const { userId } = req.params;
 
         try {
-            const deletedUser = await userModel.findOneAndDelete(userId);
-
+            const deletedUser = await userModel.findOneAndDelete({ _id: userId });
+            console.log(deletedUser);
             if (deletedUser) {
                 return res.status(200).json({
                     success: true,

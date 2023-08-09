@@ -4,6 +4,8 @@ const multer = require('multer');
 const path = require('path'); // Import the path module
 
 const testimonialsModel = require('../models/TestimonialsModel');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -19,7 +21,7 @@ const upload = multer({ storage });
 // Upload Intro Video and Testimonial Card
 // http://localhost:3000/api/testimonials/upload
 
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
         const { introVideoUrl, cards } = req.body;
         const testimonial = new testimonialsModel({
@@ -37,7 +39,7 @@ router.post('/upload', async (req, res) => {
 
 // http://localhost:3000/api/testimonials/edit
 
-router.put('/edit', async (req, res) => {
+router.put('/edit', isAdmin, async (req, res) => {
     try {
         const { introVideoUrl, cards } = req.body;
         const update = {
