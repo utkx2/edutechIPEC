@@ -45,7 +45,7 @@ const VerificationPage = () => {
                                 setErrorMessage(data.error);
                             } else {
                                 // Store response in local storage
-                                localStorage.setItem("token", JSON.stringify(data.token));
+                                localStorage.setItem("token", (data.token));
                                 // Navigate to the desired page
                                 const user = data.user
                                 localStorage.setItem("user", JSON.stringify(user));
