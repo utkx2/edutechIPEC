@@ -87,20 +87,11 @@ export default function Home() {
         i === photoNumber ? { ...student, studentImg: studentPhotos[photoNumber] } : student
       ),
     };
-
     // Now set the updated students object as the new state
     setStudents(updatedStudents);
     setBoolean(false)
     console.log(students.Students)
   }
-  // if (photos) {
-  //   setCarousel({
-  //     Carousels: photos.map(imageLink => ({
-  //       fileLink: imageLink
-  //     })
-  //     )
-  //   })
-  // }
   console.log(faculty);
   console.log(carousel);
   console.log(photoNumber);
@@ -384,7 +375,7 @@ export default function Home() {
     const requestBodyPrograms = JSON.stringify(formDataObj.programs);
     const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
 
-
+    console.log(token);
     // uploading carousel
     fetch(`${BASE_URL}carousel/upload`, {
       method: "POST",

@@ -1,6 +1,8 @@
 const express = require('express');
 const FacultyHire = require('../models/FacultyHireModel');
 const router = express.Router();
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 
 // http://localhost:3000/api/facultyHire/upload
@@ -37,7 +39,7 @@ router.post('/upload', async (req, res) => {
 });
 
 // http://localhost:3000/api/facultyHire/get
-router.get("/get", async (req, res) => {
+router.get("/get", isAdmin, async (req, res) => {
 
     try {
         const RecruitmentsList = await FacultyHire.find();
@@ -72,7 +74,7 @@ router.get("/get/:id", async (req, res) => {
 })
 
 // http://localhost:3000/api/facultyHire/delete/:id
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", isAdmin, async (req, res) => {
     const id = req.params.id;
     console.log(id);
     try {

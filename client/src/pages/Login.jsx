@@ -22,7 +22,7 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        
+
         if (!formData.identifier || !formData.userPassword) {
             setErrorMessage("Please enter both email/mobile number and password.");
             return;
@@ -40,9 +40,9 @@ const Login = () => {
                 console.log(data)
                 if (data.message) {
                     setErrorMessage(data.message || "An error occurred.");
-                } else if(data.token) {
+                } else if (data.token) {
                     // Store response in local storage
-                    localStorage.setItem("token", JSON.stringify(data.token));
+                    localStorage.setItem("token", (data.token));
                     // Navigate to the desired page
                     const user = data.data;
                     console.log(data);

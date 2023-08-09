@@ -16,13 +16,13 @@ router.post('/verify', usersController.verify);
 router.post("/signin", usersController.postSignIn);
 
 //Get User
-router.get("/byid/:userId", usersController.getUser)
+router.get("/byid/:userId", isAdmin, usersController.getUser)
 
 //Delete User
-router.delete("/byid/:userId", usersController.deleteUser)
+router.delete("/byid/:userId", isAdmin, usersController.deleteUser)
 
 //Get All Users
-router.get("/getall", usersController.getAllUsers)
+router.get("/getall", isAdmin, usersController.getAllUsers)
 
 // forgotPassword
 router.post('/forgotPassword', usersController.forgotPassword);

@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const Result = require('../models/ResultsModel');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 // Create a new Result with student information
 //http://localhost:3000/api/results/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
         const { examName, students } = req.body;
         console.log(req.body);
-        
+
         const query = {};
         const update = { examName, students };
         const options = { new: true, upsert: true };
@@ -39,7 +41,7 @@ router.get('/get', async (req, res) => {
 
 // Update an Result by Result ID with student information
 //http://localhost:3000/api/results/edit/:id
-router.put('/edit/', async (req, res) => {
+router.put('/edit/', isAdmin, async (req, res) => {
     try {
         const { examName, students } = req.body;
         //  const ResultId = req.params.id;
@@ -59,7 +61,7 @@ router.put('/edit/', async (req, res) => {
 
 // Delete an Result by Result ID
 //http://localhost:3000/api/results/delete/:id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     try {
         const ResultId = req.params.id;
         await Result.findByIdAndRemove(ResultId);
