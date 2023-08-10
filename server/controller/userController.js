@@ -44,6 +44,7 @@ class User {
             const {
                 email,
                 mobileNumber,
+                className,
                 password,
                 ...userData
             } = req.body;
@@ -70,6 +71,7 @@ class User {
                 email,
                 mobileNumber,
                 password: hashedPassword,
+                className
             });
 
             // Save the new user to the database

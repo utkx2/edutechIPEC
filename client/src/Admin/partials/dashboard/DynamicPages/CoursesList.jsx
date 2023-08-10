@@ -280,9 +280,9 @@ function CoursesList() {
                                                                         showDetails(user._id);
                                                                     }}
                                                                 > */}
-                                                                    <p className="font-semibold text-black">
-                                                                        {user.Title}
-                                                                    </p>
+                                                                <p className="font-semibold text-black">
+                                                                    {user.Title}
+                                                                </p>
                                                                 {/* </div> */}
                                                             </div>
                                                         </td>

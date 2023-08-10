@@ -1,36 +1,42 @@
 const express = require('express');
 const router = express.Router();
 const ExamController = require('../controller/examController');
+const { verifyToken, isAdmin } = require('../middleware/auth')
+
 
 const examController = new ExamController();
 
 // Create a new exam
 // http://localhost:3000/api/exam/newexam
-router.post('/newexam', examController.createExam);
+router.post('/newexam', isAdmin, examController.createExam);
 
 // Edit an existing exam
-router.put('/byid/:id', examController.editExam);
+router.put('/byid/:id', isAdmin, examController.editExam);
 
 // Delete an existing exam
-router.delete('/byid/:id', examController.deleteExam);
+router.delete('/byid/:id', isAdmin, examController.deleteExam);
 
 // Get exam by ID
-router.get('/byid/:id', examController.getExamById);
+
+router.get('/byid/:id', verifyToken, examController.getExamById);
 
 // Get all exams
-router.get('/allexams', examController.getAllExams);
+router.get('/allexams', verifyToken, examController.getAllExams);
+
+// Get all exams for student
+// router.get('/allexamsForStudent', examController.getAllExamsForStudent);
 
 //Toggle status
-router.put('/byid/:id/toggleStatus', examController.toggleStatus);
+router.put('/byid/:id/toggleStatus', isAdmin, examController.toggleStatus);
 
 //Exams with status active
-router.get('/active-exams', examController.getExamsWithStatusTrue);
+router.get('/active-exams', verifyToken, examController.getExamsWithStatusTrue);
 
 //Exam without answers
 router.get('/student-exam/:id', examController.getExamByIdWithoutCorrect);
 
 //Calculate Score
-router.post('/getscore/:id', examController.getExamScore);
+router.post('/getscore/:id', verifyToken, examController.getExamScore);
 
 module.exports = router;
 

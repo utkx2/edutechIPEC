@@ -27,6 +27,7 @@ import ExamineesTable from "../Admin/partials/dashboard/Exam/Examinees";
 import CoursesList from "../Admin/partials/dashboard/DynamicPages/CoursesList";
 import FacultyRegistration from "../Admin/partials/dashboard/Faculty/FacultyRegisrations";
 import FacultyRegistrationDetails from "../Admin/partials/dashboard/Faculty/FacultyRegistrationDetails";
+import AdminRoute from "./AdminRoute";
 
 const DashboardRoutes = () => {
   return (
@@ -34,95 +35,95 @@ const DashboardRoutes = () => {
       <Routes>
         <Route
           path="/admin"
-          element={<PrivateRoute element={DashboardHome} />}
+          element={<AdminRoute element={DashboardHome} />}
         />
         <Route
           path="/users"
-          element={<PrivateRoute element={DashboardUsers} />}
+          element={<AdminRoute element={DashboardUsers} />}
         />
         <Route
           path="/registrations"
-          element={<PrivateRoute element={AllUserRegistrations} />}
+          element={<AdminRoute element={AllUserRegistrations} />}
         />
         <Route
           path="/home"
-          element={<PrivateRoute element={WebsiteHome} />}
+          element={<AdminRoute element={WebsiteHome} />}
         />
         <Route
           path="/about"
-          element={<PrivateRoute element={WebsiteAbout} />}
+          element={<AdminRoute element={WebsiteAbout} />}
         />
         <Route
           path="/why"
-          element={<PrivateRoute element={WebsiteWhy} />}
+          element={<AdminRoute element={WebsiteWhy} />}
         />
         <Route
           path="/testimonials"
-          element={<PrivateRoute element={WebsiteTestimonials} />}
+          element={<AdminRoute element={WebsiteTestimonials} />}
         />
         <Route
           path="/result"
-          element={<PrivateRoute element={WebsiteResult} />}
+          element={<AdminRoute element={WebsiteResult} />}
         />
         <Route
           path="/courses"
-          element={<PrivateRoute element={WebsiteCourses} />}
+          element={<AdminRoute element={WebsiteCourses} />}
         />
         <Route
           path="/coursesList"
-          element={<PrivateRoute element={CoursesList} />}
+          element={<AdminRoute element={CoursesList} />}
         />
         <Route
           path="/contact"
-          element={<PrivateRoute element={WebsiteContact} />}
+          element={<AdminRoute element={WebsiteContact} />}
         />
         <Route
           path="/registrations/:id"
-          element={<PrivateRoute element={UserRegistrationDetails} />}
+          element={<AdminRoute element={UserRegistrationDetails} />}
         />
         <Route
           path="/downloads/sample-paper"
-          element={<PrivateRoute element={SamplePaper} />}
+          element={<AdminRoute element={SamplePaper} />}
         />
         <Route
           path="/downloads/e-brochures"
-          element={<PrivateRoute element={EBrochures} />}
+          element={<AdminRoute element={EBrochures} />}
         />
         <Route
           path="/downloads/syllabus"
-          element={<PrivateRoute element={Syllabus} />}
+          element={<AdminRoute element={Syllabus} />}
         />
         <Route
           path="/downloads/engineering-brochure"
-          element={<PrivateRoute element={EngineeringBrochure} />}
+          element={<AdminRoute element={EngineeringBrochure} />}
         />
         <Route
           path="/downloads/medical-brochure"
-          element={<PrivateRoute element={MedicalBrochure} />}
+          element={<AdminRoute element={MedicalBrochure} />}
         />
         <Route
           path="/add-exam"
-          element={<PrivateRoute element={AddExam} />}
+          element={<AdminRoute element={AddExam} />}
         />
         <Route
           path="/update/:id"
-          element={<PrivateRoute element={UpdateExam} />}
+          element={<AdminRoute element={UpdateExam} />}
         />
         <Route
           path="/list"
-          element={<PrivateRoute element={List} />}
+          element={<AdminRoute element={List} />}
         />
         <Route
           path="/examinees/:id"
-          element={<PrivateRoute element={ExamineesTable} />}
+          element={<AdminRoute element={ExamineesTable} />}
         />
         <Route
           path="/faculty-registration"
-          element={<PrivateRoute element={FacultyRegistration} />}
+          element={<AdminRoute element={FacultyRegistration} />}
         />
         <Route
           path="/faculty-registration/:id"
-          element={<PrivateRoute element={FacultyRegistrationDetails} />}
+          element={<AdminRoute element={FacultyRegistrationDetails} />}
         />
       </Routes>
     </div>

@@ -11,8 +11,18 @@ const Signup = () => {
         email: '',
         password: '',
         mobileNumber: '',
+        className: '',
     });
     const [errorMessage, setErrorMessage] = useState('')
+
+    const handleClassChange = (event) => {
+        const selectedClass = event.target.value;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            className: selectedClass,
+        }));
+    };
+
 
     const handleChange = (e) => {
         setFormData({
@@ -151,6 +161,21 @@ const Signup = () => {
                                             >
                                                 Password
                                             </label>
+                                        </div>
+                                        <div className='mb-6 '>
+                                            <label htmlFor="classSelector" className=' mr-2'>Select a Class:</label>
+                                            <select id="classSelector" onChange={handleClassChange}>
+                                                <option value="">Select</option>
+                                                <option value="class 6">Class 6</option>
+                                                <option value="class 7">Class 7</option>
+                                                <option value="class 8">Class 8</option>
+                                                <option value="class 9">Class 9</option>
+                                                <option value="class 10">Class 10</option>
+                                                <option value="class 11">Class 11</option>
+                                                <option value="class 12">Class 12</option>
+                                                <option value="JEE">JEE</option>
+                                                <option value="NEET">NEET</option>
+                                            </select>
                                         </div>
 
 

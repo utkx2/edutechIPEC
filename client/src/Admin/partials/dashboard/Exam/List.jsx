@@ -14,7 +14,13 @@ const ExamList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${BASE_URL}exam/allexams`)
+    axios.get(`${BASE_URL}exam/allexams`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        auth: localStorage.getItem("token"),
+      }
+    })
       .then((response) => {
         setExams(response.data.exams);
       })
@@ -24,7 +30,12 @@ const ExamList = () => {
   }, []);
 
   const handleDeleteExam = (examId) => {
-    axios.delete(`${BASE_URL}exam/byid/${examId}`)
+    axios.delete(`${BASE_URL}exam/byid/${examId}`, {
+      method: "DELETE",
+      headers: {
+        auth: localStorage.getItem("token"),
+      },
+    })
       .then((response) => {
         setExams(exams.filter((exam) => exam._id !== examId));
       })
@@ -34,10 +45,16 @@ const ExamList = () => {
   };
 
   const handleChangeStatus = (examId, newStatus) => {
-    axios.put(`${BASE_URL}exam/byid/${examId}/toggleStatus`, { status: newStatus })
-      .then((response) => {
-        setExams(exams.map((exam) => exam._id === examId ? { ...exam, status: newStatus } : exam));
-      })
+    axios.put(`${BASE_URL}exam/byid/${examId}/toggleStatus`, {
+      status: newStatus,
+    }, {
+      headers: {
+        auth: localStorage.getItem("token"),
+      },
+    },
+    ).then((response) => {
+      setExams(exams.map((exam) => exam._id === examId ? { ...exam, status: newStatus } : exam));
+    })
       .catch((error) => {
         console.error('Failed to change exam status:', error);
       });

@@ -36,6 +36,35 @@ router.post('/upload', async (req, res) => {
     }
 });
 
+// http://localhost:3000/api/QuickLinkHomePage/get/:id
+router.get("/get/:id", async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+        const QuickLinksContent = await QuickLinksModel.find();
+        if (!QuickLinksContent) {
+            return res.status(404).json({ error: "Course content not found" });
+        }
+        //    console.log(QuickLinksContent[[0]]);
+        const quickLink = QuickLinksContent[0].quickLinks.find(link => link._id.toString() === id);
+        console.log(quickLink);
+        if (!quickLink) {
+            return res.status(404).json({ error: "Quick link not found" });
+        }
+        //const CoursesContent = await QuickLinksModel.findById({ quickLinks._id: id });
+        //  console.log(QuickLinksContent);
+        res.status(200).json(QuickLinksContent);
+    }
+    catch (error) {
+        console.log('Error occurred while retrieving registrations:', error);
+        res.status(500).json({
+            error: "An error occurred while submitting the gem registration form"
+
+        });
+    }
+})
+
+
 // http://localhost:3000/api/QuickLinkHomePage/edit/:id
 router.put('/edit/:id', async (req, res) => {
     try {

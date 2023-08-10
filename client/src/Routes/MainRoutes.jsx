@@ -21,6 +21,8 @@ import ExamPage from '../pages/Exam/ExamList';
 import Media from '../pages/Media';
 import Downloads from '../pages/Downloads';
 import VerificationPage from '../pages/VerificationPage';
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from './PrivateRoutes';
 
 const MainRoutes = () => {
   return (
@@ -33,8 +35,8 @@ const MainRoutes = () => {
         <Route path="/download" element={<Downloads />} />
         <Route path="/results" element={<Result />} />
         <Route path="/result/:score" element={<ResultPage />} />
-        <Route path="/exam" element={<ExamPage />} />
-        <Route path="/exam/:examId" element={<Exam />} />
+        <Route path="/exam" element={<PrivateRoute element={ExamPage} />} />
+        <Route path="/exam/:examId" element={<PrivateRoute element={Exam} />} />
         <Route path="/mission" element={<OurMission />} />
         <Route path="/why" element={<WhyIPEC />} />
         <Route path="/registration" element={<Registration />} />
@@ -45,7 +47,7 @@ const MainRoutes = () => {
         <Route path="/careers" element={<Career />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<AdminRoute element={Signup} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

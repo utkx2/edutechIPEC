@@ -99,6 +99,10 @@ const examSchema = new mongoose.Schema({
     subjects: {
         type: [subjectSchema], // Array of subjects, each containing name, startingQuestionNumber, and endingQuestionNumber
     },
+    className: {
+        type: String,
+        required: true,
+    }
 },
     { timestamps: true });
 

@@ -4,8 +4,8 @@ const ExamResults = require('../models/ExamResults');
 class ExamController {
   async createExam(req, res) {
     try {
-      const { name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects } = req.body;
-      const exam = await Exam.create({ name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects });
+      const { name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects, className } = req.body;
+      const exam = await Exam.create({ name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects, className });
       res.status(200).json({ success: true, exam: exam });
     } catch (err) {
       console.log(err);
@@ -16,8 +16,8 @@ class ExamController {
   async editExam(req, res) {
     try {
       const examId = req.params.id;
-      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects } = req.body;
-      const exam = await Exam.findByIdAndUpdate(examId, { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects }, { new: true });
+      const { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects, className } = req.body;
+      const exam = await Exam.findByIdAndUpdate(examId, { name, instructions, questions, questionMarks, maxMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects, className }, { new: true });
       if (!exam) {
         return res.status(404).json({ error: 'Exam not found' });
       }
@@ -66,8 +66,21 @@ class ExamController {
     }
   }
 
+  // async getAllExamsForStudent(req, res) {
+
+
+  //   try {
+  //     const exams = await Exam.find().select('name createdAt status');
+  //     res.json({ success: true, exams: exams });
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(500).json({ error: 'Failed to get exams' });
+  //   }
+  // }
+
   async toggleStatus(req, res) {
     try {
+
       const examId = req.params.id;
       const exam = await Exam.findById(examId);
       if (!exam) {
@@ -86,7 +99,9 @@ class ExamController {
 
   async getExamsWithStatusTrue(req, res) {
     try {
-      const examsWithStatusTrue = await Exam.find({ status: true }).select('name updatedAt');
+      const className = req.query.userClass;
+      console.log(className);
+      const examsWithStatusTrue = await Exam.find({ status: true, className: className }).select('name updatedAt');
       return res.json({ success: true, exams: examsWithStatusTrue });
     } catch (error) {
       console.log(error);
@@ -134,7 +149,7 @@ class ExamController {
             Array.isArray(submittedAnswer) &&
             Array.isArray(correctOption) &&
             submittedAnswer.length === correctOption.length &&
-            submittedAnswer.every((option) => correctOption.includes(option)) && 
+            submittedAnswer.every((option) => correctOption.includes(option)) &&
             correctOption.every((option) => submittedAnswer.includes(option))
           ) {
             totalScore = totalScore + questionMarks;
@@ -151,8 +166,8 @@ class ExamController {
           }
         }
       }
-      console.log(totalScore);
-      console.log(NegativeCount);
+      // console.log(totalScore);
+      // console.log(NegativeCount);
       const existingExamResult = await ExamResults.findOne({ examId: exam._id });
 
       if (existingExamResult) {

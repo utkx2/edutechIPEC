@@ -57,7 +57,7 @@ router.get("/get", isAdmin, async (req, res) => {
 })
 
 // http://localhost:3000/api/facultyHire/get/:id
-router.get("/get/:id", async (req, res) => {
+router.get("/get/:id", isAdmin, async (req, res) => {
     const id = req.params.id;
     try {
         const RecruitmentsList = await FacultyHire.findById({ _id: id });

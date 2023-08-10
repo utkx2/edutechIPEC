@@ -28,6 +28,10 @@ const UserModel = new mongoose.Schema(
         mobileNumber: {
             type: Number,
             required: true
+        },
+        className: {
+            type: String,
+            required: [true, "Please enter your class."],
         }
     },
     { timestamps: true }

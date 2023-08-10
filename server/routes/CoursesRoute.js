@@ -34,7 +34,6 @@ router.get("/get", async (req, res) => {
         console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while submitting the gem registration form"
-
         });
     }
 })

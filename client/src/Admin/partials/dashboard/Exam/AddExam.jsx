@@ -18,6 +18,7 @@ const AddExamForm = () => {
   const [questionMarks, setQuestionMarks] = useState("");
   const [textNegativeMarks, setTextNegativeMarks] = useState("");
   const [mcqNegativeMarks, setMcqNegativeMarks] = useState("");
+  const [className, setClassName] = useState("");
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("");
   const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
@@ -121,7 +122,10 @@ const AddExamForm = () => {
     updatedQuestions[questionIndex].correctOption = correctOption;
     setQuestions(...[updatedQuestions]);
     console.log(answers, "answer");
-    console.log(questions,"question");
+    console.log(questions, "question");
+  };
+  const handleClassChange = (event) => {
+    setClassName(event.target.value); // Update the className state
   };
   const handleChangeCorrectTextInputAnswer = (
     questionIndex,
@@ -136,11 +140,13 @@ const AddExamForm = () => {
     console.log("Exam Name:", examName);
     console.log("Exam Instructions:", examInstruction);
     console.log("Questions:", questions);
+    console.log("className", className);
     try {
       const response = await fetch(`${BASE_URL}exam/newexam`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
         },
         body: JSON.stringify({
           name: examName,
@@ -162,6 +168,7 @@ const AddExamForm = () => {
           questionMarks: questionMarks,
           textNegativeMarks: textNegativeMarks,
           mcqNegativeMarks: mcqNegativeMarks,
+          className: className,
         }),
       });
       if (response.ok) {
@@ -202,7 +209,7 @@ const AddExamForm = () => {
         <main>
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-15">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-15">
               <div className="p-4 ">
                 <h1 className="text-2xl font-bold mb-4">Add New Exam</h1>
                 <div className="md:flex  justify-between">
@@ -290,6 +297,7 @@ const AddExamForm = () => {
                       placeholder="Per Question Marks"
                     />
                   </div>
+
                 </div>
                 <div className="mb-4">
                   <label
@@ -340,6 +348,21 @@ const AddExamForm = () => {
                     onChange={(e) => setExamName(e.target.value)}
                     placeholder="Enter Exam Name"
                   />
+                  <div className='mb-4  mt-4'>
+                    <label htmlFor="classSelector" className=' mr-2 font-bold text-gray-700'>Select a Class:</label>
+                    <select id="classSelector" value={className} onChange={handleClassChange} >
+                      <option value="">Select</option>
+                      <option value="class 6">Class 6</option>
+                      <option value="class 7">Class 7</option>
+                      <option value="class 8">Class 8</option>
+                      <option value="class 9">Class 9</option>
+                      <option value="class 10">Class 10</option>
+                      <option value="class 11">Class 11</option>
+                      <option value="class 12">Class 12</option>
+                      <option value="JEE">JEE</option>
+                      <option value="NEET">NEET</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="mb-4">
                   <label
@@ -405,80 +428,80 @@ const AddExamForm = () => {
                       }
                       placeholder="Enter Image URL (optional)"
                     />
-     {question.type === "multiple-correct" && (
+                    {question.type === "multiple-correct" && (
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>
                         {question.options.map((option, optionIndex) => (
-          <div key={optionIndex} className="md:flex items-center mb-2">
-            <input
-              required
-              type="text"
-              className="px-4 py-2 mr-2 border border-gray-300 rounded-md w-60"
-              value={option.text}
-              onChange={(e) =>
-                handleChangeOptionText(
-                  questionIndex,
-                  optionIndex,
-                  e.target.value
-                )
-              }
-              placeholder={`Enter Option ${optionIndex + 1}`}
-            />
-            <label
-                                                            htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
-                                                            className="block mb-2 font-bold text-gray-700"
-                                                        >
-                                                            Image URL
-                                                        </label>
-                                                        <input
-                                                            required
-                                                            type="text"
-                                                            id={`optionImage-${questionIndex}-${optionIndex}`}
-                                                            className="w-64 px-4 py-2 border border-gray-300 rounded-md"
-                                                            value={option.imageUrl}
-                                                            onChange={(e) => handleChangeOptionImage(questionIndex, optionIndex, e.target.value)}
-                                                            placeholder="Enter Image URL for Option (optional)"
-                                                        /><div>
-                                                            <button className='' id="uploadButton" onClick={() => handleUpload(questionIndex, optionIndex, true)}>Upload Image from Clipboard</button>
-                                                        </div>
-            <button
-              type="button"
-              className="text-red-600 font-bold ml-3"
-              onClick={() => handleRemoveOption(questionIndex, optionIndex)}
-            >
-              <FontAwesomeIcon icon={faTrash} className="mr-1" />
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          className="text-blue-600 font-bold"
-          onClick={() => handleAddOption(questionIndex)}
-        >
-          <FontAwesomeIcon icon={faPlus} className="mr-1" />
-          Add Option
-        </button>
-    <div className="mt-2 mb-1 font-bold">Correct Answer (Choose multiple)</div>
-    {question.options.map((option, optionIndex) => (
-      <div key={optionIndex} className="md:flex items-center mb-2">
-        <input
-          type="checkbox"
-          className="mr-2"
-          checked={question.correctOption.includes(optionIndex)}
-          onChange={() => {
-            const newCorrectOption = question.correctOption.includes(
-              optionIndex
-            )
-              ? question.correctOption.filter((index) => index !== optionIndex)
-              : [...question.correctOption, optionIndex];
-            handleChangeCorrectAnswer(questionIndex, newCorrectOption);
-          }}
-        />
-        <span>{`Option ${optionIndex + 1}`}</span>
-      </div>
-    ))}
-  </>
-)}
+                          <div key={optionIndex} className="md:flex items-center mb-2">
+                            <input
+                              required
+                              type="text"
+                              className="px-4 py-2 mr-2 border border-gray-300 rounded-md w-60"
+                              value={option.text}
+                              onChange={(e) =>
+                                handleChangeOptionText(
+                                  questionIndex,
+                                  optionIndex,
+                                  e.target.value
+                                )
+                              }
+                              placeholder={`Enter Option ${optionIndex + 1}`}
+                            />
+                            <label
+                              htmlFor={`optionImage-${questionIndex}-${optionIndex}`}
+                              className="block mb-2 font-bold text-gray-700"
+                            >
+                              Image URL
+                            </label>
+                            <input
+                              required
+                              type="text"
+                              id={`optionImage-${questionIndex}-${optionIndex}`}
+                              className="w-64 px-4 py-2 border border-gray-300 rounded-md"
+                              value={option.imageUrl}
+                              onChange={(e) => handleChangeOptionImage(questionIndex, optionIndex, e.target.value)}
+                              placeholder="Enter Image URL for Option (optional)"
+                            /><div>
+                              <button className='' id="uploadButton" onClick={() => handleUpload(questionIndex, optionIndex, true)}>Upload Image from Clipboard</button>
+                            </div>
+                            <button
+                              type="button"
+                              className="text-red-600 font-bold ml-3"
+                              onClick={() => handleRemoveOption(questionIndex, optionIndex)}
+                            >
+                              <FontAwesomeIcon icon={faTrash} className="mr-1" />
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          className="text-blue-600 font-bold"
+                          onClick={() => handleAddOption(questionIndex)}
+                        >
+                          <FontAwesomeIcon icon={faPlus} className="mr-1" />
+                          Add Option
+                        </button>
+                        <div className="mt-2 mb-1 font-bold">Correct Answer (Choose multiple)</div>
+                        {question.options.map((option, optionIndex) => (
+                          <div key={optionIndex} className="md:flex items-center mb-2">
+                            <input
+                              type="checkbox"
+                              className="mr-2"
+                              checked={question.correctOption.includes(optionIndex)}
+                              onChange={() => {
+                                const newCorrectOption = question.correctOption.includes(
+                                  optionIndex
+                                )
+                                  ? question.correctOption.filter((index) => index !== optionIndex)
+                                  : [...question.correctOption, optionIndex];
+                                handleChangeCorrectAnswer(questionIndex, newCorrectOption);
+                              }}
+                            />
+                            <span>{`Option ${optionIndex + 1}`}</span>
+                          </div>
+                        ))}
+                      </>
+                    )}
                     {question.type === "multiple-choice" && (
                       <>
                         <div className="mt-2 mb-1 font-bold">Options:</div>

@@ -6,9 +6,19 @@ import { BASE_URL } from '../../config'
 const ExamPage = () => {
     const [exams, setExams] = useState([]);
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+    const queryString = `userId=${user["_id"]}&userClass=${user.className}`;
 
     useEffect(() => {
-        fetch(`${BASE_URL}exam/active-exams`)
+        console.log(user)
+        console.log(queryString);
+        fetch(`${BASE_URL}exam/active-exams?${queryString}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                auth: localStorage.getItem("token"),
+            }
+        })
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
