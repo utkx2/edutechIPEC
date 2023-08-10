@@ -1,10 +1,8 @@
 import { useState } from "react";
 import IndianStates from "../constants/IndianStates";
-// import { ProgressBar, Step } from "react-step-progress-bar";
 import { BASE_URL } from "../config";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const Registration = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
@@ -27,15 +25,11 @@ const Registration = () => {
         zipCode: "",
         message: "",
     });
-
     const clearInputs = () => {
         setFormData({
             firstName: "",
             lastName: "",
             email: "",
-            // password: "",
-            // repeatPassword: "",
-            // retypeEmail: "",
             phoneNumber: "",
             fatherName: "",
             fatherNumber: "",
@@ -53,24 +47,19 @@ const Registration = () => {
             message: "",
         });
     };
-
     const handleZipCodeKeyPress = (e) => {
         const key = e.key;
         if (key === 'e') {
             e.preventDefault();
         }
     };
-
     const [genderSelected, setGenderSelected] = useState(false);
     const [categorySelected, setcategorySelected] = useState(false);
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    
         if (e.target.name === "email") {
           setEmailAlreadyPresent(false);
         }
-    
         if (e.target.name === "gender") {
           setGenderSelected(true);
         }
@@ -78,7 +67,6 @@ const Registration = () => {
           setcategorySelected(true);
         }
       };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!categorySelected) {
@@ -97,6 +85,7 @@ const Registration = () => {
                 const responseData = await response.json();
                 console.log('Form submitted successfully', responseData);
                 toast.success("admin card sent on your mail");
+                // window.location.href = '/signup';
                 //   alert('Form submitted successfully');
             } else {
                 console.log('Form submission failed', response.statusText);
@@ -109,14 +98,10 @@ const Registration = () => {
         }
         clearInputs();
     };
-
-
     return (
         <div className='flex items-center justify-center w-full p-4 py-10 bg-[#d1e9f9]'>
             <div>
-
                 <div className='max-w-[1444px] border py-6 px-12 shadow-lg bg-white'>
-
                     <h1 className=' text-3xl text-[#1f1d5a] font-bold text-center'>
                         REGISTRATION FORM
                     </h1>
@@ -140,7 +125,6 @@ const Registration = () => {
                                     First name
                                 </label>
                             </div>
-
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
                                     type="text"
@@ -158,7 +142,6 @@ const Registration = () => {
                             </div>
                         </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
-
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
                                     type="email"
@@ -175,49 +158,7 @@ const Registration = () => {
                                     Email address
                                 </label>
                             </div>
-                            {/* <div className="relative z-0 w-full mb-6 group">
-                        <input
-                            type="email"
-                            name="retypeEmail"
-                            id="retype_email"
-                            value={formData.retypeEmail}
-                            onChange={handleChange}
-                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label htmlFor="floating_first_name"
-                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Retype Email
-                        </label>
-                    </div> */}
                         </div>
-                        {/* <div className="grid md:grid-cols-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                    <input
-                        type="password"
-                        name="password"
-                        id="floating_password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label htmlFor="floating_password"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Password
-                    </label>
-                </div>
-                <div className="relative z-0 w-full mb-6 group">
-                    <input
-                        type="password"
-                        name="repeatPassword"
-                        id="floating_repeat_password"
-                        value={formData.repeatPassword}
-                        onChange={handleChange}
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label htmlFor="floating_repeat_password"
-                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Confirm password
-                    </label>
-                </div>
-                </div> */}
-
                         <div className="relative z-0 flex flex-col w-full mb-6 gap-y-2 group">
                             <label htmlFor="" className="text-sm text-gray-500 dark:text-gray-400">
                                 Choose Class
@@ -304,11 +245,40 @@ const Registration = () => {
                                         Class 12 pass
                                     </label>
                                 </div>
+                                <div className="flex items-center">
+                                    <input
+                                        id="default-radio-6"
+                                        type="radio"
+                                        value="JEE"
+                                        name="selectedClass"
+                                        onChange={handleChange}
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-100 dark:border-gray-600"
+                                    />
+                                    <label
+                                        htmlFor="default-radio-5"
+                                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    >
+                                        JEE
+                                    </label>
+                                </div>
+                                <div className="flex items-center">
+                                    <input
+                                        id="default-radio-7"
+                                        type="radio"
+                                        value="NEET"
+                                        name="selectedClass"
+                                        onChange={handleChange}
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-100 dark:border-gray-600"
+                                    />
+                                    <label
+                                        htmlFor="default-radio-5"
+                                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    >
+                                        NEET
+                                    </label>
+                                </div>
                             </div>
                         </div>
-
-
-
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
@@ -329,7 +299,6 @@ const Registration = () => {
                                     Phone number
                                 </label>
                             </div>
-
                             <div className="relative z-0 flex flex-col h-10 mb-6 gap-y-2 group">
                                 <label htmlFor="" className="text-sm text-gray-500 dark:text-gray-400">
                                     Choose Gender
@@ -352,7 +321,6 @@ const Registration = () => {
                                             Male
                                         </label>
                                     </div>
-
                                     <div className="items-center pl-4 rounded basis-1/2 dark:border-gray-700">
                                         <input
                                             id="bordered-radio-7"
@@ -377,10 +345,7 @@ const Registration = () => {
                                     </div>
                                 </div>
                             </div>
-
-
-                        </div>
-
+                          </div>
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
@@ -418,9 +383,7 @@ const Registration = () => {
                                     Father mobile Number
                                 </label>
                             </div>
-
                         </div>
-
                         <div className="grid md:grid-cols-2 md:gap-6">
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
@@ -459,7 +422,6 @@ const Registration = () => {
                                 </label>
                             </div>
                         </div>
-
                         <div className="grid gap-4 md:grid-cols-2 md:gap-6">
                             <div>
                                 <label className="mt-2 mr-5" htmlFor="dob">
@@ -509,8 +471,6 @@ const Registration = () => {
                 )}
                             </div>
                         </div>
-
-
                         <form className='mt-4'>
                             <div className="relative z-0 w-full mb-6 group">
                                 <input
@@ -629,7 +589,6 @@ const Registration = () => {
                                 </div>
                             </div>
                         </form>
-
                         <textarea
                             id="message"
                             rows="4"
@@ -639,7 +598,6 @@ const Registration = () => {
                             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-50 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Write your thoughts here..."
                         ></textarea>
-
 <button
               type="submit"
               className="my-10 text-white bg-[#1f1d5a] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -654,5 +612,4 @@ const Registration = () => {
         </div>
     )
 };
-
 export default Registration;

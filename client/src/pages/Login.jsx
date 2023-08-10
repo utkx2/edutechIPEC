@@ -135,7 +135,7 @@ const Login = () => {
                                         <div className="mb-4 text-red-500">{errorMessage}</div>
                                     )}
                                 </form>
-                                <div className="mt-10 text-center">
+                                {/* <div className="mt-10 text-center">
                                     Do not have an account?{" "}
                                     <Link
                                         to="/signup"
@@ -143,7 +143,7 @@ const Login = () => {
                                     >
                                         Sign up
                                     </Link>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

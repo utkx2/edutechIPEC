@@ -22,6 +22,7 @@ function DashboardUsers() {
   const [userType, setUserType] = useState("all");
   const [subscriptionStatus, setSubscriptionStatus] = useState("all");
   const navigate = useNavigate();
+  const [userRoleFilter, setUserRoleFilter] = useState(false);
 
   const handleDelete = async (userId) => {
     setIsOpen(false)
@@ -52,7 +53,7 @@ function DashboardUsers() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}user/getall`,
+        `${BASE_URL}user/getall?userRole=${userRoleFilter ? 'admin' : 'student'}`,
         {
           method: "GET",
           headers: {
@@ -109,6 +110,7 @@ function DashboardUsers() {
       (userType === "hr" && user.userRole === "hr") ||
       (userType === "user" && user.userRole === "user") ||
       (userType === "employee" && user.userRole === "employee");
+      const userRoleMatch = !userRoleFilter || (userRoleFilter && user.userRole === 'admin');
     const subscriptionStatusMatch =
       subscriptionStatus === "all" ||
       (subscriptionStatus === "active" &&
@@ -119,7 +121,7 @@ function DashboardUsers() {
 
     // Check if any of the conditions is true
     return (
-      (nameMatch || emailMatch) && userTypeMatch && subscriptionStatusMatch
+      (nameMatch || emailMatch) && userTypeMatch && userRoleMatch &&  subscriptionStatusMatch
     );
   });
 
@@ -199,6 +201,10 @@ function DashboardUsers() {
     doc.save("users.pdf");
   };
 
+  const AddStudent = () => {
+    window.location.href = '/signup';
+  }
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
   const [deleteId, setDeleteId] = useState()
@@ -245,6 +251,18 @@ function DashboardUsers() {
                       onClick={downloadAsPDF}
                     >
                       Download PDF
+                    </button>
+                    <button
+                      className="px-4 py-2 font-bold text-white bg-blue-700 rounded focus:outline-none focus:ring-2 ml-2"
+                      onClick={() => setUserRoleFilter(!userRoleFilter)}
+                    >
+                      User Role
+                    </button>
+                    <button
+                      className="px-4 py-2 font-bold text-white bg-yellow-700 ml-2 rounded focus:outline-none focus:ring-2"
+                      onClick={AddStudent}
+                    >
+                      Add Student
                     </button>
                   </div>
                 </div>
