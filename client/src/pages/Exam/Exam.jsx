@@ -110,6 +110,12 @@ function OnlineExamPage() {
       response: responsePayload,
       submittedAnswers: submittedAnswersPayload,
       userId: userId,
+    }, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        auth: localStorage.getItem("token"),
+      }
     })
       .then((examData) => {
         console.log('Exam Score:', examData.data.score);
