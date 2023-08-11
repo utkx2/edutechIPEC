@@ -37,7 +37,7 @@ const Login = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
+                // console.log(data)
                 if (data.message) {
                     setErrorMessage(data.message || "An error occurred.");
                 } else if (data.token) {
@@ -45,7 +45,7 @@ const Login = () => {
                     localStorage.setItem("token", (data.token));
                     // Navigate to the desired page
                     const user = data.data;
-                    console.log(data);
+                    // console.log(data);
                     localStorage.setItem("user", JSON.stringify(user));
                     if (user.userRole === "admin") {
                         navigate("/dashboard/users");

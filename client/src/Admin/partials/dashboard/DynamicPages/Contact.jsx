@@ -30,7 +30,7 @@ export default function Contact() {
           },
         }
       );
-      console.log(response)
+      // console.log(response)
       if (response.status == 200) {
         console.log('successfully get all registrations')
       }
@@ -45,7 +45,7 @@ export default function Contact() {
   };
 
   useEffect(() => {
-    console.log('useEffect')
+    // console.log('useEffect')
     fetchData();
   }, []);
 
@@ -61,7 +61,7 @@ export default function Contact() {
     setUserType(e.target.value);
   };
 
-  console.log('coponent rendered again')
+  // console.log('coponent rendered again')
 
   const filteredData = userData.filter((user) => {
     const nameMatch = user.name

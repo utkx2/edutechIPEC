@@ -9,7 +9,7 @@ router.get('/get', async (req, res) => {
 
     try {
         const ourprogramsObj = await ourPrograms.find();
-        console.log(ourprogramsObj);
+        // console.log(ourprogramsObj);
         res.json(ourprogramsObj);
     }
     catch (error) {

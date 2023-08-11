@@ -47,7 +47,7 @@ export default function Courses() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
+        // console.log(formData)
         const token = localStorage.getItem("token");
 
         const requestBody = JSON.stringify(formData);
@@ -62,7 +62,7 @@ export default function Courses() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Course added succesfully.", data);
+                // console.log("Course added succesfully.", data);
                 clearInputs();
             })
             .catch((error) => {

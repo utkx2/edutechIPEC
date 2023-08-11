@@ -12,24 +12,24 @@ export default function QuickLinksPhotoUploader({ photos, onChange, index }) {
     function uploadPhoto(ev) {
         ev.preventDefault();
         const files = ev.target.files;
-        console.log(files);
+        // console.log(files);
         const data = new FormData();
         for (let file of files) {
             data.append('photos', file);
         }
-        console.log(data);
+        // console.log(data);
         axios.post(`${BASE_URL}home/uploadImage`, data, {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(response => {
             const { data: filenames } = response;
             setPhotoslink(filenames[0]);
-            console.log(filenames[0]);
-            console.log(photos);
+            // console.log(filenames[0]);
+            // console.log(photos);
             photos.QuickLinks[index].image = filenames[0]
-            console.log(photos, index);
+            // console.log(photos, index);
             // photos.facultyImg = filenames[0];
             //  console.log(photos.facultyImg);
-            console.log(photos);
+            // console.log(photos);
             setMessage("photo updated ");
             setShowMessage(true)
             setTimeout(() => {

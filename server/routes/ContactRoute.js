@@ -49,7 +49,7 @@ router.get('/allUsers', isAdmin, async (req, res) => {
         res.json(usersList).status(200);
     }
     catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
         res.status(500).send("Internal Server Error");
     }
 })

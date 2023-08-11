@@ -115,7 +115,7 @@ app.get('/api/image/:id', async (req, res) => {
 app.post('/api/upload', async (req, res) => {
   try {
     const { image } = req.body;
-    console.log(image);
+    // console.log(image);
     if (!image) {
       return res.status(400).json({ error: 'No image data received.' });
     }
@@ -142,7 +142,7 @@ app.post('/api/upload', async (req, res) => {
 app.use('/api/home/', express.static(path.join(__dirname, '/uploads').replace(/\\/g, '/')));
 const multerMiddleware = multer();
 app.post('/api/home/uploadImage', multerMiddleware.array('photos', 100), async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const uploadedFiles = [];
 
@@ -163,7 +163,7 @@ app.post('/api/home/uploadImage', multerMiddleware.array('photos', 100), async (
       // Delete the temporary file from the server
       fs.unlinkSync(tempFilePath);
     }
-    console.log(uploadedFiles);
+    // console.log(uploadedFiles);
     res.json(uploadedFiles);
 
   }

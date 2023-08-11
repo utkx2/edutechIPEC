@@ -8,7 +8,7 @@ class ExamController {
       const exam = await Exam.create({ name, instructions, questions, maxMarks, questionMarks, totalTime, mcqNegativeMarks, textNegativeMarks, subjects, className });
       res.status(200).json({ success: true, exam: exam });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: 'Failed to create exam' });
     }
   }
@@ -23,7 +23,7 @@ class ExamController {
       }
       res.json({ success: true, exam: exam });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: 'Failed to edit exam' });
     }
   }
@@ -37,7 +37,7 @@ class ExamController {
       }
       res.json({ success: true, message: 'Exam deleted successfully' });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: 'Failed to delete exam' });
     }
   }
@@ -51,7 +51,7 @@ class ExamController {
       }
       res.json({ success: true, exam: exam });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: 'Failed to get exam' });
     }
   }
@@ -61,7 +61,7 @@ class ExamController {
       const exams = await Exam.find().select('name createdAt status');
       res.json({ success: true, exams: exams });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(500).json({ error: 'Failed to get exams' });
     }
   }
@@ -92,7 +92,7 @@ class ExamController {
 
       return res.json(exam);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       res.status(500).json({ error: 'Failed to toggle exam status' });
     }
   }
@@ -100,11 +100,11 @@ class ExamController {
   async getExamsWithStatusTrue(req, res) {
     try {
       const className = req.query.userClass;
-      console.log(className);
+      // console.log(className);
       const examsWithStatusTrue = await Exam.find({ status: true, className: className }).select('name updatedAt');
       return res.json({ success: true, exams: examsWithStatusTrue });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       res.status(500).json({ error: 'Failed to get exams' });
     }
   }
@@ -118,7 +118,7 @@ class ExamController {
       }
       return res.json({ success: true, exam: exam });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       res.status(500).json({ error: 'Failed to get exams' });
     }
   }

@@ -37,7 +37,9 @@ export default function Syllabus() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data, 'success')
+                console.log(
+                    // data,
+                     'success')
             })
             .catch((error) => {
                 console.error("Error:", error);

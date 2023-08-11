@@ -52,7 +52,7 @@ const ExamineesTable = () => {
   const formatResponseData = (response) => {
 
     const options = Object.keys(response);
-    console.log(response)
+    // console.log(response)
 
     // options.sort((a,b) => a.localeCompare(b));
     return options.map((option) => (

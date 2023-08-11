@@ -35,9 +35,9 @@ function DashboardUsers() {
             auth: localStorage.getItem("token"),
           },
         })
-      console.log(response)
+      // console.log(response)
       if (response.status == 200) {
-        console.log('successfully deleted')
+        // console.log('successfully deleted')
         fetchData()
       }
       if (response.status == 500) {

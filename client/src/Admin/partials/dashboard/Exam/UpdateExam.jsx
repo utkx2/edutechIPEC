@@ -35,7 +35,7 @@ const UpdateExamForm = () => {
         });
         if (response.ok) {
           const examData = await response.json();
-          console.log(examData);
+          // console.log(examData);
           setExamName(examData.exam.name);
           setQuestions(examData.exam.questions);
           setAnswers(examData.answers)
@@ -45,7 +45,7 @@ const UpdateExamForm = () => {
           setTextNegativeMarks(examData.exam.textNegativeMarks)
           setQuestionMarks(examData.exam.questionMarks)
           setClassName(examData.exam.className)
-          console.log(examData.exam)
+          // console.log(examData.exam)
         } else {
           console.log('Failed to fetch exam data.');
         }
@@ -57,7 +57,7 @@ const UpdateExamForm = () => {
   }, []);
   const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
     try {
-      console.log(option);
+      // console.log(option);
       const formData = new FormData();
       formData.append('file', imageBlob);
       formData.append('upload_preset', 'abfrwxrc');
@@ -68,7 +68,7 @@ const UpdateExamForm = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('Cloudinary Response:', data);
+          // console.log('Cloudinary Response:', data);
           const imageUrl = data.secure_url;
           setImageUrl(imageUrl);
 
@@ -81,7 +81,7 @@ const UpdateExamForm = () => {
             const updatedQuestions = [...questions];
             updatedQuestions[index].imageUrl = imageUrl;
 
-            console.log(updatedQuestions[index].imageUrl)
+            // console.log(updatedQuestions[index].imageUrl)
             setQuestions(updatedQuestions);
           }
           return imageUrl;
@@ -94,13 +94,13 @@ const UpdateExamForm = () => {
     }
   };
   const handleUpload = async (index, optionIndex, option) => {
-    console.log(index);
+    // console.log(index);
     try {
       const clipboardImage = await navigator.clipboard.read();
       const imageBlob = clipboardImage[0].types.includes('image/png')
         ? await clipboardImage[0].getType('image/png')
         : await clipboardImage[0].getType('image/jpeg');
-      console.log(imageBlob);
+      // console.log(imageBlob);
 
       handleCloudinaryUpload(imageBlob, index, optionIndex, option)
     } catch (error) {
@@ -108,8 +108,8 @@ const UpdateExamForm = () => {
     }
   }
   const handleSaveExam = async () => {
-    console.log('Exam Name:', examName);
-    console.log('Questions:', questions);
+    // console.log('Exam Name:', examName);
+    // console.log('Questions:', questions);
 
     try {
       const response = await fetch(`${BASE_URL}exam/byid/${id}`, {
@@ -141,7 +141,7 @@ const UpdateExamForm = () => {
         }),
       });
       if (response.ok) {
-        console.log('Exam updated successfully!');
+        // console.log('Exam updated successfully!');
         navigate('/dashboard/list');
       } else {
         console.log('Failed to update the exam.');
@@ -230,7 +230,8 @@ const UpdateExamForm = () => {
       );
       return { ...prevAnswers, [questionIndex]: updatedAnswers };
     });
-  }; console.log(answers, "answerIndex");
+  };
+  //  console.log(answers, "answerIndex");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const handleChangeCorrectAnswer = (questionIndex, correctAnswer) => {
     const updatedQuestions = [...questions];

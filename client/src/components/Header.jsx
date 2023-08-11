@@ -36,9 +36,9 @@ function Header() {
   };
 
   const handleMobileMenuToggle = () => {
-    console.log('here')
+    // console.log('here')
     setShowMobileMenu(!showMobileMenu);
-    console.log(showMobileMenu)
+    // console.log(showMobileMenu)
   };
 
   const auth = JSON.parse(localStorage.getItem('user'));

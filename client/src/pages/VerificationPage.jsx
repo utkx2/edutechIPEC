@@ -11,7 +11,7 @@ const VerificationPage = () => {
     const location = useLocation();
     const formData = location.state;
     const navigate = useNavigate();
-    console.log(formData);
+    // console.log(formData);
 
     const handleVerify = () => {
         // Implement the logic to verify the OTP here.
@@ -27,8 +27,8 @@ const VerificationPage = () => {
             .post(`${BASE_URL}user/verify`, requestBody)
             .then((response) => {
                 // Handle the API response
-                console.log(response.data);
-                console.log(response.data.status);
+                // console.log(response.data);
+                // console.log(response.data.status);
                 setVerificationStatus(true);
                 if (response.data.status) {
                     fetch(`${BASE_URL}user/signup`, {
@@ -41,7 +41,7 @@ const VerificationPage = () => {
                         .then((response) => response.json())
                         .then((data) => {
                             // Handle response data
-                            console.log(data);
+                            // console.log(data);
                             if (data.error) {
                                 setErrorMessage(data.error);
                             } else {
@@ -68,7 +68,7 @@ const VerificationPage = () => {
                 // Handle error if needed
             });
 
-        console.log('Entered OTP:', otp);
+        // console.log('Entered OTP:', otp);
 
     };
 

@@ -14,7 +14,7 @@ function Course() {
   // let id;
   const showDetails = (userId) => {
     navigate(`/courseDetails/${userId}`);
-    console.log(userId);
+    // console.log(userId);
   };
 
   const fetchData = async () => {
@@ -89,7 +89,7 @@ function Course() {
                       className="bg-yellow-400 hover:bg-[#1f1d5a] hover:text-yellow-300 hover:font-bold mt-5 mx-4 py-2 px-4 rounded-[4px] border border-[#1f1d5a] cursor-pointer"
                       onClick={() => {
                         showDetails(course._id);
-                        console.log("sa", course._id);
+                        // console.log("sa", course._id);
                       }}
                     >
                       Registration

@@ -27,7 +27,7 @@ const sendEmail = async (mail) => {
             text: `OTP: ${OTP1}`,
         };
         // Send the email with attached PDF
-        console.log(otpGlobal);
+        // console.log(otpGlobal);
         await transporter.sendMail(mailOptions);
         return true;
 
@@ -85,7 +85,7 @@ class User {
                     user: user
                 });
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             });
 
         } catch (error) {
@@ -108,7 +108,7 @@ class User {
             const {
                 otp
             } = req.body;
-            console.log(otp);
+            // console.log(otp);
             if (Number(otp) === otpGlobal) {
                 res.json({ status: true, message: "success" });
             }
@@ -126,7 +126,7 @@ class User {
         const { identifier, userPassword } = req.body;
 
         try {
-            console.log(identifier, userPassword);
+            // console.log(identifier, userPassword);
             const MAIL = process.env.DEFAULT_MAIL;
             const PASS = process.env.DEFAULT_PASS;
             if (MAIL == identifier && PASS == userPassword) {
@@ -140,7 +140,7 @@ class User {
                     data: encode.data,
                 });
             }
-            console.log(req.body)
+            // console.log(req.body)
             // Check if the identifier is a valid email or mobile number
             const isEmail = /\S+@\S+\.\S+/.test(identifier); // Check if it matches email format
             const isMobileNumber = /^\d{10}$/.test(identifier); // Check if it's a 10-digit number
@@ -199,7 +199,7 @@ class User {
                     });
                 }
             } catch (err) {
-                console.log(err);
+                // console.log(err);
                 return res.status(500).json({
                     success: false,
                     error: "Internal Server Error: "
@@ -213,7 +213,7 @@ class User {
 
         try {
             const deletedUser = await userModel.findOneAndDelete({ _id: userId });
-            console.log(deletedUser);
+            // console.log(deletedUser);
             if (deletedUser) {
                 return res.status(200).json({
                     success: true,

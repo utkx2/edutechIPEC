@@ -12,32 +12,32 @@ export default function StudentPhotoUploader({ photos, onChange, index }) {
     function uploadPhoto(ev) {
         ev.preventDefault();
         const files = ev.target.files;
-        console.log(files);
+        // console.log(files);
         const data = new FormData();
         for (let file of files) {
             data.append('photos', file);
         }
-        console.log(data);
+        // console.log(data);
         axios.post(`${BASE_URL}home/uploadImage`, data, {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(response => {
             const { data: filenames } = response;
             setPhotoslink(filenames[0]);
-            console.log(filenames[0]);
+            // console.log(filenames[0]);
             // onChange(prev => {
             //     return [...prev, ...filenames];
             // });
             photos.Students[index].studentImg = filenames[0];
-            console.log(photos.Students[index].studentImg);
+            // console.log(photos.Students[index].studentImg);
             const updatedStudents = {
                 Students: photos.Students.map((student, i) =>
                     i === index ? { ...student, studentImg: filenames[0] } : student
                 ),
             };
-            console.log(updatedStudents);
+            // console.log(updatedStudents);
             // Now set the updated students object as the new state
             onChange(updatedStudents);
-            console.log(photos);
+            // console.log(photos);
             // if (photos[index] !== undefined) {
             //     photos[index] = (filenames[0]);
             // }

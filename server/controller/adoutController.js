@@ -53,7 +53,7 @@ class AboutController {
       const AboutContent = await About.find();
       res.status(200).json(AboutContent);
     } catch (error) {
-      console.log('Error occurred while retrieving registrations:', error);
+      // console.log('Error occurred while retrieving registrations:', error);
       res.status(500).json({
         error: "Internal Server Error",
       });
@@ -65,7 +65,7 @@ class AboutController {
       const AboutContent = await About.findOneAndDelete({});
       res.status(200).json({ success: true, message: "Deleted content successfully." });
     } catch (error) {
-      console.log('Error occurred while retrieving registrations:', error);
+      // console.log('Error occurred while retrieving registrations:', error);
       res.status(500).json({
         error: "Internal Server Error",
       });

@@ -22,7 +22,7 @@ const UserRegistrationDetails = () => {
             .then((response) => response.json())
             .then((data) => setFormData(data))
             .catch((error) => console.log(error));
-        console.log(formData);
+        // console.log(formData);
     }, [id]);
 
     const handleEdit = () => {
@@ -47,7 +47,7 @@ const UserRegistrationDetails = () => {
             .then((response) => response.json())
             .then((data) => {
                 alert("form submitted");
-                console.log(data);
+                // console.log(data);
                 // Perform any necessary actions after successful update
                 // For example, you can navigate to a different page or display a success message
             })

@@ -19,7 +19,7 @@ export default function EngineeringBrochure() {
           throw new Error('Network response was not ok.');
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         if (data.length > 0) {
           // Update the state with the fetched data
@@ -29,7 +29,7 @@ export default function EngineeringBrochure() {
           });
         }
 
-        console.log(formData);
+        // console.log(formData);
       } catch (error) {
         console.error('Error fetching brochure data:', error);
       }
@@ -81,7 +81,9 @@ export default function EngineeringBrochure() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('success', data);
+        console.log('success'
+        // , data
+        );
       })
       .catch((error) => {
         console.error('Error:', error);

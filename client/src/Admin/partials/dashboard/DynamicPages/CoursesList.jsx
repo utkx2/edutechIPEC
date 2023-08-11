@@ -34,9 +34,9 @@ function CoursesList() {
                         auth: localStorage.getItem("token"),
                     },
                 })
-            console.log(response)
+            // console.log(response)
             if (response.status == 200) {
-                console.log('successfully deleted')
+                // console.log('successfully deleted')
                 fetchData()
             }
             if (response.status == 500) {
@@ -61,11 +61,11 @@ function CoursesList() {
                     },
                 }
             );
-            console.log(response.data)
+            // console.log(response.data)
             setUserData(response.data);
-            console.log(userData);
+            // console.log(userData);
             //  setUserData(response.data.users);
-            console.log(userData);
+            // console.log(userData);
         } catch (error) {
             console.error(error);
         }
@@ -78,7 +78,7 @@ function CoursesList() {
 
     useEffect(() => {
         // Now you can safely access the updated userData state here
-        console.log(userData);
+        // console.log(userData);
     }, [userData]);
 
 
@@ -189,7 +189,7 @@ function CoursesList() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
     const [deleteId, setDeleteId] = useState()
-    console.log(userData);
+    // console.log(userData);
     return (
         <div className="flex h-screen overflow-hidden">
             {/* Sidebar */}

@@ -48,7 +48,7 @@ export default function WHY() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
         // You can show a success message or handle the response as needed
       })
       .catch((error) => {

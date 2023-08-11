@@ -31,7 +31,7 @@ export default function Testimonials() {
     // console.log(carousel.Carousels[index].fileLink);
     // carousel.Carousels[index].fileLink = photos[index];
     // console.log(carousel.Carousels[index].fileLink);
-    console.log(cards);
+    // console.log(cards);
   };
 
   const handleSubmit = (e) => {
@@ -51,7 +51,7 @@ export default function Testimonials() {
         },
       })
       .then((response) => {
-        console.log("success", response.data);
+        console.log("success");
       })
       .catch((error) => {
         console.error("Error:", error);

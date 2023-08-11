@@ -46,7 +46,9 @@ export default function SamplePaper() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data, 'success')
+                console.log(
+                    // data,
+                     'success')
                 clearInputs();
             })
             .catch((error) => {

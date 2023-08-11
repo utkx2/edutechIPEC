@@ -22,7 +22,7 @@ const Downloads = () => {
                     },
                 }
             );
-            console.log(responseSamplePaper.data);
+            // console.log(responseSamplePaper.data);
             setSamplePaper(responseSamplePaper.data);
             // console.log(carousel)
             const responseBrochure = await axios.get(`${BASE_URL}download/brochure/get`, {
@@ -57,24 +57,24 @@ const Downloads = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        console.log("samplePaper:", samplePaper);
-    }, [samplePaper]);
+    // useEffect(() => {
+    //     console.log("samplePaper:", samplePaper);
+    // }, [samplePaper]);
 
-    useEffect(() => {
-        console.log("Brochure:", brochure);
-        //   console.log(MedicalBrochureLinks);
-    }, [brochure]);
+    // useEffect(() => {
+    //     console.log("Brochure:", brochure);
+    //       console.log(MedicalBrochureLinks);
+    // }, [brochure]);
 
-    useEffect(() => {
-        console.log("Syllabus:", syllabus);
-        // console.log(syllabus[0]);
-        {
-            syllabus.map((syllabusData) => {
-                console.log(syllabusData.className);
-            })
-        }
-    }, [syllabus]);
+    // useEffect(() => {
+    //     console.log("Syllabus:", syllabus);
+    //     console.log(syllabus[0]);
+    //     {
+    //         syllabus.map((syllabusData) => {
+    //             console.log(syllabusData.className);
+    //         })
+    //     }
+    // }, [syllabus]);
 
     return (
         <div className="min-h-screen py-8 bg-[#d1e9f9]">

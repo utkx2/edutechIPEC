@@ -7,11 +7,11 @@ function QuickLinkDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(id, "id");
+    // console.log(id, "id");
     fetch(`${BASE_URL}QuickLinkHomePage/get/${id}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
+      // console.log(data)
       setFormData(data);
       // console.log(data);
     })

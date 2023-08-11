@@ -69,7 +69,7 @@ export default function About() {
         },
       })
       .then((response) => {
-        console.log("success", response.data);
+        console.log("success");
       })
       .catch((error) => {
         console.error("Error:", error);

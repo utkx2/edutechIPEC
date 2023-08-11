@@ -23,7 +23,7 @@ const AddExamForm = () => {
   const [imageUrl, setImageUrl] = useState("");
   const handleCloudinaryUpload = (imageBlob, index, optionIndex, option) => {
     try {
-      console.log(option);
+      // console.log(option);
       const formData = new FormData();
       formData.append("file", imageBlob);
       formData.append("upload_preset", "abfrwxrc");
@@ -33,7 +33,9 @@ const AddExamForm = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Cloudinary Response:", data);
+          console.log("Cloudinary Response:"
+          // , data
+          );
           const imageUrl = data.secure_url;
           setImageUrl(imageUrl);
           if (option) {
@@ -44,7 +46,7 @@ const AddExamForm = () => {
             const updatedQuestions = [...questions];
             updatedQuestions[index].imageUrl = imageUrl;
 
-            console.log(updatedQuestions[index].imageUrl);
+            // console.log(updatedQuestions[index].imageUrl);
             setQuestions(updatedQuestions);
           }
           return imageUrl;
@@ -57,13 +59,13 @@ const AddExamForm = () => {
     }
   };
   const handleUpload = async (index, optionIndex, option) => {
-    console.log(index);
+    // console.log(index);
     try {
       const clipboardImage = await navigator.clipboard.read();
       const imageBlob = clipboardImage[0].types.includes("image/png")
         ? await clipboardImage[0].getType("image/png")
         : await clipboardImage[0].getType("image/jpeg");
-      console.log(imageBlob);
+      // console.log(imageBlob);
       handleCloudinaryUpload(imageBlob, index, optionIndex, option);
     } catch (error) {
       console.error("Error:", error);
@@ -93,7 +95,7 @@ const AddExamForm = () => {
   };
   const handleChangeQuestionImage = (index, imageUrl) => {
     const updatedQuestions = [...questions];
-    console.log(imageUrl);
+    // console.log(imageUrl);
     updatedQuestions[index].imageUrl = imageUrl;
     setQuestions(updatedQuestions);
   };
@@ -121,8 +123,8 @@ const AddExamForm = () => {
     const updatedQuestions = [...questions];
     updatedQuestions[questionIndex].correctOption = correctOption;
     setQuestions(...[updatedQuestions]);
-    console.log(answers, "answer");
-    console.log(questions, "question");
+    // console.log(answers, "answer");
+    // console.log(questions, "question");
   };
   const handleClassChange = (event) => {
     setClassName(event.target.value); // Update the className state
@@ -137,10 +139,10 @@ const AddExamForm = () => {
     setQuestions(updatedQuestions);
   };
   const handleSaveExam = async () => {
-    console.log("Exam Name:", examName);
-    console.log("Exam Instructions:", examInstruction);
-    console.log("Questions:", questions);
-    console.log("className", className);
+    // console.log("Exam Name:", examName);
+    // console.log("Exam Instructions:", examInstruction);
+    // console.log("Questions:", questions);
+    // console.log("className", className);
     try {
       const response = await fetch(`${BASE_URL}exam/newexam`, {
         method: "POST",
@@ -172,7 +174,7 @@ const AddExamForm = () => {
         }),
       });
       if (response.ok) {
-        console.log("Exam saved successfully!");
+        // console.log("Exam saved successfully!");
         navigate("/dashboard/list");
       } else {
         console.log("Failed to save the exam.");
@@ -186,7 +188,7 @@ const AddExamForm = () => {
     updatedAnswers[questionIndex].splice(answerIndex, 1);
     setAnswers(updatedAnswers);
   };
-  console.log(answers, "answerIndex");
+  // console.log(answers, "answerIndex");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const handleAddSubject = () => {

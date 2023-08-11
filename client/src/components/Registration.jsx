@@ -51,14 +51,14 @@ const Registration = () => {
 
             if (response.ok) {
                 const responseData = await response.json();
-                console.log('Form submitted successfully', responseData);
+                // console.log('Form submitted successfully', responseData);
                 alert('Form submitted successfully');
             } else {
-                console.log('Form submission failed', response.statusText);
+                // console.log('Form submission failed', response.statusText);
                 alert('Form submission failed');
             }
         } catch (error) {
-            console.log('Error submitting form', error);
+            // console.log('Error submitting form', error);
             alert('Error submitting form');
         }
     };

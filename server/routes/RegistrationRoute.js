@@ -42,8 +42,8 @@ const sendEmail = async (pdfBuffer, email) => {
 router.post('/upload', async (req, res) => {
     const { firstName, lastName, email,
         phoneNumber, gender, selectedClass, fatherName, fatherNumber, motherName, motherNumber, dob, category, addressLine1, addressLine2, addressLine3, city, state, zipCode, message } = req.body;
-    console.log(selectedClass, category);
-    console.log(req.body);
+    // console.log(selectedClass, category);
+    // console.log(req.body);
 
     const dataFromAPI = req.body;
 
@@ -118,11 +118,11 @@ router.get("/get", isAdmin, async (req, res) => {
 
     try {
         const registrationsList = await Registrations.find();
-        console.log(registrationsList);
+        // console.log(registrationsList);
         res.status(200).json(registrationsList);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while getting the registrations list "
         });
@@ -136,11 +136,11 @@ router.get("/get/:id", async (req, res) => {
     const id = req.params.id;
     try {
         const registrationsList = await Registrations.findById({ _id: id });
-        console.log(registrationsList);
+        // console.log(registrationsList);
         res.status(200).json(registrationsList);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while getting the registrations list "
         });
@@ -152,15 +152,15 @@ router.get("/get/:id", async (req, res) => {
 // http://localhost:3000/api/registration/delete/:id
 router.delete("/delete/:id", isAdmin, async (req, res) => {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     try {
         const registrationsList = await Registrations.findByIdAndDelete({ _id: id });
-        console.log(registrationsList);
-        console.log("registration Deleted Successfully")
+        // console.log(registrationsList);
+        // console.log("registration Deleted Successfully")
         res.status(200).json(registrationsList);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while deleting the registration"
         });

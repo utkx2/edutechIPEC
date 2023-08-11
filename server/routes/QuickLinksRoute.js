@@ -22,7 +22,7 @@ router.post('/upload',isAdmin, async (req, res) => {
     try {
         const quickLinksData = req.body; // JSON object with faculty information
         //      console.log(req.body);
-        console.log(quickLinksData);
+        // console.log(quickLinksData);
         const update = { quickLinks: quickLinksData };
         // console.log(update);
         // Use findOneAndUpdate without filter (it will find the only entry in the collection)
@@ -41,7 +41,7 @@ router.post('/upload',isAdmin, async (req, res) => {
 // http://localhost:3000/api/QuickLinkHomePage/get/:id
 router.get("/get/:id", async (req, res) => {
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     try {
         const QuickLinksContent = await QuickLinksModel.find();
         if (!QuickLinksContent) {
@@ -49,7 +49,7 @@ router.get("/get/:id", async (req, res) => {
         }
         //console.log(QuickLinksContent[0]);
         const quickLink = await QuickLinksContent[0].quickLinks.find(link => link._id.toString() === id);
-        console.log(quickLink);
+        // console.log(quickLink);
         if (!quickLink) {
             return res.status(404).json({ error: "Quick link not found" });
         }
@@ -58,7 +58,7 @@ router.get("/get/:id", async (req, res) => {
         res.status(200).json(quickLink);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while submitting the gem registration form"
 

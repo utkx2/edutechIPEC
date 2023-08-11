@@ -59,8 +59,8 @@ function OnlineExamPage() {
         const data = await response.json(); 
         setExamData(data.exam);
         setTimer(data.exam.totalTime)
-        console.log(data.exam);
-        console.log(data.exam.totalTime);
+        // console.log(data.exam);
+        // console.log(data.exam.totalTime);
       } catch (error) {
         console.error(error);
       }
@@ -91,7 +91,7 @@ function OnlineExamPage() {
       return;
     }
 
-    console.log('Exam examData:', examData);
+    // console.log('Exam examData:', examData);
     const user = JSON.parse(localStorage.getItem("user"));
 
     // Step 3: Convert examData and selectedAnswers to the desired format
@@ -110,8 +110,8 @@ function OnlineExamPage() {
 
     // Step 4: Call the API to get the exam score and store the exam result
     const userId = user._id;
-    console.log(responsePayload);
-    console.log(submittedAnswersPayload);
+    // console.log(responsePayload);
+    // console.log(submittedAnswersPayload);
     axios.post(`${BASE_URL}exam/getscore/${examId}`, {
       response: responsePayload,
       submittedAnswers: submittedAnswersPayload,
@@ -124,7 +124,7 @@ function OnlineExamPage() {
       }
     })
       .then((examData) => {
-        console.log('Exam Score:', examData.data.score);
+        // console.log('Exam Score:', examData.data.score);
         localStorage.setItem(`exam_${examId}_submitted`, JSON.stringify(true));
         navigate(`/result/${examData.data.score}`);
         setIsSubmitted(true);

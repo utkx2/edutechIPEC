@@ -10,8 +10,8 @@ const ExamPage = () => {
     const queryString = `userId=${user["_id"]}&userClass=${user.className}`;
 
     useEffect(() => {
-        console.log(user)
-        console.log(queryString);
+        // console.log(user)
+        // console.log(queryString);
         fetch(`${BASE_URL}exam/active-exams?${queryString}`, {
             method: "GET",
             headers: {
@@ -31,7 +31,7 @@ const ExamPage = () => {
     }, []);
 
     const handleCardClick = (examId) => {
-        console.log(examId);
+        // console.log(examId);
         const isSubmitted = JSON.parse(localStorage.getItem(`exam_${examId}_submitted`));
         if (isSubmitted) {
             // Exam is already submitted, redirect to a different page

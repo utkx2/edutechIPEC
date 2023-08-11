@@ -30,7 +30,7 @@ export default function Result() {
           auth: localStorage.getItem("token"),
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       setUserData(response.data);
       // Populate the form with fetched data
       if (response.data && response.data.length > 0) {
@@ -98,7 +98,7 @@ export default function Result() {
     //   examname: '',
     //   student: []
     // }]
-    console.log(formDataObj)
+    // console.log(formDataObj)
     const token = localStorage.getItem("token");
 
     const requestBody = JSON.stringify(formDataObj);
@@ -113,7 +113,7 @@ export default function Result() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);

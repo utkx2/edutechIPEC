@@ -66,9 +66,9 @@ function Footer() {
                 ))}
               </div>
               <div>
-              <div className="md:col-span-2 pl-8 md:pl-0">
-                <h1 className="mb-12 text-xl absolute top-1 left-60 mr-96 font-bold">OUR POLICY</h1>
-                <div className="absolute bottom-26 right-2/4">
+              {/* <div className="md:col-span-2 pl-8 md:pl-0"> */}
+                <h1 className="mb-12 text-xl md:absolute top-1 left-66 font-bold">OUR POLICY</h1>
+                {/* <div className="absolute bottom-26 right-2/4"> */}
                   {footerlinks2.map((footLink) => (
                     <div
                       key={footLink.name}
@@ -79,8 +79,8 @@ function Footer() {
                       <Link to={footLink.link}>{footLink.name}</Link>
                     </div>
                   ))}
-                </div>
-              </div>
+                {/* </div> */}
+              {/* </div> */}
               </div>
             </div>
           </div>

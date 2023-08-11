@@ -32,9 +32,9 @@ function AllUserRegistrations() {
             auth: localStorage.getItem("token"),
           },
         })
-      console.log(response)
+      // console.log(response)
       if (response.status == 200) {
-        console.log('successfully deleted')
+        // console.log('successfully deleted')
         fetchData()
       }
       if (response.status == 500) {
@@ -59,7 +59,7 @@ function AllUserRegistrations() {
           },
         }
       );
-      console.log(response)
+      // console.log(response)
       if (response.status == 200) {
         console.log('successfully get all registrations')
       }
@@ -74,7 +74,7 @@ function AllUserRegistrations() {
   };
 
   useEffect(() => {
-    console.log('useEffect')
+    // console.log('useEffect')
     fetchData();
   }, []);
 
@@ -90,7 +90,7 @@ function AllUserRegistrations() {
     setUserType(e.target.value);
   };
 
-  console.log('coponent rendered again')
+  // console.log('coponent rendered again')
 
   const filteredData = userData.filter((user) => {
     const nameMatch = `${user.firstName} ${user.lastName}`

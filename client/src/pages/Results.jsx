@@ -19,7 +19,7 @@ function Result() {
           },
         }
       );
-      console.log(response.data)
+      // console.log(response.data)
       setUserData(response.data)
     } catch (error) {
       console.error(error);

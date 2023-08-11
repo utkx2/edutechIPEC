@@ -68,11 +68,11 @@ export default function Home() {
   const [studentPhotos, setStudentPhotos] = useState([]);
   const [quickLinksCount, setquickLinksCount] = useState(0);
   const [boolean, setBoolean] = useState(false);
-  console.log(photos);
+  // console.log(photos);
   useEffect(() => {
     setBoolean(true);
   }, [studentPhotos]);
-  console.log(boolean);
+  // console.log(boolean);
   if (boolean) {
     const updatedStudents = {
       Students: students.Students.map((student, i) =>
@@ -84,31 +84,31 @@ export default function Home() {
     // Now set the updated students object as the new state
     setStudents(updatedStudents);
     setBoolean(false);
-    console.log(students.Students);
+    // console.log(students.Students);
   }
-  console.log(faculty);
-  console.log(carousel);
-  console.log(photoNumber);
+  // console.log(faculty);
+  // console.log(carousel);
+  // console.log(photoNumber);
   const handleItemClick = (index) => {
     setPhotos(carousel.Carousels);
     setPhotoNumber(index);
-    console.log(carousel.Carousels[index].fileLink);
+    // console.log(carousel.Carousels[index].fileLink);
     carousel.Carousels[index].fileLink = photos[index];
-    console.log(carousel.Carousels[index].fileLink);
+    // console.log(carousel.Carousels[index].fileLink);
   };
-  console.log(studentPhotos);
-  console.log(students.Students);
+  // console.log(studentPhotos);
+  // console.log(students.Students);
   const studentsObj = students.Students;
   const imageLinks = studentsObj.map((student) => student.studentImg);
   const handleItemClickStudent = (index) => {
     if (photoNumber == null) {
       setStudentPhotos(imageLinks);
     }
-    console.log("clicked");
+    // console.log("clicked");
     setPhotoNumber(index);
-    console.log(students.Students[index]);
-    console.log(studentPhotos[index]);
-    console.log(students.Students[index].studentImg);
+    // console.log(students.Students[index]);
+    // console.log(studentPhotos[index]);
+    // console.log(students.Students[index].studentImg);
     const updatedStudents = {
       Students: students.Students.map((student, i) =>
         i === photoNumber
@@ -258,7 +258,7 @@ export default function Home() {
           auth: localStorage.getItem("token"),
         },
       });
-      console.log(responsePrograms.data[0]);
+      // console.log(responsePrograms.data[0]);
       setPrograms({
         Programs: responsePrograms.data[0].programs.map((programObj) => ({
           title: programObj.title,
@@ -275,7 +275,7 @@ export default function Home() {
           },
         }
       );
-      console.log(responseFaculty.data[0]);
+      // console.log(responseFaculty.data[0]);
       setFaculty({
         Faculties: responseFaculty.data[0].facultyMembers.map((facultyObj) => ({
           name: facultyObj.name,
@@ -295,7 +295,7 @@ export default function Home() {
           },
         }
       );
-      console.log(responseQuickLinks.data[0], "quick");
+      // console.log(responseQuickLinks.data[0], "quick");
       setquickLinks({
         QuickLinks: responseQuickLinks.data[0].quickLinks.map((facultyObj) => ({
           end: facultyObj.end,
@@ -315,10 +315,12 @@ export default function Home() {
           },
         }
       );
-      console.log(responseStudent.data[0]);
-      setStudents(responseStudent.data[0]);
+      // console.log(responseStudent.data[0]);
+      // setStudents(responseStudent.data[0]);
     } catch (err) {
-      console.log(err, "error");
+      console.log(
+        // err,
+         "error");
     }
   };
   useEffect(() => {
@@ -332,7 +334,7 @@ export default function Home() {
       selectedStudents: students.Students,
       programs: programs.Programs,
     };
-    console.log(formDataObj);
+    // console.log(formDataObj);
     const token = localStorage.getItem("token");
     const requestBodyCarousel = JSON.stringify(formDataObj.carousel);
     const requestBodyFaculty = JSON.stringify(formDataObj.faculty);
@@ -340,7 +342,7 @@ export default function Home() {
     const requestBodyPrograms = JSON.stringify(formDataObj.programs);
     const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
 
-    console.log(token);
+    // console.log(token);
     // uploading carousel
     fetch(`${BASE_URL}carousel/upload`, {
       method: "POST",
@@ -352,7 +354,9 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        console.log("success"
+        // , data
+        );
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -368,7 +372,9 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        console.log("success"
+        // , data
+        );
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -385,7 +391,9 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        console.log("success"
+        // , data
+        );
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -402,7 +410,9 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        console.log("success"
+        // , data
+        );
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -418,7 +428,9 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        console.log("success"
+        // , data
+        );
       })
       .catch((error) => {
         console.error("Error:", error);

@@ -33,9 +33,9 @@ const Signup = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
+        // console.log(formData)
         // Make API request with form data
-        console.log(localStorage.getItem("token"));
+        // console.log(localStorage.getItem("token"));
         axios
             .post(`${BASE_URL}user/sendMail/${formData.email}`, {
                 method: "POST",
@@ -44,7 +44,7 @@ const Signup = () => {
                     auth: localStorage.getItem("token"),
                 },
             }).then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 if (response.data.status) {
                     navigate("/verify-otp", { state: formData });
                 }

@@ -14,7 +14,7 @@ router.post('/upload', isAdmin, async (req, res) => {
             message: "form submitted successfully",
         });
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         res.status(500).json({
             success: false,
             message: "Internal error.",
@@ -27,11 +27,11 @@ router.get("/get", async (req, res) => {
 
     try {
         const CoursesContent = await Courses.find();
-        console.log(CoursesContent);
+        // console.log(CoursesContent);
         res.status(200).json(CoursesContent);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while submitting the gem registration form"
         });
@@ -43,11 +43,11 @@ router.get("/get/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const CoursesContent = await Courses.findById({ _id: id });
-        console.log(CoursesContent);
+        // console.log(CoursesContent);
         res.status(200).json(CoursesContent);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while submitting the gem registration form"
 
@@ -59,11 +59,11 @@ router.delete("/remove/:id", isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const CoursesContent = await Courses.findByIdAndDelete({ _id: id });
-        console.log("Object Deleted:", CoursesContent);
+        // console.log("Object Deleted:", CoursesContent);
         res.status(200).json(CoursesContent);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while submitting the gem registration form"
 

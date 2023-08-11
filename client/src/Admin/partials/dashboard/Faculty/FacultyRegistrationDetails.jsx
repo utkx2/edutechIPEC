@@ -23,7 +23,7 @@ const FacultyRegistrationDetails = () => {
             .then((data) => setFormData(data))
             .catch((error) => console.log(error));
         }, [id]);
-    console.log(formData);
+    // console.log(formData);
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -47,7 +47,7 @@ const FacultyRegistrationDetails = () => {
             .then((response) => response.json())
             .then((data) => {
                 alert("form submitted");
-                console.log(data);
+                // console.log(data);
                 // Perform any necessary actions after successful update
                 // For example, you can navigate to a different page or display a success message
             })

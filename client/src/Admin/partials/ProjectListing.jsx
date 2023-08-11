@@ -41,7 +41,7 @@ const ProjectListing = () => {
           // Update the code here to display the error message on the screen as needed
           return;
         }
-        console.log(response.data)
+        // console.log(response.data)
         setTenderData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 401) {

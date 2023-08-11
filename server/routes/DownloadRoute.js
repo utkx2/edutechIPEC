@@ -46,7 +46,7 @@ router.put('/samplePaper/edit/', isAdmin, async (req, res) => {
         const {
             className, fileLink
         } = req.body;
-        console.log(className);
+        // console.log(className);
         const updatedCarousel = await SamplePaper.findOneAndUpdate(
             { className }, {
             fileLink

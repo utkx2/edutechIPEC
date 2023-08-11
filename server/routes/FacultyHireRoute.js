@@ -43,11 +43,11 @@ router.get("/get", isAdmin, async (req, res) => {
 
     try {
         const RecruitmentsList = await FacultyHire.find();
-        console.log(RecruitmentsList);
+        // console.log(RecruitmentsList);
         res.status(200).json(RecruitmentsList);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while submitting the gem registration form"
 
@@ -61,11 +61,11 @@ router.get("/get/:id", async (req, res) => {
     const id = req.params.id;
     try {
         const RecruitmentsList = await FacultyHire.findById({ _id: id });
-        console.log(RecruitmentsList);
+        // console.log(RecruitmentsList);
         res.status(200).json(RecruitmentsList);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while getting the registrations list "
         });
@@ -76,15 +76,15 @@ router.get("/get/:id", async (req, res) => {
 // http://localhost:3000/api/facultyHire/delete/:id
 router.delete("/delete/:id", isAdmin, async (req, res) => {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     try {
         const RecruitmentsList = await FacultyHire.findByIdAndDelete({ _id: id });
-        console.log(RecruitmentsList);
-        console.log("User Deleted Successfully")
+        // console.log(RecruitmentsList);
+        // console.log("User Deleted Successfully")
         res.status(200).json(RecruitmentsList);
     }
     catch (error) {
-        console.log('Error occurred while retrieving registrations:', error);
+        // console.log('Error occurred while retrieving registrations:', error);
         res.status(500).json({
             error: "An error occurred while submitting the gem registration form"
         });

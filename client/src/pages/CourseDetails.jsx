@@ -5,15 +5,15 @@ import { BASE_URL } from "../config";
 function CourseDetails() {
   const { id } = useParams();
   const [formData, setFormData] = useState(null);
-  console.log(id)
+  // console.log(id)
 
   useEffect(() => {
-    console.log(id)
+    // console.log(id)
     // http://localhost:3000/api/Courses/get/:id
     fetch(`${BASE_URL}Courses/get/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         setFormData(data);
         // console.log(data);
       })

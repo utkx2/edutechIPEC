@@ -34,7 +34,7 @@ function Home() {
           auth: localStorage.getItem("token"),
         },
       });
-      console.log(responseCarousel.data[0].images);
+      // console.log(responseCarousel.data[0].images);
       setCarousel(responseCarousel.data[0].images);
       // console.log(carousel)
       const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
@@ -75,7 +75,7 @@ function Home() {
         }
       );
       // console.log(responsePrograms.data);
-      console.log(responseStudent.data[0].Students);
+      // console.log(responseStudent.data[0].Students);
       setStudent(responseStudent.data[0].Students);
       setFaculty(responseFaculty.data[0].facultyMembers);
       setQuickLink(responseQuickLink.data[0].quickLinks);
@@ -91,21 +91,21 @@ function Home() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // console.log("Carousel:", carousel);
-  }, [carousel]);
+  // useEffect(() => {
+  //   console.log("Carousel:", carousel);
+  // }, [carousel]);
 
-  useEffect(() => {
-    // console.log("Programs:", programs);
-  }, [programs]);
+  // useEffect(() => {
+  //   console.log("Programs:", programs);
+  // }, [programs]);
 
-  useEffect(() => {
-    // console.log("Faculty:", faculty);
-  }, [faculty]);
+  // useEffect(() => {
+  //   console.log("Faculty:", faculty);
+  // }, [faculty]);
 
-  useEffect(() => {
-    // console.log("Student:", student);
-  }, [student]);
+  // useEffect(() => {
+  //   console.log("Student:", student);
+  // }, [student]);
 
   // console.log(carousel[0]?.images[0]);
   // const CustomPrevArrow = () => (
@@ -123,7 +123,7 @@ function Home() {
 
   const viewDetails = (userId) => {
     navigate(`quickLinkdetail/${userId}`);
-    console.log(userId);
+    // console.log(userId);
   };
 
   return (
@@ -197,14 +197,14 @@ function Home() {
           )}
           autoplay={true}
           loop={true}
-          className="w-full min-h-[330px] sm:h-[500px] md:h-[570px] "
+          className="w-full object-cover h-full"
         >
           {carousel.map((imageUrl, index) => (
             <img
               key={imageUrl}
               src={imageUrl}
               alt={`image ${index}`}
-              className="w-full min-h-[330px] object-cover sm:h-[500px] md:h-[570px]"
+              className="w-full object-cover h-full"
             />
           ))}
           {/* <img
@@ -269,7 +269,7 @@ function Home() {
                     className="bg-blue-400 ml-2 text-white p-2 font-medium"
                     onClick={() => {
                       viewDetails(facultyData._id);
-                      console.log("sa", facultyData._id);
+                      // console.log("sa", facultyData._id);
                     }}
                   >
                     View Details

@@ -4,7 +4,7 @@ const userModel = require("../models/userModel");
 
 exports.verifyToken = async (req, res, next) => {
     const token = req.headers.auth;
-    console.log(token)
+    // console.log(token)
     if (!token) {
         return res.status(401).json({
             success: false,
@@ -19,7 +19,7 @@ exports.verifyToken = async (req, res, next) => {
         //   console.log(userId);
         if (req.userRole === "student") {
             const user = await userModel.findById(userId);
-            console.log(user);
+            // console.log(user);
             req.userRole = user.userRole;
             // req.userId = user.userId;
             req._id = user._id;
@@ -35,16 +35,16 @@ exports.verifyToken = async (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
     const token = req.headers.auth || req.query.token || req.cookies.token;
-    console.log(token);
+    // console.log(token);
     if (!token) {
         return res.status(401).json({ error: "Access denied. No token provided." });
     }
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        console.log(decoded.data);
+        // console.log(decoded.data);
         //    const userId = decoded.data._id;
-        console.log(decoded.data.userRole)
+        // console.log(decoded.data.userRole)
         if (decoded.data.userRole === "admin") {
             //   console.log("admin")
         }
@@ -58,7 +58,7 @@ exports.isAdmin = async (req, res, next) => {
         }
         next();
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         return res.status(403).json({ error: "Invalid token." });
     }
 };

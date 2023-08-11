@@ -9,7 +9,7 @@ try {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
-  console.log('Database Connected Successfully');
+  // console.log('Database Connected Successfully');
 } catch (err) {
   console.log('Error:', err);
 }

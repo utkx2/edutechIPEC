@@ -9,7 +9,7 @@ const { verifyToken, isAdmin } = require('../middleware/auth');
 router.post('/upload', isAdmin, async (req, res) => {
 
     const { Title, Content, Reasons } = req.body;
-    console.log(Title, Content, Reasons);
+    // console.log(Title, Content, Reasons);
 
     try {
         const whyIPEC_Obj = new whyIPEC({ Title, Content, Reasons });
@@ -34,7 +34,7 @@ router.post('/upload', isAdmin, async (req, res) => {
 router.put('/edit', isAdmin, async (req, res) => {
 
     const { Title, Content, Reasons } = req.body;
-    console.log(Title, Content, Reasons);
+    // console.log(Title, Content, Reasons);
 
     try {
         const update = { Title, Content, Reasons };
@@ -64,11 +64,11 @@ router.get("/get", async (req, res) => {
 
     try {
         const AboutContent = await whyIPEC.find();
-        console.log(AboutContent);
+        // console.log(AboutContent);
         res.status(200).json(AboutContent);
     }
     catch (error) {
-        console.log('Error occurred while retrieving whyIPEC:', error);
+        // console.log('Error occurred while retrieving whyIPEC:', error);
         res.status(500).json({
             error: "An error occurred while editing whyIPEC "
 
@@ -79,11 +79,11 @@ router.get("/get", async (req, res) => {
 router.delete("/remove", isAdmin, async (req, res) => {
     try {
         const whyIPEC_Content = await whyIPEC.findOneAndDelete({});
-        console.log("Object Deleted:", whyIPEC_Content);
+        // console.log("Object Deleted:", whyIPEC_Content);
         res.status(200).json(whyIPEC_Content);
     }
     catch (error) {
-        console.log('Error occurred while deleting whyIPEC:', error);
+        // console.log('Error occurred while deleting whyIPEC:', error);
         res.status(500).json({
             error: "An error occurred while deleting whyIPEC"
 

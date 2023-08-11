@@ -49,7 +49,7 @@ export default function Questions() {
         examName: "Medical",
         fileLink: formData.Links.map(link => link.fileLink)
     }
-    console.log(formDataObj)
+    // console.log(formDataObj)
       const token = localStorage.getItem("token");
 
     const requestBody = JSON.stringify(formDataObj);
@@ -64,7 +64,9 @@ export default function Questions() {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log("success", data); 
+            console.log("success"
+            // ,data
+             ); 
         })
         .catch((error) => {
             console.error("Error:", error);

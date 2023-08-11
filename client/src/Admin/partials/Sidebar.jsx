@@ -16,7 +16,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     if (token.length > 0 && token !== undefined) {
       setUserData(token);
     } else {
-      console.log("there is no id")
+      // console.log("there is no id")
     }
     // let userData = localStorage.getItem("user");
     // if (userData !== null && userData !== undefined) {

@@ -71,7 +71,7 @@ function About() {
           },
         }
       );
-      console.log(response.data[0])
+      // console.log(response.data[0])
       setUserData(response.data[0])
       // setUserData(response.data);
     } catch (error) {

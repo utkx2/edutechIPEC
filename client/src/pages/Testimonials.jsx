@@ -14,7 +14,7 @@ export default function Testimonials() {
           auth: localStorage.getItem("token"),
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       setUserData(response.data);
       // setUserData(response.data);
     } catch (error) {
