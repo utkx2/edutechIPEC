@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const QuickLinksModel = require('../models/QuickLinksModel');
+const { isAdmin } = require('../middleware/auth');
+
 
 // http://localhost:3000/api/QuickLinkHomePage/get
 router.get('/get', async (req, res) => {
@@ -16,7 +18,7 @@ router.get('/get', async (req, res) => {
 
 
 // http://localhost:3000/api/QuickLinkHomePage/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload',isAdmin, async (req, res) => {
     try {
         const quickLinksData = req.body; // JSON object with faculty information
         //      console.log(req.body);
@@ -65,7 +67,7 @@ router.get("/get/:id", async (req, res) => {
 })
 
 // http://localhost:3000/api/QuickLinkHomePage/edit/:id
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id',isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const data = req.body;
@@ -83,7 +85,7 @@ router.put('/edit/:id', async (req, res) => {
 });
 
 // http://localhost:3000/api/QuickLinkHomePage/delete/:id
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id',isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await QuickLinksModel.findByIdAndRemove({_id: id});

@@ -197,7 +197,7 @@ function Home() {
           )}
           autoplay={true}
           loop={true}
-          className="w-full min-h-[330px] sm:[500px] md:h-[570px] "
+          className="w-full min-h-[330px] sm:h-[500px] md:h-[570px] "
         >
           {carousel.map((imageUrl, index) => (
             <img
