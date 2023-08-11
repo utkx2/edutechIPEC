@@ -23,6 +23,7 @@ import Downloads from '../pages/Downloads';
 import VerificationPage from '../pages/VerificationPage';
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from './PrivateRoutes';
+import QuickLinkDetail from '../pages/QuickLinkDetail';
 
 const MainRoutes = () => {
   return (
@@ -47,7 +48,8 @@ const MainRoutes = () => {
         <Route path="/careers" element={<Career />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<AdminRoute element={Signup} />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/quickLinkdetail/:id" element={<QuickLinkDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

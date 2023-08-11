@@ -77,7 +77,7 @@ function CourseDetails() {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <div className="mt-6">
           <div
             className="max-w-[60rem] p-8 mx-4 border shadow-xl md:mx-auto bg-gradient-to-b from-gray-100 to-gray-50 rounded-2xl my-10">
@@ -116,7 +116,7 @@ function CourseDetails() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

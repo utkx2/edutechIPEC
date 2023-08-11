@@ -45,15 +45,15 @@ router.get("/get/:id", async (req, res) => {
         if (!QuickLinksContent) {
             return res.status(404).json({ error: "Course content not found" });
         }
-        //    console.log(QuickLinksContent[[0]]);
-        const quickLink = QuickLinksContent[0].quickLinks.find(link => link._id.toString() === id);
+        //console.log(QuickLinksContent[0]);
+        const quickLink = await QuickLinksContent[0].quickLinks.find(link => link._id.toString() === id);
         console.log(quickLink);
         if (!quickLink) {
             return res.status(404).json({ error: "Quick link not found" });
         }
         //const CoursesContent = await QuickLinksModel.findById({ quickLinks._id: id });
         //  console.log(QuickLinksContent);
-        res.status(200).json(QuickLinksContent);
+        res.status(200).json(quickLink);
     }
     catch (error) {
         console.log('Error occurred while retrieving registrations:', error);
@@ -63,7 +63,6 @@ router.get("/get/:id", async (req, res) => {
         });
     }
 })
-
 
 // http://localhost:3000/api/QuickLinkHomePage/edit/:id
 router.put('/edit/:id', async (req, res) => {
@@ -87,7 +86,7 @@ router.put('/edit/:id', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        await QuickLinksModel.findByIdAndRemove(id);
+        await QuickLinksModel.findByIdAndRemove({_id: id});
         res.json({ message: 'the card has been removed successfully' });
     }
     catch (error) {
