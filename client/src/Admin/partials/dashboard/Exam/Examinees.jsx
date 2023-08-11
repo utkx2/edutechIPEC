@@ -10,7 +10,13 @@ const ExamineesTable = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get(`${BASE_URL}examresults/users/${id}`)
+    axios.get(`${BASE_URL}examresults/users/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        auth: localStorage.getItem("token"),
+      },
+    })
       .then(response => {
         setExaminees(response.data.userResults);
       })
@@ -28,7 +34,7 @@ const ExamineesTable = () => {
   };
 
   const checkOptionValue = (value) => {
-    switch(value) {
+    switch (value) {
       case '0':
         return 'a';
       case '1':
@@ -40,11 +46,11 @@ const ExamineesTable = () => {
       default:
         return value;
     }
-  }  
+  }
 
   // Helper function to format the response data as a list of key-value pairs
   const formatResponseData = (response) => {
-  
+
     const options = Object.keys(response);
     console.log(response)
 

@@ -56,7 +56,7 @@ function OnlineExamPage() {
         if (!response.ok) {
           throw new Error("Failed to fetch exam data");
         }
-        const data = await response.json();
+        const data = await response.json(); 
         setExamData(data.exam);
         setTimer(data.exam.totalTime)
         console.log(data.exam);
