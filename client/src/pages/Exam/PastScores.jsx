@@ -9,7 +9,13 @@ const PastScoresTable = () => {
   useEffect(() => {
     const fetchPastScores = async () => {
       try {
-        const response = await fetch(`${BASE_URL}examresults/score/${user._id}`);
+        const response = await fetch(`${BASE_URL}examresults/score/${user._id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        });
         const data = await response.json();
         setCurrentScores(data);
       } catch (error) {
@@ -23,10 +29,10 @@ const PastScoresTable = () => {
   const indexOfFirstScore = indexOfLastScore - scoresPerPage;
 
   const handlePageChange = (pageNumber) => {
-  if (pageNumber >0 && pageNumber<= Math.ceil(currentScores.length / scoresPerPage)) {
-    setCurrentPage(pageNumber);
-  }
-};
+    if (pageNumber > 0 && pageNumber <= Math.ceil(currentScores.length / scoresPerPage)) {
+      setCurrentPage(pageNumber);
+    }
+  };
 
 
   return (
@@ -48,17 +54,17 @@ const PastScoresTable = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-gray-100">
-                  {currentScores
-                    .slice(indexOfFirstScore, indexOfLastScore)
-                    .map((score, index) => (
-                      <tr className="text-gray-700" key={index}>
-                        <td className="px-4 py-3 border ">{index + 1}</td>
-                        <td className="px-4 py-3 border ">{score.examName}</td>
-                        <td className="px-4 py-3 border">{score.score}</td>
-                        <td className="px-4 py-3 border">{score.maxMarks}</td>
-                        <td className="px-4 py-3 border">{score.NegativeCount}</td>
-                      </tr>
-                    ))}
+                    {currentScores
+                      .slice(indexOfFirstScore, indexOfLastScore)
+                      .map((score, index) => (
+                        <tr className="text-gray-700" key={index}>
+                          <td className="px-4 py-3 border ">{index + 1}</td>
+                          <td className="px-4 py-3 border ">{score.examName}</td>
+                          <td className="px-4 py-3 border">{score.score}</td>
+                          <td className="px-4 py-3 border">{score.maxMarks}</td>
+                          <td className="px-4 py-3 border">{score.NegativeCount}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

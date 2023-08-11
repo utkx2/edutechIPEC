@@ -33,7 +33,7 @@ router.put('/byid/:id/toggleStatus', isAdmin, examController.toggleStatus);
 router.get('/active-exams', verifyToken, examController.getExamsWithStatusTrue);
 
 //Exam without answers
-router.get('/student-exam/:id', examController.getExamByIdWithoutCorrect);
+router.get('/student-exam/:id', verifyToken, examController.getExamByIdWithoutCorrect);
 
 //Calculate Score
 router.post('/getscore/:id', verifyToken, examController.getExamScore);

@@ -20,7 +20,7 @@ router.get('/get', async (req, res) => {
 // http://localhost:3000/api/carousel/upload
 router.post('/upload', isAdmin, async (req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const newData = {
             images: req.body
         }

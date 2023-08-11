@@ -13,8 +13,8 @@ router.post('/upload', async (req, res) => {
         addressLine1, addressLine2, addressLine3,
         city, state, zipcode, message
     } = req.body;
-    console.log(gender, category);
-    console.log(req.body);
+    // console.log(gender, category);
+    // console.log(req.body);
     try {
         const FacultyCandidate = new FacultyHire({
             firstName, lastName, email,
@@ -57,7 +57,7 @@ router.get("/get", isAdmin, async (req, res) => {
 })
 
 // http://localhost:3000/api/facultyHire/get/:id
-router.get("/get/:id", isAdmin, async (req, res) => {
+router.get("/get/:id", async (req, res) => {
     const id = req.params.id;
     try {
         const RecruitmentsList = await FacultyHire.findById({ _id: id });

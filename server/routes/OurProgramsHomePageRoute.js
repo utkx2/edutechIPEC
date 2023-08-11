@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const ourPrograms = require('../models/OurProgramsHomePageModel');
+const { verifyToken, isAdmin } = require('../middleware/auth');
+
 
 //  http://localhost:3000/api/ourPrograms/get/
 router.get('/get', async (req, res) => {
@@ -17,7 +19,7 @@ router.get('/get', async (req, res) => {
 });
 
 //  http://localhost:3000/api/ourPrograms/upload/
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
         // const { title, description } = req.body;
         // const OurProgramsCard = new ourPrograms({
@@ -49,7 +51,7 @@ router.post('/upload', async (req, res) => {
 
 
 //  http://localhost:3000/api/ourPrograms/edit/
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', isAdmin, async (req, res) => {
     const cardId = req.params.id;
     try {
         const { title, description } = req.body;
@@ -67,7 +69,7 @@ router.put('/edit/:id', async (req, res) => {
     }
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     const cardId = req.params.id;
     try {
         const deletedCard = await OurProgramsCard.findByIdAndDelete(cardId);

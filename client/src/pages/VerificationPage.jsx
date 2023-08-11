@@ -22,6 +22,7 @@ const VerificationPage = () => {
         };
 
         // Make a POST request to the API
+        //    console.log(localStorage.getItem("token"));
         axios
             .post(`${BASE_URL}user/verify`, requestBody)
             .then((response) => {
@@ -33,7 +34,7 @@ const VerificationPage = () => {
                     fetch(`${BASE_URL}user/signup`, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(formData)
                     })
