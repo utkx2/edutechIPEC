@@ -4,14 +4,19 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faTrash,
+  faPowerOff,
+} from "@fortawesome/free-solid-svg-icons";
 import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import { BASE_URL } from '../../../../config'
+import { BASE_URL } from "../../../../config";
 
-import { Dialog } from '@headlessui/react'
+import { Dialog } from "@headlessui/react";
 
 function DashboardUsers() {
   const [serialNumbers, setSerialNumbers] = useState([]);
@@ -25,35 +30,36 @@ function DashboardUsers() {
   const [userRoleFilter, setUserRoleFilter] = useState(false);
 
   const handleDelete = async (userId) => {
-    setIsOpen(false)
+    setIsOpen(false);
     try {
-      const response = await axios.delete(`${BASE_URL}user/byid/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            auth: localStorage.getItem("token"),
-          },
-        })
+      const response = await axios.delete(`${BASE_URL}user/byid/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
+        },
+      });
       // console.log(response)
       if (response.status == 200) {
         // console.log('successfully deleted')
-        fetchData()
+        fetchData();
       }
       if (response.status == 500) {
-        console.log('delete failed')
+        console.log("delete failed");
       }
       return;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return;
     }
-  }
+  };
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}user/getall?userRole=${userRoleFilter ? 'admin' : 'student'}`,
+        `${BASE_URL}user/getall?userRole=${
+          userRoleFilter ? "admin" : "student"
+        }`,
         {
           method: "GET",
           headers: {
@@ -62,22 +68,20 @@ function DashboardUsers() {
           },
         }
       );
-  
+
       const usersWithSerialNumbers = response.data.users.map((user, index) => ({
         ...user,
         serialNumber: index + 1,
       }));
-  
+
       setUserData(usersWithSerialNumbers);
-      setSerialNumbers(usersWithSerialNumbers.map(user => user.serialNumber));
+      setSerialNumbers(usersWithSerialNumbers.map((user) => user.serialNumber));
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-
-
     fetchData();
   }, []);
 
@@ -110,7 +114,8 @@ function DashboardUsers() {
       (userType === "hr" && user.userRole === "hr") ||
       (userType === "user" && user.userRole === "user") ||
       (userType === "employee" && user.userRole === "employee");
-      const userRoleMatch = !userRoleFilter || (userRoleFilter && user.userRole === 'admin');
+    const userRoleMatch =
+      !userRoleFilter || (userRoleFilter && user.userRole === "admin");
     const subscriptionStatusMatch =
       subscriptionStatus === "all" ||
       (subscriptionStatus === "active" &&
@@ -121,7 +126,10 @@ function DashboardUsers() {
 
     // Check if any of the conditions is true
     return (
-      (nameMatch || emailMatch) && userTypeMatch && userRoleMatch &&  subscriptionStatusMatch
+      (nameMatch || emailMatch) &&
+      userTypeMatch &&
+      userRoleMatch &&
+      subscriptionStatusMatch
     );
   });
 
@@ -151,7 +159,7 @@ function DashboardUsers() {
     const selectedData = currentUsers.map((user, index) => ({
       SerialNumber: serialNumbers[index],
       User: user.name,
-      Role: user.userRole ? user.userRole : 'student',
+      Role: user.userRole ? user.userRole : "student",
       Email: user.email,
       Phone: user.mobileNumber,
     }));
@@ -173,19 +181,19 @@ function DashboardUsers() {
   const downloadAsPDF = () => {
     const doc = new jsPDF();
 
-    const headers = ["Serial No.","User", "Role", "Email", "Phone"];
+    const headers = ["Serial No.", "User", "Role", "Email", "Phone"];
 
     const selectedData = currentUsers.map((user, index) => [
       serialNumbers[index],
       user.name,
-      user.userRole ? user.userRole : 'student',
+      user.userRole ? user.userRole : "student",
       user.email,
-      user.mobileNumber
+      user.mobileNumber,
     ]);
 
     const data = {
       headers,
-      rows: selectedData
+      rows: selectedData,
     };
 
     const tableConfig = {
@@ -193,7 +201,7 @@ function DashboardUsers() {
       headStyles: { fillColor: [41, 128, 185], textColor: 255 },
       bodyStyles: { fillColor: 255, textColor: 0 },
       alternateRowStyles: { fillColor: 245 },
-      margin: { top: 20 }
+      margin: { top: 20 },
     };
 
     doc.autoTable(data.headers, data.rows, tableConfig);
@@ -202,12 +210,45 @@ function DashboardUsers() {
   };
 
   const AddStudent = () => {
-    window.location.href = '/signup';
-  }
+    window.location.href = "/signup";
+  };
+
+  const handleUserRole = async (userId, currentUserRole) => {
+    console.log("Attempting to update user role...");
+  
+    const newRole = currentUserRole === 'admin' ? 'student' : 'admin';
+    
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/user/makeAdmin/${userId}`,
+        null,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log("Response:", response);
+  
+      if (response.data === "role updated successfully") {
+        console.log("Role updated successfully");
+        fetchData(); // Fetch updated data after role change
+      } else {
+        console.log('Role update failed');
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // if(error.response){
+      //   console.log("response data:", error.response.data);
+      //   console.log("Response status:", error.response.status);
+      // }
+    }
+  };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false)
-  const [deleteId, setDeleteId] = useState()
+  const [isOpen, setIsOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState();
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -236,7 +277,6 @@ function DashboardUsers() {
                       onChange={handleSearchChange}
                     />
                     {/* User type select bar */}
-
                   </div>
                   {/* download buttons */}
                   <div>
@@ -251,12 +291,6 @@ function DashboardUsers() {
                       onClick={downloadAsPDF}
                     >
                       Download PDF
-                    </button>
-                    <button
-                      className="px-4 py-2 font-bold text-white bg-blue-700 rounded focus:outline-none focus:ring-2 ml-2"
-                      onClick={() => setUserRoleFilter(!userRoleFilter)}
-                    >
-                      User Role
                     </button>
                     <button
                       className="px-4 py-2 font-bold text-white bg-yellow-700 ml-2 rounded focus:outline-none focus:ring-2"
@@ -276,13 +310,26 @@ function DashboardUsers() {
                           <th className="px-4 py-3">Role</th>
                           <th className="px-4 py-3">Email</th>
                           <th className="px-4 py-3">Phone</th>
-                          <th className="py-3 text-center"><FontAwesomeIcon icon={faTrash} style={{ color: "#000", }} /></th>
+                          <th className="py-3 text-center">
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              style={{ color: "#000" }}
+                            />
+                          </th>
+                          <th className="py-3 text-center">
+                            <FontAwesomeIcon
+                              icon={faPowerOff}
+                              style={{ color: "#000" }}
+                            />
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="bg-white">
                         {currentUsers.map((user, index) => (
                           <tr className="text-gray-700" key={user._id}>
-                            <td className="px-4 py-3 border">{serialNumbers[index]}</td>
+                            <td className="px-4 py-3 border">
+                              {serialNumbers[index]}
+                            </td>
                             <td className="px-4 py-3 border">
                               <div className="flex items-center text-sm">
                                 <div
@@ -297,7 +344,7 @@ function DashboardUsers() {
                               </div>
                             </td>
                             <td className="px-4 py-3 font-semibold border text-ms">
-                              {user.userRole === 'admin' ? 'admin' : 'student'}
+                              {user.userRole === "admin" ? "admin" : "student"}
                             </td>
                             <td className="px-4 py-3 font-semibold border text-ms">
                               {user.email}
@@ -307,33 +354,26 @@ function DashboardUsers() {
                                 {user.mobileNumber}
                               </span>
                             </td>
-                            <td onClick={() => {
-                              setIsOpen(true)
-                              setDeleteId(user._id)
-                            }} className="py-3 text-center border cursor-pointer">
-                              <FontAwesomeIcon icon={faTrash} style={{ color: "#e01b24", }} />
+                            <td
+                              onClick={() => {
+                                setIsOpen(true);
+                                setDeleteId(user._id);
+                              }}
+                              className="py-3 px-1 text-center border cursor-pointer"
+                            >
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                style={{ color: "#e01b24" }}
+                              />
                             </td>
-                            {/* <td className="px-4 py-3 text-sm border">
-                              {user.country}
+                            <td
+                              className="text-green-600 font-bold py-3 px-1 text-center border cursor-pointer"
+                              onClick={() =>
+                                handleUserRole(user._id, user.userRole)
+                              }
+                            >
+                              <FontAwesomeIcon icon={faPowerOff} />
                             </td>
-                            <td className="px-4 py-3 text-sm border">
-                              {user.city}
-                            </td>
-                            <td className="px-4 py-3 text-xs border">
-                              <span
-                                className={`px-2 py-1 font-semibold leading-tight ${
-                                  !user.subscription ||
-                                  user.subscription.status === "inactive"
-                                    ? "text-red-700 bg-red-100"
-                                    : "text-green-700 bg-green-100"
-                                } rounded-sm`}
-                              >
-                                {user.subscription &&
-                                user.subscription.status !== "inactive"
-                                  ? "Active"
-                                  : "Inactive"}
-                              </span>
-                            </td> */}
                           </tr>
                         ))}
                       </tbody>
@@ -382,8 +422,18 @@ function DashboardUsers() {
           <Dialog.Panel className="max-w-md px-12 py-10 mx-auto bg-white rounded">
             <Dialog.Title>Are you sure you want to delete the use</Dialog.Title>
             <div className="flex items-center justify-end gap-4 mt-5">
-              <button onClick={() => handleDelete(deleteId)} className="px-4 py-2 text-white bg-red-700 rounded-[8px] cursor-pointer">Delete</button>
-              <button onClick={() => setIsOpen(false)} className="px-4 py-2 text-white bg-gray-700 rounded-[8px] cursor-pointer">Cancel</button>
+              <button
+                onClick={() => handleDelete(deleteId)}
+                className="px-4 py-2 text-white bg-red-700 rounded-[8px] cursor-pointer"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="px-4 py-2 text-white bg-gray-700 rounded-[8px] cursor-pointer"
+              >
+                Cancel
+              </button>
             </div>
 
             {/* ... */}
