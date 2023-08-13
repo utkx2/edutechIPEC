@@ -27,4 +27,8 @@ router.get("/getall", isAdmin, usersController.getAllUsers)
 // forgotPassword
 router.post('/forgotPassword', usersController.forgotPassword);
 
+
+// http://localhost:3000/api/user/makeAdmin/:id
+router.put('/makeAdmin/:id', usersController.makeAdmin);
+
 module.exports = router;

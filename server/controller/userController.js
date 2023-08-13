@@ -71,7 +71,7 @@ class User {
                 email,
                 mobileNumber,
                 password: hashedPassword,
-                className
+                classNamea
             });
 
             // Save the new user to the database
@@ -266,6 +266,33 @@ class User {
             res.status(500).json({ error: 'Error resetting password.' });
         }
     }
+
+    async makeAdmin(req, res) {
+        const { id } = req.params;
+
+        try {
+            const user = await userModel.findById({ _id: id });
+            if (!user) {
+                res.json({ error: "User Not found" });
+            }
+
+            if (user.userRole === "admin") {
+                user.userRole = "student"
+                await user.save();
+            }
+            else if (user.userRole === "student") {
+                user.userRole = "admin"
+                await user.save();
+            }
+            console.log(user);
+            return res.json("role updated successfully");
+        }
+        catch (err) {
+            console.log(err);
+            res.json({ "error": err });
+        }
+    }
+
 
 }
 
