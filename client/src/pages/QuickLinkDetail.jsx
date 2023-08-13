@@ -154,7 +154,7 @@ function QuickLinkDetail() {
               </div>
 
               <button className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded" onClick={registrationForm}>
-                Pay Now
+                Register Now
               </button>
             </div>
           </div>

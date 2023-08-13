@@ -11,8 +11,6 @@ import FacultyImg from "../assets/faculty.png";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config";
 import "../styles/Course.css";
-//import Carousel from '../components/carousel'
-
 function Home() {
   const [userData, setUserData] = useState({});
   const [carousel, setCarousel] = useState([]);
@@ -21,10 +19,6 @@ function Home() {
   const [quickLinks, setQuickLink] = useState([]);
   const [student, setStudent] = useState([]);
   const navigate = useNavigate();
-  // http:localhost:3000/api/facultyHomePage/get
-  //  http:localhost:3000/api/ourPrograms/get/
-  //  http:localhost:3000/api/carousel/get
-  // http://localhost:3000/api/studentHomePage/get
   const fetchData = async () => {
     try {
       const responseCarousel = await axios.get(`${BASE_URL}carousel/get`, {
@@ -34,9 +28,7 @@ function Home() {
           auth: localStorage.getItem("token"),
         },
       });
-      // console.log(responseCarousel.data[0].images);
       setCarousel(responseCarousel.data[0].images);
-      // console.log(carousel)
       const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
         method: "GET",
         headers: {
@@ -74,14 +66,10 @@ function Home() {
           },
         }
       );
-      // console.log(responsePrograms.data);
-      // console.log(responseStudent.data[0].Students);
       setStudent(responseStudent.data[0].Students);
       setFaculty(responseFaculty.data[0].facultyMembers);
       setQuickLink(responseQuickLink.data[0].quickLinks);
       setPrograms(responsePrograms.data[0].programs);
-      //setUserData(response.data)
-      // console.log(responseCarousel.data);
     } catch (error) {
       console.error(error);
     }
@@ -91,48 +79,13 @@ function Home() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("Carousel:", carousel);
-  // }, [carousel]);
-
-  // useEffect(() => {
-  //   console.log("Programs:", programs);
-  // }, [programs]);
-
-  // useEffect(() => {
-  //   console.log("Faculty:", faculty);
-  // }, [faculty]);
-
-  // useEffect(() => {
-  //   console.log("Student:", student);
-  // }, [student]);
-
-  // console.log(carousel[0]?.images[0]);
-  // const CustomPrevArrow = () => (
-  //   <button className="carousel__prev-arrow">
-  //     <span className="material-icons">keyboard_arrow_left</span>
-  //   </button>
-  // );
-
-  // const CustomNextArrow = () => (
-  //   <button className="carousel__next-arrow">
-  //     <span className="material-icons">keyboard_arrow_right</span>
-  //   </button>
-  // );
-  // console.log(carousel)
-
   const viewDetails = (userId) => {
     navigate(`quickLinkdetail/${userId}`);
-    // console.log(userId);
   };
 
   return (
     <div className="">
       <div className="">
-        {/* {carousel?.length > 0 && carousel.map((links) => (
-          <Carousel carousel={links} key={links._id} />
-        ))
-        } */}
         <Carousel
           prevArrow={({ handlePrev }) => (
             <IconButton
@@ -207,16 +160,6 @@ function Home() {
               className="w-full object-cover h-full"
             />
           ))}
-          {/* <img
-            src={carousel[0]}
-            alt="image 2"
-            className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
-          />
-          <img
-            src={carousel[1]}
-            alt="image 3"
-            className="object-cover w-full h-[830px] md:h-[400px] sm:h-[300px] "
-          /> */}
         </Carousel>
       </div>
 
@@ -224,24 +167,7 @@ function Home() {
         <h1 className=" text-3xl text-[#1f1d5a] font-bold text-center">
           {/* Quick Links */}
         </h1>
-
-        {/* <div className="flex items-center justify-center py-8">
-          <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6 max-w-[1244px]">
-            <Link to={'/media'} className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
-              Press & Media
-            </Link>
-            <div className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
-              Download NAT Syllabus
-            </div>
-            <div className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
-              Admission Test Result
-            </div>
-            <div className="bg-[#1f1d5a] text-center text-white hover:bg-white hover:border hover:border-[#1f1d5a] duration-200 linear rounded-[8px] hover:text-[#1f1d5a] font-bold px-8 py-2">
-              IPEC Assessment
-            </div>
-          </div>
-        </div> */}
-        <div className="mt-10 bg-[#d1e9f9] py-10">
+        <div className="mt-10 py-10">
           <h1 className="text-3xl text-[#1f1d5a] font-bold text-center">
             Quick Links
           </h1>
@@ -250,7 +176,7 @@ function Home() {
               {quickLinks.map((facultyData) => (
                 <div
                   key={facultyData._id}
-                  className="w-[340px] bg-white mt-5 shadow-lg rounded-[16px] p-3 border-4 border-[#1f1d5a]"
+                  className="w-[340px] bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mt-5 rounded-[16px] p-3border-[#1f1d5a]"
                 >
                   <img
                     src={facultyData.image}
@@ -258,31 +184,30 @@ function Home() {
                     className="h-[280px] w-full rounded-[8px]"
                   />
                   <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
-                    <div className="text-lg font-bold">
-                      {facultyData.product}
+                    <div className="font-semibold text-base">
+                      {facultyData.product.slice(0, 20)}
                     </div>
-                    <div>{facultyData.start}</div>
-                    <div>{facultyData.end}</div>
-                    <div>{facultyData.number}</div>
+                    <div>{facultyData.start.slice(0, 20)}</div>
+                    <div>{facultyData.end.slice(0, 20)}</div>
+                    <div>{facultyData.number.slice(0, 20)}</div>
                   </div>
-                  <button
-                    className="bg-blue-400 ml-2 text-white p-2 font-medium"
-                    onClick={() => {
-                      viewDetails(facultyData._id);
-                      // console.log("sa", facultyData._id);
-                    }}
-                  >
-                    View Details
-                  </button>
+                  <div className="text-center">
+                    <button
+  className="bg-blue-400 ml-2 mb-4 text-white p-2 font-medium transform hover:rotate-180 transition-transform duration-5000 ease-in-out"
+  onClick={() => {
+    viewDetails(facultyData._id);
+  }}
+>
+  View Details
+</button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
-
-      {/* teachers */}
-      <div className="mt-10 bg-[#d1e9f9] py-10">
+      <div className="mt-10  py-10">
         <h1 className="text-3xl text-[#1f1d5a] font-bold text-center">
           OUR EXPERIENCED FACULTY
         </h1>
@@ -291,7 +216,7 @@ function Home() {
             {faculty.map((facultyData) => (
               <div
                 key={facultyData._id}
-                className="w-[340px] bg-white mt-5 shadow-lg rounded-[16px] p-3 border-4 border-[#1f1d5a]"
+                className="w-[340px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-white mt-5  rounded-[16px] p-3 border-[#1f1d5a]"
               >
                 <img
                   src={facultyData.facultyImg}
@@ -309,10 +234,8 @@ function Home() {
           </div>
         </div>
       </div>
-
-      {/* experience */}
-      <div className="mb-10 bg-[#d1e9f9] py-10">
-        <h1 className="text-3xl text-[#1f1d5a] font-bold text-center">
+      <div className="mb-10  py-10">
+        <h1 className="text-3xl text-[#1f1d5a]  font-bold text-center">
           OUR TRAILBLAZERS EXPERIENCE
         </h1>
         <div className="flex items-center justify-center py-8">
@@ -320,7 +243,7 @@ function Home() {
             <div className="grid gap-8 md:grid-cols-3">
               {student.map((studentData) => (
                 <div
-                  className="relative w-[353px] h-auto rounded-[16px] bg-white mt-10 shadow-xl "
+                  className="relative w-[353px] h-auto rounded-[16px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-white mt-10 "
                   key={studentData._id}
                 >
                   <div className="">
@@ -358,12 +281,10 @@ function Home() {
           )}
         </div>
       </div>
-
       <div>
         <h1 className=" text-3xl text-[#1f1d5a] font-bold text-center">
           OUR PROGRAMS
         </h1>
-
         <div className="flex items-center justify-center py-8">
           <div className="grid md:grid-cols-2 max-w-[1244px]">
             {/* <div className="flex flex-col items-center gap-4 p-2"> */}
@@ -387,14 +308,10 @@ function Home() {
                 </Link>
               </div>
             ))}
-            {/* </div> */}
           </div>
         </div>
       </div>
-
-      {/* Home */}
     </div>
   );
 }
-
 export default Home;

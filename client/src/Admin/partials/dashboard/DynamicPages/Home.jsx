@@ -168,14 +168,14 @@ export default function Home() {
       ...carousel,
       Carousels: [...carousel.Carousels, initialCarousel],
     });
-    setcarouselCount(carouselCount + 1);
+    setcarouselCount(carouselCount +1);
   };
   const handleAddFaculty = () => {
     setFaculty({
       ...faculty,
       Faculties: [...faculty.Faculties, initialFaculty],
     });
-    setfacultyCount(facultyCount + 1);
+    setfacultyCount(facultyCount +1);
   };
   const handleAddQuickLinks = () => {
     setquickLinks({
@@ -189,7 +189,7 @@ export default function Home() {
       ...students,
       Students: [...students.Students, initialStudents],
     });
-    setstudentsCount(studentsCount + 1);
+    setstudentsCount(studentsCount +1);
   };
   const handleAddProgram = () => {
     setPrograms({
@@ -316,11 +316,9 @@ export default function Home() {
         }
       );
       // console.log(responseStudent.data[0]);
-      // setStudents(responseStudent.data[0]);
+      setStudents(responseStudent.data[0]);
     } catch (err) {
-      console.log(
-        // err,
-         "error");
+      console.log(err, "error");
     }
   };
   useEffect(() => {
@@ -354,9 +352,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success"
-        // , data
-        );
+        console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -372,9 +368,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success"
-        // , data
-        );
+        console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -391,9 +385,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success"
-        // , data
-        );
+        console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -410,9 +402,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success"
-        // , data
-        );
+        console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -428,9 +418,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success"
-        // , data
-        );
+        console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -495,15 +483,15 @@ export default function Home() {
                         </div>{" "}
                       </div>
                     ))}{" "}
-                    {carouselCount < 3 && carousel.Carousels.length < 3 && (
-                      <button
-                        className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                        type="button"
-                        onClick={handleAddCarousel}
-                      >
-                        {" "}
-                        Add Link{" "}
-                      </button>)}{" "}
+                    {carouselCount < 3 && carousel.Carousels.length<3 && (
+                    <button
+                      className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                      type="button"
+                      onClick={handleAddCarousel}
+                    >
+                      {" "}
+                      Add Link{" "}
+                    </button>)}{" "}
                   </div>{" "}
                   {students ? (
                     <div>
@@ -620,15 +608,15 @@ export default function Home() {
                           </button>{" "}
                         </div>
                       ))}{" "}
-                      {studentsCount < 3 && students.Students.length < 3 && (
-                        <button
-                          className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                          type="button"
-                          onClick={handleAddStudent}
-                        >
-                          {" "}
-                          Add Student{" "}
-                        </button>)}{" "}
+                      {studentsCount < 3 && students.Students.length<3 && (
+                      <button
+                        className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                        type="button"
+                        onClick={handleAddStudent}
+                      >
+                        {" "}
+                        Add Student{" "}
+                      </button>)}{" "}
                     </div>
                   ) : (
                     <></>
@@ -722,14 +710,14 @@ export default function Home() {
                         </div>
                       </div>
                     ))}
-                    {facultyCount < 3 && faculty.Faculties.length < 3 && (
-                      <button
-                        className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                        type="button"
-                        onClick={handleAddFaculty}
-                      >
-                        Add Link
-                      </button>)}
+                    {facultyCount < 3 && faculty.Faculties.length<3 && (
+                    <button
+                      className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                      type="button"
+                      onClick={handleAddFaculty}
+                    >
+                      Add Link
+                    </button>)}
                   </div>{" "}
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {/* Programs */}
@@ -860,14 +848,14 @@ export default function Home() {
                         </div>
                       </div>
                     ))}
-                    {quickLinksCount < 3 && quickLinks.QuickLinks.length < 3 && (
-                      <button
-                        className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                        type="button"
-                        onClick={handleAddQuickLinks}
-                      >
-                        Add Link
-                      </button>)}
+                    {quickLinksCount < 3 && quickLinks.QuickLinks.length<3 && (
+                    <button
+                      className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                      type="button"
+                      onClick={handleAddQuickLinks}
+                    >
+                      Add Link
+                    </button>)}
                   </div>{" "}
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
