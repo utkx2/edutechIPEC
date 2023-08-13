@@ -57,8 +57,7 @@ function DashboardUsers() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}user/getall?userRole=${
-          userRoleFilter ? "admin" : "student"
+        `${BASE_URL}user/getall?userRole=${userRoleFilter ? "admin" : "student"
         }`,
         {
           method: "GET",
@@ -215,24 +214,25 @@ function DashboardUsers() {
 
   const handleUserRole = async (userId, currentUserRole) => {
     console.log("Attempting to update user role...");
-  
+
     const newRole = currentUserRole === 'admin' ? 'student' : 'admin';
-    
+
     try {
+
       const response = await axios.put(
-        `${BASE_URL}/user/makeAdmin/${userId}`,
-        null,
+        `${BASE_URL}user/makeAdmin/${userId}`,
         {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             auth: localStorage.getItem("token"),
           },
         }
       );
-      console.log("Response:", response);
-  
+      // console.log("Response:", response);
+
       if (response.data === "role updated successfully") {
-        console.log("Role updated successfully");
+        //   console.log("Role updated successfully");
         fetchData(); // Fetch updated data after role change
       } else {
         console.log('Role update failed');

@@ -5,12 +5,12 @@ const { isAdmin, verifyToken, isNotUser } = require("../middleware/auth")
 
 
 //Sign Up New User 
-router.post("/signup", usersController.postSignup);
+router.post("/signup", isAdmin, usersController.postSignup);
 
-router.post('/sendMail/:userEmail', usersController.sendMail);
+router.post('/sendMail/', usersController.sendMail);
 
 // Verifying User
-router.post('/verify', usersController.verify);
+// router.post('/verify', usersController.verify);
 
 //Sign In New User 
 router.post("/signin", usersController.postSignIn);
@@ -29,6 +29,6 @@ router.post('/forgotPassword', usersController.forgotPassword);
 
 
 // http://localhost:3000/api/user/makeAdmin/:id
-router.put('/makeAdmin/:id', usersController.makeAdmin);
+router.put('/makeAdmin/:id', isAdmin, usersController.makeAdmin);
 
 module.exports = router;

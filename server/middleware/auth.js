@@ -34,7 +34,8 @@ exports.verifyToken = async (req, res, next) => {
 };
 
 exports.isAdmin = async (req, res, next) => {
-    const token = req.headers.auth || req.query.token || req.cookies.token;
+    // console.log(req.body.headers.auth);
+    const token = req.headers.auth || req.query.token || req.body.headers.auth || req.cookies.token;
     // console.log(token);
     if (!token) {
         return res.status(401).json({ error: "Access denied. No token provided." });

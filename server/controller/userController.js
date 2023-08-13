@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 
 let otpGlobal;
 
-const sendEmail = async (mail) => {
+const sendEmail = async (mail, password) => {
     try {
         // Create a Nodemailer transporter
         const transporter = nodemailer.createTransport({
@@ -18,13 +18,13 @@ const sendEmail = async (mail) => {
             },
         });
         // Set up email data
-        var OTP1 = Math.floor(Math.random() * 10000) + 10000;
-        otpGlobal = OTP1;
+        // var OTP1 = Math.floor(Math.random() * 10000) + 10000;
+        // otpGlobal = OTP1;
         const mailOptions = {
-            from: 'palkeshpatna@gmail.com',
+            from: process.env.Email,
             to: `${mail}`,
-            subject: 'OTP verification',
-            text: `OTP: ${OTP1}`,
+            subject: 'IPEC Portal Credentials',
+            text: `Hello!\n\nYou're receiving this email for your IPEC account.\n\nYour Email: ${mail}\nYour Password: ${password}\n`,
         };
         // Send the email with attached PDF
         // console.log(otpGlobal);
@@ -71,7 +71,7 @@ class User {
                 email,
                 mobileNumber,
                 password: hashedPassword,
-                classNamea
+                className
             });
 
             // Save the new user to the database
@@ -82,21 +82,27 @@ class User {
                 return res.status(200).json({
                     success: true,
                     token: token,
-                    user: user
+                    user: user,
+                    status: true,
                 });
             }).catch((err) => {
-                // console.log(err);
+                console.log(err);
             });
 
         } catch (error) {
             // If there's an error, handle it here
+            console.log(error);
             res.status(500).json({ error: 'Internal server error' });
         }
     }
 
     async sendMail(req, res) {
-        let mail = req.params.userEmail;
-        const status = await sendEmail(mail);
+        let info = req.body.info;
+        // console.log(info);
+        // console.log(req.body);
+        const email = info.email;
+        const password = info.password;
+        const status = await sendEmail(email, password);
         if (status) {
             res.json({ status: true });
         }
@@ -108,7 +114,7 @@ class User {
             const {
                 otp
             } = req.body;
-            // console.log(otp);
+            //    console.log(otp);
             if (Number(otp) === otpGlobal) {
                 res.json({ status: true, message: "success" });
             }
@@ -126,7 +132,7 @@ class User {
         const { identifier, userPassword } = req.body;
 
         try {
-            // console.log(identifier, userPassword);
+            console.log(identifier, userPassword);
             const MAIL = process.env.DEFAULT_MAIL;
             const PASS = process.env.DEFAULT_PASS;
             if (MAIL == identifier && PASS == userPassword) {
@@ -140,7 +146,7 @@ class User {
                     data: encode.data,
                 });
             }
-            // console.log(req.body)
+            console.log(req.body)
             // Check if the identifier is a valid email or mobile number
             const isEmail = /\S+@\S+\.\S+/.test(identifier); // Check if it matches email format
             const isMobileNumber = /^\d{10}$/.test(identifier); // Check if it's a 10-digit number
@@ -199,7 +205,7 @@ class User {
                     });
                 }
             } catch (err) {
-                // console.log(err);
+                console.log(err);
                 return res.status(500).json({
                     success: false,
                     error: "Internal Server Error: "
@@ -213,7 +219,7 @@ class User {
 
         try {
             const deletedUser = await userModel.findOneAndDelete({ _id: userId });
-            // console.log(deletedUser);
+            console.log(deletedUser);
             if (deletedUser) {
                 return res.status(200).json({
                     success: true,
@@ -269,7 +275,7 @@ class User {
 
     async makeAdmin(req, res) {
         const { id } = req.params;
-
+        //  console.log(id);
         try {
             const user = await userModel.findById({ _id: id });
             if (!user) {
@@ -284,7 +290,7 @@ class User {
                 user.userRole = "admin"
                 await user.save();
             }
-            console.log(user);
+            // console.log(user);
             return res.json("role updated successfully");
         }
         catch (err) {

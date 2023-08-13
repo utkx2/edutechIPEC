@@ -36,23 +36,55 @@ const Signup = () => {
         // console.log(formData)
         // Make API request with form data
         // console.log(localStorage.getItem("token"));
-        axios
-            .post(`${BASE_URL}user/sendMail/${formData.email}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    auth: localStorage.getItem("token"),
-                },
-            }).then((response) => {
-                // console.log(response.data);
-                if (response.data.status) {
-                    navigate("/verify-otp", { state: formData });
+        const info = {
+            email: formData.email,
+            password: formData.password
+        }
+
+        fetch(`${BASE_URL}user/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (data.status) {
+                    axios
+                        .post(`${BASE_URL}user/sendMail/`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                auth: localStorage.getItem("token"),
+                            },
+                            info: (info)
+                        }).then((response) => {
+                            // console.log(response.data);
+                            if (!response.data.status) {
+                                // navigate("/verify-otp", { state: formData });
+                                console.log("error");
+                            }
+                        }
+                        )
                 }
-                else {
-                    console.log("error");
+                if (data.error) {
+                    setErrorMessage(data.error);
+                } else {
+                    // Store response in local storage
+                    localStorage.setItem("token", (data.token));
+                    // Navigate to the desired page
+                    const user = data.user
+                    localStorage.setItem("user", JSON.stringify(user));
+                    navigate("/");
                 }
-            }
-            )
+            })
+            .catch((error) => {
+                // Handle error
+                console.log(error);
+            });
+
     };
     // navigate("/verify-otp");
 
