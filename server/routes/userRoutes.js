@@ -2,10 +2,16 @@ const express = require("express");
 const router = express.Router();
 const usersController = require("../controller/userController");
 const { isAdmin, verifyToken, isNotUser } = require("../middleware/auth")
-
+const multer = require('multer');
+const upload = multer();
 
 //Sign Up New User 
 router.post("/signup", isAdmin, usersController.postSignup);
+
+
+// http://localhost:3000/api/user/excelupload/signup
+router.post("/excelupload/signup", upload.single('excelFile'), usersController.bulkUpload);
+
 
 router.post('/sendMail/', usersController.sendMail);
 

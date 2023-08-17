@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config/keys");
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const XLSX = require('xlsx');
 
 let otpGlobal;
 
@@ -77,11 +78,11 @@ class User {
             // Save the new user to the database
             await newUser.save().then((data) => {
                 const { password, __v, ...user } = data._doc;
-                const token = jwt.sign({ user }, JWT_SECRET);
+                // const token = jwt.sign({ user }, JWT_SECRET);
 
                 return res.status(200).json({
                     success: true,
-                    token: token,
+                    // token: token,
                     user: user,
                     status: true,
                 });
@@ -94,6 +95,58 @@ class User {
             console.log(error);
             res.status(500).json({ error: 'Internal server error' });
         }
+    }
+
+    async bulkUpload(req, res) {
+        try {
+            // Parse the uploaded Excel file and extract data
+            const { buffer } = req.file;
+            console.log(req.file);
+            console.log('Buffer Data:', buffer);
+            const workbook = XLSX.read(buffer); // Parse the file buffer
+            const sheetName = workbook.SheetNames[0]; // Assuming the data is in the first sheet
+            const sheet = workbook.Sheets[sheetName];
+            const usersArray = XLSX.utils.sheet_to_json(sheet);
+            console.log(usersArray);
+            for (const user of usersArray) {
+                //     // Save user data to MongoDB
+                //     // Create a new User model using mongoose and save it to the database
+
+
+                const saltRounds = 10;
+                console.log((user.password).toString());
+                const hashedPassword = await bcrypt.hash((user.password).toString(), saltRounds);
+                const email = user.email;
+                const name = user.name;
+                const mobileNumber = user.phoneNumber;
+                const className = user.class;
+                // Create a new user document based on the UserModel
+                const newUser = new userModel({
+                    email,
+                    mobileNumber,
+                    password: hashedPassword,
+                    className,
+                    name
+                });
+
+                // Save the new user to the database
+                await newUser.save().then((data, err) => {
+                    if (err) {
+                        return res.status(500).json(err);
+                    }
+                    else {
+                        sendEmail(email, user.password);
+                    }
+                });
+
+            }
+            res.status(201).json({ message: 'Signup successful' });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'An error occurred' });
+        }
+
     }
 
     async sendMail(req, res) {
