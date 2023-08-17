@@ -185,7 +185,7 @@ function Home() {
                   />
                   <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
                     <div className="font-semibold text-base">
-                    {facultyData.number.slice(0, 20)}
+                      {facultyData.number.slice(0, 20)}
                     </div>
                     <div>{facultyData.start.slice(0, 20)}</div>
                     <div>{facultyData.end.slice(0, 20)}</div>
@@ -193,11 +193,7 @@ function Home() {
                   </div>
                   <div className="text-center">
                     <button
-<<<<<<< Updated upstream
                       className="bg-blue-400 ml-2 mb-4 text-white p-2 font-medium transform hover:rotate-360 transition-transform duration-5000 ease-in-out"
-=======
-                      className="bg-blue-400 ml-2 mb-4 text-white p-2 font-medium transform hover:rotate-180 transition-transform duration-5000 ease-in-out"
->>>>>>> Stashed changes
                       onClick={() => {
                         viewDetails(facultyData._id);
                       }}

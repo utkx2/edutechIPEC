@@ -89,7 +89,7 @@ export default function Result() {
     // For this example, we'll log the data to the console.
     const formDataObj = {
       examName: formData.examName,
-      students: formData.students
+      image: formData.imageLink
     }
     // [{
     //   examname: '',
