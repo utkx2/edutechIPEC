@@ -45,6 +45,7 @@ const Signup = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                auth: localStorage.getItem("token"),
             },
             body: JSON.stringify(formData)
         })

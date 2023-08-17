@@ -316,12 +316,7 @@ function DashboardUsers() {
                               style={{ color: "#000" }}
                             />
                           </th>
-                          <th className="py-3 text-center">
-                            <FontAwesomeIcon
-                              icon={faPowerOff}
-                              style={{ color: "#000" }}
-                            />
-                          </th>
+                          <th className="px-4 py-3">User Role</th>
                         </tr>
                       </thead>
                       <tbody className="bg-white">

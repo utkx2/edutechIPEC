@@ -6,11 +6,6 @@ const examResultsSchema = new mongoose.Schema({
     ref: 'Exam',
     required: true,
   },
-  // maxMarks:{
-  //   type: Number,
-  //   default: 0,
-  //   required: true,
-  // },
   results: [{
     userId: {
       type: mongoose.Schema.Types.ObjectId,
