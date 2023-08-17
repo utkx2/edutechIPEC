@@ -70,6 +70,7 @@ function Home() {
       setFaculty(responseFaculty.data[0].facultyMembers);
       setQuickLink(responseQuickLink.data[0].quickLinks);
       setPrograms(responsePrograms.data[0].programs);
+      console.log(programs);
     } catch (error) {
       console.error(error);
     }
@@ -140,9 +141,8 @@ function Home() {
               {new Array(length).fill("").map((_, i) => (
                 <span
                   key={i}
-                  className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                    activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
-                  }`}
+                  className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
+                    }`}
                   onClick={() => setActiveIndex(i)}
                 />
               ))}
@@ -193,7 +193,11 @@ function Home() {
                   </div>
                   <div className="text-center">
                     <button
+<<<<<<< Updated upstream
                       className="bg-blue-400 ml-2 mb-4 text-white p-2 font-medium transform hover:rotate-360 transition-transform duration-5000 ease-in-out"
+=======
+                      className="bg-blue-400 ml-2 mb-4 text-white p-2 font-medium transform hover:rotate-180 transition-transform duration-5000 ease-in-out"
+>>>>>>> Stashed changes
                       onClick={() => {
                         viewDetails(facultyData._id);
                       }}
@@ -294,7 +298,7 @@ function Home() {
                 className="flex flex-col items-center gap-4 p-2"
               >
                 <img
-                  src={ClassroomImg1}
+                  src={programData.image}
                   alt={programData.title}
                   className="h-[310px] w-[527px]"
                 />

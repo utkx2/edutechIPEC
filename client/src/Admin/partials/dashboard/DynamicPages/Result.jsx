@@ -6,21 +6,22 @@ import { BASE_URL } from '../../../../config';
 
 export default function Result() {
   const initialStudent = {
-    centreName: '',
-    studentName: '',
-    IPECRollNo: '',
-    CRLRank: 0
+    // centreName: '',
+    // studentName: '',
+    // IPECRollNo: '',
+    // CRLRank: 0
+    examName: '',
+    imageLink: ''
   };
 
   const initialData = {
-    examName: '',
-    students: [initialStudent]
+    exams: [initialStudent]
   };
 
   const [formData, setFormData] = useState(initialData);
 
   const [userData, setUserData] = useState({})
-  
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}results/get`, {
@@ -142,6 +143,7 @@ export default function Result() {
               <h1 className="mb-4 text-2xl font-bold">Result</h1>
               <div className="max-w-3xl px-4 py-8 mt-6 mb-6 rounded-lg shadow-xl border-[2px] border-black">
                 <form className='flex flex-col'>
+                  <h1 className="font-semibold text-xl mb-4">JEE Mains</h1>
                   <label className="relative block mb-2 font-semibold">
                     Exam Name:
                     <input
@@ -153,7 +155,18 @@ export default function Result() {
                       className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                     />
                   </label>
-                  <h2 className='my-4 text-xl font-bold'>Students</h2>
+                  <label className="relative block mb-2 font-semibold">
+                    image
+                    <input
+                      required
+                      type="text"
+                      name="examName"
+                      value={formData.examName}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                    />
+                  </label>
+                  {/* <h2 className='my-4 text-xl font-bold'>Students</h2>
                   {formData.students.map((student, index) => (
                     <div key={index} className='grid md:grid-cols-4 grid-cols-2 gap-4 p-4 border-[2px] border-black/20 rounded-lg mb-4'>
                       <div className='flex items-baseline justify-between col-span-2 gap-4 md:col-span-4'>
@@ -216,7 +229,7 @@ export default function Result() {
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                     type="button" onClick={handleAddStudent}>
                     Add Student
-                  </button>
+                  </button> */}
 
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"

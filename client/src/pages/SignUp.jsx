@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../assets/signup.jpg'
 import { BASE_URL } from '../config';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -51,7 +53,7 @@ const Signup = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                //console.log(data);
                 if (data.status) {
                     axios
                         .post(`${BASE_URL}user/sendMail/`, {
@@ -73,12 +75,12 @@ const Signup = () => {
                 if (data.error) {
                     setErrorMessage(data.error);
                 } else {
+                    toast.success("User Credentials Created");
                     // Store response in local storage
-                    localStorage.setItem("token", (data.token));
-                    // Navigate to the desired page
-                    const user = data.user
-                    localStorage.setItem("user", JSON.stringify(user));
-                    navigate("/");
+                    // localStorage.setItem("token", (data.token));
+                    // const user = data.user
+                    // localStorage.setItem("user", JSON.stringify(user));
+                    // navigate("/");
                 }
             })
             .catch((error) => {
@@ -226,6 +228,7 @@ const Signup = () => {
                                             >
                                                 Sign Up
                                             </button>
+                                            <ToastContainer />
                                         </div>
 
                                         {errorMessage && (

@@ -109,10 +109,6 @@ class User {
             const usersArray = XLSX.utils.sheet_to_json(sheet);
             console.log(usersArray);
             for (const user of usersArray) {
-                //     // Save user data to MongoDB
-                //     // Create a new User model using mongoose and save it to the database
-
-
                 const saltRounds = 10;
                 console.log((user.password).toString());
                 const hashedPassword = await bcrypt.hash((user.password).toString(), saltRounds);
@@ -120,7 +116,6 @@ class User {
                 const name = user.name;
                 const mobileNumber = user.phoneNumber;
                 const className = user.class;
-                // Create a new user document based on the UserModel
                 const newUser = new userModel({
                     email,
                     mobileNumber,
@@ -128,8 +123,6 @@ class User {
                     className,
                     name
                 });
-
-                // Save the new user to the database
                 await newUser.save().then((data, err) => {
                     if (err) {
                         return res.status(500).json(err);
