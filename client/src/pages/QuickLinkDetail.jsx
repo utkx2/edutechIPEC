@@ -89,20 +89,6 @@ function QuickLinkDetail() {
                 Exam No.:
               </h2>
               <div className="flex-grow mb-4 ml-14 text-xl">
-                {/* <ul className="pl-4 list-disc list-inside">
-                  <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>
-                    Non Academic Mentors
-                  </li>
-                  <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>
-                    Recorded School Support Classes
-                  </li>
-                  <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>
-                    {formData?.ComprehensivePractice}
-                  </li>
-                  <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>
-                    Chat Based Interaction In The Class
-                  </li>
-                </ul> */}
                 <strong>{formData?.number} </strong>
               </div>
             </div>
@@ -111,16 +97,20 @@ function QuickLinkDetail() {
                 className="flex-shrink-0 mb-4 md:mr-12 text-2xl font-bold border-r md:pr-14"
                 style={{ color: "#1c1950" }}
               >
-                Product:
+                Description:
               </h2>
               <div className="flex-grow mb-4 ml-16 text-xl">
               <strong>{formData?.product} </strong>
               </div>
-            </div>
+            </div><div className="text-center">
+            <button className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded" onClick={registrationForm}>
+                Register Now
+              </button>
+              </div>
           </div>
         </div>
 
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <div className="max-w-[60rem] p-8 mx-4 border shadow-xl md:mx-auto bg-gradient-to-b from-gray-100 to-gray-50 rounded-2xl my-10">
             <h1 className="mb-6 text-3xl font-bold">Payment Plans</h1>
             <hr className="mb-6 border-gray-400" />
@@ -158,7 +148,7 @@ function QuickLinkDetail() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

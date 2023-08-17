@@ -29,9 +29,23 @@ function Result() {
   useEffect(() => {
     fetchData();
   }, []);
+// resolution only takes 1200 by 384px
+  function Banner(){
+    return(
+      <div>
+      <h1 className="text-center text-2xl font-bold mx-auto py-8">
+        Congratulation to our Fellow Students
+        </h1>
+      <div className="max-w-6xl mx-auto">
+        <img className="w-full  max-h-96" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuakG3VrEnsgzzSaSmJRE2WSn2yKyfucc3sxuI1vQgqA&s" />
+      </div>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-[#d1e9f9]">
-      
+      <Banner/>
     
     <section className="p-2" id="result">
       {userData.length && (
