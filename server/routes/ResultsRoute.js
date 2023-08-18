@@ -8,14 +8,14 @@ const { verifyToken, isAdmin } = require('../middleware/auth');
 //http://localhost:3000/api/results/upload
 router.post('/upload', async (req, res) => {
     try {
-        const { examName, students } = req.body;
+        const { examName, image } = req.body;
         console.log(req.body);
 
         const query = {};
         const update = {
-            $push: {
-                exams: { examName, image }
-            }
+
+            exams: { examName, image }
+
         };
         const options = { new: true, upsert: true };
 
