@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
@@ -28,7 +28,8 @@ function DashboardUsers() {
   const [subscriptionStatus, setSubscriptionStatus] = useState("all");
   const navigate = useNavigate();
   const [userRoleFilter, setUserRoleFilter] = useState(false);
-
+  const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
   const handleDelete = async (userId) => {
     setIsOpen(false);
     try {
@@ -80,6 +81,61 @@ function DashboardUsers() {
     }
   };
 
+  const openFileInput = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileUpload = (e) => {
+    const uploadedFile = e.target.files[0];
+    setFile(uploadedFile);
+    processExcelFile(uploadedFile);
+  };
+
+  const processExcelFile = async (file) => {
+    try {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: "binary" });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const parsedData = XLSX.utils.sheet_to_json(worksheet);
+
+        // Process and upload parsedData to your API
+        await uploadDataToAPI(parsedData);
+
+        // Optionally, fetch updated data after uploading
+        fetchData();
+      };
+      reader.readAsBinaryString(file);
+    } catch (error) {
+      console.error("Error processing Excel file:", error);
+    }
+  };
+
+  const uploadDataToAPI = async (data) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}user/excelupload/signup`,
+        data,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            auth: localStorage.getItem("token"),
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Bulk upload successful");
+      } else {
+        console.log("Bulk upload failed");
+      }
+    } catch (error) {
+      console.error("Error uploading data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -90,14 +146,6 @@ function DashboardUsers() {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-  };
-
-  const handleUserTypeChange = (e) => {
-    setUserType(e.target.value);
-  };
-
-  const handleSubscriptionStatusChange = (e) => {
-    setSubscriptionStatus(e.target.value);
   };
 
   const filteredData = userData.filter((user) => {
@@ -298,6 +346,12 @@ function DashboardUsers() {
                     >
                       Add Student
                     </button>
+                    <button
+                      className="px-4 py-2 font-bold text-white bg-blue-700 ml-2 rounded focus:outline-none focus:ring-2"
+                      onClick={openFileInput}
+                    >
+                      Bulk Uploading
+                    </button>
                   </div>
                 </div>
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
@@ -402,6 +456,13 @@ function DashboardUsers() {
           </div>
         </main>
       </div>
+      <input
+  type="file"
+  accept=".xlsx, .xls"
+  onChange={handleFileUpload}
+  className="hidden"
+  ref={fileInputRef}
+/>
       {/* <div className="flex flex-col items-center justify-center w-full h-full"> */}
       <Dialog
         open={isOpen}

@@ -2,25 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
-import { BASE_URL } from '../../../../config';
+import { BASE_URL } from "../../../../config";
 
 export default function Result() {
-  const initialStudent = {
-    centreName: '',
-    studentName: '',
-    IPECRollNo: '',
-    CRLRank: 0
-  };
+  // const initialStudent = {
+  //   centreName: "",
+  //   studentName: "",
+  //   IPECRollNo: "",
+  //   CRLRank: 0,
+  // };
 
   const initialData = {
-    examName: '',
-    students: [initialStudent]
+    examName: "",
+    // students: [initialStudent]
+    image: "",
   };
 
   const [formData, setFormData] = useState(initialData);
 
-  const [userData, setUserData] = useState({})
-  
+  const [userData, setUserData] = useState({});
+
   const fetchData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}results/get`, {
@@ -44,7 +45,6 @@ export default function Result() {
     }
   };
 
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -53,7 +53,7 @@ export default function Result() {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -63,14 +63,14 @@ export default function Result() {
     newStudents[index][name.slice(0, -2)] = value;
     setFormData({
       ...formData,
-      students: newStudents
+      students: newStudents,
     });
   };
 
   const handleAddStudent = () => {
     setFormData({
       ...formData,
-      students: [...formData.students, initialStudent]
+      students: [...formData.students, initialStudent],
     });
   };
 
@@ -79,30 +79,60 @@ export default function Result() {
     newStudents.splice(index, 1);
     setFormData({
       ...formData,
-      students: newStudents
+      students: newStudents,
     });
   };
 
+  // const handleSubmit = () => {
+  //   // Submit the data to the backend (You can use fetch or Axios to send data to the backend API)
+  //   // For this example, we'll log the data to the console.
+  //   const formDataObj = {
+  //     examName: formData.examName,
+  //     students: formData.students,
+  //   };
+  //   // [{
+  //   //   examname: '',
+  //   //   student: []
+  //   // },
+  //   // {
+  //   //   examname: '',
+  //   //   student: []
+  //   // }]
+  //   // console.log(formDataObj)
+  //   const token = localStorage.getItem("token");
+
+  //   const requestBody = JSON.stringify(formDataObj);
+
+  //   fetch(`${BASE_URL}results/upload`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       auth: token,
+  //     },
+  //     body: requestBody,
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // console.log("success", data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //       alert("Oops something went wrong!!!");
+  //     });
+  //   // Reset the form after submission
+  //   // setFormData(initialData);
+  // };
+
   const handleSubmit = () => {
-    // Submit the data to the backend (You can use fetch or Axios to send data to the backend API)
-    // For this example, we'll log the data to the console.
     const formDataObj = {
       examName: formData.examName,
-      students: formData.students
-    }
-    // [{
-    //   examname: '',
-    //   student: []
-    // },
-    // {
-    //   examname: '',
-    //   student: []
-    // }]
-    // console.log(formDataObj)
+      image: formData.image, 
+    };
+    console.log(formDataObj);
+    
     const token = localStorage.getItem("token");
-
     const requestBody = JSON.stringify(formDataObj);
-
+    console.log(formDataObj, 'form data obj');
     fetch(`${BASE_URL}results/upload`, {
       method: "POST",
       headers: {
@@ -113,14 +143,15 @@ export default function Result() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("success", data);
+        // Data contains the response from the backend after exam creation
+        console.log("Success:", data);
+        // You might want to reset the form after successful submission
+        setFormData(initialData);
       })
       .catch((error) => {
         console.error("Error:", error);
         alert("Oops something went wrong!!!");
       });
-    // Reset the form after submission
-    // setFormData(initialData);
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -133,7 +164,6 @@ export default function Result() {
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
         <main>
-
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
             <div className="container p-6 mx-auto overflow-x-auto font-mono">
@@ -141,7 +171,7 @@ export default function Result() {
 
               <h1 className="mb-4 text-2xl font-bold">Result</h1>
               <div className="max-w-3xl px-4 py-8 mt-6 mb-6 rounded-lg shadow-xl border-[2px] border-black">
-                <form className='flex flex-col'>
+                <form className="flex flex-col">
                   <label className="relative block mb-2 font-semibold">
                     Exam Name:
                     <input
@@ -153,8 +183,19 @@ export default function Result() {
                       className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                     />
                   </label>
-                  <h2 className='my-4 text-xl font-bold'>Students</h2>
-                  {formData.students.map((student, index) => (
+                  <label className="relative block mb-2 font-semibold">
+                    Image URL:
+                    <input
+                      required
+                      type="text"
+                      name="image"
+                      value={formData.image}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 mt-1 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                    />
+                  </label>
+                  <h2 className="my-4 text-xl font-bold">Students</h2>
+                  {/* {formData.students.map((student, index) => (
                     <div key={index} className='grid md:grid-cols-4 grid-cols-2 gap-4 p-4 border-[2px] border-black/20 rounded-lg mb-4'>
                       <div className='flex items-baseline justify-between col-span-2 gap-4 md:col-span-4'>
                         <h1 className='font-semibold'>{`Student ${index + 1}`}</h1>
@@ -211,25 +252,28 @@ export default function Result() {
                       </label>
                       </div>
                   
-                  ))}
+                  ))} */}
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                    type="button" onClick={handleAddStudent}>
+                    type="button"
+                    onClick={handleAddStudent}
+                  >
                     Add Student
                   </button>
 
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                    type="button" onClick={handleSubmit}>Submit</button>
+                    type="button"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
                 </form>
-
               </div>
-
             </div>
           </div>
         </main>
-
       </div>
     </div>
-  )
+  );
 }
