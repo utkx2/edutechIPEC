@@ -6,13 +6,17 @@ const { verifyToken, isAdmin } = require('../middleware/auth');
 
 // Create a new Result with student information
 //http://localhost:3000/api/results/upload
-router.post('/upload', isAdmin, async (req, res) => {
+router.post('/upload', async (req, res) => {
     try {
         const { examName, students } = req.body;
         console.log(req.body);
 
         const query = {};
-        const update = { examName, students };
+        const update = {
+            $push: {
+                exams: { examName, image }
+            }
+        };
         const options = { new: true, upsert: true };
 
         const newResult = await Result.findOneAndUpdate(query, update, options);
