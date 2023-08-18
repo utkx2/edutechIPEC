@@ -7,6 +7,9 @@ import Header from "../../Header";
 import { Navigate, useNavigate } from "react-router-dom";
 import { CloudinaryContext, Image } from "cloudinary-react";
 import { Cloudinary as CloudinaryCore } from "@cloudinary/url-gen";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AddExamForm = () => {
   const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
   const [examName, setExamName] = useState("");
@@ -176,11 +179,13 @@ const AddExamForm = () => {
       if (response.ok) {
         // console.log("Exam saved successfully!");
         navigate("/dashboard/list");
+        toast.success("Submitted successfully");
       } else {
         console.log("Failed to save the exam.");
       }
     } catch (error) {
       console.error("Error occurred while saving the exam:", error);
+      toast.error("Oops! Something went wrong");
     }
   };
   const handleRemoveAnswer = (questionIndex, answerIndex) => {

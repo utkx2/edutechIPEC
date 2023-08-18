@@ -3,6 +3,8 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from "../../../../config";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function About() {
   const [aboutIPEC, setAboutIPEC] = useState("");
@@ -70,10 +72,11 @@ export default function About() {
       })
       .then((response) => {
         console.log("success");
+        toast.success("Submitted successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        toast.error("Oops! Something went wrong");
       });
   };
 

@@ -3,7 +3,8 @@ import { useState } from "react";
 import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from '../../../../config';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Courses() {
 
@@ -62,12 +63,13 @@ export default function Courses() {
         })
             .then((response) => response.json())
             .then((data) => {
-                // console.log("Course added succesfully.", data);
+                console.log("success", data);
+                toast.success("Submitted successfully");
                 clearInputs();
             })
             .catch((error) => {
                 console.error("Error:", error);
-                alert("Oops something went wrong!!!");
+                toast.error("Oops! Something went wrong");
             });
     };
 

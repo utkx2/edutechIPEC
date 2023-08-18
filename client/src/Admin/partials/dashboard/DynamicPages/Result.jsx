@@ -4,6 +4,8 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from "../../../../config";
 import ResultsPhotoUploader from "./ResultsPhotoUploader";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Result() {
   // const initialStudent = {
@@ -148,10 +150,11 @@ export default function Result() {
         console.log("Success:", data);
         // You might want to reset the form after successful submission
         setFormData(initialData);
+        toast.success("Submitted successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        toast.error("Oops! Something went wrong");
       });
   };
 
@@ -203,7 +206,7 @@ export default function Result() {
                       index={0}
                     />{" "}
                   </div>
-                  <h2 className="my-4 text-xl font-bold">Students</h2>
+                  {/* <h2 className="my-4 text-xl font-bold">Students</h2> */}
                   {/* {formData.students.map((student, index) => (
                     <div key={index} className='grid md:grid-cols-4 grid-cols-2 gap-4 p-4 border-[2px] border-black/20 rounded-lg mb-4'>
                       <div className='flex items-baseline justify-between col-span-2 gap-4 md:col-span-4'>
@@ -262,13 +265,13 @@ export default function Result() {
                       </div>
                   
                   ))} */}
-                  <button
+                  {/* <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                     type="button"
                     onClick={handleAddStudent}
                   >
                     Add Student
-                  </button>
+                  </button> */}
 
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"

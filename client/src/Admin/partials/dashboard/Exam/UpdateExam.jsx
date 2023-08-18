@@ -7,6 +7,9 @@ import Header from "../../Header";
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { CloudinaryContext, Image } from 'cloudinary-react';
 import { Cloudinary as CloudinaryCore } from '@cloudinary/url-gen';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UpdateExamForm = () => {
   const cloudinary = new CloudinaryCore({ cloud: { cloudName: "doaxcuxex" } });
   const { id } = useParams();
@@ -143,11 +146,13 @@ const UpdateExamForm = () => {
       if (response.ok) {
         // console.log('Exam updated successfully!');
         navigate('/dashboard/list');
+        toast.success("Submitted successfully");
       } else {
         console.log('Failed to update the exam.');
       }
     } catch (error) {
       console.error('Error occurred while updating the exam:', error);
+      toast.error("Oops! Something went wrong");
     }
   };
   const handleAddQuestion = (type) => {

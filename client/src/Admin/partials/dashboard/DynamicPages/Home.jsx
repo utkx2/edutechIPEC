@@ -9,6 +9,8 @@ import StudentPhotoUploader from "./StudentPhotoUploader";
 import FacultyPhotoUploader from "./FacultyPhotoUploader";
 import QuickLinksPhotoUploader from "./QuickLinksPhotoUploader";
 import ProgramsPhotoUploader from './ProgramsPhotoUploader';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const initialCarousel = {
@@ -358,10 +360,11 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         console.log("success", data);
+        toast.success("Submitted successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        toast.error("Oops! Something went wrong");
       });
     fetch(`${BASE_URL}facultyHomePage/upload`, {
       method: "POST",
@@ -377,7 +380,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        
       });
 
     fetch(`${BASE_URL}QuickLinkHomePage/upload`, {
@@ -394,7 +397,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        
       });
     // uploading programs
     fetch(`${BASE_URL}ourPrograms/upload/`, {
@@ -411,7 +414,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        
       });
     fetch(`${BASE_URL}studentHomePage/upload`, {
       method: "POST",
@@ -427,7 +430,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        
       });
   };
   const [sidebarOpen, setSidebarOpen] = useState(false);

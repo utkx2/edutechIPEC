@@ -3,6 +3,8 @@ import Sidebar from "../../Sidebar";
 import Header from "../../Header";
 import { BASE_URL } from "../../../../config";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function WHY() {
   const [whyIPEC, setWhyIPEC] = useState("");
@@ -48,12 +50,12 @@ export default function WHY() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("success", data);
-        // You can show a success message or handle the response as needed
+        console.log("success", data);
+        toast.success("Submitted successfully");
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Oops something went wrong!!!");
+        toast.error("Oops! Something went wrong");
       });
   };
 
