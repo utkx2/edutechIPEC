@@ -259,7 +259,7 @@ export default function Result() {
                     onClick={handleAddStudent}
                   >
                     Add Student
-                  </button> */}
+                  </button>
 
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
