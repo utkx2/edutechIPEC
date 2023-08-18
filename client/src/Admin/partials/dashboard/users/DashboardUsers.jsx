@@ -58,7 +58,8 @@ function DashboardUsers() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}user/getall?userRole=${userRoleFilter ? "admin" : "student"
+        `${BASE_URL}user/getall?userRole=${
+          userRoleFilter ? "admin" : "student"
         }`,
         {
           method: "GET",
@@ -93,21 +94,25 @@ function DashboardUsers() {
 
   const processExcelFile = async (file) => {
     try {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: "binary" });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        const parsedData = XLSX.utils.sheet_to_json(worksheet);
+      const formData = new FormData();
+      formData.append("excelFile", file);
 
-        // Process and upload parsedData to your API
-        await uploadDataToAPI(parsedData);
+      const response = await axios.post(
+        `${BASE_URL}user/excelupload/signup`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-        // Optionally, fetch updated data after uploading
-        fetchData();
-      };
-      reader.readAsBinaryString(file);
+      if (response.status === 201) {
+        console.log("Bulk upload successful");
+        // Perform any additional actions after successful upload
+      } else {
+        console.log("Bulk upload failed");
+      }
     } catch (error) {
       console.error("Error processing Excel file:", error);
     }
@@ -263,27 +268,23 @@ function DashboardUsers() {
   const handleUserRole = async (userId, currentUserRole) => {
     console.log("Attempting to update user role...");
 
-    const newRole = currentUserRole === 'admin' ? 'student' : 'admin';
+    const newRole = currentUserRole === "admin" ? "student" : "admin";
 
     try {
-
-      const response = await axios.put(
-        `${BASE_URL}user/makeAdmin/${userId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            auth: localStorage.getItem("token"),
-          },
-        }
-      );
+      const response = await axios.put(`${BASE_URL}user/makeAdmin/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
+        },
+      });
       // console.log("Response:", response);
 
       if (response.data === "role updated successfully") {
         //   console.log("Role updated successfully");
         fetchData(); // Fetch updated data after role change
       } else {
-        console.log('Role update failed');
+        console.log("Role update failed");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -327,27 +328,27 @@ function DashboardUsers() {
                     {/* User type select bar */}
                   </div>
                   {/* download buttons */}
-                  <div>
+                  <div className="flex flex-col md:flex-row gap-2 mb-2">
                     <button
-                      className="px-4 py-2 mr-4 mb-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2 md:mb-0 md:mr-2"
+                      className="px-4 py-2 mb-2 md:mb-0 md:mr-2 font-bold text-white bg-green-700 rounded focus:outline-none focus:ring-2"
                       onClick={downloadAsExcel}
                     >
                       Download Excel
                     </button>
                     <button
-                      className="px-4 py-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
+                      className="px-4 py-2 mb-2 md:mb-0 md:mr-2 font-bold text-white bg-red-700 rounded focus:outline-none focus:ring-2"
                       onClick={downloadAsPDF}
                     >
                       Download PDF
                     </button>
                     <button
-                      className="px-4 py-2 font-bold text-white bg-yellow-700 ml-2 rounded focus:outline-none focus:ring-2"
+                      className="px-4 py-2 mb-2 md:mb-0 md:mr-2 font-bold text-white bg-yellow-700 rounded focus:outline-none focus:ring-2"
                       onClick={AddStudent}
                     >
                       Add Student
                     </button>
                     <button
-                      className="px-4 py-2 font-bold text-white bg-blue-700 ml-2 rounded focus:outline-none focus:ring-2"
+                      className="px-4 py-2 mb-2 md:mb-0 md:mr-2 font-bold text-white bg-blue-700 rounded focus:outline-none focus:ring-2"
                       onClick={openFileInput}
                     >
                       Bulk Uploading
@@ -456,13 +457,15 @@ function DashboardUsers() {
           </div>
         </main>
       </div>
-      <input
-  type="file"
-  accept=".xlsx, .xls"
-  onChange={handleFileUpload}
-  className="hidden"
-  ref={fileInputRef}
-/>
+      <div>
+        <input
+          type="file"
+          accept=".xlsx, .xls"
+          onChange={handleFileUpload}
+          className="hidden"
+          ref={fileInputRef}
+        />
+      </div>
       {/* <div className="flex flex-col items-center justify-center w-full h-full"> */}
       <Dialog
         open={isOpen}
