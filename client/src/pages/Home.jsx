@@ -141,8 +141,9 @@ function Home() {
               {new Array(length).fill("").map((_, i) => (
                 <span
                   key={i}
-                  className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
-                    }`}
+                  className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                    activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
+                  }`}
                   onClick={() => setActiveIndex(i)}
                 />
               ))}
@@ -260,16 +261,21 @@ function Home() {
                         <div>Air {studentData.air}</div>
                       </div>
                     </div>
-                    <div className="relative bg-[#E9ECF5] rounded-[20px] mx-3 p-3 text-sm mb-14">
-                      {studentData.description}
-                    </div>
+                    {studentData.description && (
+                      <div>
+                        <div className="relative bg-[#E9ECF5] rounded-[20px] mx-3 p-3 text-sm mb-14">
+                          {studentData.description}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-10%] top-[-10%]">
+                  {/* <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-10%] top-[-10%]">
                     <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-0 top-0 text-white font-bold leading-[10px]">
                       <span className="text-[12px] ">AIR</span>
                       <span className="text-3xl">{studentData.air}</span>
                     </div>
-                  </div>
+                  </div> */}
+
                   <div className="absolute w-full flex bottom-0 items-center text-white bg-[#1f1d5a] text-center font-bold justify-center rounded-b-[16px] h-[40px]">
                     {studentData.exam}
                   </div>

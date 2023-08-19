@@ -225,7 +225,7 @@ const AddExamForm = () => {
                       htmlFor="totalTime"
                       className="block mb-2 font-bold text-gray-700"
                     >
-                      Total Time taken for exam:
+                      Total Time taken in seconds:
                     </label>
                     <input
                       required

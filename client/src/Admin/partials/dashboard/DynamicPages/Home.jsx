@@ -825,7 +825,7 @@ export default function Home() {
                           </label>
                           <label className="relative block mb-2 font-semibold">
                             {/* {`Price ${index + 1}`} */}
-                            {`Child Product: ${index + 1}`}
+                            {`Description: ${index + 1}`}
                             <input
                               required
                               type="text"

@@ -380,7 +380,7 @@ const FacultyRegistrationDetails = () => {
                                 <div className="grid gap-10 md:grid-cols-2">
                                     <div>
                                         <label className="block mb-2 text-xl font-medium">
-                                            Address Line 3
+                                            Post for Apply
                                         </label>
                                         <input
                                             type="text"

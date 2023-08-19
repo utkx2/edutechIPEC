@@ -174,6 +174,23 @@ export default function Career() {
                   This email is already registered
                 </p>
               )}
+              <div className="relative z-0 w-full mb-6 group">
+                <input
+                  type="text"
+                  name="addressLine3"
+                  id="addressLine3"
+                  value={formData.addressLine3}
+                  onChange={handleChange}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none        focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                />
+                <label
+                  htmlFor="addressLine3"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Post for Apply
+                </label>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 md:gap-6">
@@ -195,6 +212,7 @@ export default function Career() {
                   Phone number
                 </label>
               </div>
+              
 
               <div className="relative z-0 flex flex-col h-10 mb-6 gap-y-2 group">
                 <label htmlFor="" className="text-sm text-gray-500 ">
@@ -368,23 +386,6 @@ export default function Career() {
                   className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Address Line 2
-                </label>
-              </div>
-              <div className="relative z-0 w-full mb-6 group">
-                <input
-                  type="text"
-                  name="addressLine3"
-                  id="addressLine3"
-                  value={formData.addressLine3}
-                  onChange={handleChange}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none        focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                />
-                <label
-                  htmlFor="addressLine3"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Address Line 3
                 </label>
               </div>
               <div className="grid md:grid-cols-2 md:gap-6">
