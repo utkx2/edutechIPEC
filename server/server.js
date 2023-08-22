@@ -85,6 +85,9 @@ app.use('/api/QuickLinkHomePage', quickLinkHomePage);
 app.use('/api/OfflineResults', OfflineResults);
 app.use('/api/PopUp', PopUpRoute);
 
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 const imageSchema = new mongoose.Schema({
   name: String,
   data: Buffer,

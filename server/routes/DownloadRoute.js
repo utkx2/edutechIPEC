@@ -5,6 +5,19 @@ const syllabus = require('../models/SyllabusModel');
 const Brochure = require('../models/BrochureModel');
 const { verifyToken, isAdmin } = require('../middleware/auth');
 
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({ storage });
 
 
 // http://localhost:3000/api/download/samplePaper/get
@@ -19,10 +32,26 @@ router.get('/samplePaper/get', async (req, res) => {
     }
 });
 
+// http://localhost:3000/api/download/pdf/upload
+router.post('/pdf/upload', upload.single('pdfFile'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file received' });
+        }
+        console.log(req.file);
+        res.send({ filenames: `/uploads/${req.file.filename}` });
+    }
+    catch (error) {
+        console.error('error occured', error);
+        return res.status(500).json(error);
+    }
+});
+
 
 // http://localhost:3000/api/download/samplePaper/upload
-router.post('/samplePaper/upload', isAdmin, async (req, res) => {
+router.post('/samplePaper/upload', async (req, res) => {
     try {
+
         const {
             className, fileLink
         } = req.body;
@@ -30,8 +59,7 @@ router.post('/samplePaper/upload', isAdmin, async (req, res) => {
             className, fileLink
         });
         await newSamplePaper.save();
-
-        res.json({ message: 'SamplePaper added successfully', SamplePaper: newSamplePaper });
+        res.json({ message: 'SamplePaper Pdf added successfully' });
     }
     catch (error) {
         console.error('error occured', error);
