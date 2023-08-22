@@ -40,7 +40,8 @@ const download = require('./routes/DownloadRoute');
 const results = require('./routes/ResultsRoute');
 const examResults = require('./routes/ExamResults');
 const quickLinkHomePage = require('./routes/QuickLinksRoute');
-
+const OfflineResults = require('./routes/OfflineResultsRoute');
+const PopUpRoute = require('./routes/PopUpRoute');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -80,7 +81,9 @@ app.use('/api/facultyHomePage', facultyHomePage);
 app.use('/api/carousel', carousel);
 app.use('/api/download', download);
 app.use('/api/results', results);
-app.use('/api/QuickLinkHomePage', quickLinkHomePage)
+app.use('/api/QuickLinkHomePage', quickLinkHomePage);
+app.use('/api/OfflineResults', OfflineResults);
+app.use('/api/PopUp', PopUpRoute);
 
 const imageSchema = new mongoose.Schema({
   name: String,
@@ -156,7 +159,6 @@ app.post('/api/home/uploadImage', multerMiddleware.array('photos', 100), async (
         folder: 'uploads', // Specify the folder in Cloudinary where the file should be saved
         use_filename: true // Use the original filename
       });
-
       // Store the public URL of the uploaded file in the array
       uploadedFiles.push(uploadedFile.secure_url);
 
