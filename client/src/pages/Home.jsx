@@ -18,7 +18,10 @@ function Home() {
   const [faculty, setFaculty] = useState([]);
   const [quickLinks, setQuickLink] = useState([]);
   const [student, setStudent] = useState([]);
+  const [popup, setPopup] = useState("");
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [selectedImageUrl, setSelectedImageUrl] = useState("");
   const fetchData = async () => {
     try {
       const responseCarousel = await axios.get(`${BASE_URL}carousel/get`, {
@@ -29,6 +32,15 @@ function Home() {
         },
       });
       setCarousel(responseCarousel.data[0].images);
+      const responsePopUp = await axios.get(`${BASE_URL}PopUp/getImage`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          auth: localStorage.getItem("token"),
+        },
+      });
+      setPopup(responsePopUp.data[0]);
+      console.log(popup, "popup");
       const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
         method: "GET",
         headers: {
@@ -76,6 +88,10 @@ function Home() {
     }
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -84,8 +100,43 @@ function Home() {
     navigate(`quickLinkdetail/${userId}`);
   };
 
+  const handleOutsideClick = (e) => {
+    if (!e.target.closest(".modal-content")) {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.addEventListener("click", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isModalOpen]);
+
   return (
     <div className="">
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50 ">
+          <div className="relative w-[80%] h-[80%]">
+            <a
+              href={popup.redirectURL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={popup.image}
+                alt="Modal Content"
+                className="w-full h-full cursor-pointer"
+              />
+            </a>
+            
+          </div>
+        </div>
+      )}
       <div className="">
         <Carousel
           prevArrow={({ handlePrev }) => (
@@ -241,10 +292,10 @@ function Home() {
         </h1>
         <div className="flex items-center justify-center py-8">
           {student ? (
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-8 ">
               {student.map((studentData) => (
                 <div
-                  className="relative w-[353px] h-auto rounded-[16px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-white mt-10 "
+                  className="relative w-[900px] h-auto rounded-[16px]  bg-white mt-10 "
                   key={studentData._id}
                 >
                   <div className="">
@@ -252,32 +303,11 @@ function Home() {
                       <img
                         src={studentData.studentImg}
                         alt="student"
-                        className="h-[280px] w-full rounded-[8px]"
+                        className="h-[650px] w-full rounded-[8px]"
                       />
-                      <div className="w-full text-[#1f1d5a] text-md h-fit mt-2 flex flex-col items-start justify-center text-center p-3">
-                        <div className="font-bold">{studentData.name}</div>
-                        <div>{studentData.classRoomDetails}</div>
-                        <div>{studentData.enrollmentNo}</div>
-                        <div>Air {studentData.air}</div>
-                      </div>
+                     
                     </div>
-                    {studentData.description && (
-                      <div>
-                        <div className="relative bg-[#E9ECF5] rounded-[20px] mx-3 p-3 text-sm mb-14">
-                          {studentData.description}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  {/* <div className="absolute flex items-center justify-center h-[97px] w-[97px] bg-yellow-400 rounded-full right-[-10%] top-[-10%]">
-                    <div className="flex flex-col items-center justify-center h-[80px] w-[80px] bg-[#1f1d5a] rounded-full right-0 top-0 text-white font-bold leading-[10px]">
-                      <span className="text-[12px] ">AIR</span>
-                      <span className="text-3xl">{studentData.air}</span>
-                    </div>
-                  </div> */}
-
-                  <div className="absolute w-full flex bottom-0 items-center text-white bg-[#1f1d5a] text-center font-bold justify-center rounded-b-[16px] h-[40px]">
-                    {studentData.exam}
+                    
                   </div>
                 </div>
               ))}

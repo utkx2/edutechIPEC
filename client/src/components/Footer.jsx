@@ -66,21 +66,23 @@ function Footer() {
                 ))}
               </div>
               <div>
-              {/* <div className="md:col-span-2 pl-8 md:pl-0"> */}
-                <h1 className="mb-12 text-xl md:absolute top-1 left-66 font-bold">OUR POLICY</h1>
+                {/* <div className="md:col-span-2 pl-8 md:pl-0"> */}
+                <h1 className="mb-12 text-xl md:absolute top-1 left-66 font-bold">
+                  OUR POLICY
+                </h1>
                 {/* <div className="absolute bottom-26 right-2/4"> */}
-                  {footerlinks2.map((footLink) => (
-                    <div
-                      key={footLink.name}
-                      className={`my-3 text-sm uppercase cursor-pointer ${
-                        footLink.colorChange ? "text-yellow-400" : ""
-                      }`}
-                    >
-                      <Link to={footLink.link}>{footLink.name}</Link>
-                    </div>
-                  ))}
+                {footerlinks2.map((footLink) => (
+                  <div
+                    key={footLink.name}
+                    className={`my-3 text-sm uppercase cursor-pointer ${
+                      footLink.colorChange ? "text-yellow-400" : ""
+                    }`}
+                  >
+                    <Link to={footLink.link}>{footLink.name}</Link>
+                  </div>
+                ))}
                 {/* </div> */}
-              {/* </div> */}
+                {/* </div> */}
               </div>
             </div>
           </div>
@@ -89,12 +91,12 @@ function Footer() {
           <div className="md:col-span-1 mt-8 md:mt-0 pl-4 md:pl-0">
             <h1 className="mb-4 text-xl font-bold">Contact</h1>
             <div className="my-4">
-              Ipec Classes Aggrawal Corporate Heights, drd Floor,
-              <br /> Plot no. A-7, xxtaji Subhash Place,
-              <br />
-              Opposite xxzirpur Depot,
-              <br />
-              Rohini, Delhi
+              Reg. Office:- A-17, 3rd Floor, City Centre, Sec - 4, Above Saree
+              Sangam, Bokaro Steel City, Jharkhand - 827001
+            </div>
+            <div className="my-4">
+            Branch Office:-
+301 Krishna Mathura Complex, Circular Rd, Beside Kaveri Resturant, Lalpur, Ranchi, Jharkhand 834001
             </div>
             <div className="my-4">
               <div>9818xxx768 / 8585xxx897 </div>

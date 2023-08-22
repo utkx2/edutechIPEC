@@ -8,9 +8,9 @@ import PhotoUploader from "./PhotoUploader";
 import StudentPhotoUploader from "./StudentPhotoUploader";
 import FacultyPhotoUploader from "./FacultyPhotoUploader";
 import QuickLinksPhotoUploader from "./QuickLinksPhotoUploader";
-import ProgramsPhotoUploader from './ProgramsPhotoUploader';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ProgramsPhotoUploader from "./ProgramsPhotoUploader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const initialCarousel = {
@@ -37,6 +37,10 @@ export default function Home() {
     product: "",
     start: "",
   };
+  const [postData, setPostData] = useState({
+    image: "",
+    redirectURL: "",
+  });
   const initialDataQuickLinks = {
     QuickLinks: [initialQuickLinks],
   };
@@ -60,6 +64,7 @@ export default function Home() {
   const initialDataPrograms = {
     Programs: [initialPrograms],
   };
+
   const [carousel, setCarousel] = useState(initialDataCarousel);
   const [carouselCount, setcarouselCount] = useState(0);
   const [faculty, setFaculty] = useState(initialDataFaculty);
@@ -78,6 +83,7 @@ export default function Home() {
     setBoolean(true);
   }, [studentPhotos]);
   // console.log(boolean);
+
   if (boolean) {
     const updatedStudents = {
       Students: students.Students.map((student, i) =>
@@ -242,6 +248,7 @@ export default function Home() {
       Programs: newLinks,
     });
   };
+
   const fetchHomeContent = async () => {
     try {
       const responseCarousel = await axios.get(`${BASE_URL}carousel/get`, {
@@ -347,7 +354,23 @@ export default function Home() {
     const requestBodyPrograms = JSON.stringify(formDataObj.programs);
     const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
 
-    // console.log(token);
+    fetch("http://localhost:3000/api/PopUp/postImage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("POST request successful", data);
+        // Handle the response data here
+      })
+      .catch((error) => {
+        console.error("POST request error", error);
+        // Handle the error here
+      });
+
     // uploading carousel
     fetch(`${BASE_URL}carousel/upload`, {
       method: "POST",
@@ -380,7 +403,6 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        
       });
 
     fetch(`${BASE_URL}QuickLinkHomePage/upload`, {
@@ -397,7 +419,6 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        
       });
     // uploading programs
     fetch(`${BASE_URL}ourPrograms/upload/`, {
@@ -414,7 +435,6 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        
       });
     fetch(`${BASE_URL}studentHomePage/upload`, {
       method: "POST",
@@ -430,8 +450,15 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        
       });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPostData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
@@ -499,136 +526,193 @@ export default function Home() {
                       >
                         {" "}
                         Add Link{" "}
-                      </button>)}{" "}
+                      </button>
+                    )}{" "}
                   </div>{" "}
-                  {students ? (
-                    <div>
-                      {" "}
-                      <h2 className="my-4 text-xl font-bold">Students</h2>{" "}
-                      {students.Students.map((student, index) => (
-                        <div key={index} className="gap-4 mb-4 rounded-lg">
+                  <div>
+                    <div className="border-[2px] border-black/20 p-4 rounded-md">
+                      <h2 className="my-4 text-xl font-bold">POP Up</h2>{" "}
+                      <div className="grid grid-cols-2 gap-4">
+                        {" "}
+                        <label className="relative block mb-2 font-semibold">
                           {" "}
-                          <div className="grid grid-cols-2 gap-4">
+                          <p>pop image</p>
+                          <input
+                required
+                type="text"
+                name="image"
+                value={postData.image}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              />
+                        </label>{" "}
+                        <label className="relative block mb-2 font-semibold">
+                          {" "}
+                          <p>Redirect Url</p>
+                          <input
+                required
+                type="text"
+                name="redirectURL"
+                value={postData.redirectURL}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+              />
+                        </label>{" "}
+                        {
+                          postData && (
+                            <p>{postData.imageLink}</p>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div className="border-[2px] border-black/20 p-4 rounded-md">
+                    {students ? (
+                      <div>
+                        {" "}
+                        <h2 className="my-4 text-xl font-bold">
+                          Students
+                        </h2>{" "}
+                        {students.Students.map((student, index) => (
+                          <div key={index} className="gap-4 mb-4 rounded-lg">
                             {" "}
-                            <label className="relative block mb-2 font-semibold">
+                            <div className="grid grid-cols-2 gap-4">
                               {" "}
-                              {`Student ${index + 1} Name`}{" "}
-                              <input
-                                required
-                                type="text"
-                                name={`name-${index}`}
-                                value={student.name}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />{" "}
-                            </label>{" "}
-                            <label className="relative block mb-2 font-semibold">
+                              <label className="relative block mb-2 font-semibold">
+                                {" "}
+                                {`Student ${index + 1} Name`}{" "}
+                                <input
+                                  required
+                                  type="text"
+                                  name={`name-${index}`}
+                                  value={student.name}
+                                  onChange={(e) =>
+                                    handleStudentsChange(index, e)
+                                  }
+                                  className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                />{" "}
+                              </label>{" "}
+                              <label className="relative block mb-2 font-semibold">
+                                {" "}
+                                {`Student ${index + 1} Image`}{" "}
+                                <input
+                                  required
+                                  type="text"
+                                  name={`studentImg-${index}`}
+                                  value={student.studentImg}
+                                  onChange={(e) =>
+                                    handleStudentsChange(index, e)
+                                  }
+                                  className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                />{" "}
+                              </label>{" "}
+                              <label className="relative block mb-2 font-semibold">
+                                {" "}
+                                {`Student ${index + 1} EnrollmentNo`}{" "}
+                                <input
+                                  required
+                                  type="text"
+                                  name={`enrollmentNo-${index}`}
+                                  value={student.enrollmentNo}
+                                  onChange={(e) =>
+                                    handleStudentsChange(index, e)
+                                  }
+                                  className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                />{" "}
+                              </label>{" "}
+                              <label className="relative block mb-2 font-semibold">
+                                {" "}
+                                {`Student ${index + 1} Classroom Program`}{" "}
+                                <input
+                                  required
+                                  type="text"
+                                  name={`classRoomDetails-${index}`}
+                                  value={student.classRoomDetails}
+                                  onChange={(e) =>
+                                    handleStudentsChange(index, e)
+                                  }
+                                  className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                />{" "}
+                              </label>{" "}
+                            </div>{" "}
+                            <div className="grid grid-cols-2 gap-4">
                               {" "}
-                              {`Student ${index + 1} Image`}{" "}
-                              <input
-                                required
-                                type="text"
-                                name={`studentImg-${index}`}
-                                value={student.studentImg}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />{" "}
-                            </label>{" "}
-                            <label className="relative block mb-2 font-semibold">
+                              <label className="relative block mb-2 font-semibold">
+                                {" "}
+                                {`Student ${index + 1} AIR`}{" "}
+                                <input
+                                  required
+                                  type="number"
+                                  name={`air-${index}`}
+                                  value={student.air}
+                                  onChange={(e) =>
+                                    handleStudentsChange(index, e)
+                                  }
+                                  className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                />{" "}
+                              </label>{" "}
+                              <label className="relative block mb-2 font-semibold">
+                                {" "}
+                                {`Student ${index + 1} Exam`}{" "}
+                                <input
+                                  required
+                                  type="text"
+                                  name={`exam-${index}`}
+                                  value={student.exam}
+                                  onChange={(e) =>
+                                    handleStudentsChange(index, e)
+                                  }
+                                  className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                />{" "}
+                              </label>{" "}
+                              <label className="relative block col-span-2 mb-2 font-semibold">
+                                {" "}
+                                {`Student ${index + 1} Description`}{" "}
+                                <textarea
+                                  required
+                                  type="text"
+                                  name={`description-${index}`}
+                                  value={student.description}
+                                  onChange={(e) =>
+                                    handleStudentsChange(index, e)
+                                  }
+                                  className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                                />{" "}
+                              </label>{" "}
+                            </div>{" "}
+                            <div onClick={() => handleItemClickStudent(index)}>
                               {" "}
-                              {`Student ${index + 1} EnrollmentNo`}{" "}
-                              <input
-                                required
-                                type="text"
-                                name={`enrollmentNo-${index}`}
-                                value={student.enrollmentNo}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                              <StudentPhotoUploader
+                                photos={students}
+                                onChange={setStudents}
+                                index={index}
                               />{" "}
-                            </label>{" "}
-                            <label className="relative block mb-2 font-semibold">
+                            </div>{" "}
+                            <button
+                              className="px-4 py-2 mt-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                              type="button"
+                              onClick={() => handleRemoveStudent(index)}
+                            >
                               {" "}
-                              {`Student ${index + 1} Classroom Program`}{" "}
-                              <input
-                                required
-                                type="text"
-                                name={`classRoomDetails-${index}`}
-                                value={student.classRoomDetails}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />{" "}
-                            </label>{" "}
-                          </div>{" "}
-                          <div className="grid grid-cols-2 gap-4">
-                            {" "}
-                            <label className="relative block mb-2 font-semibold">
-                              {" "}
-                              {`Student ${index + 1} AIR`}{" "}
-                              <input
-                                required
-                                type="number"
-                                name={`air-${index}`}
-                                value={student.air}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />{" "}
-                            </label>{" "}
-                            <label className="relative block mb-2 font-semibold">
-                              {" "}
-                              {`Student ${index + 1} Exam`}{" "}
-                              <input
-                                required
-                                type="text"
-                                name={`exam-${index}`}
-                                value={student.exam}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />{" "}
-                            </label>{" "}
-                            <label className="relative block col-span-2 mb-2 font-semibold">
-                              {" "}
-                              {`Student ${index + 1} Description`}{" "}
-                              <textarea
-                                required
-                                type="text"
-                                name={`description-${index}`}
-                                value={student.description}
-                                onChange={(e) => handleStudentsChange(index, e)}
-                                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-                              />{" "}
-                            </label>{" "}
-                          </div>{" "}
-                          <div onClick={() => handleItemClickStudent(index)}>
-                            {" "}
-                            <StudentPhotoUploader
-                              photos={students}
-                              onChange={setStudents}
-                              index={index}
-                            />{" "}
-                          </div>{" "}
+                              Remove Link{" "}
+                            </button>{" "}
+                          </div>
+                        ))}{" "}
+                        {studentsCount < 3 && students.Students.length < 3 && (
                           <button
-                            className="px-4 py-2 mt-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
+                            className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
                             type="button"
-                            onClick={() => handleRemoveStudent(index)}
+                            onClick={handleAddStudent}
                           >
                             {" "}
-                            Remove Link{" "}
-                          </button>{" "}
-                        </div>
-                      ))}{" "}
-                      {studentsCount < 3 && students.Students.length < 3 && (
-                        <button
-                          className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                          type="button"
-                          onClick={handleAddStudent}
-                        >
-                          {" "}
-                          Add Student{" "}
-                        </button>)}{" "}
-                    </div>
-                  ) : (
-                    <></>
-                  )}{" "}
+                            Add Student{" "}
+                          </button>
+                        )}{" "}
+                      </div>
+                    ) : (
+                      <></>
+                    )}{" "}
+                  </div>
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {" "}
                     {/* Faculty */}{" "}
@@ -725,7 +809,8 @@ export default function Home() {
                         onClick={handleAddFaculty}
                       >
                         Add Link
-                      </button>)}
+                      </button>
+                    )}
                   </div>{" "}
                   <div className="border-[2px] border-black/20 p-4 rounded-md mt-5">
                     {/* Programs */}
@@ -756,7 +841,6 @@ export default function Home() {
                             />
                           </label>
                           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
                             <button
                               className="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                               type="button"
@@ -865,14 +949,16 @@ export default function Home() {
                         </div>
                       </div>
                     ))}
-                    {quickLinksCount < 3 && quickLinks.QuickLinks.length < 3 && (
-                      <button
-                        className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
-                        type="button"
-                        onClick={handleAddQuickLinks}
-                      >
-                        Add Link
-                      </button>)}
+                    {quickLinksCount < 3 &&
+                      quickLinks.QuickLinks.length < 3 && (
+                        <button
+                          className="px-4 py-2 mx-1 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
+                          type="button"
+                          onClick={handleAddQuickLinks}
+                        >
+                          Add Link
+                        </button>
+                      )}
                   </div>{" "}
                   <button
                     className="px-4 py-2 mx-6 mt-8 font-semibold text-white bg-indigo-700 rounded-lg hover:bg-indigo-800"
