@@ -11,8 +11,8 @@ const upload = multer();
 // http://localhost:3000/api/PopUp/postImage
 router.post("/postImage", async (req, res) => {
     try {
-        const { image } = req.body;
-        const ImageLinks = await PopUp.findOneAndUpdate({}, { image }, { new: true, upsert: true });
+        const { image, redirectURL } = req.body;
+        const ImageLinks = await PopUp.findOneAndUpdate({}, { image, redirectURL }, { new: true, upsert: true });
         res.status(200).json(ImageLinks);
     }
     catch (error) {
