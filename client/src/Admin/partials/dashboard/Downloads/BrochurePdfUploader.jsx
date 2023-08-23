@@ -18,8 +18,12 @@ export default function BrochurePdfUploader({ photos, onChange, index }) {
             data.append('pdfFile', file);
         }
         // console.log(data);
+        const token = localStorage.getItem("token");
         axios.post(`${BASE_URL}download/pdf/upload`, data, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                auth: token,
+            }
         }).then(response => {
             const { data: filenames } = response;
             console.log(response.data);

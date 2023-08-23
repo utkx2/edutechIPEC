@@ -7,7 +7,7 @@ const OfflineResultsSchema = new mongoose.Schema({
             required: true
         },
         examScore: {
-            type: String,
+            type: Number,
             required: true
         }
     }]

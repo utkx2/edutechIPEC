@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const Home = require('../models/HomeModel');
+const { verifyToken, isAdmin } = require('../middleware/auth');
 
 // Set up Multer for handling file uploads
 const storage = multer.diskStorage({
@@ -18,7 +19,7 @@ const upload = multer({ storage });
 
 // Upload home page content
 // http://localhost:3000/api/home/upload
-router.post('/home/upload', upload.fields([
+router.post('/home/upload', isAdmin, upload.fields([
     { name: 'carousel', maxCount: 4 },
     { name: 'faculty.images', maxCount: 4 },
     { name: 'selectedStudents.images', maxCount: 4 },

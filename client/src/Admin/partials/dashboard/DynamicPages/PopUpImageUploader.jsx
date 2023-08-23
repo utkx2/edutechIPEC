@@ -9,6 +9,7 @@ export default function PopUpImageUploader({ photos, onChange, index }) {
     const [photoslink, setPhotoslink] = useState('');
     const [message, setMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
+    const token = localStorage.getItem("token");
     function uploadPhoto(ev) {
         ev.preventDefault();
         const files = ev.target.files;
@@ -19,7 +20,10 @@ export default function PopUpImageUploader({ photos, onChange, index }) {
         }
         // console.log(data);
         axios.post(`${BASE_URL}home/uploadImage`, data, {
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                auth: token,
+            }
         }).then(response => {
             const { data: filenames } = response;
             setPhotoslink(filenames[0]);

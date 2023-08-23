@@ -42,6 +42,7 @@ const examResults = require('./routes/ExamResults');
 const quickLinkHomePage = require('./routes/QuickLinksRoute');
 const OfflineResults = require('./routes/OfflineResultsRoute');
 const PopUpRoute = require('./routes/PopUpRoute');
+const { verifyToken, isAdmin } = require('./middleware/auth');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -147,7 +148,7 @@ app.post('/api/upload', async (req, res) => {
 // upload the photo of home section of admin
 app.use('/api/home/', express.static(path.join(__dirname, '/uploads').replace(/\\/g, '/')));
 const multerMiddleware = multer();
-app.post('/api/home/uploadImage', multerMiddleware.array('photos', 100), async (req, res) => {
+app.post('/api/home/uploadImage', isAdmin, multerMiddleware.array('photos', 100), async (req, res) => {
   // console.log(req.body);
   try {
     const uploadedFiles = [];

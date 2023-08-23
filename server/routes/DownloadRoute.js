@@ -4,6 +4,7 @@ const SamplePaper = require('../models/SamplePaperModel');
 const syllabus = require('../models/SyllabusModel');
 const Brochure = require('../models/BrochureModel');
 const { verifyToken, isAdmin } = require('../middleware/auth');
+const fsExtra = require('fs-extra');
 
 const multer = require('multer');
 const path = require('path');
@@ -20,6 +21,34 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
+// http://localhost:3000/api/download/delete-pdf-files
+router.delete('/delete-pdf-files', isAdmin, (req, res) => {
+    const folderPath = '../server/uploads'; // Specify the path to the folder
+
+    fsExtra.readdir(folderPath, (err, files) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send('An error occurred while reading the folder');
+            return;
+        }
+
+        files.forEach(file => {
+            if (file.endsWith('.pdf')) {
+                fsExtra.remove(path.join(folderPath, file))
+                    .then(() => {
+                        console.log(`${file} deleted successfully`);
+                    })
+                    .catch(err => {
+                        console.error(`Failed to delete ${file}: ${err}`);
+                    });
+            }
+        });
+
+        res.send('PDF files deleted successfully');
+    });
+});
+
+
 // http://localhost:3000/api/download/samplePaper/get
 router.get('/samplePaper/get', async (req, res) => {
     try {
@@ -33,7 +62,7 @@ router.get('/samplePaper/get', async (req, res) => {
 });
 
 // http://localhost:3000/api/download/pdf/upload
-router.post('/pdf/upload', upload.single('pdfFile'), async (req, res) => {
+router.post('/pdf/upload', isAdmin, upload.single('pdfFile'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'No file received' });
@@ -49,7 +78,7 @@ router.post('/pdf/upload', upload.single('pdfFile'), async (req, res) => {
 
 
 // http://localhost:3000/api/download/samplePaper/upload
-router.post('/samplePaper/upload', async (req, res) => {
+router.post('/samplePaper/upload', isAdmin, async (req, res) => {
     try {
 
         const {

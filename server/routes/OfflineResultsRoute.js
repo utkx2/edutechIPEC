@@ -30,11 +30,23 @@ router.post('/postResult', upload.single('excelFile'), async (req, res) => {
 
 
 // http://localhost:3000/api/OfflineResults/getResult
-router.get('/getResult', async (req, res) => {
+router.get('/getResult/:email', async (req, res) => {
     try {
-        const Results = await OfflineResults.find();
-        res.status(200).json(Results);
+        // const Results = await OfflineResults.find();
+        // res.status(200).json(Results);
+        const email = req.params.email;
+
+        const result = await OfflineResults.findOne(
+            { 'students.email': email },
+            { 'students.$': 1 }
+        );
+        if (!result) {
+            return res.status(404).json({ message: 'Student not found' });
+        }
+        const examScore = result.students[0].examScore;
+        res.json({ email, examScore });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 });

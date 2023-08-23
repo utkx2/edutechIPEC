@@ -32,6 +32,7 @@ const Downloads = () => {
                     auth: localStorage.getItem("token"),
                 },
             });
+            console.log(responseBrochure.data);
             const responseSyllabus = await axios.get(
                 `${BASE_URL}download/syllabus/get`,
                 {
@@ -61,10 +62,11 @@ const Downloads = () => {
     //     console.log("samplePaper:", samplePaper);
     // }, [samplePaper]);
 
-    // useEffect(() => {
-    //     console.log("Brochure:", brochure);
-    //       console.log(MedicalBrochureLinks);
-    // }, [brochure]);
+    useEffect(() => {
+        console.log("Brochure:", brochure);
+        //console.log(MedicalBrochureLinks);
+        console.log(brochure[0])
+    }, [brochure]);
 
     // useEffect(() => {
     //     console.log("Syllabus:", syllabus);
@@ -104,7 +106,7 @@ const Downloads = () => {
                             {
                                 brochure[0]?.fileLink.map((links, index = 0) => (
                                     <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 cursor-pointer " key={links._id}>
-                                        <a href={links}>Links {index + 1}</a>
+                                        <a href={"http://localhost:3000" + links}>Links {index + 1}</a>
                                     </div>
                                 ))
                             }
@@ -152,7 +154,7 @@ const Downloads = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
