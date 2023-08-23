@@ -55,12 +55,11 @@ const ExamPage = () => {
 
     return (
         <div className="bg-[#d1e9f9]">
-            {exams.length && (
-                <div className="max-w-6xl px-4 py-10 mx-auto ">
-
-                    <div className="container px-4 py-8 mx-auto bg-white shadow-2xl">
-                        <div>
-                            <h1 className="mb-4 text-3xl font-bold mr-14 lg:text-center">Exams</h1>
+            <div className="max-w-6xl px-4 py-10 mx-auto ">
+                <div className="container px-4 py-8 mx-auto bg-white shadow-2xl">
+                    <div>
+                        <h1 className="mb-4 text-3xl font-bold mr-14 lg:text-center">Exams</h1>
+                        {exams.length ? (
                             <div className="grid grid-cols-1 gap-4 mx-10 sm:grid-cols-2 md:grid-cols-3">
                                 {exams.map((exam) => (
                                     <div
@@ -73,11 +72,13 @@ const ExamPage = () => {
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                        <PastScoresTable />
+                        ) : (
+                            <p className="text-center">No exams available.</p>
+                        )}
                     </div>
+                    <PastScoresTable />
                 </div>
-            )}
+            </div>
         </div>
     );
 };

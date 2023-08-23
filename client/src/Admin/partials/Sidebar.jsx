@@ -400,7 +400,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </SidebarLinkGroup>
               {/* Finance */}
 
-              {/* <SidebarLinkGroup activecondition={pathname.includes('finance')} >
+              <SidebarLinkGroup activecondition={pathname.includes('finance')} >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -412,8 +412,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
                         }}
-                      > */}
-                        {/* <div className="flex items-center justify-between">
+                      > 
+                       <div className="flex items-center justify-between">
                           <div className="flex items-center">
                             <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
                               <path
@@ -433,21 +433,21 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               Results
                             </span>
                           </div>
-                          {/* Icon 
+                          {/* Icon  */}
                           <div className="flex ml-2 shrink-0">
                             <svg className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${open && 'rotate-180'}`} viewBox="0 0 12 12">
                               <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                             </svg>
                           </div>
-                        </div> */}
-                      {/* </a>
+                        </div>
+                       </a>
                       <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                         <ul className={`pl-9 mt-1 ${!open && 'hidden'}`}>
 
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/dashboard/contact"
+                              to="/dashboard/offlineresult"
                               className={({ isActive }) =>
                                 'block transition duration-150 truncate ' + (isActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200')
                               }
@@ -459,11 +459,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           </li>
                         </ul>
                       </div>
-                    </React.Fragment> */}
-                  {/* );
+                    </React.Fragment> 
+                   );
                 }
                 }
-              </SidebarLinkGroup> */}
+              </SidebarLinkGroup>
               {/* Job Board */}
               <SidebarLinkGroup activecondition={pathname.includes('job')} >
                 {(handleClick, open) => {

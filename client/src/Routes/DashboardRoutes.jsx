@@ -28,6 +28,7 @@ import CoursesList from "../Admin/partials/dashboard/DynamicPages/CoursesList";
 import FacultyRegistration from "../Admin/partials/dashboard/Faculty/FacultyRegisrations";
 import FacultyRegistrationDetails from "../Admin/partials/dashboard/Faculty/FacultyRegistrationDetails";
 import AdminRoute from "./AdminRoute";
+import OfflineResults from "../Admin/partials/dashboard/OfflineResults/Offlineresult";
 
 const DashboardRoutes = () => {
   return (
@@ -124,6 +125,10 @@ const DashboardRoutes = () => {
         <Route
           path="/faculty-registration/:id"
           element={<AdminRoute element={FacultyRegistrationDetails} />}
+        />
+        <Route
+          path="/offlineresult"
+          element={<AdminRoute element={OfflineResults} />}
         />
       </Routes>
     </div>

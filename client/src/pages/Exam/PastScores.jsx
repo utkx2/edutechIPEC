@@ -1,39 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { BASE_URL } from '../../config'
+import React, { useState, useEffect } from "react";
+import { BASE_URL } from "../../config";
 const PastScoresTable = () => {
   const [currentScores, setCurrentScores] = useState([]);
   const [pastScores, setPastScores] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [scoresPerPage] = useState(4);
+  const [examScores, setExamScores] = useState([]);
   useEffect(() => {
+    const fetchExamScores = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}OfflineResults/getResult/${user.email}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              auth: localStorage.getItem("token"),
+            },
+          }
+        );
+        const data = await response.json();
+        setExamScores([data]); // Wrap the data in an array to match the currentScores structure
+      } catch (error) {
+        console.error("Error fetching exam scores:", error);
+      }
+    };
+
     const fetchPastScores = async () => {
       try {
-        const response = await fetch(`${BASE_URL}examresults/score/${user._id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            auth: localStorage.getItem("token"),
-          },
-        });
+        const response = await fetch(
+          `${BASE_URL}examresults/score/${user._id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              auth: localStorage.getItem("token"),
+            },
+          }
+        );
         const data = await response.json();
         setCurrentScores(data);
       } catch (error) {
-        console.error('Error fetching past scores:', error);
+        console.error("Error fetching past scores:", error);
       }
     };
     fetchPastScores();
+    fetchExamScores();
   }, [user._id]);
 
   const indexOfLastScore = currentPage * scoresPerPage;
   const indexOfFirstScore = indexOfLastScore - scoresPerPage;
 
   const handlePageChange = (pageNumber) => {
-    if (pageNumber > 0 && pageNumber <= Math.ceil(currentScores.length / scoresPerPage)) {
+    if (
+      pageNumber > 0 &&
+      pageNumber <= Math.ceil(currentScores.length / scoresPerPage)
+    ) {
       setCurrentPage(pageNumber);
     }
   };
-
 
   return (
     <div className="w-full px-4 py-8 mx-auto sm:px-6 lg:px-8 max-w-9xl">
@@ -59,10 +85,14 @@ const PastScoresTable = () => {
                       .map((score, index) => (
                         <tr className="text-gray-700" key={index}>
                           <td className="px-4 py-3 border ">{index + 1}</td>
-                          <td className="px-4 py-3 border ">{score.examName}</td>
+                          <td className="px-4 py-3 border ">
+                            {score.examName}
+                          </td>
                           <td className="px-4 py-3 border">{score.score}</td>
                           <td className="px-4 py-3 border">{score.maxMarks}</td>
-                          <td className="px-4 py-3 border">{score.NegativeCount}</td>
+                          <td className="px-4 py-3 border">
+                            {score.NegativeCount}
+                          </td>
                         </tr>
                       ))}
                   </tbody>
@@ -89,6 +119,25 @@ const PastScoresTable = () => {
             </button>
           </div>
         </section>
+        <div className="max-w-6xl">
+    <h1 className="mb-4 text-xl font-bold">Offline Results</h1>
+
+    {examScores.length > 0 ? (
+        examScores.map((score, index) => (
+            <div
+                key={index}
+                className="p-4 bg-[#1f1d5a] rounded-3xl shadow-md cursor-pointer hover:shadow-2xl "
+                // onClick={() => handleCardClick(score._id)}
+            >
+                <h2 className="p-2 text-xl font-bold text-center bg-white rounded-[48px] ">
+                    Student Score: {score.examScore}
+                </h2>
+            </div>
+        ))
+    ) : (
+        <p>No exam scores available.</p>
+    )}
+</div>
       </div>
     </div>
   );

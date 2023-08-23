@@ -92,7 +92,7 @@ const Downloads = () => {
                             {
                                 MedicalBrochureLinks.map((links, index = 0) => (
                                     <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 cursor-pointer " key={links._id}>
-                                        <a href={links}>Links {index + 1}</a>
+                                        <a href={"http://localhost:3000" + links}>Links {index + 1}</a>
                                     </div>
                                 ))
                             }
@@ -121,7 +121,7 @@ const Downloads = () => {
                                 syllabus?.map((syllabusData) => (
                                     <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 cursor-pointer " key={syllabusData._id}>
                                         {
-                                            syllabusData.className === "12th Pass" ? (<a href={syllabusData.fileLink[0]}> {syllabusData.className}</a>) : <a href={syllabusData.fileLink[0]}>Class {syllabusData.className}</a>
+                                            syllabusData.className === "12th Pass" ? (<a href={"http://localhost:3000" + syllabusData.fileLink[0]}> {syllabusData.className}</a>) : <a href={"http://localhost:3000" + syllabusData.fileLink[0]}>Class {syllabusData.className}</a>
                                         }
                                         {/* <a href={syllabusData.fileLink[0]}>Class {syllabusData.className}</a> */}
                                     </div>
@@ -143,7 +143,7 @@ const Downloads = () => {
                                 samplePaper?.map((samplePaperData) => (
                                     <div className="px-4 py-2 font-medium text-center text-[#1f1d5a] font-bold bg-yellow-400 rounded-lg whitespace-nowrap cursor-pinter hover:bg-yellow-500 cursor-pointer " key={samplePaperData._id}>
                                         {
-                                            samplePaperData.className === "12th Pass" ? (<a href={samplePaperData.fileLink[0]}> {samplePaperData.className}</a>) : <a href={samplePaperData.fileLink[0]}>Class {samplePaperData.className}</a>
+                                            samplePaperData.className === "12th Pass" ? (<a href={"http://localhost:3000" + samplePaperData.fileLink[0]}> {samplePaperData.className}</a>) : <a href={"http://localhost:3000" + samplePaperData.fileLink[0]}>Class {samplePaperData.className}</a>
                                         }
 
                                     </div>
