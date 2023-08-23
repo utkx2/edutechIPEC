@@ -6,7 +6,7 @@ import { Disclosure } from '@headlessui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL } from '../../../../config'
-import SyllabusPdfUploader from "../Downloads/SyllabusPdfUploader";
+import SyllabusPdfUploader from "./PdfUploader";
 
 export default function Syllabus() {
     const [class6, setClass6] = useState();

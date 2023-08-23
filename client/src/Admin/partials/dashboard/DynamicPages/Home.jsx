@@ -11,6 +11,7 @@ import QuickLinksPhotoUploader from "./QuickLinksPhotoUploader";
 import ProgramsPhotoUploader from "./ProgramsPhotoUploader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PopUpImageUploader from './PopUpImageUploader';
 
 export default function Home() {
   const initialCarousel = {
@@ -354,7 +355,7 @@ export default function Home() {
     const requestBodyPrograms = JSON.stringify(formDataObj.programs);
     const requestBodyStudents = JSON.stringify(formDataObj.selectedStudents);
 
-    fetch("http://localhost:3000/api/PopUp/postImage", {
+    fetch(`${BASE_URL}PopUp/postImage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -538,32 +539,39 @@ export default function Home() {
                           {" "}
                           <p>pop image</p>
                           <input
-                required
-                type="text"
-                name="image"
-                value={postData.image}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-              />
+                            required
+                            type="text"
+                            name="image"
+                            value={postData.image}
+                            onChange={handleInputChange}
+                            className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                          />
                         </label>{" "}
                         <label className="relative block mb-2 font-semibold">
                           {" "}
                           <p>Redirect Url</p>
                           <input
-                required
-                type="text"
-                name="redirectURL"
-                value={postData.redirectURL}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
-              />
+                            required
+                            type="text"
+                            name="redirectURL"
+                            value={postData.redirectURL}
+                            onChange={handleInputChange}
+                            className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                          />
+
                         </label>{" "}
                         {
                           postData && (
                             <p>{postData.imageLink}</p>
                           )
                         }
+
                       </div>
+                      <PopUpImageUploader
+                        photos={postData}
+                        onChange={setPostData}
+                        index={0}
+                      />
                     </div>
                   </div>
                   <div className="border-[2px] border-black/20 p-4 rounded-md">

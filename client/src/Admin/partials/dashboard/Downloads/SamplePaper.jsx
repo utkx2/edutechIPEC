@@ -6,6 +6,7 @@ import { Disclosure } from '@headlessui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL } from '../../../../config'
+import SyllabusPdfUploader from "./PdfUploader";
 
 export default function SamplePaper() {
 
@@ -48,7 +49,7 @@ export default function SamplePaper() {
             .then((data) => {
                 console.log(
                     // data,
-                     'success')
+                    'success')
                 clearInputs();
             })
             .catch((error) => {
@@ -104,8 +105,10 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class6} onChange={setClass6} index={0} />
+
                                                         <button onClick={() => handleSubmit(6, class6)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>
@@ -133,8 +136,9 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class7} onChange={setClass7} index={0} />
                                                         <button onClick={() => handleSubmit(7, class7)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>
@@ -162,8 +166,9 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class8} onChange={setClass8} index={0} />
                                                         <button onClick={() => handleSubmit(8, class8)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>
@@ -191,8 +196,9 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class9} onChange={setClass9} index={0} />
                                                         <button onClick={() => handleSubmit(9, class9)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>
@@ -220,8 +226,9 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class10} onChange={setClass10} index={0} />
                                                         <button onClick={() => handleSubmit(10, class10)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>
@@ -249,8 +256,9 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class11} onChange={setClass11} index={0} />
                                                         <button onClick={() => handleSubmit(11, class11)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>
@@ -278,8 +286,9 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class12} onChange={setClass12} index={0} />
                                                         <button onClick={() => handleSubmit(12, class12)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>
@@ -307,8 +316,9 @@ export default function SamplePaper() {
                                                             placeholder="Add link"
                                                             required
                                                         />
+                                                        <SyllabusPdfUploader photos={class13} onChange={setClass13} index={0} />
                                                         <button onClick={() => handleSubmit('12th Pass', class13)} className="bg-[#182235] hover:bg-[#111a2b] text-white px-4 py-2 mt-2 rounded-lg font-semibold ">
-                                                            Upload
+                                                            Submit
                                                         </button>
                                                     </Disclosure.Panel>
                                                 </>

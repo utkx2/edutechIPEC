@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../../Sidebar';
 import Header from '../../Header';
 import { BASE_URL } from '../../../../config';
+import BrochurePdfUploader from './BrochurePdfUploader';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function EngineeringBrochure() {
   const initialData = {
@@ -82,8 +85,18 @@ export default function EngineeringBrochure() {
       .then((response) => response.json())
       .then((data) => {
         console.log('success'
-        // , data
+          // , data
         );
+        toast.success('Pdf Links Updated successfully', {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -122,6 +135,7 @@ export default function EngineeringBrochure() {
                             className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                           />
                         </label>
+                        <BrochurePdfUploader photos={formData} onChange={setFormData} index={index} />
                         <button
                           className="px-4 py-2 mx-6 font-semibold text-white bg-red-700 rounded-lg hover:bg-red-800"
                           type="button"
