@@ -31,7 +31,7 @@ function UploadExcel() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Data saved:", data);
+        // console.log("Data saved:", data);
       } else {
         console.error("Failed to save data.");
       }
@@ -49,7 +49,7 @@ function UploadExcel() {
         <main>
           {/* Site header */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <form onSubmit={handleSubmit} className="justify-center flex gap-10">
+          <form onSubmit={handleSubmit} className="justify-center flex gap-0 md:gap-10">
               <div>
                 <input
                   type="file"

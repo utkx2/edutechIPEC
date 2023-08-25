@@ -84,9 +84,9 @@ export default function EngineeringBrochure() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('success'
-          // , data
-        );
+        // console.log('success'
+        //   // , data
+        // );
         toast.success('Pdf Links Updated successfully', {
           position: "top-right",
           autoClose: 1000,
@@ -100,7 +100,7 @@ export default function EngineeringBrochure() {
       })
       .catch((error) => {
         console.error('Error:', error);
-        alert('Oops something went wrong!!!');
+        toast.error("Oops! Something went wrong");
       });
   };
 

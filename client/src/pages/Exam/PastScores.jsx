@@ -120,24 +120,23 @@ const PastScoresTable = () => {
           </div>
         </section>
         <div className="max-w-6xl">
-    <h1 className="mb-4 text-xl font-bold">Offline Results</h1>
+          <h1 className="mb-4 text-xl font-bold">Offline Results</h1>
 
-    {examScores.length > 0 ? (
-        examScores.map((score, index) => (
-            <div
+          {examScores.length > 0 ? (
+            examScores.map((score, index) => (
+              <div
                 key={index}
-                className="p-4 bg-[#1f1d5a] rounded-3xl shadow-md cursor-pointer hover:shadow-2xl "
-                // onClick={() => handleCardClick(score._id)}
-            >
+                className="p-4 bg-[#1f1d5a] rounded-3xl shadow-md hover:shadow-2xl "
+              >
                 <h2 className="p-2 text-xl font-bold text-center bg-white rounded-[48px] ">
-                    Student Score: {score.examScore}
+                  Student Score: {score.examScore}
                 </h2>
-            </div>
-        ))
-    ) : (
-        <p>No exam scores available.</p>
-    )}
-</div>
+              </div>
+            ))
+          ) : (
+            <p>No exam scores available.</p>
+          )}
+        </div>
       </div>
     </div>
   );

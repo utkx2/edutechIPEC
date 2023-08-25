@@ -84,9 +84,9 @@ export default function MedicalBrochure() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('success'
-          // , data
-        );
+        // console.log('success'
+        //   // , data
+        // );
         toast.success('Pdf Links Updated successfully', {
           position: "top-right",
           autoClose: 1000,

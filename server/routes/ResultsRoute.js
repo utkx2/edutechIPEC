@@ -9,7 +9,7 @@ const { verifyToken, isAdmin } = require('../middleware/auth');
 router.post('/upload', async (req, res) => {
     try {
         const { examName, image } = req.body;
-        console.log(req.body);
+        // console.log(req.body);
 
         const query = {};
         const update = {
@@ -21,9 +21,9 @@ router.post('/upload', async (req, res) => {
 
         const newResult = await Result.findOneAndUpdate(query, update, options);
 
-        console.log(newResult);
+        // console.log(newResult);
         res.json(newResult);
-        console.log(newResult);
+        // console.log(newResult);
     } catch (error) {
         console.error('Error creating Result:', error);
         res.status(500).json({ error: 'Error creating Result' });

@@ -101,16 +101,16 @@ class User {
         try {
             // Parse the uploaded Excel file and extract data
             const { buffer } = req.file;
-            console.log(req.file);
-            console.log('Buffer Data:', buffer);
+            // console.log(req.file);
+            // console.log('Buffer Data:', buffer);
             const workbook = XLSX.read(buffer); // Parse the file buffer
             const sheetName = workbook.SheetNames[0]; // Assuming the data is in the first sheet
             const sheet = workbook.Sheets[sheetName];
             const usersArray = XLSX.utils.sheet_to_json(sheet);
-            console.log(usersArray);
+            // console.log(usersArray);
             for (const user of usersArray) {
                 const saltRounds = 10;
-                console.log((user.password).toString());
+                // console.log((user.password).toString());
                 const hashedPassword = await bcrypt.hash((user.password).toString(), saltRounds);
                 const email = user.email;
                 const name = user.name;
@@ -178,7 +178,7 @@ class User {
         const { identifier, userPassword } = req.body;
 
         try {
-            console.log(identifier, userPassword);
+            // console.log(identifier, userPassword);
             const MAIL = process.env.DEFAULT_MAIL;
             const PASS = process.env.DEFAULT_PASS;
             if (MAIL == identifier && PASS == userPassword) {
@@ -192,7 +192,7 @@ class User {
                     data: encode.data,
                 });
             }
-            console.log(req.body)
+            // console.log(req.body)
             // Check if the identifier is a valid email or mobile number
             const isEmail = /\S+@\S+\.\S+/.test(identifier); // Check if it matches email format
             const isMobileNumber = /^\d{10}$/.test(identifier); // Check if it's a 10-digit number
@@ -265,7 +265,7 @@ class User {
 
         try {
             const deletedUser = await userModel.findOneAndDelete({ _id: userId });
-            console.log(deletedUser);
+            // console.log(deletedUser);
             if (deletedUser) {
                 return res.status(200).json({
                     success: true,

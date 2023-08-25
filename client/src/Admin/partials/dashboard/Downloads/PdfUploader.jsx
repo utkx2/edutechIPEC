@@ -26,15 +26,15 @@ export default function SyllabusPdfUploader({ photos, onChange, index }) {
             }
         }).then(response => {
             const { data: filenames } = response;
-            console.log(response.data);
+            // console.log(response.data);
             setPhotoslink(filenames);
-            console.log(filenames.filenames);
-            console.log(photos);
+            // console.log(filenames.filenames);
+            // console.log(photos);
             photos = filenames.filenames;
             onChange(photos);
             // photos.facultyImg = filenames[0];
             // console.log(photos.facultyImg);
-            console.log(photos);
+            // console.log(photos);
             setMessage("pdf updated ");
             setShowMessage(true)
             setTimeout(() => {

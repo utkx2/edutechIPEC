@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { BASE_URL } from '../../../../config'
 import SyllabusPdfUploader from "./PdfUploader";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SamplePaper() {
 
@@ -47,14 +49,12 @@ export default function SamplePaper() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(
-                    // data,
-                    'success')
+                toast.success("Submitted successfully");
                 clearInputs();
             })
             .catch((error) => {
                 console.error("Error:", error);
-                alert("Oops something went wrong!!!");
+                toast.error("Oops! Something went wrong");
             });
     };
     const [sidebarOpen, setSidebarOpen] = useState(false);

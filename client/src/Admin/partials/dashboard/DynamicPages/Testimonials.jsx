@@ -53,7 +53,7 @@ export default function Testimonials() {
         },
       })
       .then((response) => {
-        console.log("success");
+        // console.log("success");
         toast.success("Submitted successfully");
       })
       .catch((error) => {

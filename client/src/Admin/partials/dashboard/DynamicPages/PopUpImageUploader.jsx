@@ -27,11 +27,11 @@ export default function PopUpImageUploader({ photos, onChange, index }) {
         }).then(response => {
             const { data: filenames } = response;
             setPhotoslink(filenames[0]);
-            console.log(filenames[0]);
-            console.log(photos);
+            // console.log(filenames[0]);
+            // console.log(photos);
             photos.image = filenames[0];
             // console.log(photos.facultyImg);
-            console.log(photos);
+            // console.log(photos);
             setMessage("photo updated ");
             setShowMessage(true)
             setTimeout(() => {

@@ -40,7 +40,7 @@ function Home() {
         },
       });
       setPopup(responsePopUp.data[0]);
-      console.log(popup, "popup");
+      // console.log(popup, "popup");
       const responsePrograms = await axios.get(`${BASE_URL}ourPrograms/get/`, {
         method: "GET",
         headers: {
@@ -82,7 +82,7 @@ function Home() {
       setFaculty(responseFaculty.data[0].facultyMembers);
       setQuickLink(responseQuickLink.data[0].quickLinks);
       setPrograms(responsePrograms.data[0].programs);
-      console.log(programs);
+      // console.log(programs);
     } catch (error) {
       console.error(error);
     }
@@ -118,10 +118,9 @@ function Home() {
 
   return (
     <div className="">
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50 ">
-          <div className="relative w-[50%] h-[80%]">
+          <div className="relative w-full max-w-[90%] max-h-[80%] sm:max-w-[70%] sm:max-h-[70%]">
             <a
               href={popup.redirectURL}
               target="_blank"
@@ -133,11 +132,34 @@ function Home() {
                 className="w-full h-full cursor-pointer"
               />
             </a>
-            
+
+            {/* Cancel Button */}
+            <IconButton
+              color="gray"
+              style={{background: "black"}}
+              size="lg"
+              onClick={closeModal}
+              className="absolute top-3 right-3"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </IconButton>
           </div>
         </div>
       )}
-      <div className="">
+      <div className=" relative z-0">
         <Carousel
           prevArrow={({ handlePrev }) => (
             <IconButton
@@ -151,14 +173,15 @@ function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={2}
+                // strokeWidth={2}
                 stroke="currentColor"
                 className="w-6 h-6"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             </IconButton>
@@ -295,7 +318,7 @@ function Home() {
             <div className="grid gap-8 ">
               {student.map((studentData) => (
                 <div
-                  className="relative w-[900px] h-auto rounded-[16px]  bg-white mt-10 "
+                  className="relative sm:w-full md:w-[900px] h-auto rounded-[16px]  bg-white mt-10 "
                   key={studentData._id}
                 >
                   <div className="">
@@ -305,9 +328,7 @@ function Home() {
                         alt="student"
                         className="h-[650px] w-full rounded-[8px]"
                       />
-                     
                     </div>
-                    
                   </div>
                 </div>
               ))}

@@ -32,7 +32,7 @@ const Downloads = () => {
                     auth: localStorage.getItem("token"),
                 },
             });
-            console.log(responseBrochure.data);
+            // console.log(responseBrochure.data);
             const responseSyllabus = await axios.get(
                 `${BASE_URL}download/syllabus/get`,
                 {
@@ -63,9 +63,9 @@ const Downloads = () => {
     // }, [samplePaper]);
 
     useEffect(() => {
-        console.log("Brochure:", brochure);
+        // console.log("Brochure:", brochure);
         //console.log(MedicalBrochureLinks);
-        console.log(brochure[0])
+        // console.log(brochure[0])
     }, [brochure]);
 
     // useEffect(() => {

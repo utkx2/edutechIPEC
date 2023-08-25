@@ -337,11 +337,12 @@ const Registration = () => {
                                         >
                                             Female
                                         </label>
+                                        <div className="text-center">
                                         {!genderSelected && (
-                  <p className="text-red-500 text-sm mt-2">
+                  <p className="text-red-500 text-sm mt-0 md:mt-2">
                     Please select a gender
                   </p>
-                )}
+                )}</div>
                                     </div>
                                 </div>
                             </div>

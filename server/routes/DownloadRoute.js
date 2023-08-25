@@ -36,7 +36,7 @@ router.delete('/delete-pdf-files', isAdmin, (req, res) => {
             if (file.endsWith('.pdf')) {
                 fsExtra.remove(path.join(folderPath, file))
                     .then(() => {
-                        console.log(`${file} deleted successfully`);
+                        // console.log(`${file} deleted successfully`);
                     })
                     .catch(err => {
                         console.error(`Failed to delete ${file}: ${err}`);
@@ -67,7 +67,7 @@ router.post('/pdf/upload', isAdmin, upload.single('pdfFile'), async (req, res) =
         if (!req.file) {
             return res.status(400).json({ error: 'No file received' });
         }
-        console.log(req.file);
+        // console.log(req.file);
         res.send({ filenames: `/uploads/${req.file.filename}` });
     }
     catch (error) {

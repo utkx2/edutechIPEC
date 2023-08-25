@@ -279,7 +279,7 @@ export default function Home() {
           image: programObj.image,
         })),
       });
-      console.log(programs);
+      // console.log(programs);
       const responseFaculty = await axios.get(
         `${BASE_URL}facultyHomePage/get`,
         {
@@ -364,7 +364,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("POST request successful", data);
+        // console.log("POST request successful", data);
         // Handle the response data here
       })
       .catch((error) => {
@@ -383,7 +383,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
         toast.success("Submitted successfully");
       })
       .catch((error) => {
@@ -400,7 +400,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -416,7 +416,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -432,7 +432,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -447,7 +447,7 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
       })
       .catch((error) => {
         console.error("Error:", error);

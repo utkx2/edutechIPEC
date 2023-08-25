@@ -50,7 +50,7 @@ export default function WHY() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success", data);
+        // console.log("success", data);
         toast.success("Submitted successfully");
       })
       .catch((error) => {

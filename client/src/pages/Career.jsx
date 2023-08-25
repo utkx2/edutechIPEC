@@ -257,9 +257,11 @@ export default function Career() {
                   </div>
                 </div>
                 {!genderSelected && (
-                  <p className="text-red-500 text-sm mt-2">
+                  <div className="text-center">
+                  <p className="text-red-500 text-sm mt-0 md:mt-2">
                     Please select a gender
                   </p>
+                  </div>
                 )}
               </div>
             </div>

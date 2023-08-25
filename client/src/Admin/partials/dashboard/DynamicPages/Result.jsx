@@ -131,11 +131,11 @@ export default function Result() {
       examName: formData.examName,
       image: formData.image,
     };
-    console.log(formDataObj);
+    // console.log(formDataObj);
 
     const token = localStorage.getItem("token");
     const requestBody = JSON.stringify(formDataObj);
-    console.log(formDataObj, 'form data obj');
+    // console.log(formDataObj, 'form data obj');
     fetch(`${BASE_URL}results/upload`, {
       method: "POST",
       headers: {
@@ -147,7 +147,7 @@ export default function Result() {
       .then((response) => response.json())
       .then((data) => {
         // Data contains the response from the backend after exam creation
-        console.log("Success:", data);
+        // console.log("Success:", data);
         // You might want to reset the form after successful submission
         setFormData(initialData);
         toast.success("Submitted successfully");

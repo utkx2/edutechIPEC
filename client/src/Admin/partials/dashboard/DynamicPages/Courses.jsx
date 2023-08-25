@@ -63,7 +63,7 @@ export default function Courses() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("success", data);
+                // console.log("success", data);
                 toast.success("Submitted successfully");
                 clearInputs();
             })
