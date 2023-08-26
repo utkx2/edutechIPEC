@@ -10,7 +10,7 @@ router.post("/signup", isAdmin, usersController.postSignup);
 
 
 // http://localhost:3000/api/user/excelupload/signup
-router.post("/excelupload/signup", upload.single('excelFile'), usersController.bulkUpload);
+router.post("/excelupload/signup", isAdmin, upload.single('excelFile'), usersController.bulkUpload);
 
 
 router.post('/sendMail/', usersController.sendMail);

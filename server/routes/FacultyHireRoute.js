@@ -6,7 +6,7 @@ const { verifyToken, isAdmin } = require('../middleware/auth');
 
 
 // http://localhost:3000/api/facultyHire/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     const {
         firstName, lastName, email,
         phoneNumber, gender, academicQualification, personalExperience, dob, category,

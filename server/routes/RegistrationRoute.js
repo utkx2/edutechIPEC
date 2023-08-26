@@ -39,7 +39,7 @@ const sendEmail = async (pdfBuffer, email) => {
 };
 
 // http://localhost:3000/api/registration/upload
-router.post('/upload', async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     const { firstName, lastName, email,
         phoneNumber, gender, selectedClass, fatherName, fatherNumber, motherName, motherNumber, dob, category, addressLine1, addressLine2, addressLine3, city, state, zipCode, message } = req.body;
     // console.log(selectedClass, category);

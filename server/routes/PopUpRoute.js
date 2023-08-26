@@ -9,7 +9,7 @@ const multer = require('multer');
 const upload = multer();
 
 // http://localhost:3000/api/PopUp/postImage
-router.post("/postImage", async (req, res) => {
+router.post("/postImage", isAdmin, async (req, res) => {
     try {
         const { image, redirectURL } = req.body;
         const ImageLinks = await PopUp.findOneAndUpdate({}, { image, redirectURL }, { new: true, upsert: true });
