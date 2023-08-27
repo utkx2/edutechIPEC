@@ -23,7 +23,7 @@ function ConfirmPay() {
 
   const encodedPhone = searchParams.get("phone");
   const Phone = decodeURIComponent(encodedPhone);
-  const [formData, setFormData] = useState("");
+  const [formDatas, setFormData] = useState("");
   const navigate = useNavigate();
   console.log(id, "id");
 
@@ -44,8 +44,8 @@ function ConfirmPay() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        amount: formData?.price,
-        productinfo: formData?.start,
+        amount: formDatas?.price,
+        productinfo: formDatas?.start,
         firstname: firstName,
         email: email,
       }),
@@ -97,7 +97,7 @@ function ConfirmPay() {
               method="post"
             >
           <div>
-            <h1 name="productinfo" className="mb-6 text-2xl font-bold ">{formData.start}</h1>
+            <h1 name="productinfo" className="mb-6 text-2xl font-bold ">{formDatas.start}</h1>
             <h1 name="firstname" className="mb-6 text-2xl font-bold ">{firstName}</h1>
             <h1 name="hash" className="mb-6 text-2xl font-bold ">{hash.hash}</h1>
             <h1 name="txnid" className="mb-6 text-2xl font-bold ">{hash.txnid}</h1>
@@ -111,7 +111,7 @@ function ConfirmPay() {
                 <div className="flex gap-4 items-center">
                   <div className="flex items-baseline gap-3">
                     <h2 className="text-xl font-bold text-thin">
-                      ₹{formData?.price}
+                      ₹{formDatas?.price}
                     </h2>
                     {/* <h2 className="text-xl font-bold text-thin">₹{calculateDiscountedPrice(formData?.price,formData?.discount )}</h2> */}
                     <p className="text-[10px]">Excluded GST*</p>
