@@ -115,9 +115,9 @@ const Registration = () => {
     const encodedEmail = encodeURIComponent(formData.email);
     const encodedPhone = encodeURIComponent(formData.phoneNumber);
 
-    navigate(`/confirm-payment?id=${id}&firstName=${encodedFirstName}&lastName=${encodedLastName}&email=${encodedEmail}&phone=${encodedPhone}`);
+    navigate(`/confirm-payment?id=${id}&firstName=${encodedFirstName}&lastName=${encodedLastName}&email=${encodedEmail}&phone=${encodedPhone}`, { state: formData });
     // clearInputs();
-};
+  };
   return (
     <div className="flex items-center justify-center w-full p-4 py-10 bg-[#d1e9f9]">
       <div>
