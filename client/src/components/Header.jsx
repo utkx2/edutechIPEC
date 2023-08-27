@@ -27,7 +27,7 @@ function Header() {
     { name: 'why ipec', link: '/why', dropdown: false },
     { name: 'Download', link: '/download', dropdown: false },
     { name: 'Careers', link: '/careers', dropdown: false },
-    { name: 'registration form', link: '/registration', dropdown: false },
+    // { name: 'registration form', link: '/registration', dropdown: false },
     { name: 'contact us', link: '/contact', dropdown: false },
   ];
 

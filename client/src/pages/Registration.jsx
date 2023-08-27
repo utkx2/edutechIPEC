@@ -208,6 +208,7 @@ const Registration = () => {
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <input
+                  hidden
                   type="text"
                   name="email"
                   id="floating_description"

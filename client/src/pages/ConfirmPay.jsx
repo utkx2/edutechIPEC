@@ -92,45 +92,122 @@ function ConfirmPay() {
           style={{ color: "#fff", background: "#1f1e5a" }}
         >
           <form
-              id="paymentForm"
-              action="https://test.payu.in/_payment"
-              method="post"
-            >
-          <div>
-            <h1 name="productinfo" className="mb-6 text-2xl font-bold ">{formDatas.start}</h1>
-            <h1 name="firstname" className="mb-6 text-2xl font-bold ">{firstName}</h1>
-            <h1 name="hash" className="mb-6 text-2xl font-bold ">{hash.hash}</h1>
-            <h1 name="txnid" className="mb-6 text-2xl font-bold ">{hash.txnid}</h1>
-            <h1 name="lastname" className="mb-6 text-2xl font-bold ">{lastName}</h1>
-            <h1 name="email" className="mb-6 text-2xl font-bold ">{email}</h1>
-            <h1 name="phone" className="mb-6 text-2xl font-bold ">{Phone}</h1>
-            
-            <div className="flex justify-between mt-6">
-              <div>
-                <p className="text-sm">Actual Fee</p>
-                <div className="flex gap-4 items-center">
-                  <div className="flex items-baseline gap-3">
-                    <h2 className="text-xl font-bold text-thin">
-                      ₹{formDatas?.price}
-                    </h2>
-                    {/* <h2 className="text-xl font-bold text-thin">₹{calculateDiscountedPrice(formData?.price,formData?.discount )}</h2> */}
-                    <p className="text-[10px]">Excluded GST*</p>
-                  </div>
-                  {/* <div className="bg-[#17a2b8] p-1 rounded text-center text-[12px]">
-                        Save {formData?.discount}
-                      </div> */}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button
-            className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded"
-            disabled={loading}
-            onClick={submitForm}
+            id="paymentForm"
+            action="https://test.payu.in/_payment"
+            method="post"
           >
-            {loading ? "Processing..." : "Pay Now"}
-          </button>
+            <div>
+              <input
+                hidden
+                type="text"
+                value={formDatas.start}
+                name="productinfo"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value={firstName}
+                name="firstname"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value={hash.hash}
+                name="hash"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value={hash.txnid}
+                name="txnid"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value={lastName}
+                name="lastname"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value={email}
+                name="email"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value={Phone}
+                name="phone"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value="gtKFFx"
+                name="key"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value="eCwWELxi"
+                name="salt"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value="https://www.google.co.in/"
+                name="surl"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <input
+                hidden
+                type="text"
+                value="https://www.wikipedia.org/"
+                name="furl"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+              />
+              <label>Total Amount:</label>
+              <br /><br />
+              <input
+                type="text"
+                value={formDatas?.price}
+                name="amount"
+                className="mb-6 text-2xl font-bold text-black"
+                readOnly
+                style={{
+                  border: "2px yellow solid",
+                  borderRadius: "10px"
+                }}
+              />
+              
+            </div>
+
+            <button
+              className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded"
+              disabled={loading}
+              onClick={submitForm}
+            >
+              {loading ? "Processing..." : "Pay Now"}
+            </button>
           </form>
         </div>
       </div>
