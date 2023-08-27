@@ -11,6 +11,8 @@ const mongoose = require('mongoose');
 const { promisify } = require('util');
 const writeFileAsync = promisify(fs.writeFile);
 const cloudinary = require('cloudinary').v2;
+const cryptoJs = require("crypto-js");
+const { generateUUID } = require('./config/functions');
 
 // Middleware
 app.use(cors());
@@ -87,6 +89,19 @@ app.use('/api/OfflineResults', OfflineResults);
 app.use('/api/PopUp', PopUpRoute);
 
 
+app.get('/api/getHash', (req, res) => {
+  const { amount, productinfo, firstname, email } = req.body;
+  const txn = generateUUID();
+  let hash_string = process.env.Hash;
+  let hash = `gtKFFx|${txn}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${hash_string}`
+  let hash1 = cryptoJs.SHA512(hash).toString();
+
+  res.json({
+    txnid: txn,
+    hash: hash1
+  });
+})
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const imageSchema = new mongoose.Schema({
@@ -148,6 +163,7 @@ app.post('/api/upload', async (req, res) => {
 // upload the photo of home section of admin
 app.use('/api/home/', express.static(path.join(__dirname, '/uploads').replace(/\\/g, '/')));
 const multerMiddleware = multer();
+
 app.post('/api/home/uploadImage', isAdmin, multerMiddleware.array('photos', 100), async (req, res) => {
   // console.log(req.body);
   try {

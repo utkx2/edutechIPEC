@@ -18,7 +18,7 @@ router.get('/get', async (req, res) => {
 
 
 // http://localhost:3000/api/QuickLinkHomePage/upload
-router.post('/upload',isAdmin, async (req, res) => {
+router.post('/upload', isAdmin, async (req, res) => {
     try {
         const quickLinksData = req.body; // JSON object with faculty information
         //      console.log(req.body);
@@ -67,7 +67,7 @@ router.get("/get/:id", async (req, res) => {
 })
 
 // http://localhost:3000/api/QuickLinkHomePage/edit/:id
-router.put('/edit/:id',isAdmin, async (req, res) => {
+router.put('/edit/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const data = req.body;
@@ -85,10 +85,10 @@ router.put('/edit/:id',isAdmin, async (req, res) => {
 });
 
 // http://localhost:3000/api/QuickLinkHomePage/delete/:id
-router.delete('/delete/:id',isAdmin, async (req, res) => {
+router.delete('/delete/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        await QuickLinksModel.findByIdAndRemove({_id: id});
+        await QuickLinksModel.findByIdAndRemove({ _id: id });
         res.json({ message: 'the card has been removed successfully' });
     }
     catch (error) {
