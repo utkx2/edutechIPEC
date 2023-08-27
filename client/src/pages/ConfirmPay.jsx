@@ -45,6 +45,10 @@ function ConfirmPay() {
         console.error("Error fetching hash:", error);
       });
   };
+  const submitForm = () => {
+    const form = document.getElementById("paymentForm");
+    form.submit();
+  };
   useEffect(() => {
     console.log(id, "id");
     fetch(`${BASE_URL}QuickLinkHomePage/get/${id}`)
@@ -72,14 +76,20 @@ function ConfirmPay() {
           className="items-start p-8 w-full md:w-96 mx-auto shadow-2xl rounded-2xl bg-gradient-to-b from-gray-300 to-gray-50"
           style={{ color: "#fff", background: "#1f1e5a" }}
         >
+          <form
+              id="paymentForm"
+              action="https://test.payu.in/_payment"
+              method="post"
+            >
           <div>
-            <h1 className="mb-6 text-2xl font-bold ">{formData.start}</h1>
-            <h1 className="mb-6 text-2xl font-bold ">{firstName}</h1>
-            <h1 className="mb-6 text-2xl font-bold ">{hash.hash}</h1>
-            <h1 className="mb-6 text-2xl font-bold ">{hash.txnid}</h1>
-            <h1 className="mb-6 text-2xl font-bold ">{lastName}</h1>
-            <h1 className="mb-6 text-2xl font-bold ">{email}</h1>
-            <h1 className="mb-6 text-2xl font-bold ">{Phone}</h1>
+            <h1 name="productinfo" className="mb-6 text-2xl font-bold ">{formData.start}</h1>
+            <h1 name="firstname" className="mb-6 text-2xl font-bold ">{firstName}</h1>
+            <h1 name="hash" className="mb-6 text-2xl font-bold ">{hash.hash}</h1>
+            <h1 name="txnid" className="mb-6 text-2xl font-bold ">{hash.txnid}</h1>
+            <h1 name="lastname" className="mb-6 text-2xl font-bold ">{lastName}</h1>
+            <h1 name="email" className="mb-6 text-2xl font-bold ">{email}</h1>
+            <h1 name="phone" className="mb-6 text-2xl font-bold ">{Phone}</h1>
+            
             <div className="flex justify-between mt-6">
               <div>
                 <p className="text-sm">Actual Fee</p>
@@ -102,9 +112,11 @@ function ConfirmPay() {
           <button
             className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded"
             disabled={loading}
+            onClick={submitForm}
           >
             {loading ? "Processing..." : "Pay Now"}
           </button>
+          </form>
         </div>
       </div>
     </div>
