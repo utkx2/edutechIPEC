@@ -89,7 +89,7 @@ app.use('/api/OfflineResults', OfflineResults);
 app.use('/api/PopUp', PopUpRoute);
 
 
-app.get('/api/getHash', (req, res) => {
+app.post('/api/getHash', (req, res) => {
   const { amount, productinfo, firstname, email } = req.body;
   const txn = generateUUID();
   let hash_string = process.env.Hash;

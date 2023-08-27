@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
 import { useNavigate, useParams } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function QuickLinkDetail() {
   const [formData, setFormData] = useState(null);
   const { id } = useParams();
-  const navigate = useNavigate();
   useEffect(() => {
     // console.log(id, "id");
     fetch(`${BASE_URL}QuickLinkHomePage/get/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // console.log(data)
-      setFormData(data);
-      // console.log(data);
-    })
-    .catch((error) => console.log(error));
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data)
+        setFormData(data);
+        // console.log(data);
+      })
+      .catch((error) => console.log(error));
   }, [id]);
 
-  const registrationForm = () => {
-    navigate('/registration')
-  }
-  
   return (
     <div>
       <div className="bg-[#d1e9f9] py-10">
@@ -44,7 +40,7 @@ function QuickLinkDetail() {
                 style={{ color: "#1c1950" }}
               >
                 <i className="far fa-calendar"></i>
-                
+
                 <strong>{formData?.end} </strong>
               </div>
             </div>
@@ -53,32 +49,10 @@ function QuickLinkDetail() {
                 className="flex-shrink-0 mb-4 md:mr-12 text-2xl font-bold border-r md:pr-14"
                 style={{ color: "#1c1950" }}
               >
-                Seesion Start: 
+                Seesion Start:
               </h2>
               <div className="flex-grow mb-4 ml-3">
-              <strong>{formData?.start} </strong>
-                {/* <ul className="pl-8 list-disc list-inside">
-                  <li
-                    className="mb-2 font-mono text-xl"
-                    style={{ color: "#1c1950" }}
-                  >
-                    
-                  </li>
-                  <li
-                    className="mb-2 font-mono text-lg"
-                    style={{ color: "#1c1950" }}
-                  >
-                    {formData?.number}
-                  </li>
-                  <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>
-                    <strong>
-                      Recordings Of Live Classes & Class Notes (PDF)
-                    </strong>
-                  </li>
-                  <li className="mb-2 font-mono" style={{ color: "#1c1950" }}>
-                    <strong>Live Quiz</strong>
-                  </li>
-                </ul> */}
+                <strong>{formData?.start} </strong>
               </div>
             </div>
             <div className="flex flex-col mb-6 md:flex-row">
@@ -91,6 +65,15 @@ function QuickLinkDetail() {
               <div className="flex-grow mb-4 ml-14 text-xl">
                 <strong>{formData?.number} </strong>
               </div>
+              <h2
+                className="flex-shrink-0 mb-4 hidden md:mr-12 text-2xl font-bold border-r md:pr-14"
+                style={{ color: "#1c1950" }}
+              >
+                Price.:
+              </h2>
+              <div className="flex-grow mb-4 ml-14 hidden text-xl">
+                <strong>{formData?.price} </strong>
+              </div>
             </div>
             <div className="flex flex-col mb-6 md:flex-row">
               <h2
@@ -100,13 +83,17 @@ function QuickLinkDetail() {
                 Description:
               </h2>
               <div className="flex-grow mb-4 ml-16 text-xl">
-              <strong>{formData?.product} </strong>
+                <strong>{formData?.product} </strong>
               </div>
-            </div><div className="text-center">
-            <button className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded" onClick={registrationForm}>
+            </div>
+            <div className="text-center">
+              <Link to={`/registration/?id=${id}`}
+                className="px-6 py-2 mt-5 font-bold text-white bg-yellow-400 rounded"
+                // onClick={registrationForm}
+              >
                 Register Now
-              </button>
-              </div>
+              </Link >
+            </div>
           </div>
         </div>
 

@@ -938,6 +938,17 @@ export default function Home() {
                               className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
                             />
                           </label>
+                          <label className="relative block mb-2 font-semibold">
+                            {`Price(₹): ${index + 1}`}
+                            <textarea
+                              required
+                              type="number"
+                              name={`price-${index}`}
+                              value={faculty.price}
+                              onChange={(e) => handleQuickLinksChange(index, e)}
+                              className="w-full px-3 py-2 text-black bg-gray-100 border rounded-sm focus:border-red-700 focus:ring-2 focus:ring-red-700 focus:outline-none"
+                            />
+                          </label>
                           <div>
                             <QuickLinksPhotoUploader
                               photos={quickLinks}

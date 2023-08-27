@@ -24,6 +24,8 @@ const Media = lazy(() => import("../pages/Media"));
 const Downloads = lazy(() => import("../pages/Downloads"));
 const VerificationPage = lazy(() => import("../pages/VerificationPage"));
 const QuickLinkDetail = lazy(() => import("../pages/QuickLinkDetail"));
+const PayFail = lazy(() => import("../pages/PayFail"));
+const ConfirmPay = lazy(() => import("../pages/ConfirmPay"));
 import PrivateRoute from './PrivateRoutes';
 const MainRoutes = () => {
   return (
@@ -65,6 +67,8 @@ const MainRoutes = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/quickLinkdetail/:id" element={<QuickLinkDetail />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/confirm-payment" element={<ConfirmPay />} />
+          <Route path="/pay-fail" element={<PayFail />} />
         </Routes>
       </Suspense>
       <Footer />
