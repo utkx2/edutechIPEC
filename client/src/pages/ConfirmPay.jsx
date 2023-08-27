@@ -1,12 +1,16 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config";
 import { useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 function ConfirmPay() {
   const location = useLocation();
   const [hash, setHash] = useState("");
   const [loading, setLoading] = useState(false);
   const searchParams = new URLSearchParams(location.search);
+  const formData = location.state;
+  console.log(formData);
   const id = searchParams.get("id");
   const encodedFirstName = searchParams.get("firstName");
   const firstName = decodeURIComponent(encodedFirstName);
@@ -20,7 +24,18 @@ function ConfirmPay() {
   const encodedPhone = searchParams.get("phone");
   const Phone = decodeURIComponent(encodedPhone);
   const [formData, setFormData] = useState("");
+  const navigate = useNavigate();
   console.log(id, "id");
+
+  function handleSuccess() {
+    toast.success("Payment Successful !!");
+
+  }
+
+  function handleFailure() {
+    toast.error("Payment Failed !!");
+    // navigate('/');
+  }
 
   const handlePayNow = async () => {
     fetch(`${BASE_URL}getHash`, {
