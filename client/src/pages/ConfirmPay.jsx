@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -37,49 +37,69 @@ function ConfirmPay() {
     // navigate('/');
   }
 
-  const handlePayNow = async () => {
-    fetch(`${BASE_URL}getHash`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: formDatas?.price,
-        productinfo: formDatas?.start,
-        firstname: firstName,
-        email: email,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const txnid = data.txnid;
-        const hash = data.hash;
-        setHash(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching hash:", error);
+  const handlePayNow = useCallback(async () => {
+    try {
+      const response = await fetch(`${BASE_URL}getHash`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: formData?.price,
+          productinfo: formData?.start,
+          firstname: firstName,
+          email: email,
+        }),
       });
-  };
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      const txnid = data.txnid;
+      const hash = data.hash;
+      setHash(data);
+    } catch (error) {
+      console.error("Error fetching hash:", error);
+      handleFailure();
+    }
+  }, [formData, firstName, email]);
+
   const submitForm = () => {
     const form = document.getElementById("paymentForm");
     form.submit();
+    handleSuccess();
   };
+
   useEffect(() => {
     console.log(id, "id");
-    fetch(`${BASE_URL}QuickLinkHomePage/get/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
+
+    const fetchData = async () => {
+      try {
+        // Fetch data from the first API using async/await
+        const response = await fetch(`${BASE_URL}QuickLinkHomePage/get/${id}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+
         console.log(data, "data");
         setFormData(data);
         console.log(data, "data");
-      })
-      .catch((error) => console.log(error));
-  }, [id]);
 
-  useEffect(() => {
-    handlePayNow();
-    console.log("hello");
-  }, [id]);
+        // Call the `handlePayNow` function
+        handlePayNow();
+        console.log("hello");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData(); // Call the fetchData function
+
+  }, [id, handlePayNow]);
+
 
   return (
     <div className="mt-6">
@@ -172,7 +192,7 @@ function ConfirmPay() {
               <input
                 hidden
                 type="text"
-                value="https://www.google.co.in/"
+                value="/confirm-payment"
                 name="surl"
                 className="mb-6 text-2xl font-bold text-black"
                 readOnly
@@ -180,7 +200,7 @@ function ConfirmPay() {
               <input
                 hidden
                 type="text"
-                value="https://www.wikipedia.org/"
+                value="/pay-fail"
                 name="furl"
                 className="mb-6 text-2xl font-bold text-black"
                 readOnly
@@ -198,7 +218,7 @@ function ConfirmPay() {
                   borderRadius: "10px"
                 }}
               />
-              
+
             </div>
 
             <button

@@ -93,7 +93,7 @@ app.post('/api/getHash', (req, res) => {
   const { amount, productinfo, firstname, email } = req.body;
   const txn = generateUUID();
   let hash_string = process.env.Hash;
-  let hash = `gtKFFx|${txn}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${hash_string}`
+  let hash = `gtKFFx|${txn}|${req.body.amount}|${req.body.productinfo}|${firstname}|${email}|||||||||||${hash_string}`
   let hash1 = cryptoJs.SHA512(hash).toString();
 
   res.json({
