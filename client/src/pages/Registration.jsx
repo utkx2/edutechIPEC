@@ -190,7 +190,7 @@ const Registration = () => {
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  // hidden
+                  hidden
                   type="text"
                   name="amount"
                   id="floating_price"
@@ -204,7 +204,7 @@ const Registration = () => {
 
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  // hidden
+                  hidden
                   type="text"
                   name="productinfo"
                   id="floating_description"
