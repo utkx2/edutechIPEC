@@ -92,7 +92,7 @@ const Registration = () => {
       return;
     }
     try {
-      const response = await fetch(`${BASE_URL}registration/upload`, {
+      const response = await fetch(`${BASE_URL}upload1`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const Registration = () => {
       });
       if (response.ok) {
         const responseData = await response.json();
-        toast.success("admin card sent on your mail");
+        // toast.success("admin card sent on your mail");
       } else {
         toast.error("error during submission of form");
       }
@@ -190,11 +190,11 @@ const Registration = () => {
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  hidden
+                  // hidden
                   type="text"
                   name="amount"
                   id="floating_price"
-                  value={formData.amount} // Assuming formData.price contains the value
+                  value={formData.price} // Assuming formData.price contains the value
                   // className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   // placeholder=" "
                   required
@@ -204,7 +204,7 @@ const Registration = () => {
 
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  hidden
+                  // hidden
                   type="text"
                   name="productinfo"
                   id="floating_description"

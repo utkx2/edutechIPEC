@@ -1,16 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function PayFail() {
-  const navigate = useNavigate();
+function PaySuccess() {
+    const navigate = useNavigate();
 
     const back = () => {
         navigate("/")
     }
+    
   return (
     <div className="mt-6">
       <div className="max-w-[60rem] p-8 mx-4 border shadow-xl md:mx-auto bg-gradient-to-b from-gray-100 to-gray-50 rounded-2xl my-10">
-        <h1 className="mb-6 text-3xl font-bold">Payment Failed</h1>
+        <h1 className="mb-6 text-3xl font-bold">Payment Success</h1>
         <hr className="mb-6 border-gray-400" />
 
         <div
@@ -19,7 +20,7 @@ function PayFail() {
         >
           <div>
             <h1 className="mb-6 text-2xl font-bold ">
-              Sorry, Your Payment is failed!
+              Your are successfully registered and admit card is sent to your email
             </h1>
           </div>
 
@@ -32,4 +33,4 @@ function PayFail() {
   );
 }
 
-export default PayFail;
+export default PaySuccess;

@@ -10,7 +10,6 @@ function ConfirmPay() {
   const [loading, setLoading] = useState(false);
   const searchParams = new URLSearchParams(location.search);
   const formData = location.state;
-  console.log(formData);
   const id = searchParams.get("id");
   const encodedFirstName = searchParams.get("firstName");
   const firstName = decodeURIComponent(encodedFirstName);
@@ -25,7 +24,6 @@ function ConfirmPay() {
   const Phone = decodeURIComponent(encodedPhone);
   const [formDatas, setFormData] = useState("");
   const navigate = useNavigate();
-  console.log(id, "id");
 
   function handleSuccess() {
     toast.success("Payment Successful !!");
@@ -34,7 +32,7 @@ function ConfirmPay() {
 
   function handleFailure() {
     toast.error("Payment Failed !!");
-    // navigate('/');
+    navigate("/pay-fail");
   }
 
   const handlePayNow = useCallback(async () => {
@@ -62,18 +60,17 @@ function ConfirmPay() {
       setHash(data);
     } catch (error) {
       console.error("Error fetching hash:", error);
-      handleFailure();
+      // handleFailure();
     }
   }, [formData, firstName, email]);
 
   const submitForm = () => {
     const form = document.getElementById("paymentForm");
     form.submit();
-    handleSuccess();
+    // handleSuccess();
   };
 
   useEffect(() => {
-    console.log(id, "id");
 
     const fetchData = async () => {
       try {
@@ -84,15 +81,13 @@ function ConfirmPay() {
         }
         const data = await response.json();
 
-        console.log(data, "data");
         setFormData(data);
-        console.log(data, "data");
 
         // Call the `handlePayNow` function
         handlePayNow();
-        console.log("hello");
       } catch (error) {
         console.error(error);
+        // handleFailure();
       }
     };
 
@@ -192,7 +187,7 @@ function ConfirmPay() {
               <input
                 hidden
                 type="text"
-                value="/confirm-payment"
+                value="http://localhost:3000/api/payment/success"
                 name="surl"
                 className="mb-6 text-2xl font-bold text-black"
                 readOnly
@@ -200,7 +195,7 @@ function ConfirmPay() {
               <input
                 hidden
                 type="text"
-                value="/pay-fail"
+                value="http://localhost:3000/api/payment/failed"
                 name="furl"
                 className="mb-6 text-2xl font-bold text-black"
                 readOnly

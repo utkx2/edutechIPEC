@@ -26,6 +26,7 @@ const VerificationPage = lazy(() => import("../pages/VerificationPage"));
 const QuickLinkDetail = lazy(() => import("../pages/QuickLinkDetail"));
 const PayFail = lazy(() => import("../pages/PayFail"));
 const ConfirmPay = lazy(() => import("../pages/ConfirmPay"));
+const PaySuccess = lazy(() => import("../pages/PaySuccess"));
 import PrivateRoute from './PrivateRoutes';
 const MainRoutes = () => {
   return (
@@ -69,6 +70,7 @@ const MainRoutes = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/confirm-payment" element={<ConfirmPay />} />
           <Route path="/pay-fail" element={<PayFail />} />
+          <Route path="/pay-success" element={<PaySuccess />} />
         </Routes>
       </Suspense>
       <Footer />
